@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_rectangle_18"
+    tools:context="com.eidland.auxilium.voice.only.MyProfile">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="4dp"
+        android:paddingVertical="5dp"
+        android:layout_gravity="right"
+        android:visibility="invisible"
+        android:paddingHorizontal="10dp"
+        android:textSize="20dp"
+        android:textColor="@color/red"
+        android:background="@color/transparent1"
+        android:text="Log out"
+        android:gravity="center"
+        android:onClick="SignOut"></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userimage"
+            android:layout_width="126dp"
+            android:layout_height="126dp"
+            android:layout_gravity="center"
+            android:src="@drawable/userprofile"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-32dp">
+            <LinearLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="80dp"
+                android:background="@drawable/ic_upload_photo_button"
+                >
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+
+                    android:gravity="center"
+                    android:onClick="ChangeImage"
+                    android:contentDescription="TODO" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="260dp"
+            android:layout_height="41dp"
+
+            android:layout_marginHorizontal="2dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="30dp"
+            android:padding="6dp"
+            android:background="@drawable/ic_background"
+            android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
+            android:text="Your Name"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+    <EditText
+        android:id="@+id/userEmail"
+        android:layout_width="260dp"
+        android:layout_height="41dp"
+
+        android:layout_marginHorizontal="2dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="30dp"
+        android:padding="6dp"
+        android:background="@drawable/ic_background"
+
+        android:text="Your Email address"
+
+        android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
+        android:textColor="@color/white"
+        
+        android:textSize="18sp"
+        />
+
+
+        <RelativeLayout
+
+            android:id="@+id/singupactive"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="update"
+            android:background="@drawable/join_button">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="Update"
+                android:textColor="@color/white">
+
+            </TextView>
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

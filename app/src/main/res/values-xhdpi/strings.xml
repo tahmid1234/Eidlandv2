@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <string name="app_name">EIDLAND</string>
+    <array name="entries">
+        <item>1</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>799</item>
+    </array>
+    <string name="eidland">
+Eidland
+</string>
+
+    <string name="label_audience">Audience</string>
+
+    <string name="label_broadcaster">Broadcaster</string>
+
+    <string name="msg_no_network_connection">No network connection, please check the network settings</string>
+
+    // DO NOT TRANSLATE
+
+    <string name="facebook_app_id">260099269129263</string>
+
+
+    <string name="Playid">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgm8QRuZqKaPIqqKd3dDHbBT/sp39U+nuXSbNxPHsKWzrmGZaMn2Lj+dUbxQL6F+M9OY/3gedq0KkVIrc/ZJYtu2K/dEn1nn5XKOfhRSdaWBkTh4Ya7f2tFUXzLbseX4EK8RW1tBAYOzUxt49mpicQhhmkCuZZwlwiCiGc+opbMG873SY81UXcZI3BF5uDqs8tDDVdtbPdU/OgBn3CfRUhW8n6tBVXrM0sx4JBxgoEP92kNWY+TFBWmCMYPnqLLUPWT0EzjIE0E67304OcDEj9rR+2Gc9WfhMmCawad3ZNIlGTmTmNwzX8oJTZrbMhEcHS9XVmp6gcDYzp1Yqvmk5mwIDAQAB</string>
+
+</resources>

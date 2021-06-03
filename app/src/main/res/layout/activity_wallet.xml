@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_rectangle_18"
+    tools:context="com.eidland.auxilium.voice.only.ui.WalletActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="101dp"
+                android:id="@+id/lrnt"
+
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:id="@+id/userimg"
+                    android:src="@drawable/ic_coin"
+                    android:scaleType="centerCrop"/>
+
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/lrnname"
+                android:layout_below="@id/lrnt"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txtname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="1000"
+                    android:textColor="#fff"
+                    android:textSize="54sp"
+ />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:weightSum="1"
+                android:visibility="visible"
+                android:id="@+id/lrnfigures"
+                android:layout_below="@id/lrnname"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:gravity="top"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txtcoins"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Coins"
+                        android:textColor="#FD9F35"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:textSize="24sp"></TextView>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/lrnfigures"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/buy100"
+
+                    android:layout_marginStart="40dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/ic_fi_rr_coin_5"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center|left"
+                        android:text="250"
+                        android:lineHeight="24dp"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="25dp"
+
+                        android:gravity="center"
+                        android:layout_gravity="center"
+
+                        android:background="@drawable/ic_buy_button"
+                        android:contentDescription="TODO" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    android:id="@+id/buy1000"
+                    android:layout_marginStart="40dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/ic_fi_rr_coin_5"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center|left"
+                        android:text="1,000"
+                        android:lineHeight="24dp"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="25dp"
+
+                        android:gravity="center"
+                        android:layout_gravity="center"
+
+                        android:background="@drawable/ic_buy_button_1"
+                        android:contentDescription="TODO" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/buy5000"
+
+                    android:layout_marginStart="40dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/ic_fi_rr_coin_5"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center|left"
+                        android:text="5,000"
+                        android:lineHeight="24dp"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="25dp"
+
+                        android:gravity="center"
+                        android:layout_gravity="center"
+
+                        android:background="@drawable/ic_buy_button_4"
+                        android:contentDescription="TODO" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                   android:id="@+id/buy12000"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/ic_fi_rr_coin_5"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center|left"
+                        android:text="12,000"
+                        android:lineHeight="24dp"
+                        android:textColor="#fff"
+                        android:textSize="18sp"/>
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="25dp"
+
+                        android:gravity="center"
+                        android:layout_gravity="center"
+
+                        android:background="@drawable/ic_buy_button_2"
+                        android:contentDescription="TODO" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:id="@+id/buy36500"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="12dp"
+                        android:background="@drawable/ic_fi_rr_coin_5"
+                        android:contentDescription="TODO" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center|left"
+                        android:text="36,500"
+                        android:lineHeight="24dp"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="25dp"
+
+                        android:gravity="center"
+                        android:layout_gravity="center"
+
+                        android:background="@drawable/ic_buy_button_3"
+                        android:contentDescription="TODO" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:onClick="finishthis"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_fi_rr_arrow_left_1"
+        android:contentDescription="TODO" />
+    />
+
+</RelativeLayout>

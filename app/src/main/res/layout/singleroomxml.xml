@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="10dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp">
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/_ivphoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bgmain"
+                android:contentDescription="TODO">
+            </ImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:background="@drawable/titleback"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/_tvname"
+                android:text="Group Name"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textColor="#fff"
+
+                android:gravity="center|left"
+                android:textStyle="bold"
+                android:layout_weight="1"></TextView>
+            <TextView
+                android:id="@+id/_tvdes"
+                android:text="100 Members"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="7dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_weight="1"></TextView>
+         </LinearLayout>
+     </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

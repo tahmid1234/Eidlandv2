@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+repositories {
+    jcenter()
+    mavenCentral()
+    google()
+}
+task wrapper(type: Wrapper){
+    gradleVersion = '2.14.1'
+}
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "com.zcorridor.openlive.voice.only"
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 21
+        versionName "0.1.21"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    ndkVersion '22.0.7026061'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'org.slf4j:slf4j-api:1.7.21'
+    implementation 'com.github.tony19:logback-android-core:1.1.1-4'
+    implementation 'io.agora.rtc:voice-sdk:3.3.1'
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+    // image load from firebase
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+    implementation 'com.google.firebase:firebase-analytics'
+
+    implementation('com.github.tony19:logback-android-classic:1.1.1-4') {
+        // workaround issue #73
+        exclude group: 'com.google.android', module: 'android'
+    }
+    implementation 'com.google.firebase:firebase-database:19.7.0'
+    implementation 'com.android.volley:volley:1.1.1'
+    // Firbase Recycler Option
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+    implementation 'com.google.firebase:firebase-auth:19.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
+    //circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+    // country code picker
+    implementation 'com.hbb20:ccp:2.3.1'
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3'
+    //OTP PIN View Design
+    implementation 'com.chaos.view:pinview:1.4.3'
+    // image croper
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+// volley
+    implementation 'com.anjlab.android.iab.v3:library:1.0.45'
+
+    // facebook
+    implementation 'com.facebook.android:facebook-core:[8,9)'
+    implementation 'com.facebook.android:facebook-login:[8,9)'
+
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
+}

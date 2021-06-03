@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+     tools:context="com.eidland.auxilium.voice.only.ui.MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_rectangle_18"
+        android:scaleType="centerCrop"
+        android:contentDescription="TODO" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="15dp"
+          android:background="@drawable/appbar_back">
+
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+
+                android:fontFamily="@font/pacificoregular"
+                android:gravity="left|center"
+                android:text="Eidland"
+                android:textAppearance="@style/eidlandappbar" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:onClick="myProfile"
+                app:cardCornerRadius="18dp"
+                >
+                <ImageView
+                    android:src="@drawable/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/userimage"
+                    android:contentDescription="TODO"></ImageView>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="12sp"
+        android:visibility="gone"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            tools:context="com.eidland.auxilium.voice.only.MyProfile">
+
+            <LinearLayout
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="test"
+                    android:gravity="center|left"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:id="@+id/username"></TextView>
+                <TextView
+                    android:text="Welcome on Auxilium"
+                    android:gravity="top"
+                    android:textSize="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/userEmail"></TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+<ProgressBar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/progressbar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/chatrooms_b"
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/singleroomxml"
+            android:id="@+id/rvrooms"
+            ></androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:visibility="gone"
+    android:padding="8dp">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:src="@drawable/home"
+        android:contentDescription="TODO" />
+    <ImageView
+        android:id="@+id/button_join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/golive"
+        android:backgroundTint="@color/purple"
+        android:textColor="@color/white"
+        android:onClick="onClickJoin"
+        android:contentDescription="TODO" />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:src="@drawable/profil"
+        android:contentDescription="TODO" />
+</LinearLayout></LinearLayout>
+
+</RelativeLayout>

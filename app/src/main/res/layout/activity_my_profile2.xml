@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_rectangle_18"
+    tools:context="com.eidland.auxilium.voice.only.MyProfileActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="101dp"
+        android:id="@+id/lrnt"
+
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/userimg"
+                android:src="@drawable/ic_default_image_1"
+                android:scaleType="centerCrop"/>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/lrnname"
+        android:layout_below="@id/lrnt"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txtname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Username"
+            android:textColor="#fff"
+            android:textSize="20sp"
+
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:weightSum="1"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"
+        android:id="@+id/lrnfigures"
+        android:layout_below="@id/lrnname"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:gravity="top|center"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:text="00"
+                android:drawablePadding="5dp"
+                android:drawableEnd="@drawable/ic_fi_rr_coin_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtcoins"></TextView>
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Coins"
+                android:visibility="gone"
+                android:textSize="12sp"
+                ></TextView>
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/lrnfigures"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/lrnrefresh"
+            android:visibility="gone"
+            android:onClick="refreshtoken"
+            android:layout_marginStart="40dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/ic_arrowsclockwise"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center|left"
+                android:text="Refresh token"
+                android:lineHeight="24dp"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="Walllet"
+            android:layout_marginStart="40dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/ic_fi_rr_box_alt_1"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center|left"
+                android:text="Buy Coins"
+                android:lineHeight="24dp"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:background="@drawable/ic_background_coinbalance"
+    android:layout_marginEnd="35dp"
+    android:layout_gravity="center"
+    android:visibility="gone"
+    android:layout_height="35dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+
+
+               android:drawableEnd="@drawable/ic_fi_rr_coin_5"
+                android:drawablePadding="10dp"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:text="100"
+
+                android:fontFamily="@font/open_sans_bold"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+</RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/lrnjoin"
+
+            android:onClick="onClickJoin"
+            android:layout_marginStart="40dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/ic_fi_rr_user_add_1"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center|left"
+                android:text="Add Rooms"
+                android:lineHeight="24dp"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:onClick="editprofile"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/ic_fi_rr_edit_1"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center|left"
+                android:text="Change Photo or Name"
+                android:lineHeight="24dp"
+                android:textColor="#fff"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:onClick="logout"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/ic_fi_rr_sign_out_1"
+                android:contentDescription="TODO" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center|left"
+                android:text="Logout"
+                android:lineHeight="24dp"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:padding="8dp">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:onClick="myProfile"
+            android:src="@drawable/home"
+            android:contentDescription="TODO" />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="@drawable/profil"
+            android:contentDescription="TODO" />
+    </LinearLayout>
+</RelativeLayout>
+    </ScrollView>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:onClick="editprofile"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/ic_fi_rr_pencil_1"
+        android:contentDescription="TODO" />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="25dp"
+        android:onClick="finishthis"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/ic_fi_rr_arrow_left_1"
+        android:contentDescription="TODO" />
+     />
+
+</RelativeLayout>
