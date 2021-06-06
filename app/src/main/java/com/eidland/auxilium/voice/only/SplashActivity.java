@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import io.agora.rtc.Constants;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,9 +31,10 @@ import com.eidland.auxilium.voice.only.model.Staticconfig;
 import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
 
 public class SplashActivity extends AppCompatActivity {
-DatabaseReference myRef;
+    DatabaseReference myRef;
     Intent intent;
     TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +46,9 @@ DatabaseReference myRef;
       mInterstitialAd.setAdUnitId("ca-app-pub-3902756767389775/6264215741");
 
       initAndLoadInterstitialAds();*/
-      //   Spannable spannable = new SpannableString("EIDLAND");
-      //  spannable.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-     //   textView.setText(spannable);
+        //   Spannable spannable = new SpannableString("EIDLAND");
+        //  spannable.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //   textView.setText(spannable);
         Handler handler = new Handler();
         handler.postDelayed(
                 new Runnable() {
@@ -59,13 +61,13 @@ DatabaseReference myRef;
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() != null) {
-                                        String value=getSharedPreferences("Auxilium",MODE_PRIVATE).getString("Signupcomplete","no");
+                                        String value = getSharedPreferences("Auxilium", MODE_PRIVATE).getString("Signupcomplete", "no");
                                         if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
                                             Staticconfig.user = dataSnapshot.getValue(User.class);
                                             //  Toast.makeText(SplashActivity.this, ""+StaticConfig.user.getCoin(), Toast.LENGTH_SHORT).show();
 
-                                             intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
-                                            intent.putExtra("User","Participent");
+                                            intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
+                                            intent.putExtra("User", "Participent");
                                             intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
                                             intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
@@ -74,8 +76,8 @@ DatabaseReference myRef;
 
                                             intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
 
-                                                startActivity(intent);
-                                                finish();
+                                            startActivity(intent);
+                                            finish();
 
 
                                         } else
@@ -95,17 +97,16 @@ DatabaseReference myRef;
                             });
 
 
-                        }
-                        else {
+                        } else {
 
 
-                                startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-                                finish();
+                            startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+                            finish();
 
 
                         }
                     }
-                }, 3000);
+                }, 1000);
     }
 
 

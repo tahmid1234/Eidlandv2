@@ -12,8 +12,6 @@ import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.Viewer;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,7 +60,7 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             placesViewHolder=(PlacesViewHolder) holder;
-        Glide.with(context).load( countryInfoArrayList.get(position).getPhoto()).into(placesViewHolder.ivFamousPlace);
+        Glide.with(context).load( countryInfoArrayList.get(position).getPhotoUrl()).into(placesViewHolder.ivFamousPlace);
        String t= countryInfoArrayList.get(position).getName();
         placesViewHolder.UName.setText(t);
 

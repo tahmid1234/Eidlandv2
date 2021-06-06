@@ -44,12 +44,13 @@ import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.ui.ViewDialog;
 
 public class MyProfile extends AppCompatActivity {
-    TextView tvname,tvmail;
+    TextView tvname, tvmail;
     ImageView imageViewuphoto;
-    String userid,UserName,Email,ImageUrl,imgpath;
+    String userid, UserName, Email, ImageUrl, imgpath;
     Uri filePath;
     ProgressDialog progressDialog;
     ViewDialog viewDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class MyProfile extends AppCompatActivity {
         ImageUrl = Staticconfig.user.getImageurl();
         Glide.with(MyProfile.this).load(Staticconfig.user.getImageurl()).into(imageViewuphoto);
     }
+
     public void SignOut(View view) {
 
     }
@@ -74,9 +76,9 @@ public class MyProfile extends AppCompatActivity {
     public void update(View view) {
 
         viewDialog.showDialog("We are updating your profile information. Please wait..");
-        if (filePath==null){
+        if (filePath == null) {
             AddData(ImageUrl);
-        }else{
+        } else {
             uplnamephoto();
         }
 
@@ -84,20 +86,20 @@ public class MyProfile extends AppCompatActivity {
 
     private void AddData(String url) {
         String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url,Staticconfig.user.getCoins());
-        Staticconfig.user=obj;
+        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, Staticconfig.user.getCoins());
+        Staticconfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(MyProfile.this, "Saved", Toast.LENGTH_SHORT).show();
-              viewDialog.hideDialog();
+                viewDialog.hideDialog();
                 onBackPressed();
 
             }
         });
     }
 
-    public void uplnamephoto(){
+    public void uplnamephoto() {
         viewDialog.showDialog("Please wait for a while");
         RequestQueue MyRequestQueue = Volley.newRequestQueue(MyProfile.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
@@ -106,17 +108,16 @@ public class MyProfile extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                Log.e("response", response+"");
+                Log.e("response", response + "");
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     boolean status = jsonObject.getBoolean("error");
-                    if(!status){
-                        String url=  jsonObject.getString("thumb");
+                    if (!status) {
+                        String url = jsonObject.getString("thumb");
                         AddData(url);
 
 
-                    }
-                    else {
+                    } else {
 
                         Toast.makeText(MyProfile.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
                     }
@@ -132,8 +133,8 @@ public class MyProfile extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //This code is executed if there is an error.
-                if(error!=null)
-                    Log.e("error",error.getLocalizedMessage()+"");
+                if (error != null)
+                    Log.e("error", error.getLocalizedMessage() + "");
 
             }
         }) {
@@ -150,6 +151,7 @@ public class MyProfile extends AppCompatActivity {
 
         MyRequestQueue.add(MyStringRequest);
     }
+
     public void ChangeImage(View view) {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)

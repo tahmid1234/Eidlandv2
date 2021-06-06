@@ -11,6 +11,7 @@ public class AGApplication extends Application {
     private WorkerThread mWorkerThread;
     private int activityReferences = 0;
     private boolean isActivityChangingConfigurations = false;
+
     public synchronized void initWorkerThread() {
         if (mWorkerThread == null) {
             mWorkerThread = new WorkerThread(getApplicationContext());
@@ -21,8 +22,7 @@ public class AGApplication extends Application {
     }
 
     public synchronized WorkerThread getWorkerThread() {
-        if(mWorkerThread==null)
-        {
+        if (mWorkerThread == null) {
             initWorkerThread();
         } else return mWorkerThread;
 

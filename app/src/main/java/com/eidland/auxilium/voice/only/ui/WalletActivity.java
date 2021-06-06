@@ -26,32 +26,32 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
-public class WalletActivity extends AppCompatActivity  implements View.OnClickListener,BillingProcessor.IBillingHandler {
+public class WalletActivity extends AppCompatActivity implements View.OnClickListener, BillingProcessor.IBillingHandler {
     TextView txtcurrent;
     LinearLayout buy100, buy1000, buy5000, buy12000, buy36500;
     LinearLayout lrnmethod;
     CardView cardplaystore, cardbiglive;
     BillingProcessor billingProcessor;
     DecimalFormat formatter;
-    String finalText,coincomma, Userid;
+    String finalText, coincomma, Userid;
     ViewDialog viewDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-       // lrnmethod = findViewById(R.id.lrnmethod);
-       // cardbiglive = findViewById(R.id.idbiglive);
-    //    cardplaystore = findViewById(R.id.idplaystore);
+        // lrnmethod = findViewById(R.id.lrnmethod);
+        // cardbiglive = findViewById(R.id.idbiglive);
+        //    cardplaystore = findViewById(R.id.idplaystore);
         buy100 = findViewById(R.id.buy100);
         buy1000 = findViewById(R.id.buy1000);
         buy5000 = findViewById(R.id.buy5000);
         buy12000 = findViewById(R.id.buy12000);
         buy36500 = findViewById(R.id.buy36500);
-viewDialog=new ViewDialog(this);
+        viewDialog = new ViewDialog(this);
 
         txtcurrent = findViewById(R.id.txtname);
-        coincomma=  formattedtext(Staticconfig.user.getCoins());
+        coincomma = formattedtext(Staticconfig.user.getCoins());
         txtcurrent.setText(coincomma);
 
         buy100.setOnClickListener(this);
@@ -60,17 +60,18 @@ viewDialog=new ViewDialog(this);
         buy12000.setOnClickListener(this);
         buy36500.setOnClickListener(this);
 
-      //  cardplaystore.setOnClickListener(this);
-       // cardbiglive.setOnClickListener(this);
+        //  cardplaystore.setOnClickListener(this);
+        // cardbiglive.setOnClickListener(this);
         initpur();
     }
-    public String formattedtext (String coin)
-    {
+
+    public String formattedtext(String coin) {
         BigDecimal val = new BigDecimal(coin);
         formatter = new DecimalFormat("#,###,###");
-        finalText=formatter.format(val);
+        finalText = formatter.format(val);
         return finalText;
     }
+
     void purchasecoins() {
         billingProcessor.purchase(this, selectedkey);
     }
@@ -103,10 +104,10 @@ viewDialog=new ViewDialog(this);
 
     @Override
     public void onProductPurchased(String productId, TransactionDetails details) {
-         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String currentCoins=Staticconfig.user.getCoins();
-        long coininnumber= Long.parseLong(currentCoins);
-        long finalcoin= coininnumber + Long.parseLong(productId);
+        Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentCoins = Staticconfig.user.getCoins();
+        long coininnumber = Long.parseLong(currentCoins);
+        long finalcoin = coininnumber + Long.parseLong(productId);
         Staticconfig.user.setCoins(finalcoin + "");
 
         verifypurchase();
