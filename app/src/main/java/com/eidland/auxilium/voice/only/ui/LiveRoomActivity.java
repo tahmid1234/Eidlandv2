@@ -2046,21 +2046,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         });*/
     }
     private void sendgift() {
-        Log.v("entered gift", String.valueOf("hellogift"));
     Gift gift = new Gift();
     gift.setGift(selectedgiftname);
-        Log.v("entered gift2", String.valueOf(selectedgiftname));
     gift.setReceivername(txtsinglename.getText().toString());
-        Log.v("entered gift3", String.valueOf(gift.getReceivername()));
     gift.setSendername(Staticconfig.user.getName());
-        Log.v("entered gift4", String.valueOf(gift.getSendername()));
     gift.setSender(Staticconfig.user.getImageurl());
-        Log.v("entered gift5", String.valueOf(gift.getSender()));
+
     FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift);
     Comment comment = new Comment(Staticconfig.user.getName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1",Staticconfig.user.getImageurl());
-        Log.v("entered gift6", String.valueOf(comment.getComment()));
     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
-        Log.v("entered gift7", String.valueOf("done"));
+
+        // animation here
     }
     ArrayList<Point> path;
     public void addpoints() {

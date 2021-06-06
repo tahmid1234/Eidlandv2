@@ -78,5 +78,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-core:[8,9)'
     implementation 'com.facebook.android:facebook-login:[8,9)'
 
+    implementation 'com.airbnb.android:lottie:3.4.0'
+
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
 }
