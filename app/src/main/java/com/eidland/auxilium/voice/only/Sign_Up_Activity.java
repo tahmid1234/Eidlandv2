@@ -258,7 +258,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
                                 userid = mAuth.getCurrentUser().getUid();
 
-                                User obj = new User(userName, userEmail, String.valueOf(mAuth.getCurrentUser().getPhotoUrl()),"100");
+                                User obj = new User(userName, userEmail, String.valueOf(mAuth.getCurrentUser().getPhotoUrl()),"100","0");
                                 Staticconfig.user = obj;
                                 Intent intent = new Intent(Sign_Up_Activity.this, LiveRoomActivity.class);
                                 intent.putExtra("User","Participent");

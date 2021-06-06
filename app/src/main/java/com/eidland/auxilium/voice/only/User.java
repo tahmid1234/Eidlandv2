@@ -1,16 +1,24 @@
 package com.eidland.auxilium.voice.only;
 
 public class User {
-  public   String name,email,imageurl,coins;
+  public   String name;
+    public String email;
+    public String imageurl;
+    public String coins;
+
+
+
+    public String recievedCoins;
 
     public User() {
     }
 
-    public User(String name, String email, String imageurl,String coins) {
+    public User(String name, String email, String imageurl,String coins, String recievedCoins) {
         this.name = name;
         this.email = email;
         this.imageurl = imageurl;
         this.coins = coins;
+        this.recievedCoins = recievedCoins;
     }
 
     public String getCoins() {
@@ -20,6 +28,10 @@ public class User {
     public void setCoins(String coins) {
         this.coins = coins;
     }
+
+    public String getRecievedCoins() { return recievedCoins; }
+
+    public void setRecievedCoins(String recievedCoins) { this.recievedCoins = recievedCoins; }
 
     public String getName() {
         return name;

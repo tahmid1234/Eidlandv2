@@ -121,7 +121,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     CircleImageView popup_user,commentuser;
     TextView popup_uname;
     private volatile boolean mAudioMuted = false;
- ImageView userimage;
+    ImageView userimage;
     private volatile int mAudioRouting = -1; // Default
     ChildEventListener eventListener;
     String imgurl;
@@ -1814,8 +1814,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                     Staticconfig.user.setCoins(l + "");
                                     coincomma=  formattedtext(Staticconfig.user.getCoins());
                                     txtusercoin.setText(coincomma);
-                                    Log.v("entered 2nd", String.valueOf(coincomma));
-
+                                    Log.v("current balance", String.valueOf(coincomma));
+                                    Log.v("reciever", selectuseruid);
                                 }
 
                                 @Override
@@ -1826,14 +1826,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             userref.child(selectuseruid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                                     User user = snapshot.getValue(User.class);
-                                    long l = Long.parseLong(user.getCoins());
-                                    l = l + selectamnt;
-                                    user.setCoins(l + "");
-                                    Log.v("entered 3", String.valueOf(user.getCoins()));
+                                    long lr;
+                                    if (user.getRecievedCoins() == null) lr = 0;
+                                    else lr   = Long.parseLong(user.getRecievedCoins());
+                                    lr = lr + selectamnt;
+                                    user.setRecievedCoins(lr + "");
                                     userref.child(selectuseruid).setValue(user);
-
+                                    Staticconfig.user.setRecievedCoins(lr + "");
+                                    coincomma=  formattedtext(Staticconfig.user.getRecievedCoins());
+                                    txtusercoin.setText(coincomma);
+                                    Log.v("current recieved", String.valueOf(coincomma));
                                 }
 
                                 @Override
@@ -1841,8 +1844,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                                 }
                             });
-
-
                             sendgift();
                         } else
                         {

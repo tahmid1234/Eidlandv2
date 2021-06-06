@@ -133,7 +133,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Uri img = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()),Staticconfig.user.getCoins());
+        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()),Staticconfig.user.getCoins(), Staticconfig.user.getRecievedCoins());
         Staticconfig.user = obj;
 
         Intent intent = new Intent(MyProfileActivity.this, LiveRoomActivity.class);
