@@ -15,8 +15,19 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="5dp">
+        <RelativeLayout
+            android:id="@+id/confettiLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/confetti"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"/>
 
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,8 +36,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:gravity="center">
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/img"
                     android:layout_width="32dp"
@@ -34,7 +45,6 @@
                     android:layout_height="32dp"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp">
-
                     <ImageView
                         android:id="@+id/hostimg"
                         android:layout_width="match_parent"
@@ -43,7 +53,6 @@
                         android:scaleType="centerCrop"
                         android:contentDescription="TODO" />
                 </androidx.cardview.widget.CardView>
-
 
                 <TextView
                     android:id="@+id/room_name"
@@ -126,7 +135,6 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:layout_marginLeft="10dp"
-
                     android:src="@drawable/viewersicon"
                     android:contentDescription="TODO" />
 
@@ -1027,19 +1035,17 @@ android:visibility="gone"
                 android:id="@+id/animatedlayout"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="60dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/ic_top_member"
                     android:gravity="center|left"
-                    android:padding="5dp">
+                    android:padding="9dp">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -1071,7 +1077,7 @@ android:visibility="gone"
                             android:paddingLeft="5dp"
                             android:text="contributed"
                             android:textColor="#C551F6"
-                            android:textSize="10sp" />
+                            android:textSize="17sp" />
 
                     </LinearLayout>
 
@@ -1242,7 +1248,19 @@ android:visibility="gone"
 
 
                 </RelativeLayout>
-
+<!--                <com.airbnb.lottie.LottieAnimationView-->
+<!--                    android:id="@+id/animationView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="36dp"-->
+<!--                    app:layout_constraintWidth_percent="0.4"-->
+<!--                    app:layout_constraintDimensionRatio="1:1"-->
+<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                    app:layout_constraintRight_toRightOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:lottie_autoPlay="true"-->
+<!--                    app:lottie_loop="true"-->
+<!--                    app:lottie_rawRes="@drawable/crown"/>-->
 
 
 

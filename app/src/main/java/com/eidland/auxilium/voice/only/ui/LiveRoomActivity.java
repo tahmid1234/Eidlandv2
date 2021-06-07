@@ -3,7 +3,6 @@ package com.eidland.auxilium.voice.only.ui;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
@@ -12,7 +11,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +23,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,8 +46,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.MyProfileActivity;
-import com.eidland.auxilium.voice.only.SplashActivity;
-import com.eidland.auxilium.voice.only.VerifyotpActivity;
 import com.eidland.auxilium.voice.only.adapter.CommentAdapter;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.adapter.ViewerListAdapter;
@@ -65,8 +64,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -117,6 +114,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     String selectuseruid;
     EditText txtcmnt;
     String Clickedseat=null;
+    Animation enter;
+    Animation exit;
     private final static Logger log = LoggerFactory.getLogger(LiveRoomActivity.class);
     CircleImageView popup_user,commentuser;
     TextView popup_uname;
@@ -139,11 +138,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     RelativeLayout singlegift;
     DatabaseReference userref;
     RelativeLayout singl;
+    RelativeLayout confettiLayout;
     ImageView button;
     LinearLayout contentView;
-
+    Animation enterAnimation, leaveAnimation;
+    TextView giftAnimation;
     RelativeLayout animatedlayout;
     GifImageView simplegift;
+    GifImageView confetti;
     boolean flag;
     ArrayList<Gift> giftslist;
     boolean isKeyboardShowing = false;
@@ -176,6 +178,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         singleimg = findViewById(R.id.singleimg);
         close = findViewById(R.id.close);
         simplegift = findViewById(R.id.imggif);
+        confetti = findViewById(R.id.confetti);
+        confettiLayout = findViewById(R.id.confettiLayout);
         sendername = findViewById(R.id.sendername);
         receivername = findViewById(R.id.receivername);
         popup_uname=findViewById(R.id.txtnamepopup);
@@ -246,6 +250,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         iv50earring = findViewById(R.id.earing);
         iv50kbucket = findViewById(R.id.flowerbuckt);
         iv10kladiesbag = findViewById(R.id.iv10kbag);
+
+        enterAnimation = AnimationUtils.loadAnimation(this, R.anim.enter);
+        leaveAnimation = AnimationUtils.loadAnimation(this, R.anim.exit);
+        //giftAnimation = findViewById(R.id.giftAnimation);
 
         txtviewerscount.setOnClickListener(new View.OnClickListener() {
 
@@ -1845,6 +1853,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 }
                             });
                             sendgift();
+                            animatedlayout.setAnimation(enterAnimation);
                         } else
                         {
                            if (selectamnt==0)
@@ -1883,14 +1892,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     if(isnotfirst) {
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             Gift gift = dataSnapshot1.getValue(Gift.class);
-
                             if (gift.getGift() != null && gift.getSender() != null) {
-
                                 giftslist.add(new Gift(gift.getGift(), gift.getSender(), gift.getSendername(),gift.getReceivername()));
                                 Log.e("gift list", gift.getSender() + gift.getGift());
                             }
                         }
-                        if (animatedlayout.getVisibility() == View.GONE && giftslist.size() > 0) {
+                        if (animatedlayout.getVisibility() == View.VISIBLE && giftslist.size() > 0) {
                             //  addcomnt(giftslist.get(0).getPhoto(),giftslist.get(0).getId());
                             giftsend(giftslist.get(0).getGift(), giftslist.get(0).getSender(), giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
                         }
@@ -1906,18 +1913,24 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         });
 
     }
-    public void showlocalgift(String id){
-        Log.v("showlocal",id);
+    public void showGiftAnimationLeftTorRight(String id, Gift gift){
         animatedlayout.setVisibility(View.VISIBLE);
-        switch (id){
+//        AnimationSet animationSet = new AnimationSet(true);
+//
+//        enter = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+//        animatedlayout.setAnimation(enter);
+//        exit = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.exit);
+//        animationSet.addAnimation(enter);
+//        animationSet.addAnimation(exit);
+//        animatedlayout.startAnimation(animationSet);
 
+        switch (id){ // maybe entering here only once?
             case "hearts":
                 simplegift.setImageResource(R.drawable.ic_heart);
                 //   Constants.user.setDimond(Constants.user.getDimond()-500);
                 break;
             case "like1":
                 simplegift.setImageResource(R.drawable.ic_like_1);
-
                 //  talntcoins.setText(Constants.user.getDimond()+"");
                 break;
             case "smilereact":
@@ -1934,7 +1947,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case "heartcomment":
                 simplegift.setImageResource(R.drawable.ic_heartcomment);
-
                 // talntcoins.setText(Constants.user.getDimond()+"");
                 break;
 
@@ -1948,6 +1960,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case "medal":
                 simplegift.setImageResource(R.drawable.ic_medal);
+                confetti.setImageResource(R.drawable.confetti);
+                confettiLayout.setVisibility(View.VISIBLE);
                 // talntcoins.setText(Constants.user.getDimond()+"");
                 break;
             case "fire":
@@ -1958,7 +1972,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 simplegift.setImageResource(R.drawable.ic_debate);
                 // talntcoins.setText(Constants.user.getDimond()+"");
                 break;
-
             case "castle":
                 simplegift.setImageResource(R.drawable.ic_sand_castle);
                 //  talntcoins.setText(Constants.user.getDimond()+"");
@@ -1967,7 +1980,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 simplegift.setImageResource(R.drawable.ic_crown);
                 //  talntcoins.setText(Constants.user.getDimond()+"");
                 break;
-
             case "carousel":
                 simplegift.setImageResource(R.drawable.ic_carousel);
                 //  talntcoins.setText(Constants.user.getDimond()+"");
@@ -1980,47 +1992,43 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 simplegift.setImageResource(R.drawable.ic_clapping);
                 //  talntcoins.setText(Constants.user.getDimond()+"");
                 break;
-
         }
 
         Path path = new Path();
+        path.moveTo(-1000, height);
+        path.lineTo(this.path.get(0).x, this.path.get(0).y);
 
-        path.moveTo(-200, height);
-
-
-            path.lineTo(0, height);
-
-        ObjectAnimator objectAnimator =
-                null;
+        ObjectAnimator objectAnimator = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             objectAnimator = ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
         }
         setAnimValues(objectAnimator, 1000, ValueAnimator.INFINITE);
         objectAnimator.start();
-        Handler handler1 = new Handler();
-        handler1.postDelayed(new Runnable() {
+
+        Handler stayOnScreen = new Handler();
+        stayOnScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     animateCurveMotion();
                 }
             }
         }, 1500);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        Handler appearFromLeft = new Handler();
+        appearFromLeft.postDelayed(new Runnable() {
             @Override
             public void run() {
                 animatedlayout.setVisibility(View.GONE);
+                confettiLayout.setVisibility(View.GONE);
                 giftslist.remove(0);
                 if(giftslist.size()>0){
                     giftsend(giftslist.get(0).getGift(),giftslist.get(0).getSender(),giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
                 }
             }
-        }, 4000);
+        }, 5000);
 
     }
-    public void giftsend(final String gift, final String sender,String name,String receiver){
+    public void giftsend(final String gift, final String sender,String senderName,String receiver){
      /*   databaseReference.child("Viewers").child(broadid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -2029,8 +2037,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     Viewer viewer=dsp.getValue(Viewer.class);
                     if(viewer.getId().equals(firebaseUser.getUid())) {*/
 
-        sendername.setText(name);
-        receivername.setText("contributed");
+        sendername.setText(senderName + " contributed to");
+        receivername.setText(receiver);
      //  Glide.with(getApplicationContext()).load(sender).error(R.drawable.appicon).into(senderimg);
         //showlocalgift(gift);
 
@@ -2056,7 +2064,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     Comment comment = new Comment(Staticconfig.user.getName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1",Staticconfig.user.getImageurl());
     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
 
-        // animation here
+    showGiftAnimationLeftTorRight(gift.getGift(), gift);
     }
     ArrayList<Point> path;
     public void addpoints() {
@@ -2087,7 +2095,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     private void animateCurveMotion() {
 
         Path path = new Path();
-
         path.moveTo(this.path.get(0).x, this.path.get(0).y);
 
         for (int i = 1; i < this.path.size(); i++) {
