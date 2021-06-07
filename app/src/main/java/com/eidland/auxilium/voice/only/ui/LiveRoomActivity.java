@@ -92,6 +92,8 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, View.OnClickListener {
     String Seats, type, UserName, SeatsName, AgainSeat, leave = null, run;
     LinearLayout _seat0, _seat1, _seat2, _seat3, _seat4, _seat5, _seat6, _seat7, _seat8, _seat9;
@@ -1853,7 +1855,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 }
                             });
                             sendgift();
-                            animatedlayout.setAnimation(enterAnimation);
                         } else
                         {
                            if (selectamnt==0)
@@ -1897,10 +1898,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 Log.e("gift list", gift.getSender() + gift.getGift());
                             }
                         }
-                        if (animatedlayout.getVisibility() == View.VISIBLE && giftslist.size() > 0) {
-                            //  addcomnt(giftslist.get(0).getPhoto(),giftslist.get(0).getId());
-                            giftsend(giftslist.get(0).getGift(), giftslist.get(0).getSender(), giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
-                        }
+//                        if (animatedlayout.getVisibility() == View.VISIBLE && giftslist.size() > 0) {
+//                            //  addcomnt(giftslist.get(0).getPhoto(),giftslist.get(0).getId());
+//                            giftsend(giftslist.get(0).getGift(), giftslist.get(0).getSender(), giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
+//                        }
                     }
                     else
                         isnotfirst=true;
@@ -1914,17 +1915,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
     }
     public void showGiftAnimationLeftTorRight(String id, Gift gift){
-        animatedlayout.setVisibility(View.VISIBLE);
-//        AnimationSet animationSet = new AnimationSet(true);
-//
-//        enter = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
-//        animatedlayout.setAnimation(enter);
-//        exit = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.exit);
-//        animationSet.addAnimation(enter);
-//        animationSet.addAnimation(exit);
-//        animatedlayout.startAnimation(animationSet);
-
-        switch (id){ // maybe entering here only once?
+        switch (id){
             case "hearts":
                 simplegift.setImageResource(R.drawable.ic_heart);
                 //   Constants.user.setDimond(Constants.user.getDimond()-500);
@@ -1993,31 +1984,22 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 //  talntcoins.setText(Constants.user.getDimond()+"");
                 break;
         }
-
-        Path path = new Path();
-        path.moveTo(-1000, height);
-        path.lineTo(this.path.get(0).x, this.path.get(0).y);
-
-        ObjectAnimator objectAnimator = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            objectAnimator = ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
-        }
-        setAnimValues(objectAnimator, 1000, ValueAnimator.INFINITE);
-        objectAnimator.start();
-
         Handler stayOnScreen = new Handler();
         stayOnScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    animateCurveMotion();
+                if (Build.VERSION.SDK_INT >= LOLLIPOP) {
+                    animatedlayout.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+                    animatedlayout.startAnimation(animation);
                 }
             }
-        }, 1500);
-        Handler appearFromLeft = new Handler();
-        appearFromLeft.postDelayed(new Runnable() {
+        }, 1000);
+        Handler exitScreen = new Handler();
+        exitScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
+                animateCurveMotion();
                 animatedlayout.setVisibility(View.GONE);
                 confettiLayout.setVisibility(View.GONE);
                 giftslist.remove(0);
@@ -2025,7 +2007,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     giftsend(giftslist.get(0).getGift(),giftslist.get(0).getSender(),giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
                 }
             }
-        }, 5000);
+        }, 2500);
 
     }
     public void giftsend(final String gift, final String sender,String senderName,String receiver){
@@ -2091,19 +2073,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void animateCurveMotion() {
-
-        Path path = new Path();
-        path.moveTo(this.path.get(0).x, this.path.get(0).y);
-
-        for (int i = 1; i < this.path.size(); i++) {
-            path.lineTo(this.path.get(i).x, this.path.get(i).y);
-        }
-        ObjectAnimator objectAnimator =
-                ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
-        setAnimValues(objectAnimator, 2000, ValueAnimator.INFINITE);
-        objectAnimator.start();
+        Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
+        animatedlayout.startAnimation(animation2);
+//        Path path = new Path();
+//        for (int i = 1; i < this.path.size(); i++) {
+//            path.moveTo(this.path.get(0).x, this.path.get(0).y);
+//            path.lineTo(this.path.get(i).x, this.path.get(i).y);
+//        }
+//
+//        ObjectAnimator objectAnimator = null;
+//        if (android.os.Build.VERSION.SDK_INT >= LOLLIPOP) {
+//            objectAnimator = ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
+//        }
+//        setAnimValues(objectAnimator, 2000, ValueAnimator.RESTART);
+//        objectAnimator.start();
     }
     public void setAnimValues(ObjectAnimator objectAnimator, int duration, int repeatMode) {
         objectAnimator.setDuration(duration);
