@@ -1898,10 +1898,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 Log.e("gift list", gift.getSender() + gift.getGift());
                             }
                         }
-//                        if (animatedlayout.getVisibility() == View.VISIBLE && giftslist.size() > 0) {
-//                            //  addcomnt(giftslist.get(0).getPhoto(),giftslist.get(0).getId());
-//                            giftsend(giftslist.get(0).getGift(), giftslist.get(0).getSender(), giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
-//                        }
+                        giftsend(giftslist.get(0).getGift(), giftslist.get(0).getSender(), giftslist.get(0).getSendername(),giftslist.get(0).getReceivername());
+                        if (animatedlayout.getVisibility() == View.VISIBLE && giftslist.size() > 0) {
+                            //  addcomnt(giftslist.get(0).getPhoto(),giftslist.get(0).getId());
+                        }
                     }
                     else
                         isnotfirst=true;
@@ -1991,7 +1991,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 if (Build.VERSION.SDK_INT >= LOLLIPOP) {
                     animatedlayout.setVisibility(View.VISIBLE);
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
-                    animatedlayout.startAnimation(animation);
+                    animatedlayout.setAnimation(animation);
                 }
             }
         }, 1000);
@@ -2000,7 +2000,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             @Override
             public void run() {
                 Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
-                animatedlayout.startAnimation(animation2);
+                animatedlayout.setAnimation(animation2);
                 animatedlayout.setVisibility(View.GONE);
                 confettiLayout.setVisibility(View.GONE);
                 giftslist.remove(0);
