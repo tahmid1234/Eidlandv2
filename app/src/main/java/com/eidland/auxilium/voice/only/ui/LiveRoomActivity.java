@@ -1999,7 +1999,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         exitScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
-                animateCurveMotion();
+                Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
+                animatedlayout.startAnimation(animation2);
                 animatedlayout.setVisibility(View.GONE);
                 confettiLayout.setVisibility(View.GONE);
                 giftslist.remove(0);
@@ -2074,20 +2075,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     private void animateCurveMotion() {
-        Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
-        animatedlayout.startAnimation(animation2);
-//        Path path = new Path();
-//        for (int i = 1; i < this.path.size(); i++) {
-//            path.moveTo(this.path.get(0).x, this.path.get(0).y);
-//            path.lineTo(this.path.get(i).x, this.path.get(i).y);
-//        }
-//
-//        ObjectAnimator objectAnimator = null;
-//        if (android.os.Build.VERSION.SDK_INT >= LOLLIPOP) {
-//            objectAnimator = ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
-//        }
-//        setAnimValues(objectAnimator, 2000, ValueAnimator.RESTART);
-//        objectAnimator.start();
+        Path path = new Path();
+        for (int i = 1; i < this.path.size(); i++) {
+            path.moveTo(this.path.get(0).x, this.path.get(0).y);
+            path.lineTo(this.path.get(i).x, this.path.get(i).y);
+        }
+
+        ObjectAnimator objectAnimator = null;
+        if (android.os.Build.VERSION.SDK_INT >= LOLLIPOP) {
+            objectAnimator = ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
+        }
+        setAnimValues(objectAnimator, 2000, ValueAnimator.RESTART);
+        objectAnimator.start();
     }
     public void setAnimValues(ObjectAnimator objectAnimator, int duration, int repeatMode) {
         objectAnimator.setDuration(duration);
