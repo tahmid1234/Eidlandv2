@@ -133,7 +133,10 @@
 
                 <RelativeLayout
                     android:background="@drawable/gradient_leader_board"
-                    android:padding="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
@@ -1369,7 +1372,7 @@
                     android:id="@+id/txtusercoin"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".4"
+                    android:layout_weight=".6"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/ic_fi_rr_coin_5"
                     android:gravity="center_vertical"
@@ -1385,7 +1388,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
 
-
+                    android:visibility="gone"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
                     android:text="@string/Recharge"

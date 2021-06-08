@@ -1560,6 +1560,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             }
 
 
+
+
+
+
 //                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
 
                         } else {
@@ -1689,7 +1693,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case "heartcomment":
                 simplegift.setImageResource(R.drawable.ic_heartcomment);
                 break;
-
             case "like2":
                 simplegift.setImageResource(R.drawable.ic_like);
                 break;
@@ -1707,7 +1710,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case "debate":
                 simplegift.setImageResource(R.drawable.ic_debate);
                 break;
-
             case "castle":
                 simplegift.setImageResource(R.drawable.ic_sand_castle);
                 break;
@@ -1768,7 +1770,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift.toMap());
         Comment comment = new Comment(gift.getSenderName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1", Staticconfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
-        Log.v("giftname", currentUser.getDisplayName());
+        //Log.v("giftname", currentUser.getDisplayName());
     }
 
     ArrayList<Point> path;
