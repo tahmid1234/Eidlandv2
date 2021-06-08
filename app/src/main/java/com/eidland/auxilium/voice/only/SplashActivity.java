@@ -1,10 +1,13 @@
 package com.eidland.auxilium.voice.only;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -36,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.eidland.auxilium.voice.only.model.ConstantApp;
 import com.eidland.auxilium.voice.only.model.Staticconfig;
 import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
@@ -44,24 +48,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import static android.content.ContentValues.TAG;
+
 public class SplashActivity extends AppCompatActivity
          {
     DatabaseReference myRef;
     Intent intent;
     TextView textView;
-             private static final String FB_RC_KEY_TITLE="update_title";
-             private static final String FB_RC_KEY_DESCRIPTION="update_description";
-             private static final String FB_RC_KEY_FORCE_UPDATE_VERSION="force_update_version";
-             private static final String FB_RC_KEY_LATEST_VERSION="latest_version";
-             String TAG = "HomeActivity";
+    private static final String FB_RC_KEY_TITLE="update_title";
+    private static final String FB_RC_KEY_DESCRIPTION="update_description";
+    private static final String FB_RC_KEY_FORCE_UPDATE_VERSION="force_update_version";
+    private static final String FB_RC_KEY_LATEST_VERSION="latest_version";
+    AppUpdateDialog appUpdateDialog;
+    FirebaseRemoteConfig mFirebaseRemoteConfig;
 
-             AppUpdateDialog appUpdateDialog;
-
-             FirebaseRemoteConfig mFirebaseRemoteConfig;
-
-             Timer timer;
-             TimerTask timerTask;
-             final Handler handler = new Handler();
     @Override
     protected void onStart() {
         super.onStart();
@@ -73,79 +73,29 @@ public class SplashActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId  = "FCM";
+            String channelName = "FCM";
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
 
-        //textView=findViewById(R.id.eidland);
-      /*  mInterstitialAd = new InterstitialAd(this);
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
-      // set the ad unit ID
-      mInterstitialAd.setAdUnitId("ca-app-pub-3902756767389775/6264215741");
-
-      initAndLoadInterstitialAds();*/
-        //   Spannable spannable = new SpannableString("EIDLAND");
-        //  spannable.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //   textView.setText(spannable);
-
-    }
-public void CheckNextActivity()
-{
-    Handler handler = new Handler();
-    handler.postDelayed(
-            new Runnable() {
-                @Override
-                public void run() {
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                        myRef = FirebaseDatabase.getInstance().getReference();
-
-                        myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.getValue() != null) {
-                                    String value = getSharedPreferences("Auxilium", MODE_PRIVATE).getString("Signupcomplete", "no");
-                                    if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
-                                        Staticconfig.user = dataSnapshot.getValue(User.class);
-                                        //  Toast.makeText(SplashActivity.this, ""+StaticConfig.user.getCoin(), Toast.LENGTH_SHORT).show();
-
-                                        intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
-                                        intent.putExtra("User", "Participent");
-                                        intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
-                                        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                                        intent.putExtra("UserName", "Eidland Welcome Hall");
-                                        intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-                                        intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-
-                                        startActivity(intent);
-                                        finish();
-
-
-                                    } else
-                                        startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-
-                                } else
-                                    startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-
-
-                            }
-
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                    } else {
-
-
-                        startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-
-
+                        String token = task.getResult();
+                        Log.d(TAG, token);
                     }
-                }
-            }, 1000);
-}
+                });
+    }
 
              public void checkAppUpdate() {
 
@@ -210,5 +160,65 @@ public void CheckNextActivity()
                      value= (String) defaultMap.get(parameterKey);
 
                  return value;
+             }
+             public void CheckNextActivity()
+             {
+                 Handler handler = new Handler();
+                 handler.postDelayed(
+                         new Runnable() {
+                             @Override
+                             public void run() {
+                                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                                     myRef = FirebaseDatabase.getInstance().getReference();
+
+                                     myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                         @Override
+                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                             if (dataSnapshot.getValue() != null) {
+                                                 String value = getSharedPreferences("Auxilium", MODE_PRIVATE).getString("Signupcomplete", "no");
+                                                 if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
+                                                     Staticconfig.user = dataSnapshot.getValue(User.class);
+                                                     //  Toast.makeText(SplashActivity.this, ""+StaticConfig.user.getCoin(), Toast.LENGTH_SHORT).show();
+
+                                                     intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
+                                                     intent.putExtra("User", "Participent");
+                                                     intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                                                     intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+
+                                                     intent.putExtra("UserName", "Eidland Welcome Hall");
+                                                     intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+
+                                                     intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+
+                                                     startActivity(intent);
+                                                     finish();
+
+
+                                                 } else
+                                                     startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+
+                                             } else
+                                                 startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+
+
+                                         }
+
+
+                                         @Override
+                                         public void onCancelled(DatabaseError databaseError) {
+
+                                         }
+                                     });
+
+
+                                 } else {
+
+
+                                     startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+
+
+                                 }
+                             }
+                         }, 1000);
              }
 }
