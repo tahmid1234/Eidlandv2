@@ -202,7 +202,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         spinner = findViewById(R.id.spinner);
         crystal = findViewById(R.id.giftslayout);
         closegift = findViewById(R.id.closegift);
-//        btngift = findViewById(R.id.btngift);
+        btngift = findViewById(R.id.btngift);
         txtcmnt = findViewById(R.id.txtcmnt);
         sencmnt = findViewById(R.id.sndcmnt);
         _seat0 = findViewById(R.id._seat0);
@@ -289,7 +289,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         });
         closegift.setOnClickListener(this);
-//        btngift.setOnClickListener(this);
+        btngift.setOnClickListener(this);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1396,11 +1396,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case R.id.closegift:
                 crystal.setVisibility(View.GONE);
                 break;
-//            case R.id.btngift: //gift icon beside keyboard
-//                selectuseruid = hostuid;
-//                txtsinglename.setText(UserName);
-//                crystal.setVisibility(View.VISIBLE);
-//                break;
+            case R.id.btngift: //gift icon beside keyboard
+                selectuseruid = hostuid;
+                txtsinglename.setText(UserName);
+                crystal.setVisibility(View.VISIBLE);
+                break;
 
             case R.id.iv500hearts:
                 setselct(iv500hearts);
@@ -1542,14 +1542,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
 
 
-//                            if(selectedViewer == null){
-//                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, hostuid, _host_name.getText().toString(), selectedViewer.photo, System.currentTimeMillis()));
-//                            }else {
-//                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
-//                            }
+                            if(selectedViewer == null){
+                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, hostuid, _host_name.getText().toString(), " ", System.currentTimeMillis()));
+                            }else {
+                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
+                            }
 
 
-                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
+//                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
 
                         } else {
                             if (selectamnt == 0) {
