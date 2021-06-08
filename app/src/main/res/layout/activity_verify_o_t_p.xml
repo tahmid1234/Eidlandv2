@@ -66,9 +66,25 @@
         android:autoSizeMaxTextSize="16sp"
         android:fontFamily="@font/interregular"
 
-        android:text="Your mobile number is"
+        android:text="Please enter the OTP to verify your number"
         android:textAlignment="center"
         android:textColor="@color/white"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/numbertitle"
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center_horizontal|center_vertical"
+
+        android:autoSizeMaxTextSize="16sp"
+        android:fontFamily="@font/interregular"
+        android:gravity="center_horizontal|center_vertical"
+        android:letterSpacing="0.01"
+        android:lines="1"
+        android:text="Your mobile number is"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="16sp" />
     <TextView
         android:id="@+id/setphonenumber"
