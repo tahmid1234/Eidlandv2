@@ -16,6 +16,18 @@
         android:layout_weight="1"
         android:padding="0dp">
 
+        <RelativeLayout
+            android:id="@+id/confettiLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/confetti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -914,6 +926,59 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/animatedlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_top_member"
+                    android:gravity="center|left"
+                    android:padding="8dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/sendername"
+                            android:paddingBottom="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center|left"
+                            android:paddingLeft="5dp"
+                            android:text="Sender"
+                            android:fontFamily="@font/open_sans"
+                            android:textColor="#fff"
+                            android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/receivername"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:paddingLeft="5dp"
+                            android:text="contributed"
+                            android:textColor="#C551F6"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/imggif"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitCenter"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -922,9 +987,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cmntrecyler"
-                    android:layout_width="match_parent"
-
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -1346,70 +1410,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/animatedlayout"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="60dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/ic_top_member"
-                    android:gravity="center|left"
-                    android:padding="5dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/sendername"
-                            android:paddingBottom="0dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:gravity="center|left"
-                            android:paddingLeft="5dp"
-                            android:text="Sender"
-                            android:fontFamily="@font/open_sans"
-                            android:textColor="#fff"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/receivername"
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:gravity="center|left"
-                            android:paddingLeft="5dp"
-                            android:text="contributed"
-                            android:textColor="#C551F6"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/imggif"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:scaleType="fitCenter"
-                    android:layout_alignParentRight="true"
-                    />
-            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

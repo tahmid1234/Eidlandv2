@@ -187,7 +187,7 @@ public class SignUpData extends Activity {
         Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
         String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        User obj = new User(_username, _email, urlimg, "100");
+        User obj = new User(_username, _email, urlimg, "100", "0");
         Staticconfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -429,7 +429,7 @@ public class SignUpData extends Activity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            User userobj = new User(_username, _email, urlimage, "10000");
+                            User userobj = new User(_username, _email, urlimage, "10000", "0");
                             FirebaseDatabase.getInstance().getReference("Users").child(userid).setValue(userobj);
                             Staticconfig.user = userobj;
                             Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
