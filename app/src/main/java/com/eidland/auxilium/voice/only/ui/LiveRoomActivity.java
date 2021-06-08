@@ -63,6 +63,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -1605,7 +1606,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                             if (gift.receiverImg != null && gift.senderName != null && !gift.receiverUID.equals(hostuid)) {
                                 giftslist.add(gift);
-                                giftAnimation(selectedgiftname, gift);
+                                //giftAnimation(selectedgiftname, gift);
                             }
                         }
 
@@ -1693,6 +1694,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case "heartcomment":
                 simplegift.setImageResource(R.drawable.ic_heartcomment);
                 break;
+
             case "like2":
                 simplegift.setImageResource(R.drawable.ic_like);
                 break;
@@ -1710,6 +1712,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case "debate":
                 simplegift.setImageResource(R.drawable.ic_debate);
                 break;
+
             case "castle":
                 simplegift.setImageResource(R.drawable.ic_sand_castle);
                 break;
@@ -1726,12 +1729,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case "clap":
                 simplegift.setImageResource(R.drawable.ic_clapping);
                 break;
-
         }
-
         sendername.setText(gift.getSenderName() + " contributed to");
-        receivername.setText(txtsinglename.getText().toString());
 
+            receivername.setText(txtsinglename.getText().toString());
         Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
             @Override
@@ -1770,6 +1771,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift.toMap());
         Comment comment = new Comment(gift.getSenderName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1", Staticconfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
+        giftAnimation(selectedgiftname, gift);
+        //Log.v("gift name:", selectedgiftname);
         //Log.v("giftname", currentUser.getDisplayName());
     }
 
@@ -1938,8 +1941,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO: {
                 if (grantResults.length > 0
