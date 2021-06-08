@@ -1540,7 +1540,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                     user.setReceivedCoins(lr + "");
                                     userRef.child(selectedViewer.id).setValue(user);
                                     Staticconfig.user.setReceivedCoins(lr + "");
-
+//                                    coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
+//                                    textUserCoin.setText(coincomma);
                                     Log.v("entered 2nd", String.valueOf(coincomma));
 
                                 }
