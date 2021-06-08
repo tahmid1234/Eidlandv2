@@ -1,5 +1,6 @@
 package com.eidland.auxilium.voice.only;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -303,11 +304,12 @@ public class Sign_Up_Activity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-
-
-
-
-  /*  private void Progressdialog() {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ((Activity) getApplicationContext()).finish();
+    }
+/*  private void Progressdialog() {
         progressDialog = new ProgressDialog(this);
 
         progressDialog.setContentView(R.layout.wait_pop_up);
