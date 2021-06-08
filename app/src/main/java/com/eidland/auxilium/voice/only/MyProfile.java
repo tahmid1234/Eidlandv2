@@ -86,7 +86,7 @@ public class MyProfile extends AppCompatActivity {
 
     private void AddData(String url) {
         String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, Staticconfig.user.getCoins());
+        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
         Staticconfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

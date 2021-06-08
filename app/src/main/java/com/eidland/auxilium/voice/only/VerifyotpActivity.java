@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,11 +46,15 @@ public class VerifyotpActivity extends AppCompatActivity {
     RelativeLayout verifyotp;
     String otpid, phoneNumber, error, pincode;
     ProgressDialog dialoge;
+    ImageView backBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
+
+
+        backBTN = findViewById(R.id.back_to_phn);
         // Hide ActionBar
 //        getSupportActionBar().hide();
         // progress dialoge
@@ -80,12 +85,19 @@ public class VerifyotpActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void Callalert() {
         AlertDialog.Builder dialoge = new AlertDialog.Builder(VerifyotpActivity.this);
         dialoge.setTitle("Welcome to Eidland")
-                .setMessage("Please ensure your microphone and storage permission is given in order to get most of Eidland")
+                .setMessage("Please ensure your microphone and storage permission is given in order to get most out of Eidland")
                 .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

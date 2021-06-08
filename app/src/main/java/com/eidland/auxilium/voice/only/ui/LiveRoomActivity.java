@@ -24,6 +24,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -134,12 +136,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     RelativeLayout singlegift;
     DatabaseReference userRef;
     FirebaseUser currentUser;
-    Viewer selectedViewer;
+    Viewer selectedViewer = new Viewer();
     RelativeLayout singl;
     ImageView button;
     LinearLayout contentView;
 
     RelativeLayout animatedlayout;
+    RelativeLayout confettiLayout;
+    GifImageView confetti;
     GifImageView simplegift;
     boolean flag;
     ArrayList<Gift> giftslist;
@@ -192,6 +196,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         showusers = findViewById(R.id.showonlineusers);
         //  senderimg = findViewById(R.id.senderimg);
         animatedlayout = findViewById(R.id.animatedlayout);
+        confetti = findViewById( R.id.confetti);
+        confettiLayout = findViewById(R.id.confettiLayout);
         giftslist = new ArrayList<>();
         singl = findViewById(R.id.reltivesingle);
         viewers = findViewById(R.id.viewersrecyler);
@@ -1397,6 +1403,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 crystal.setVisibility(View.GONE);
                 break;
             case R.id.btngift: //gift icon beside keyboard
+                selectedViewer.id = hostuid;
+                selectedViewer.name = _host_name.getText().toString();
+                selectedViewer.photo = " ";
                 selectuseruid = hostuid;
                 txtsinglename.setText(UserName);
                 crystal.setVisibility(View.VISIBLE);
@@ -1428,13 +1437,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case R.id.iv15khappybirthday:
                 setselct(iv15happy);
-
                 selectamnt = 5;
 
                 break;
             case R.id.iv20kgift:
                 setselct(iv20giftpack);
-
                 selectamnt = 50;
 
                 break;
@@ -1495,7 +1502,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case R.id.txtsendgift: //gift layout send button
 
-                if (true||!selectedViewer.id.equals(currentUser.getUid())) {
+                if (!selectedViewer.id.equals(currentUser.getUid())) {
                     if (selectamnt > 0) {
                         Long curnt = Long.parseLong(Staticconfig.user.getCoins());
 
@@ -1521,16 +1528,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                                 }
                             });
-                            userRef.child(selectuseruid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            userRef.child(selectedViewer.id).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                                     User user = snapshot.getValue(User.class);
-                                    long l = Long.parseLong(user.getCoins());
-                                    l = l + selectamnt;
-                                    user.setCoins(l + "");
-                                    Log.v("entered 3", String.valueOf(user.getCoins()));
-                                    userRef.child(selectuseruid).setValue(user);
+                                    long lr;
+                                    if (user.getReceivedCoins() == null) lr = 0;
+                                    else lr = Long.parseLong(user.getReceivedCoins());
+                                    lr = lr + selectamnt;
+                                    user.setReceivedCoins(lr + "");
+                                    userRef.child(selectedViewer.id).setValue(user);
+                                    Staticconfig.user.setReceivedCoins(lr + "");
+                                    coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
+                                    textUserCoin.setText(coincomma);
+                                    Log.v("entered 2nd", String.valueOf(coincomma));
 
                                 }
 
@@ -1541,7 +1553,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             });
 
 
-                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
+                            if(selectedViewer == null){
+                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, hostuid, _host_name.getText().toString(), " ", System.currentTimeMillis()));
+                            }else {
+                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
+                            }
+
+
+//                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
 
                         } else {
                             if (selectamnt == 0) {
@@ -1582,6 +1601,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                             if (gift.receiverImg != null && gift.senderName != null) {
                                 giftslist.add(gift);
+                                giftAnimation(selectedgiftname, gift);
                             }
                         }
 
@@ -1632,8 +1652,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         }catch (Exception e){
                             System.out.println(e);
                         }
-
-
                         if (animatedlayout.getVisibility() == View.GONE && giftslist.size() > 0) {
 //                            giftsend(giftslist.get(0));
                             System.out.println("okoko");
@@ -1650,11 +1668,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         });
     }
 
-    public void showlocalgift(String id) {
+    public void giftAnimation(String id, Gift gift) {
         Log.v("showlocal", id);
-        animatedlayout.setVisibility(View.VISIBLE);
         switch (id) {
-
             case "hearts":
                 simplegift.setImageResource(R.drawable.ic_heart);
                 break;
@@ -1682,6 +1698,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case "medal":
                 simplegift.setImageResource(R.drawable.ic_medal);
+                confetti.setImageResource(R.drawable.confetti);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "fire":
                 simplegift.setImageResource(R.drawable.ic_fire);
@@ -1709,42 +1727,35 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
         }
 
-        Path path = new Path();
+        sendername.setText(gift.getSenderName() + " contributed to");
+        receivername.setText(gift.getReceiverName());
 
-        path.moveTo(-200, height);
-
-
-        path.lineTo(0, height);
-
-        ObjectAnimator objectAnimator =
-                null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            objectAnimator = ObjectAnimator.ofFloat(animatedlayout, View.X, View.Y, path);
-        }
-        setAnimValues(objectAnimator, 1000, ValueAnimator.INFINITE);
-        objectAnimator.start();
-        Handler handler1 = new Handler();
-        handler1.postDelayed(new Runnable() {
+        Handler enterScreen = new Handler();
+        enterScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    animateCurveMotion();
+                    animatedlayout.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+                    animatedlayout.setAnimation(animation);
                 }
             }
         }, 1500);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        Handler exitScreen = new Handler();
+        exitScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
+                animatedlayout.setAnimation(animation2);
                 animatedlayout.setVisibility(View.GONE);
+                confettiLayout.setVisibility(View.GONE);
                 giftslist.remove(0);
                 if (giftslist.size() > 0) {
 //                    giftsend(giftslist.get(0));
                     System.out.println("okokok");
                 }
             }
-        }, 4000);
+        }, 3000);
 
     }
 
@@ -1752,6 +1763,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift.toMap());
         Comment comment = new Comment(currentUser.getDisplayName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1", Staticconfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
+        Log.v("giftname", txtsinglename.getText().toString());
     }
 
     ArrayList<Point> path;
