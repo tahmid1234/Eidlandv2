@@ -1601,6 +1601,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                             if (gift.receiverImg != null && gift.senderName != null) {
                                 giftslist.add(gift);
+                                giftAnimation(selectedgiftname, gift);
                             }
                         }
 
@@ -1651,8 +1652,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         }catch (Exception e){
                             System.out.println(e);
                         }
-
-
                         if (animatedlayout.getVisibility() == View.GONE && giftslist.size() > 0) {
 //                            giftsend(giftslist.get(0));
                             System.out.println("okoko");
@@ -1764,8 +1763,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift.toMap());
         Comment comment = new Comment(currentUser.getDisplayName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1", Staticconfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
-        Log.v("giftname", selectedgiftname);
-        giftAnimation(selectedgiftname, gift);
+        Log.v("giftname", txtsinglename.getText().toString());
     }
 
     ArrayList<Point> path;
