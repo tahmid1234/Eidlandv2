@@ -68,7 +68,8 @@ public class VerifyotpActivity extends AppCompatActivity {
 
         Log.e("signup", (String) setphonenumber.getText());
         sendotp(phoneNumber);
-        setphonenumber.setText(number);
+        setphonenumber.setText(phoneNumber);
+
         verifyotp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
