@@ -1599,7 +1599,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             Gift gift = dataSnapshot1.getValue(Gift.class);
 
-                            if (gift.receiverImg != null && gift.senderName != null) {
+                            if (gift.receiverImg != null && gift.senderName != null && !gift.receiverUID.equals(hostuid)) {
                                 giftslist.add(gift);
                                 giftAnimation(selectedgiftname, gift);
                             }
@@ -1728,7 +1728,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         }
 
         sendername.setText(gift.getSenderName() + " contributed to");
-        receivername.setText(gift.getReceiverName());
+        receivername.setText(txtsinglename.getText().toString());
 
         Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
@@ -1749,10 +1749,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 animatedlayout.setAnimation(animation2);
                 animatedlayout.setVisibility(View.GONE);
                 confettiLayout.setVisibility(View.GONE);
+                try{
+
                 giftslist.remove(0);
                 if (giftslist.size() > 0) {
 //                    giftsend(giftslist.get(0));
                     System.out.println("okokok");
+                }
+                }catch (Exception e){
+                    System.out.println(e);
                 }
             }
         }, 3000);
