@@ -8,4 +8,8 @@
         http://docs.agora.io/en/user_guide/Component_and_Others/Dynamic_Key_User_Guide.html -->
     <string name="private_app_id">c0909d46fc014793b620f23cef6cddd8</string>
     <string name="mobile_number">Your mobile number is %n %1$s </string>
-</resources>
+
+    <string name="Recharge"> <u>Recharge</u></string>
+
+
+    </resources>

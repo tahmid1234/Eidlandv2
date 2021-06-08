@@ -357,7 +357,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         }
         if (nameofroom.contentEquals("Eidland Welcome Hall")) {
 
-            comment.setComment("Ramadan Kareem! We are glad to have you here! Please tap on a seat to start speaking");
+            comment.setComment("Welcome to Eidland! We are glad to have you here! Please tap on a seat to start speaking");
             comment.setName("Eidland Staff \uD83E\uDD73");
             imgUrl = getIntent().getStringExtra("profile");
             comment.setUserphoto(imgUrl);
@@ -1540,8 +1540,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                     user.setReceivedCoins(lr + "");
                                     userRef.child(selectedViewer.id).setValue(user);
                                     Staticconfig.user.setReceivedCoins(lr + "");
-                                    coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
-                                    textUserCoin.setText(coincomma);
+
                                     Log.v("entered 2nd", String.valueOf(coincomma));
 
                                 }
@@ -1897,7 +1896,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         };
         viewerslist = new ArrayList<>();
         viewers.hasFixedSize();
-        viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, viewerslist, new ItemClickListener1() {
             @Override
             public void onPositionClicked(View view, int position) {
