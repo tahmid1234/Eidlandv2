@@ -61,7 +61,7 @@ public class SignUpData extends Activity {
     String stringUri, _username, _email;
     CircleImageView imageView;
     AuthCredential credential;
-    Uri filePath = Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/sampleimage.png");
+    Uri filePath = Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png");
     String imgpath;
     Intent intent;
     ProgressDialog progressDialog;
@@ -80,7 +80,7 @@ public class SignUpData extends Activity {
         setContentView(R.layout.sign_up_get_data);
         initialViews();
 
-        Glide.with(SignUpData.this).load("https://auxiliumlivestreaming.000webhostapp.com/images/sampleimage.png").into(profileimageView);
+        Glide.with(SignUpData.this).load("https://auxiliumlivestreaming.000webhostapp.com/images/4.png").into(profileimageView);
 
         intent = getIntent();
 
@@ -114,7 +114,7 @@ public class SignUpData extends Activity {
                 if (!validateUserName() | !validateimage() | !validateEmail()) {
                     return;
                 } else {
-                    if (filePath.equals(Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/sampleimage.png"))) {
+                    if (filePath.equals(Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png"))) {
                         viewDialog.showDialog();
                         AddData(String.valueOf(filePath));
                     } else {
