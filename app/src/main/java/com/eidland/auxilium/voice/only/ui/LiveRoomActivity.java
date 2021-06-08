@@ -136,7 +136,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     RelativeLayout singlegift;
     DatabaseReference userRef;
     FirebaseUser currentUser;
-    Viewer selectedViewer;
+    Viewer selectedViewer = new Viewer();
     RelativeLayout singl;
     ImageView button;
     LinearLayout contentView;
@@ -1403,6 +1403,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 crystal.setVisibility(View.GONE);
                 break;
             case R.id.btngift: //gift icon beside keyboard
+                selectedViewer.id = hostuid;
+                selectedViewer.name = _host_name.getText().toString();
+                selectedViewer.photo = " ";
                 selectuseruid = hostuid;
                 txtsinglename.setText(UserName);
                 crystal.setVisibility(View.VISIBLE);
@@ -1499,7 +1502,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case R.id.txtsendgift: //gift layout send button
 
-                if (true||!selectedViewer.id.equals(currentUser.getUid())) {
+                if (!selectedViewer.id.equals(currentUser.getUid())) {
                     if (selectamnt > 0) {
                         Long curnt = Long.parseLong(Staticconfig.user.getCoins());
 
