@@ -72,6 +72,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
     ImageView iv;
     ViewDialog viewDialog;
     SharedPreferences sharedpreferences;
+    RelativeLayout continueBTN;
 
     @Override
     public void onStart() {
@@ -103,6 +104,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 Context.MODE_PRIVATE);
 
         phonenumber1 = findViewById(R.id.txtnumber);
+        continueBTN = findViewById(R.id.phn_next);
         googlesign = findViewById(R.id.googlesignup);
 //        TextView textView = (TextView) googlesign.getChildAt(0);
 
@@ -133,6 +135,16 @@ public class Sign_Up_Activity extends AppCompatActivity {
                     return true;
                 }
                 return true;
+            }
+        });
+
+        continueBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Sign_Up_Activity.this, VerifyotpActivity.class);
+                intent.putExtra("mobileNumber", ccp.getFullNumberWithPlus().trim());
+                startActivity(intent);
             }
         });
 
