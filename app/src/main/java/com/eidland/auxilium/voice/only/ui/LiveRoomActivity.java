@@ -63,7 +63,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -71,7 +70,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
@@ -107,7 +108,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     ImageView button1;
     String pushid = "";
     DecimalFormat formatter;
-    String finalText, coincomma;
+    String finalText, coinWithComma;
     ArrayList<Viewer> viewerslist;
     ViewerAdapter viewerAdapter;
     String hostuid, roomname;
@@ -421,10 +422,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
             } else {
-
                 Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
-
-
             }
 
             gettoken(false);
@@ -494,15 +492,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         });
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomname).child(pushid).onDisconnect().removeValue();
-        coincomma = formattedtext(Staticconfig.user.getCoins());
-        textUserCoin.setText(coincomma);
+        coinWithComma = formattedtext(Staticconfig.user.getCoins());
+        textUserCoin.setText(coinWithComma);
         userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 Staticconfig.user = user;
-                coincomma = formattedtext(Staticconfig.user.getCoins());
-                textUserCoin.setText(coincomma);
+                coinWithComma = formattedtext(Staticconfig.user.getCoins());
+                textUserCoin.setText(coinWithComma);
 
             }
 
@@ -633,8 +631,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     Log.e("roor", e.getLocalizedMessage() + "d");
                     Toast.makeText(LiveRoomActivity.this, "Json", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
@@ -1510,64 +1506,61 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                         if (curnt > selectamnt) {
                             crystal.setVisibility(View.GONE);
-                            userRef.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    User user = snapshot.getValue(User.class);
-                                    long l = Long.parseLong(user.getCoins());
-                                    l = l - selectamnt;
-                                    user.setCoins(l + "");
-                                    userRef.child(currentUser.getUid()).setValue(user);
-                                    Staticconfig.user.setCoins(l + "");
-                                    coincomma = formattedtext(Staticconfig.user.getCoins());
-                                    textUserCoin.setText(coincomma);
-                                    Log.v("entered 2nd", String.valueOf(coincomma));
 
+
+
+
+
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
+                                @NonNull
+                                @Override
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+
+                                    User user = currentData.getValue(User.class);
+                                    //do some calculations
+                                    user.coins = String.valueOf(Long.parseLong(user.coins) - selectamnt);
+                                    currentData.setValue(user);
+                                    return Transaction.success(currentData);
                                 }
 
                                 @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
 
-                                }
-                            });
-
-                            userRef.child(selectedViewer.id).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    User user = snapshot.getValue(User.class);
-                                    long lr;
-                                    if (user.getReceivedCoins() == null) lr = 0;
-                                    else lr = Long.parseLong(user.getReceivedCoins());
-                                    lr = lr + selectamnt;
-                                    user.setReceivedCoins(lr + "");
-                                    userRef.child(selectedViewer.id).setValue(user);
-                                    Staticconfig.user.setReceivedCoins(lr + "");
-//                                    coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
-//                                    textUserCoin.setText(coincomma);
-                                    Log.v("entered 2nd", String.valueOf(coincomma));
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
+                                    User user = currentData.getValue(User.class);
+                                    Staticconfig.user = user;
+                                    coinWithComma = formattedtext(user.coins);
+                                    textUserCoin.setText(coinWithComma);
                                 }
                             });
 
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(selectedViewer.id).runTransaction(new Transaction.Handler() {
+                                @NonNull
+                                @Override
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
-                            if(selectedViewer == null){
-                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, hostuid, _host_name.getText().toString(), " ", System.currentTimeMillis()));
-                            }else {
+                                    User user = currentData.getValue(User.class);
+                                    //do some calculations
+
+                                    try {
+                                        user.coins = String.valueOf(Long.parseLong(user.coins) + selectamnt);
+                                    }catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+
+                                    currentData.setValue(user);
+                                    return Transaction.success(currentData);
+                                }
+
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+
+                                    System.out.println(error);
+                                }
+                            });
+
 
                                 sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
-                            }
 
-
-
-
-
-
-//                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
 
                         } else {
                             if (selectamnt == 0) {
