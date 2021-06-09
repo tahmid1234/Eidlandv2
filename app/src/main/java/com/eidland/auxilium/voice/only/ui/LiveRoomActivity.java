@@ -164,7 +164,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     LinearLayout supporter1, supporter2, supporter3;
     ImageView supporter1Img,supporter2Img,supporter3Img;
     TextView supporter1Coin,supporter2Coin,supporter3Coin;
-
+    String nameofroom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -344,7 +344,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        String nameofroom = getIntent().getStringExtra("UserName");
+         nameofroom = getIntent().getStringExtra("UserName");
         final Comment comment = new Comment();
         if (nameofroom.contentEquals("Board Gamers")) {
             comment.setComment("Fellow gamers! Welcome to the world of board games! ");
@@ -1405,7 +1405,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case R.id.btngift: //gift icon beside keyboard
                 selectedViewer.id = hostuid;
-                selectedViewer.name = _host_name.getText().toString();
+                selectedViewer.name = nameofroom;
                 selectedViewer.photo = " ";
                 selectuseruid = hostuid;
                 txtsinglename.setText(UserName);

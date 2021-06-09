@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:617168201197:android:86d356503799ab32c4b3e4",
+        "android_client_info": {
+          "package_name": "com.eidland.auxilium.voice.only"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy0BeJhbi863hsCG4xfZ-jemrHZKMHaRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:617168201197:android:ebe5e8edcf763a8bc4b3e4",
         "android_client_info": {
           "package_name": "com.zcorridor.openlive.voice.only"
