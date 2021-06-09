@@ -444,14 +444,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                                     doSwitchToBroadcaster(false);
                                     FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomname).child(AgainSeat).removeValue();
-                                    Uri ir2 = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
                                     AgainSeat = null;
                                     Intent intent = new Intent(LiveRoomActivity.this, MyProfileActivity.class);
                                     startActivity(intent);
                                     finish();
 
                                 } else {
-                                    Uri ir3 = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
                                     Intent intent = new Intent(LiveRoomActivity.this, MyProfileActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -1406,6 +1406,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             case R.id.btngift: //gift icon beside keyboard
                 selectedViewer.id = hostuid;
                 selectedViewer.name = nameofroom;
+
                 selectedViewer.photo = " ";
                 selectuseruid = hostuid;
                 txtsinglename.setText(UserName);
@@ -1557,6 +1558,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             if(selectedViewer == null){
                                 sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, hostuid, _host_name.getText().toString(), " ", System.currentTimeMillis()));
                             }else {
+
                                 sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
                             }
 

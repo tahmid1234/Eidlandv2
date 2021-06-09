@@ -50,6 +50,8 @@ public class MyProfileActivity extends AppCompatActivity {
     DecimalFormat formatter;
     String finalText, coincomma;
     FirebaseAuth mAuth;
+    Boolean edited=false;
+    String PhotoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +138,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Uri img = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()), Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
+        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), PhotoUrl, Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
         Staticconfig.user = obj;
 
         Intent intent = new Intent(MyProfileActivity.this, LiveRoomActivity.class);
@@ -160,6 +162,7 @@ public class MyProfileActivity extends AppCompatActivity {
             txtname.setText(Staticconfig.user.getName());
             coincomma = formattedtext(Staticconfig.user.getCoins());
             txtcoins.setText(coincomma);
+            PhotoUrl=Staticconfig.user.getImageurl();
             Glide.with(MyProfileActivity.this).load(Staticconfig.user.getImageurl()).into(userimg);
         }
     }
