@@ -83,7 +83,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             view = itemView;
 
             ivFamousPlace = view.findViewById(R.id.img);
-            superimg = view.findViewById(R.id.supr);
+
           view.setOnClickListener(this);
 
         }

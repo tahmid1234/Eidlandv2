@@ -273,7 +273,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                                 intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
                                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-                                intent.putExtra("UserName", "Eidland Welcome Hall");
+                                intent.putExtra("UserName", "Eidland Battle Royale");
                                 intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
                                 intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);

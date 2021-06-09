@@ -356,7 +356,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             comment.setName("Admin - Cat Lovers");
             comments.add(comment);
         }
-        if (nameofroom.contentEquals("Eidland Welcome Hall")) {
+        if (nameofroom.contentEquals("Eidland Battle Royale")) {
 
             comment.setComment("Welcome to Eidland! We are glad to have you here! Please tap on a seat to start speaking");
             comment.setName("Eidland Staff \uD83E\uDD73");
@@ -390,7 +390,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         imgUrl = getIntent().getStringExtra("profile");
 
         Glide.with(this).load(imgUrl).error(R.drawable.userprofile).placeholder(R.drawable.userprofile).into(imgbroad);
-        broadName.setText(UserName + " \uD83C\uDF89\uD83C\uDF8A");
+        broadName.setText(UserName + " \uD83E\uDD4A\uD83C\uDFC6\uD83C\uDFC5");
 
         if (type.equals("Host")) {
             roomname = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);

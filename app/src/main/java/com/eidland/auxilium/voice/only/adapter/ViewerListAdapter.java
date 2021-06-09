@@ -86,7 +86,7 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             ivFamousPlace = view.findViewById(R.id.userimglist);
             UName=view.findViewById(R.id.usernamelist);
-            superimg = view.findViewById(R.id.supr);
+
           view.setOnClickListener(this);
 
         }
