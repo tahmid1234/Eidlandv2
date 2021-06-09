@@ -1,5 +1,10 @@
 package com.eidland.auxilium.voice.only;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
   public   String name;
     public String email;
@@ -17,6 +22,20 @@ public class User {
         this.coins = coins;
         this.receivedCoins = receivedCoins;
     }
+
+
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", this.name);
+        result.put("email", this.email);
+        result.put("imageurl", this.imageurl);
+        result.put("coins", this.coins);
+        result.put("receivedCoins", this.receivedCoins);
+        return result;
+    }
+
 
     public String getCoins() {
         return coins;

@@ -63,7 +63,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -107,7 +106,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     ImageView button1;
     String pushid = "";
     DecimalFormat formatter;
-    String finalText, coincomma;
+    String finalText, coinWithComma;
     ArrayList<Viewer> viewerslist;
     ViewerAdapter viewerAdapter;
     String hostuid, roomname;
@@ -421,10 +420,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
             } else {
-
                 Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
-
-
             }
 
             gettoken(false);
@@ -494,15 +490,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         });
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomname).child(pushid).onDisconnect().removeValue();
-        coincomma = formattedtext(Staticconfig.user.getCoins());
-        textUserCoin.setText(coincomma);
+        coinWithComma = formattedtext(Staticconfig.user.getCoins());
+        textUserCoin.setText(coinWithComma);
         userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 Staticconfig.user = user;
-                coincomma = formattedtext(Staticconfig.user.getCoins());
-                textUserCoin.setText(coincomma);
+                coinWithComma = formattedtext(Staticconfig.user.getCoins());
+                textUserCoin.setText(coinWithComma);
 
             }
 
@@ -633,8 +629,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     Log.e("roor", e.getLocalizedMessage() + "d");
                     Toast.makeText(LiveRoomActivity.this, "Json", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
@@ -1516,11 +1510,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                     long l = Long.parseLong(user.getCoins());
                                     l = l - selectamnt;
                                     user.setCoins(l + "");
-                                    userRef.child(currentUser.getUid()).setValue(user);
+
+
+                                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).setValue(user.toMap());
                                     Staticconfig.user.setCoins(l + "");
-                                    coincomma = formattedtext(Staticconfig.user.getCoins());
-                                    textUserCoin.setText(coincomma);
-                                    Log.v("entered 2nd", String.valueOf(coincomma));
+                                    coinWithComma = formattedtext(Staticconfig.user.getCoins());
+                                    textUserCoin.setText(coinWithComma);
 
                                 }
 
@@ -1539,11 +1534,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                     else lr = Long.parseLong(user.getReceivedCoins());
                                     lr = lr + selectamnt;
                                     user.setReceivedCoins(lr + "");
-                                    userRef.child(selectedViewer.id).setValue(user);
-                                    Staticconfig.user.setReceivedCoins(lr + "");
-//                                    coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
-//                                    textUserCoin.setText(coincomma);
-                                    Log.v("entered 2nd", String.valueOf(coincomma));
+
+                                    FirebaseDatabase.getInstance().getReference().child("Users").child(selectedViewer.id).setValue(user.toMap());
 
                                 }
 
