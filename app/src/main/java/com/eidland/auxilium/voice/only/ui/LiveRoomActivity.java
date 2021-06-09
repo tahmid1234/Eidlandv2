@@ -70,7 +70,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
@@ -1503,61 +1505,61 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                         if (curnt > selectamnt) {
                             crystal.setVisibility(View.GONE);
-                            userRef.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+
+
+
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
+                                @NonNull
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    User user = snapshot.getValue(User.class);
-                                    long l = Long.parseLong(user.getCoins());
-                                    l = l - selectamnt;
-                                    user.setCoins(l + "");
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
+                                    User user = currentData.getValue(User.class);
+                                    //do some calculations
+                                    user.coins = String.valueOf(Long.parseLong(user.coins) - selectamnt);
+                                    currentData.setValue(user);
+                                    return Transaction.success(currentData);
+                                }
 
-                                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).setValue(user.toMap());
-                                    Staticconfig.user.setCoins(l + "");
-                                    coinWithComma = formattedtext(Staticconfig.user.getCoins());
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+
+                                    User user = currentData.getValue(User.class);
+                                    Staticconfig.user = user;
+                                    coinWithComma = formattedtext(user.coins);
                                     textUserCoin.setText(coinWithComma);
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
                                 }
                             });
 
-                            userRef.child(selectedViewer.id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(selectedViewer.id).runTransaction(new Transaction.Handler() {
+                                @NonNull
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    User user = snapshot.getValue(User.class);
-                                    long lr;
-                                    if (user.getReceivedCoins() == null) lr = 0;
-                                    else lr = Long.parseLong(user.getReceivedCoins());
-                                    lr = lr + selectamnt;
-                                    user.setReceivedCoins(lr + "");
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
-                                    FirebaseDatabase.getInstance().getReference().child("Users").child(selectedViewer.id).setValue(user.toMap());
+                                    User user = currentData.getValue(User.class);
+                                    //do some calculations
 
+                                    try {
+                                        user.coins = String.valueOf(Long.parseLong(user.coins) + selectamnt);
+                                    }catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+
+                                    currentData.setValue(user);
+                                    return Transaction.success(currentData);
                                 }
 
                                 @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
 
+                                    System.out.println(error);
                                 }
                             });
 
 
-                            if(selectedViewer == null){
-                                sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, hostuid, _host_name.getText().toString(), " ", System.currentTimeMillis()));
-                            }else {
                                 sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
-                            }
 
-
-
-
-
-
-//                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectedViewer.id, selectedViewer.name, selectedViewer.photo, System.currentTimeMillis()));
 
                         } else {
                             if (selectamnt == 0) {
