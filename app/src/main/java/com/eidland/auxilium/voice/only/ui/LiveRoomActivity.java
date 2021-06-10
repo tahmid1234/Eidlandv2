@@ -1722,8 +1722,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
         }
         sendername.setText(gift.getSenderName() + " contributed to");
-
-            receivername.setText(txtsinglename.getText().toString());
+        receivername.setText(txtsinglename.getText().toString());
+        
         Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
             @Override

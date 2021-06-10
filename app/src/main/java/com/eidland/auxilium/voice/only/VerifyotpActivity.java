@@ -236,7 +236,6 @@ public class VerifyotpActivity extends AppCompatActivity {
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
-
                             } else {
                                 Staticconfig.user = snapshot.getValue(User.class);
                                 Intent intent = new Intent(VerifyotpActivity.this, LiveRoomActivity.class);
