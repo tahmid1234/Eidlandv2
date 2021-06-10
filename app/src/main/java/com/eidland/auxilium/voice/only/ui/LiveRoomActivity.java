@@ -63,6 +63,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -111,7 +114,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     String finalText, coinWithComma;
     ArrayList<Viewer> viewerslist;
     ViewerAdapter viewerAdapter;
-    String hostuid, roomname;
+    String hostUID, roomname;
     Spinner spinner;
     String selectuseruid;
     EditText txtcmnt;
@@ -395,7 +398,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
         if (type.equals("Host")) {
             roomname = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
-            hostuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            hostUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, Staticconfig.user.getEmail(), "host");
             pushid = FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomname).push().getKey();
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomname).child(pushid).setValue(viewer);
@@ -413,7 +416,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             gettoken(true);
         } else {
             roomname = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
-            hostuid = getIntent().getStringExtra("userid");
+            hostUID = getIntent().getStringExtra("userid");
 
             Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), Staticconfig.user.getImageurl(), Staticconfig.user.getEmail(), Staticconfig.user.getName());
             pushid = FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomname).push().getKey();
@@ -482,7 +485,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 }
             }
         });
-        selectuseruid = hostuid;
+        selectuseruid = hostUID;
 
         singlegift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -600,7 +603,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     public void joinChannel(String token) {
-        Rooms room = new Rooms(UserName, imgUrl, hostuid, token, "0", roomname);
+        Rooms room = new Rooms(UserName, imgUrl, hostUID, token, "0", roomname);
         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomname).setValue(room);
         SeatsName = "seat1";
         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), UserName);
@@ -1400,10 +1403,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 crystal.setVisibility(View.GONE);
                 break;
             case R.id.btngift: //gift icon beside keyboard
-                selectedViewer.id = hostuid;
+                selectedViewer.id = hostUID;
                 selectedViewer.name = _host_name.getText().toString();
                 selectedViewer.photo = " ";
-                selectuseruid = hostuid;
+                selectuseruid = hostUID;
                 txtsinglename.setText(UserName);
                 crystal.setVisibility(View.VISIBLE);
                 break;
@@ -1506,10 +1509,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         if (curnt > selectamnt) {
                             crystal.setVisibility(View.GONE);
 
-
-
-
-
                             FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -1532,7 +1531,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 }
                             });
 
-                            FirebaseDatabase.getInstance().getReference().child("Users").child(selectedViewer.id).runTransaction(new Transaction.Handler() {
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
@@ -1552,7 +1551,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-
                                     System.out.println(error);
                                 }
                             });
@@ -1598,13 +1596,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             Gift gift = dataSnapshot1.getValue(Gift.class);
 
-                            if (gift.receiverImg != null && gift.senderName != null && !gift.receiverUID.equals(hostuid)) {
+                            if (gift.receiverImg != null && gift.senderName != null && !gift.receiverUID.equals(hostUID)) {
                                 giftslist.add(gift);
-                                //giftAnimation(selectedgiftname, gift);
                             }
                         }
 
 
+                        giftAnimation(selectedgiftname, giftslist.get(0));
                         LeaderBoard leaderBoard = new LeaderBoard(giftslist);
 
                         System.out.println(leaderBoard.getTopContributor());
@@ -1652,7 +1650,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             System.out.println(e);
                         }
                         if (animatedlayout.getVisibility() == View.GONE && giftslist.size() > 0) {
-//                            giftsend(giftslist.get(0));
                             System.out.println("okoko");
                         }
                     } else
@@ -1762,12 +1759,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     private void sendGift(Gift gift) {
-        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift.toMap());
+        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).push().setValue(gift.toMap()).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e);
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+            }
+        });
         Comment comment = new Comment(gift.getSenderName(), "Contributed to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedgiftname, "1", Staticconfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
-        giftAnimation(selectedgiftname, gift);
-        //Log.v("gift name:", selectedgiftname);
-        //Log.v("giftname", currentUser.getDisplayName());
     }
 
     ArrayList<Point> path;
