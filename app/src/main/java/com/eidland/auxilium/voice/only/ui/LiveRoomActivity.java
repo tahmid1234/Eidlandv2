@@ -481,7 +481,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 }
             }
         });
-       // selectuseruid = hostuid;
+       selectuseruid = hostuid;
 
         singlegift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1406,7 +1406,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                 selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
 
-              //  selectuseruid = hostuid;
+               selectuseruid = hostuid;
                 txtsinglename.setText(nameofroom);
                 crystal.setVisibility(View.VISIBLE);
                 break;
@@ -1616,7 +1616,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             giftslist.add(gift);
                             int index=giftslist.size()-1;
 
-                            //giftAnimation(selectedgiftname, gift);
+                            giftAnimation(selectedgiftname, gift,gift.getReceiverName());
                         }
                     }
 
@@ -1684,7 +1684,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         });
     }
 
-    public void giftAnimation(String id, Gift gift) {
+    public void giftAnimation(String id, Gift gift,String receiver) {
         Log.v("showlocal", id);
         switch (id) {
             case "hearts":
@@ -1742,8 +1742,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
         }
         sendername.setText(gift.getSenderName() + " Rewarded to ");
-            if (selectuseruid.equals(hostuid)) receivername.setText("Eidland Battle Royale");
-            else receivername.setText(txtsinglename.getText().toString());
+             receivername.setText(receiver);
         Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
             @Override
@@ -1787,7 +1786,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomname).push().setValue(comment);
         Log.d("beforeaftergift",selectuseruid);
 
-       giftAnimation(selectedgiftname, gift);
+       giftAnimation(selectedgiftname, gift,gift.receiverName);
         //Log.v("gift name:", selectedgiftname);
         //Log.v("giftname", currentUser.getDisplayName());
     }
