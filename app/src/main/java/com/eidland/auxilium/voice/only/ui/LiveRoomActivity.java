@@ -101,6 +101,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     TextView textViewersCount, _host_name, _name1, _name2, _name3, _name4, _name5, _name6, _name7, _name8, _name9, broadName, textSendGift, textUserCoin;
     ImageView _image0, _image1, _image2, _image3, _image4, _image5, _image6, _image7, _image8, _image9, _image10, _image11, _image12, _image13, sencmnt;
     ProgressDialog progressDialog;
+    String selectedgiftname="flowers";
     LinearLayout showusers;
     TextView ModUserRemove;
     Boolean muteClicked = false;
@@ -1568,7 +1569,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
 
 
-                            sendGift(new Gift("giftName", selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+                            sendGift(new Gift(selectedgiftname, selectamnt, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
 
 
                         } else {
@@ -1597,7 +1598,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
     }
 
-    String selectedgiftname = "flower";
+
     boolean isnotfirst = true;
 
     public void giftsListner() {
@@ -1611,16 +1612,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         Gift gift = dataSnapshot1.getValue(Gift.class);
 
+                        assert gift != null;
                         if (gift.getGift() != null && gift.getSenderName() != null) {
 
                             giftslist.add(gift);
-                            int index=giftslist.size()-1;
 
-                            giftAnimation(selectedgiftname, gift,gift.getReceiverName());
+
                         }
                     }
 
                     Log.d("giftsizeout", String.valueOf(giftslist.size()));
+                    int index=giftslist.size()-1;
+                    giftAnimation(giftslist.get(index).getGift(),giftslist.get(index), giftslist.get(index).getReceiverName());
                     LeaderBoard leaderBoard = new LeaderBoard(giftslist);
 
                     System.out.println(leaderBoard.getTopContributor());
@@ -1686,6 +1689,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
     public void giftAnimation(String id, Gift gift,String receiver) {
         Log.v("showlocal", id);
+
         switch (id) {
             case "hearts":
                 simplegift.setImageResource(R.drawable.ic_heart);
