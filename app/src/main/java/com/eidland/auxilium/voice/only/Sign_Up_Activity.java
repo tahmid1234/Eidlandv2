@@ -146,6 +146,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 Intent intent = new Intent(Sign_Up_Activity.this, VerifyotpActivity.class);
                 intent.putExtra("mobileNumber", ccp.getFullNumberWithPlus().trim());
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -204,7 +205,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                             userName = first_name + " " + last_name;
                             userEmail = email;
                             userImage = image_url;
-                            CreateUser();
+                          //  CreateUser();
 
                         } catch (JSONException e) {
                             viewDialog.hideDialog();
@@ -270,7 +271,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                                 Staticconfig.user = obj;
                                 Intent intent = new Intent(Sign_Up_Activity.this, LiveRoomActivity.class);
                                 intent.putExtra("User", "Participent");
-                                intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
                                 intent.putExtra("UserName", "Eidland Battle Royale");
@@ -304,7 +305,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
         userImage = account.getPhotoUrl().toString();
 
 
-        CreateUser();
+        //CreateUser();
 
     }
 

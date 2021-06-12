@@ -64,7 +64,7 @@ public class MyProfileActivity extends AppCompatActivity {
         button_join = findViewById(R.id.lrnjoin);
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Uri ir = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-        if (userid.equals("A3qP5qyS34aGkFxQa3caaXxmHGl2")) {
+        if (userid.equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3")) {
             lrnrefrsh.setVisibility(View.VISIBLE);
         }
         FirebaseDatabase.getInstance().getReference("admins").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -143,7 +143,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MyProfileActivity.this, LiveRoomActivity.class);
         intent.putExtra("User", "Participent");
-        intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+        intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
         intent.putExtra("UserName", "Eidland Battle Royale");
@@ -169,10 +169,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void refreshtoken(View view) {
 
-        Log.e("valueee", FirebaseAuth.getInstance().getCurrentUser().getUid() + "" + "A3qP5qyS34aGkFxQa3caaXxmHGl2");
-        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals("A3qP5qyS34aGkFxQa3caaXxmHGl2"))
+        Log.e("valueee", FirebaseAuth.getInstance().getCurrentUser().getUid() + "" + "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3"))
             if (getSharedPreferences("auxilium", MODE_PRIVATE).getInt("dayofmonth", 0) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
-                Log.e("valueee", "today  " + "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                Log.e("valueee", "today  " + "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                 getSharedPreferences("auxilium", MODE_PRIVATE).edit().putInt("dayofmonth", Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).apply();
                 Toast.makeText(this, "Please wait token going refresh, this is take place one time in  a day", Toast.LENGTH_SHORT).show();
                 FirebaseDatabase.getInstance().getReference("AllRooms").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -180,7 +180,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             gettoken(dataSnapshot.getKey());
-                            Log.e("valueee", dataSnapshot.getKey() + "    " + "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                            Log.e("valueee", dataSnapshot.getKey() + "    " + "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                         }
                     }
 

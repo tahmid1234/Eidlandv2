@@ -242,7 +242,7 @@ public class VerifyotpActivity extends AppCompatActivity {
                                 Intent intent = new Intent(VerifyotpActivity.this, LiveRoomActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("User", "Participent");
-                                intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
                                 intent.putExtra("UserName", "Eidland Battle Royale");

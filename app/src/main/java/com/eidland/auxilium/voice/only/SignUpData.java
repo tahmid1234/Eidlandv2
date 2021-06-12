@@ -47,6 +47,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
@@ -114,8 +115,9 @@ public class SignUpData extends Activity {
                 if (!validateUserName() | !validateimage() | !validateEmail()) {
                     return;
                 } else {
+                    viewDialog.showDialog();
                     if (filePath.equals(Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png"))) {
-                        viewDialog.showDialog();
+
                         AddData(String.valueOf(filePath));
                     } else {
                         uplnamephoto();
@@ -185,19 +187,17 @@ public class SignUpData extends Activity {
 
     private void AddData(final String urlimg) {
         Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
-        String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String Userid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         User obj = new User(_username, _email, urlimg, "100", "0");
         Staticconfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                String Name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                String Email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                Uri irsignup = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
                 Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
                 intent.putExtra("User", "Participent");
-                intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
                 intent.putExtra("UserName", "Eidland Battle Royale");
@@ -249,7 +249,7 @@ public class SignUpData extends Activity {
                             String email = mAuth.getCurrentUser().getEmail();
                             Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
                             intent.putExtra("User", "Participent");
-                            intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                             intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
                             intent.putExtra("UserName", "Eidland Battle Royale");
@@ -337,7 +337,7 @@ public class SignUpData extends Activity {
     }
 
     public void uplnamephoto() {
-        viewDialog.showDialog();
+
         RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
 
@@ -419,7 +419,7 @@ public class SignUpData extends Activity {
                         }
                     });
 
-    }*/
+    }
     private void CreateUser(final String urlimage) {
 
         FirebaseAuth.getInstance().signInWithCredential(credential)
@@ -434,7 +434,7 @@ public class SignUpData extends Activity {
                             Staticconfig.user = userobj;
                             Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
                             intent.putExtra("User", "Participent");
-                            intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                             intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
                             intent.putExtra("UserName", "Eidland Battle Royale");
@@ -451,7 +451,7 @@ public class SignUpData extends Activity {
                         }
                     }
                 });
-    }
+    }*/
 
     public String encodeTobase64(Bitmap image) {
         Bitmap immagex = image;
