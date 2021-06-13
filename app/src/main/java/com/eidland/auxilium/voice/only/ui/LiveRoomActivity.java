@@ -1403,12 +1403,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 crystal.setVisibility(View.GONE);
                 break;
             case R.id.btngift: //gift icon beside keyboard
-                selectedViewer.id = hostuid;
+                selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 selectedViewer.name = nameofroom;
 
                 selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
 
-               selectuseruid = hostuid;
+               selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 txtsinglename.setText(nameofroom);
                 crystal.setVisibility(View.VISIBLE);
                 break;
