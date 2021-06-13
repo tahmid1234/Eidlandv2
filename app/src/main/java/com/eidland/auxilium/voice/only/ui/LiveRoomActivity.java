@@ -149,7 +149,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     GifImageView confetti;
     GifImageView simplegift;
     boolean flag;
-    ArrayList<Gift> giftslist;
+    ArrayList<Gift> giftslist, leaderGiftList;
     boolean isKeyboardShowing = false;
 
     void onKeyboardVisibilityChanged(boolean opened) {
@@ -202,6 +202,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         confetti = findViewById( R.id.confetti);
         confettiLayout = findViewById(R.id.confettiLayout);
         giftslist = new ArrayList<>();
+        leaderGiftList = new ArrayList<>();
         singl = findViewById(R.id.reltivesingle);
         viewers = findViewById(R.id.viewersrecyler);
 
@@ -1512,9 +1513,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             crystal.setVisibility(View.GONE);
 
 
-
-
-
                             FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -1603,38 +1601,37 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
     public void giftsListner() {
         addpoints();
-       // Log.d("enteredlistener",roomname);
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomname).orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (isnotfirst) {
                     giftslist.clear();
+                    leaderGiftList.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         Gift gift = dataSnapshot1.getValue(Gift.class);
 
                         assert gift != null;
                         if (gift.getGift() != null && gift.getSenderName() != null) {
-
                             giftslist.add(gift);
-
-
+                        }
+                        if (gift.getGift() != null && gift.getSenderName() != null ) {
+                            leaderGiftList.add(gift);
                         }
                     }
 
                     Log.d("giftsizeout", String.valueOf(giftslist.size()));
                     int index=giftslist.size()-1;
                     giftAnimation(giftslist.get(index).getGift(),giftslist.get(index), giftslist.get(index).getReceiverName());
-                    LeaderBoard leaderBoard = new LeaderBoard(giftslist);
 
+
+                    LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);// getting wrong hostuid
                     System.out.println(leaderBoard.getTopContributor());
                     System.out.println(leaderBoard.getTopWinner());
-
 
                     try {
                         if (leaderBoard.winners.get(0) != null) {
                             speaker1.setVisibility(View.VISIBLE);
                             speaker1Coin.setText(Long.toString(leaderBoard.winners.get(0).coins));
-
                             Glide.with(getApplicationContext()).load(leaderBoard.winners.get(0).imgUrl).placeholder(R.drawable.ic_mic).into(speaker1Img);
                         }
                         if (leaderBoard.winners.get(1) != null) {
