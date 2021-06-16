@@ -47,6 +47,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
@@ -54,21 +55,21 @@ import io.agora.rtc.Constants;
 import com.eidland.auxilium.voice.only.ui.ViewDialog;
 
 public class SignUpData extends Activity {
-    TextView  imgerror;
+    TextView imgerror;
     RelativeLayout singupactive;
     String finalImage;
     EditText username, email;
     String stringUri, _username, _email;
     CircleImageView imageView;
     AuthCredential credential;
-    Uri filePath = Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/sampleimage.png");
+    Uri filePath = Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png");
     String imgpath;
     Intent intent;
     ProgressDialog progressDialog;
     CircleImageView profileimageView;
     ViewDialog viewDialog;
-    String gNaame,gEmaail,gImage;
-    Boolean ImageUploaded=false,isLoggedin=false;
+    String gNaame, gEmaail, gImage;
+    Boolean ImageUploaded = false, isLoggedin = false;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -76,15 +77,15 @@ public class SignUpData extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.sign_up_get_data);
         initialViews();
 
-        Glide.with(SignUpData.this).load("https://auxiliumlivestreaming.000webhostapp.com/images/sampleimage.png").into(profileimageView);
+        Glide.with(SignUpData.this).load("https://auxiliumlivestreaming.000webhostapp.com/images/4.png").into(profileimageView);
 
         intent = getIntent();
 
-        viewDialog=new ViewDialog(this);
+        viewDialog = new ViewDialog(this);
         // get ids from layout
 
 
@@ -95,7 +96,7 @@ public class SignUpData extends Activity {
 
             String gid = getIntent().getStringExtra("gImg");
 
-                username.setText(gNaame);
+            username.setText(gNaame);
 
 
             email.setText(gEmaail);
@@ -113,25 +114,20 @@ public class SignUpData extends Activity {
 
                 if (!validateUserName() | !validateimage() | !validateEmail()) {
                     return;
-                } else
-                {
-                    if (filePath.equals(Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/sampleimage.png")))
-                    {
-                        viewDialog.showDialog();
+                } else {
+                    viewDialog.showDialog();
+                    if (filePath.equals(Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png"))) {
+
                         AddData(String.valueOf(filePath));
-                    }
-                    else {
+                    } else {
                         uplnamephoto();
 
                     }
                 }
 
-                }
+            }
 
         });
-
-
-
 
 
     }
@@ -191,31 +187,28 @@ public class SignUpData extends Activity {
 
     private void AddData(final String urlimg) {
         Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
-        String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String Userid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        User obj = new User(_username, _email, urlimg,"100", "0");
+        User obj = new User(_username, _email, urlimg, "100", "0");
         Staticconfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                String Name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                String Email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                Uri irsignup=FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
                 Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                intent.putExtra("User","Participent");
-                intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                intent.putExtra("User", "Participent");
+                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-                intent.putExtra("UserName", "Eidland Welcome Hall");
+                intent.putExtra("UserName", "Eidland Battle Royale");
                 intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
                 intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                if(getIntent().hasExtra("gName"))
-                {
+                if (getIntent().hasExtra("gName")) {
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("GSign", "yes");
-                   editor.commit();
+                    editor.commit();
                 }
                 viewDialog.hideDialog();
                 startActivity(intent);
@@ -232,6 +225,7 @@ public class SignUpData extends Activity {
         profileimageView = findViewById(R.id.imageViewprofile);
         singupactive = findViewById(R.id.singupactive);
     }
+
     // validate functions
     private boolean validateEmail() {
 
@@ -243,6 +237,7 @@ public class SignUpData extends Activity {
             return true;
         }
     }
+
     private void CheckSignin() {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -251,13 +246,13 @@ public class SignUpData extends Activity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             String userid = mAuth.getCurrentUser().getUid();
-                        String email=mAuth.getCurrentUser().getEmail();
+                            String email = mAuth.getCurrentUser().getEmail();
                             Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                            intent.putExtra("User","Participent");
-                            intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                            intent.putExtra("User", "Participent");
+                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                             intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-                            intent.putExtra("UserName", "Eidland Welcome Hall");
+                            intent.putExtra("UserName", "Eidland Battle Royale");
                             intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
                             intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
@@ -272,6 +267,7 @@ public class SignUpData extends Activity {
                     }
                 });
     }
+
     private boolean validateUserName() {
         if (_username.isEmpty()) {
             username.setError("Field can not be empty");
@@ -288,11 +284,9 @@ public class SignUpData extends Activity {
     private boolean validateimage() {
 
 
-        if (filePath!=null) {
+        if (filePath != null) {
             return true;
-        }
-
-        else {
+        } else {
             Toast.makeText(this, "Please Choose image", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -327,7 +321,7 @@ public class SignUpData extends Activity {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                     profileimageView.setImageBitmap(bitmap);
                     imgpath = encodeTobase64(bitmap);
-                    ImageUploaded=true;
+                    ImageUploaded = true;
 
 
                 } catch (IOException e) {
@@ -341,8 +335,9 @@ public class SignUpData extends Activity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public void uplnamephoto(){
-        viewDialog.showDialog();
+
+    public void uplnamephoto() {
+
         RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
 
@@ -350,20 +345,17 @@ public class SignUpData extends Activity {
             @Override
             public void onResponse(String response) {
 
-                Log.e("response", response+"");
+                Log.e("response", response + "");
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     boolean status = jsonObject.getBoolean("error");
-                    if(!status){
-                     finalImage=  jsonObject.getString("thumb");
+                    if (!status) {
+                        finalImage = jsonObject.getString("thumb");
 
-                            AddData(finalImage);
-
-
+                        AddData(finalImage);
 
 
-                    }
-                    else {
+                    } else {
 
                         Toast.makeText(SignUpData.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
                     }
@@ -379,8 +371,8 @@ public class SignUpData extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //This code is executed if there is an error.
-                if(error!=null)
-                    Log.e("error",error.getLocalizedMessage()+"");
+                if (error != null)
+                    Log.e("error", error.getLocalizedMessage() + "");
 
             }
         }) {
@@ -397,6 +389,7 @@ public class SignUpData extends Activity {
 
         MyRequestQueue.add(MyStringRequest);
     }
+
     /*private void uploadImage() {
 
         RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
@@ -426,7 +419,7 @@ public class SignUpData extends Activity {
                         }
                     });
 
-    }*/
+    }
     private void CreateUser(final String urlimage) {
 
         FirebaseAuth.getInstance().signInWithCredential(credential)
@@ -435,16 +428,16 @@ public class SignUpData extends Activity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            String userid =  FirebaseAuth.getInstance().getCurrentUser().getUid();
-                             User userobj = new User(_username,_email, urlimage, "10000", "0");
+                            String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            User userobj = new User(_username, _email, urlimage, "10000", "0");
                             FirebaseDatabase.getInstance().getReference("Users").child(userid).setValue(userobj);
                             Staticconfig.user = userobj;
                             Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                            intent.putExtra("User","Participent");
-                            intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                            intent.putExtra("User", "Participent");
+                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                             intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-                            intent.putExtra("UserName", "Eidland Welcome Hall");
+                            intent.putExtra("UserName", "Eidland Battle Royale");
                             intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
                             intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
@@ -458,7 +451,7 @@ public class SignUpData extends Activity {
                         }
                     }
                 });
-    }
+    }*/
 
     public String encodeTobase64(Bitmap image) {
         Bitmap immagex = image;

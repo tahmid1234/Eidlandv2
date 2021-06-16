@@ -28,7 +28,7 @@
 
             android:scaleType="centerCrop"
             android:layout_marginTop="196dp"
-            android:background="@drawable/ic_logo"
+            android:background="@drawable/ic_el_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +100,40 @@
                 android:inputType="number"
                 android:lines="1"
                 android:textAlignment="textStart" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+
+                android:id="@+id/phn_next"
+                android:layout_width="130dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+
+                android:background="@drawable/join_button">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:text="Next"
+                    android:textColor="@color/white">
+
+                </TextView>
+            </RelativeLayout>
+
+
         </LinearLayout>
 
         <LinearLayout

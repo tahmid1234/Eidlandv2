@@ -1,5 +1,6 @@
 package com.eidland.auxilium.voice.only;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import io.agora.rtc.Constants;
 
 import com.eidland.auxilium.voice.only.model.ConstantApp;
@@ -58,7 +60,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
     GoogleSignInAccount account;
     GoogleSignInClient mGoogleSignInClient;
     ProgressDialog progressDialog;
-    String userid,userName,userEmail,userImage,Coins="1000";
+    String userid, userName, userEmail, userImage, Coins = "1000";
     User userobj;
     FirebaseAuth mAuth;
     String status;
@@ -66,11 +68,13 @@ public class Sign_Up_Activity extends AppCompatActivity {
     AuthCredential credential;
     EditText phonenumber1;
     RelativeLayout googlesign;
-     CountryCodePicker ccp;
-     TextView textView;
+    CountryCodePicker ccp;
+    TextView textView;
     ImageView iv;
     ViewDialog viewDialog;
     SharedPreferences sharedpreferences;
+    RelativeLayout continueBTN;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -87,27 +91,28 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
         // Firebase Authentication Initilize
         mAuth = FirebaseAuth.getInstance();
-       // textView=findViewById(R.id.eidland);
+        // textView=findViewById(R.id.eidland);
         FacebookSdk.sdkInitialize(getApplicationContext());
-    //    Spannable spannable = new SpannableString("EIDLAND");
-       // spannable.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //    Spannable spannable = new SpannableString("EIDLAND");
+        // spannable.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         //textView.setText(spannable);
         // ProgressDialoge Create
-        viewDialog=new ViewDialog(this);
+        viewDialog = new ViewDialog(this);
         // Request to google for Google Sign in
         Google_Signin_Request();
-        status="vallagena";
+        status = "vallagena";
         sharedpreferences = getSharedPreferences("MyPref",
                 Context.MODE_PRIVATE);
 
         phonenumber1 = findViewById(R.id.txtnumber);
-        googlesign=findViewById(R.id.googlesignup);
+        continueBTN = findViewById(R.id.phn_next);
+        googlesign = findViewById(R.id.googlesignup);
 //        TextView textView = (TextView) googlesign.getChildAt(0);
 
-  //  textView.setText("Sign in with Google");
+        //  textView.setText("Sign in with Google");
 
         //textView.setTextSize(16);
-         iv=new ImageView(getApplicationContext());
+        iv = new ImageView(getApplicationContext());
         ccp = findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(phonenumber1);
         phonenumber1.setImeOptions(EditorInfo.IME_ACTION_GO);
@@ -134,12 +139,18 @@ public class Sign_Up_Activity extends AppCompatActivity {
             }
         });
 
+        continueBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Sign_Up_Activity.this, VerifyotpActivity.class);
+                intent.putExtra("mobileNumber", ccp.getFullNumberWithPlus().trim());
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
-
-
-
-
-
 
 
     // onClick Facebook Login Button
@@ -163,7 +174,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 viewDialog.hideDialog();
-                Toast.makeText(Sign_Up_Activity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sign_Up_Activity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -191,10 +202,10 @@ public class Sign_Up_Activity extends AppCompatActivity {
                             if (object.has("email")) {
                                 email = object.getString("email");
                             }
-                            userName=first_name+" "+last_name;
-                            userEmail=email;
-                            userImage=image_url;
-                            CreateUser();
+                            userName = first_name + " " + last_name;
+                            userEmail = email;
+                            userImage = image_url;
+                          //  CreateUser();
 
                         } catch (JSONException e) {
                             viewDialog.hideDialog();
@@ -224,8 +235,8 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 viewDialog.hideDialog();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }else {
-            callbackManager.onActivityResult(requestCode,resultCode,data);
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
 
     }
@@ -240,32 +251,30 @@ public class Sign_Up_Activity extends AppCompatActivity {
                             boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
                             Log.d("MyTAG", "onComplete: " + (isNew ? "new user" : "old user"));
                             if (sharedpreferences.contains("GSign")) {
-                                 status = sharedpreferences.getString("GSign", " ");
-                                 if (status.isEmpty())status="no";
+                                status = sharedpreferences.getString("GSign", " ");
+                                if (status.isEmpty()) status = "no";
                             }
 
-                            if (isNew||status.equals("no"))
-                            {
+                            if (isNew || status.equals("no")) {
                                 Intent intent = new Intent(Sign_Up_Activity.this, SignUpData.class);
                                 intent.putExtra("gName", userName);
                                 intent.putExtra("gEmail", userEmail);
-                                intent.putExtra("gChobi",userImage);
+                                intent.putExtra("gChobi", userImage);
 
                                 startActivity(intent);
                                 finish();
-                            }
-                            else {
+                            } else {
 
                                 userid = mAuth.getCurrentUser().getUid();
 
-                                User obj = new User(userName, userEmail, String.valueOf(mAuth.getCurrentUser().getPhotoUrl()),"100","0");
+                                User obj = new User(userName, userEmail, String.valueOf(mAuth.getCurrentUser().getPhotoUrl()), "100", "0");
                                 Staticconfig.user = obj;
                                 Intent intent = new Intent(Sign_Up_Activity.this, LiveRoomActivity.class);
-                                intent.putExtra("User","Participent");
-                                intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                                intent.putExtra("User", "Participent");
+                                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-                                intent.putExtra("UserName", "Eidland Welcome Hall");
+                                intent.putExtra("UserName", "Eidland Battle Royale");
                                 intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
                                 intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
@@ -291,13 +300,12 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(String idToken) {
         credential = GoogleAuthProvider.getCredential(idToken, null);
-        userName=account.getDisplayName();
-        userEmail=account.getEmail();
-        userImage=account.getPhotoUrl().toString();
+        userName = account.getDisplayName();
+        userEmail = account.getEmail();
+        userImage = account.getPhotoUrl().toString();
 
 
-
-        CreateUser();
+        //CreateUser();
 
     }
 
@@ -309,11 +317,12 @@ public class Sign_Up_Activity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-
-
-
-
-  /*  private void Progressdialog() {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ((Activity) getApplicationContext()).finish();
+    }
+/*  private void Progressdialog() {
         progressDialog = new ProgressDialog(this);
 
         progressDialog.setContentView(R.layout.wait_pop_up);
@@ -332,7 +341,6 @@ public class Sign_Up_Activity extends AppCompatActivity {
         progressDialog.setCancelable(false);
     }
 */
-
 
 
 }

@@ -8,12 +8,89 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:617168201197:android:86d356503799ab32c4b3e4",
+        "android_client_info": {
+          "package_name": "com.eidland.auxilium.voice.only"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy0BeJhbi863hsCG4xfZ-jemrHZKMHaRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:617168201197:android:ebe5e8edcf763a8bc4b3e4",
         "android_client_info": {
           "package_name": "com.zcorridor.openlive.voice.only"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "617168201197-2fc829tcc9opuio3vr1qdf9356fk3qo6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zcorridor.openlive.voice.only",
+            "certificate_hash": "0ed96ca1bbf28634a8a3c6540e67006b4b2c552d"
+          }
+        },
+        {
+          "client_id": "617168201197-5himktg4q3e9g7ojgstbcre8qebi4pl3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zcorridor.openlive.voice.only",
+            "certificate_hash": "4e7457f77dbc6c49e410818cb3bff63e78a6be7d"
+          }
+        },
+        {
+          "client_id": "617168201197-7aopgrugvbn0t4ltb8ugrqg4qog44uft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zcorridor.openlive.voice.only",
+            "certificate_hash": "72d9e33fa0648f8afaffb384c43506f4670c34b9"
+          }
+        },
+        {
+          "client_id": "617168201197-8gusjsu6u3rh2k571iqgp205u12o3ngh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zcorridor.openlive.voice.only",
+            "certificate_hash": "265432cc9b646d455f588eadb6c4bda24d19f8f6"
+          }
+        },
+        {
+          "client_id": "617168201197-j9r5sdgt5c8jna8i40lo2nqfuneb37ip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zcorridor.openlive.voice.only",
+            "certificate_hash": "a9670b4019483d414d0436d9589f9a1e26a6c042"
+          }
+        },
+        {
+          "client_id": "617168201197-s8d881mfhokoqssqle15r3lp17d2oire.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zcorridor.openlive.voice.only",
+            "certificate_hash": "99337cde57f2f91ce6f0f4fbfcb5867122201c30"
+          }
+        },
         {
           "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
           "client_type": 3
@@ -44,11 +121,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "617168201197-1f29du5gv1ji5jvi911dk20bhmhufgqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.agora.openlive.voice.only",
+            "certificate_hash": "a9670b4019483d414d0436d9589f9a1e26a6c042"
+          }
+        },
+        {
           "client_id": "617168201197-7gir5ltj50vh6b3l0t397ot4g2e9738a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "io.agora.openlive.voice.only",
             "certificate_hash": "0ed96ca1bbf28634a8a3c6540e67006b4b2c552d"
+          }
+        },
+        {
+          "client_id": "617168201197-8nncsh9nt2e7q67j4sqmsc946o3bp6g7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.agora.openlive.voice.only",
+            "certificate_hash": "72d9e33fa0648f8afaffb384c43506f4670c34b9"
+          }
+        },
+        {
+          "client_id": "617168201197-qn4p2gq2hki1k9a81f0a59ntv0vtv9a1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.agora.openlive.voice.only",
+            "certificate_hash": "4e7457f77dbc6c49e410818cb3bff63e78a6be7d"
+          }
+        },
+        {
+          "client_id": "617168201197-qqk0bj3qp23a1b29t4sqjl8va4hcgrnu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.agora.openlive.voice.only",
+            "certificate_hash": "99337cde57f2f91ce6f0f4fbfcb5867122201c30"
           }
         },
         {

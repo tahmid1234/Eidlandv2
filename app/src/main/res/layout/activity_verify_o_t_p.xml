@@ -8,10 +8,23 @@
     tools:context="com.eidland.auxilium.voice.only.VerifyotpActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back_to_phn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+
+    </LinearLayout>
+
+
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:gravity="center"
         android:orientation="vertical">
 
@@ -26,7 +39,7 @@
 
             android:scaleType="centerCrop"
             android:layout_marginTop="196dp"
-            android:background="@drawable/ic_logo"
+            android:background="@drawable/ic_el_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,18 +58,33 @@
     android:layout_weight="1">
 
     <TextView
-        android:layout_width="202dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginBottom="30dp"
         android:letterSpacing="0.01"
-        android:lines="2"
         android:autoSizeMaxTextSize="16sp"
         android:fontFamily="@font/interregular"
 
-        android:text="Enter the OTP to verify your number"
+        android:text="Please enter the OTP to verify your number"
         android:textAlignment="center"
         android:textColor="@color/white"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/numbertitle"
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center_horizontal|center_vertical"
+
+        android:autoSizeMaxTextSize="16sp"
+        android:fontFamily="@font/interregular"
+        android:gravity="center_horizontal|center_vertical"
+        android:letterSpacing="0.01"
+        android:lines="1"
+        android:text="Your mobile number is"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="16sp" />
     <TextView
         android:id="@+id/setphonenumber"
@@ -72,7 +100,7 @@
         android:lines="1"
         android:text="00"
         android:textAlignment="center"
-        android:textColor="#FD9F35"
+        android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
 
@@ -97,7 +125,7 @@
 
         android:id="@+id/verifyotp"
         android:layout_width="130dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:layout_alignParentLeft="true"

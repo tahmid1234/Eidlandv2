@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import io.agora.rtc.Constants;
 
 import com.chaos.view.PinView;
@@ -44,25 +46,30 @@ public class VerifyotpActivity extends AppCompatActivity {
     RelativeLayout verifyotp;
     String otpid, phoneNumber, error, pincode;
     ProgressDialog dialoge;
+    ImageView backBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
+
+
+        backBTN = findViewById(R.id.back_to_phn);
         // Hide ActionBar
 //        getSupportActionBar().hide();
         // progress dialoge
         progressdialogeshow();
-     //   dialoge.show();
+        //   dialoge.show();
         // getting ids from layout
         findviewbyids();
         //get data from Activity
-      String number=  getdata();
+        String number = getdata();
         // call the otp send function
 
         Log.e("signup", (String) setphonenumber.getText());
         sendotp(phoneNumber);
-        setphonenumber.setText(number);
+        setphonenumber.setText(phoneNumber);
+
         verifyotp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,36 +83,38 @@ public class VerifyotpActivity extends AppCompatActivity {
                     Callalert();
 
 
-
-
-
-
                 }
             }
         });
-    }
-  public void Callalert ()
-  {
-      AlertDialog.Builder dialoge = new AlertDialog.Builder(VerifyotpActivity.this);
-      dialoge.setTitle("Welcome to Eidland")
-              .setMessage("Please ensure your microphone and storage permission is given in order to get most of Eidland")
-              .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                      boolean checkPermissionResult = checkSelfPermissions();
-                      if (checkPermissionResult)
-                      {
-                          PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
-                          signInWithPhoneAuthCredential(credential);
-                          dialog.cancel();
-                      }
-                      else Log.e("no permission", "Not Found");
-                  }
-              })
 
-              .setCancelable(false)
-              .show();
-  }
+        backBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    public void Callalert() {
+        AlertDialog.Builder dialoge = new AlertDialog.Builder(VerifyotpActivity.this);
+        dialoge.setTitle("Welcome to Eidland")
+                .setMessage("Please ensure your microphone and storage permission is given in order to get most out of Eidland")
+                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean checkPermissionResult = checkSelfPermissions();
+                        if (checkPermissionResult) {
+                            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
+                            signInWithPhoneAuthCredential(credential);
+                            dialog.cancel();
+                        } else Log.e("no permission", "Not Found");
+                    }
+                })
+
+                .setCancelable(false)
+                .show();
+    }
+
     private void progressdialogeshow() {
         dialoge = new ProgressDialog(VerifyotpActivity.this);
         dialoge.setMessage("Loading, Please Wait!");
@@ -157,12 +166,14 @@ public class VerifyotpActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private boolean checkSelfPermissions() {
         return checkSelfPermission(Manifest.permission.RECORD_AUDIO, ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO) &&
                 checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
     }
+
     public boolean checkSelfPermission(String permission, int requestCode) {
-     //   log.debug("checkSelfPermission " + permission + " " + requestCode);
+        //   log.debug("checkSelfPermission " + permission + " " + requestCode);
         if (ContextCompat.checkSelfPermission(this,
                 permission)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -178,15 +189,15 @@ public class VerifyotpActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
-       // Log.e("onRequestPermissionsResult " + requestCode + " " + Arrays.toString(permissions) + " " + Arrays.toString(grantResults));
+        // Log.e("onRequestPermissionsResult " + requestCode + " " + Arrays.toString(permissions) + " " + Arrays.toString(grantResults));
         switch (requestCode) {
             case ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO: {
                 if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
                     ((AGApplication) getApplication()).initWorkerThread();
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
@@ -226,22 +237,22 @@ public class VerifyotpActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
 
-                            }else {
+                            } else {
                                 Staticconfig.user = snapshot.getValue(User.class);
                                 Intent intent = new Intent(VerifyotpActivity.this, LiveRoomActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("User","Participent");
-                                intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                                intent.putExtra("User", "Participent");
+                                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-                                intent.putExtra("UserName", "Eidland Welcome Hall");
+                                intent.putExtra("UserName", "Eidland Battle Royale");
                                 intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
                                 intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                                 startActivity(intent);
                                 finish();
                             }
-                         }
+                        }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {

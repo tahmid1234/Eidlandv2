@@ -46,12 +46,13 @@ import com.eidland.auxilium.voice.only.R;
 import io.agora.rtc.Constants;
 
 public class EnterRoomActivity extends AppCompatActivity {
-ImageView userimg;
-EditText txttitle;
-Button btncreate;
-String imgpath;
+    ImageView userimg;
+    EditText txttitle;
+    Button btncreate;
+    String imgpath;
     Uri filePath;
     ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,20 +62,19 @@ String imgpath;
         progressDialog.setMessage("Please Wait...!");
         progressDialog.setCancelable(false);
 
-        btncreate=findViewById(R.id.btncreate);
-        txttitle=findViewById(R.id.txttitle);
-        userimg=findViewById(R.id.userimage);
-        if(Staticconfig.user!=null){
+        btncreate = findViewById(R.id.btncreate);
+        txttitle = findViewById(R.id.txttitle);
+        userimg = findViewById(R.id.userimage);
+        if (Staticconfig.user != null) {
             Glide.with(this).load(Staticconfig.user.imageurl).error(R.drawable.appicon).into(userimg);
 
         }
         btncreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(txttitle.getText().toString().trim().length()<=0){
+                if (txttitle.getText().toString().trim().length() <= 0) {
                     Toast.makeText(EnterRoomActivity.this, "Enter Title Please", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     if (imgpath != null) {
                         uplnamephoto();
                     } else {
@@ -83,7 +83,7 @@ String imgpath;
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
                         intent.putExtra("profile", Staticconfig.user.getImageurl());
-                        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() +FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                     }
                 }
@@ -91,7 +91,7 @@ String imgpath;
         });
     }
 
-    public void uplnamephoto(){
+    public void uplnamephoto() {
         progressDialog.show();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(EnterRoomActivity.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
@@ -100,34 +100,35 @@ String imgpath;
             @Override
             public void onResponse(String response) {
 
-                Log.e("response", response+"");
+                Log.e("response", response + "");
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     boolean status = jsonObject.getBoolean("error");
-                    if(!status){
-                        String url=  jsonObject.getString("thumb");
+                    if (!status) {
+                        String url = jsonObject.getString("thumb");
                         Intent intent = new Intent(EnterRoomActivity.this, LiveRoomActivity.class);
                         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
-                        intent.putExtra("User","Host");
-                        intent.putExtra("UserName",txttitle.getText().toString());
-                        intent.putExtra("profile",url);
-                        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() +FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        intent.putExtra("User", "Host");
+                        intent.putExtra("UserName", txttitle.getText().toString());
+                        intent.putExtra("profile", url);
+                        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                         finish();
                         progressDialog.dismiss();
 
-                    }
-                    else {
+                    } else {
 
                         Toast.makeText(EnterRoomActivity.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
 
-                        progressDialog.dismiss();  }
+                        progressDialog.dismiss();
+                    }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
                     Toast.makeText(EnterRoomActivity.this, "Json", Toast.LENGTH_SHORT).show();
 
-                    progressDialog.dismiss();   }
+                    progressDialog.dismiss();
+                }
 
 
             }
@@ -135,8 +136,8 @@ String imgpath;
             @Override
             public void onErrorResponse(VolleyError error) {
                 //This code is executed if there is an error.
-                if(error!=null)
-                    Log.e("error",error.getLocalizedMessage()+"");
+                if (error != null)
+                    Log.e("error", error.getLocalizedMessage() + "");
 
                 progressDialog.dismiss();
             }
@@ -157,6 +158,7 @@ String imgpath;
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MyRequestQueue.add(MyStringRequest);
     }
+
     public void ChangeImage(View view) {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -178,7 +180,7 @@ String imgpath;
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                     userimg.setImageBitmap(bitmap);
                     imgpath = encodeTobase64(bitmap);
-Log.e("path",imgpath);
+                    Log.e("path", imgpath);
 
                 } catch (IOException e) {
                     e.printStackTrace();

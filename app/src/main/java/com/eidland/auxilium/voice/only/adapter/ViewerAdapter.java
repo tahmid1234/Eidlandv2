@@ -60,7 +60,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             placesViewHolder=(PlacesViewHolder) holder;
-        Glide.with(context).load( countryInfoArrayList.get(position).getPhoto()).into(placesViewHolder.ivFamousPlace);
+        Glide.with(context).load( countryInfoArrayList.get(position).getPhotoUrl()).into(placesViewHolder.ivFamousPlace);
 
 
     }
@@ -83,7 +83,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             view = itemView;
 
             ivFamousPlace = view.findViewById(R.id.img);
-            superimg = view.findViewById(R.id.supr);
+
           view.setOnClickListener(this);
 
         }

@@ -33,7 +33,7 @@
 
 
             android:layout_alignParentTop="true"
-            android:background="@drawable/ic_logo"
+            android:background="@drawable/ic_el_logo"
             android:gravity="center_horizontal|center_vertical"
             android:scaleType="centerCrop"
             android:contentDescription="TODO" />

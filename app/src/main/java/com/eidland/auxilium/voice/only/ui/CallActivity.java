@@ -248,7 +248,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                 Viewer viewer = dataSnapshot.getValue(Viewer.class);
                 boolean isexist = false;
                 for (int i = 0; i < viewerslist.size(); i++) {
-                    if (viewerslist.get(i).getId().equals(viewer.getId())) {
+                    if (viewerslist.get(i).getUid().equals(viewer.getUid())) {
                         isexist = true;
                         break;
                     }
@@ -282,7 +282,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
                 for (int i = 0; i < viewerslist.size(); i++) {
-                    if (viewerslist.get(i).getId().equals(dataSnapshot.getValue(Viewer.class).getId())) {
+                    if (viewerslist.get(i).getUid().equals(dataSnapshot.getValue(Viewer.class).getUid())) {
                         viewerslist.remove(i);
                         break;
                     }
@@ -485,7 +485,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     Viewer seat9 = snapshot.child("seat9").getValue(Viewer.class);
                     if (seat0 != null) {
                         _host_name.setText(seat0.getType());
-                        Glide.with(getApplicationContext()).load(seat0.getPhoto()).placeholder(R.drawable.userprofile).into(_image0);
+                        Glide.with(getApplicationContext()).load(seat0.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image0);
                     } else {
                         _host_name.setText("Seat #0");
                         _image0.setImageResource(R.drawable.userprofile);
@@ -494,7 +494,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
 
                     if (seat1 != null) {
                         _name1.setText(seat1.getType());
-                        Glide.with(getApplicationContext()).load(seat1.getPhoto()).placeholder(R.drawable.userprofile).into(_image1);
+                        Glide.with(getApplicationContext()).load(seat1.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image1);
                     } else {
                         _name1.setText("Seat #1");
                         _image1.setImageResource(R.drawable.userprofile);
@@ -502,7 +502,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat2 != null) {
                         _name2.setText(seat2.getType());
-                        Glide.with(getApplicationContext()).load(seat2.getPhoto()).placeholder(R.drawable.userprofile).into(_image2);
+                        Glide.with(getApplicationContext()).load(seat2.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image2);
 
                     } else {
                         _name2.setText("Seat #2");
@@ -511,7 +511,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat3 != null) {
                         _name3.setText(seat3.getType());
-                        Glide.with(getApplicationContext()).load(seat3.getPhoto()).placeholder(R.drawable.userprofile).into(_image3);
+                        Glide.with(getApplicationContext()).load(seat3.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image3);
 
                     } else {
                         _name3.setText("Seat #3");
@@ -520,7 +520,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat4 != null) {
                         _name4.setText(seat4.getType());
-                        Glide.with(getApplicationContext()).load(seat4.getPhoto()).placeholder(R.drawable.userprofile).into(_image4);
+                        Glide.with(getApplicationContext()).load(seat4.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image4);
 
                     } else {
                         _name4.setText("Seat #4");
@@ -529,7 +529,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat5 != null) {
                         _name5.setText(seat5.getType());
-                        Glide.with(getApplicationContext()).load(seat5.getPhoto()).placeholder(R.drawable.userprofile).into(_image5);
+                        Glide.with(getApplicationContext()).load(seat5.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image5);
 
                     } else {
                         _name5.setText("Seat #5");
@@ -538,7 +538,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat6 != null) {
                         _name6.setText(seat6.getType());
-                        Glide.with(getApplicationContext()).load(seat6.getPhoto()).placeholder(R.drawable.userprofile).into(_image6);
+                        Glide.with(getApplicationContext()).load(seat6.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image6);
 
                     } else {
                         _name6.setText("Seat #6");
@@ -547,7 +547,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat7 != null) {
                         _name7.setText(seat7.getType());
-                        Glide.with(getApplicationContext()).load(seat7.getPhoto()).placeholder(R.drawable.userprofile).into(_image7);
+                        Glide.with(getApplicationContext()).load(seat7.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image7);
 
                     } else {
                         _name7.setText("Seat #7");
@@ -556,7 +556,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat8 != null) {
                         _name8.setText(seat8.getType());
-                        Glide.with(getApplicationContext()).load(seat8.getPhoto()).placeholder(R.drawable.userprofile).into(_image8);
+                        Glide.with(getApplicationContext()).load(seat8.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image8);
 
                     } else {
                         _name8.setText("Seat #8");
@@ -565,7 +565,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                     }
                     if (seat9 != null) {
                         _name9.setText(seat9.getType());
-                        Glide.with(getApplicationContext()).load(seat9.getPhoto()).placeholder(R.drawable.userprofile).into(_image9);
+                        Glide.with(getApplicationContext()).load(seat9.getPhotoUrl()).placeholder(R.drawable.userprofile).into(_image9);
                     } else {
                         _name9.setText("Seat #9");
                         _image9.setImageResource(R.drawable.userprofile);
@@ -620,8 +620,8 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
                         Viewer viewer = snapshot.getValue(Viewer.class);
-                        selectuseruid = viewer.getId();
-                        Glide.with(getApplicationContext()).load(viewer.getPhoto()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(singleimg);
+                        selectuseruid = viewer.getUid();
+                        Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(singleimg);
                         txtsinglename.setText(viewer.getType());
                         singl.setVisibility(View.VISIBLE);
                     } else {
@@ -654,8 +654,8 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
                         Viewer viewer = snapshot.getValue(Viewer.class);
-                        selectuseruid = viewer.getId();
-                        Glide.with(getApplicationContext()).load(viewer.getPhoto()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(singleimg);
+                        selectuseruid = viewer.getUid();
+                        Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(singleimg);
                         txtsinglename.setText(viewer.getType());
                         singl.setVisibility(View.VISIBLE);
                     }

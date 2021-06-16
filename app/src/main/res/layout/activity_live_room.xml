@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="5dp">
+        android:padding="0dp">
+
         <RelativeLayout
             android:id="@+id/confettiLayout"
             android:layout_width="match_parent"
@@ -23,11 +24,11 @@
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/confetti"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"/>
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter" />
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,8 +37,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
 
+                android:gravity="center">
                 <androidx.cardview.widget.CardView
                     android:id="@+id/img"
                     android:layout_width="32dp"
@@ -45,6 +46,7 @@
                     android:layout_height="32dp"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp">
+
                     <ImageView
                         android:id="@+id/hostimg"
                         android:layout_width="match_parent"
@@ -53,6 +55,7 @@
                         android:scaleType="centerCrop"
                         android:contentDescription="TODO" />
                 </androidx.cardview.widget.CardView>
+
 
                 <TextView
                     android:id="@+id/room_name"
@@ -99,7 +102,7 @@
                         android:contentDescription="TODO"
                         android:scaleType="centerCrop"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/background"></ImageView>
+                       />
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
@@ -119,22 +122,359 @@
 
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="8dp"
+                android:translationZ="10dp"
+                android:background="@drawable/leader_board_back"
+                android:elevation="10dp">
+
+                <RelativeLayout
+                    android:background="@drawable/gradient_leader_board"
+                    android:paddingTop="12dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="left"
+                                android:layout_marginBottom="5dp"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:elevation="5dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_cup"/>
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:padding="3dp"
+                                    android:elevation="5dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/open_sans"
+                                    android:textFontWeight="600"
+                                    android:textSize="14dp"
+                                    android:text="Top Speakers"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/s"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:id="@+id/s1"
+                                        android:visibility="gone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+                                        <de.hdodenhof.circleimageview.CircleImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_margin="3dp"
+                                            android:id="@+id/s1i"
+                                            android:src="@drawable/ic_default_image_1"
+                                            android:scaleType="centerCrop"/>
+
+                                        <TextView
+                                            android:id="@+id/s1t"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:padding="3dp"
+                                            android:layout_marginRight="4dp"
+                                            android:textColor="@color/black"
+                                            android:textFontWeight="600"
+                                            android:textSize="14sp"
+                                            android:text="347"/>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/s2"
+                                        android:visibility="gone"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+                                        <de.hdodenhof.circleimageview.CircleImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_margin="3dp"
+                                            android:id="@+id/s2i"
+                                            android:src="@drawable/ic_default_image_1"
+                                            android:scaleType="centerCrop"/>
+
+                                        <TextView
+                                            android:id="@+id/s2t"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:padding="3dp"
+                                            android:layout_marginRight="4dp"
+                                            android:textColor="@color/black"
+                                            android:textFontWeight="600"
+                                            android:textSize="14sp"
+                                            android:text="347"/>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/s3"
+                                        android:visibility="gone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+                                        <de.hdodenhof.circleimageview.CircleImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_margin="3dp"
+                                            android:id="@+id/s3i"
+                                            android:src="@drawable/ic_default_image_1"
+                                            android:scaleType="centerCrop"/>
+
+
+                                        <TextView
+                                            android:id="@+id/s3t"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:padding="3dp"
+                                            android:layout_marginRight="4dp"
+                                            android:textColor="@color/black"
+                                            android:textFontWeight="600"
+                                            android:textSize="14sp"
+                                            android:text="347"/>
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="1dp"
+                            android:padding="20dp"
+                            android:background="#D68920"
+                            android:layout_gravity="center"
+                            android:layout_height="match_parent">
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="left"
+                                android:layout_marginBottom="5dp"
+                                android:orientation="horizontal">
+
+
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_support"/>
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:padding="3dp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/open_sans"
+                                    android:textFontWeight="600"
+                                    android:textSize="14dp"
+                                    android:text="Top Supporters"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/c"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:id="@+id/c1"
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <de.hdodenhof.circleimageview.CircleImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_margin="3dp"
+                                        android:id="@+id/c1i"
+                                        android:src="@drawable/ic_default_image_1"
+                                        android:scaleType="centerCrop"/>
+
+                                    <TextView
+                                        android:id="@+id/c1t"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:padding="3dp"
+                                        android:layout_marginRight="4dp"
+                                        android:textColor="@color/black"
+                                        android:textSize="14sp"
+                                        android:text="347"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/c2"
+                                    android:visibility="gone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="left"
+                                    android:orientation="horizontal">
+
+                                    <de.hdodenhof.circleimageview.CircleImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_margin="3dp"
+                                        android:id="@+id/c2i"
+                                        android:src="@drawable/ic_default_image_1"
+                                        android:scaleType="centerCrop"/>
+
+                                    <TextView
+                                        android:id="@+id/c2t"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:padding="3dp"
+                                        android:layout_marginRight="4dp"
+                                        android:textColor="@color/black"
+                                        android:textFontWeight="600"
+                                        android:textSize="14sp"
+                                        android:text="347"/>
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/c3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:visibility="gone"
+                                    android:orientation="horizontal">
+
+                                    <de.hdodenhof.circleimageview.CircleImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_margin="3dp"
+                                        android:id="@+id/c3i"
+                                        android:src="@drawable/ic_default_image_1"
+                                        android:scaleType="centerCrop"/>
+
+                                    <TextView
+                                        android:id="@+id/c3t"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:padding="3dp"
+                                        android:layout_margin="4dp"
+                                        android:textColor="@color/black"
+                                        android:textFontWeight="600"
+                                        android:textSize="14sp"
+                                        android:text="347"/>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:gravity="center">
+                android:gravity="left">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/viewersrecyler"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+
+                    android:layout_weight="1" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:id="@+id/showonlineusers"
 
-
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                 <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:layout_marginLeft="10dp"
+
+
                     android:src="@drawable/viewersicon"
                     android:contentDescription="TODO" />
 
@@ -149,14 +489,7 @@
                     android:textColor="#fff"
                     android:textSize="12sp" />
                 </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/viewersrecyler"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="10dp"
 
-                    android:layout_weight="1" />
             </LinearLayout>
 
 
@@ -165,7 +498,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -596,6 +931,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/animatedlayout"
                 android:layout_width="match_parent"
@@ -604,12 +940,13 @@
                 android:visibility="invisible">
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="55dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/ic_top_member"
-                    android:padding="9dp">
+                    android:gravity="center|left"
+                    android:padding="8dp">
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -621,8 +958,8 @@
                             android:paddingBottom="0dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
-                            android:gravity="center"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center|left"
                             android:paddingLeft="5dp"
                             android:text="Sender"
                             android:fontFamily="@font/open_sans"
@@ -630,20 +967,15 @@
                             android:textSize="12sp" />
                         <TextView
                             android:id="@+id/receivername"
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
-                            android:gravity="center"
+                            android:gravity="center|left"
                             android:paddingLeft="5dp"
                             android:text="contributed"
                             android:textColor="#C551F6"
-                            android:textSize="12sp" />
+                            android:textSize="10sp" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/imggif"
                     android:layout_width="50dp"
@@ -652,17 +984,17 @@
                     android:layout_alignParentRight="true"
                     />
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="10dp"
+
                 android:layout_weight="1">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cmntrecyler"
-                    android:layout_width="match_parent"
-
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -678,27 +1010,27 @@
                     android:layout_height="wrap_content"
 
                     android:layout_weight="1">
-                    <EditText
-                        android:id="@+id/txtcmnt"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginHorizontal="10dp"
 
-                        android:hint="Say hi "
-                        android:paddingBottom="15dp"
-                        android:inputType="textCapSentences"
-                        android:paddingLeft="8dp"
-                        android:paddingTop="8dp"
-                        android:textColor="#fff"
-                        android:background="@android:color/transparent"
-                        android:textColorHint="#A3FFFFFF" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginTop="3dp"
                         android:background="@drawable/transparentblackcircle" />
+                    <EditText
+                        android:id="@+id/txtcmnt"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginHorizontal="10dp"
 
+                        android:hint="Tap here to write "
+                        android:paddingBottom="15dp"
+                        android:inputType="textCapSentences"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp"
+                        android:textColorHint="#fff"
+                        android:background="@android:color/transparent"
+                        android:textColor="#fff" />
                 </RelativeLayout>
 
 
@@ -726,8 +1058,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_marginHorizontal="5dp"
-
-android:visibility="gone"
+                    android:visibility="gone"
                     android:src="@drawable/ic_mic_on"
                     android:contentDescription="TODO" />
 
@@ -840,7 +1171,7 @@ android:visibility="gone"
                             android:id="@+id/iv500hearts"
                             android:layout_width="wrap_content"
                             android:layout_height="99dp"
-                            android:background="@drawable/ic_gift___heart"
+                            android:background="@drawable/ic_gift___heart_3"
                             android:padding="30dp"
                             android:scaleType="centerCrop"
                             android:contentDescription="TODO" />
@@ -1041,16 +1372,28 @@ android:visibility="gone"
                     android:id="@+id/txtusercoin"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight=".6"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/ic_fi_rr_coin_5"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="13dp"
                     android:fontFamily="@font/open_sans_bold"
                     android:textSize="20dp"
-                    android:text="Recharge"
+                    android:text="00"
                     android:textColor="#fff" />
 
+                <TextView
+                    android:id="@+id/coinrecharge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:visibility="gone"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:text="@string/Recharge"
+                    android:textColor="#fff"
+                    android:textSize="12dp" />
                 <RelativeLayout
                     android:layout_width="98dp"
                     android:layout_height="32dp"
@@ -1230,6 +1573,21 @@ android:visibility="gone"
 
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:gravity="center"
+                    android:visibility="visible">
+
+
+                </RelativeLayout>
+
+
+
+
 
             </LinearLayout>
 

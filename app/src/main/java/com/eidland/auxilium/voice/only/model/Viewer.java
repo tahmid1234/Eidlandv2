@@ -1,16 +1,16 @@
 package com.eidland.auxilium.voice.only.model;
 
 public class Viewer {
-    String id;
-    String photo;
-    String type;
-    String name;
+    public String id;
+    public String photo;
+    public String type;
+    public String name;
     public Viewer(){
 
     }
-    public Viewer(String id, String photo, String type,String n){
-        this.id=id;
-        this.photo=photo;
+    public Viewer(String uid, String photo, String type, String n){
+        this.id = uid;
+        this.photo = photo;
         this.type=type;
         this.name=n;
     }
@@ -23,20 +23,20 @@ public class Viewer {
         this.name = name;
     }
 
-    public String getPhoto() {
+    public String getPhotoUrl() {
         return photo;
     }
 
-    public String getId() {
+    public String getUid() {
         return id;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhotoUrl(String photo) {
         this.photo = photo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUid(String uid) {
+        this.id = uid;
     }
 
     public String getType() {

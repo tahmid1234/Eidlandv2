@@ -2,22 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_width="32dp"
+    android:layout_width="wrap_content"
     android:gravity="center"
-    android:layout_marginHorizontal="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
 
-    android:layout_height="32dp">
-<ImageView
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:visibility="gone"
-    android:id="@+id/supr"
-    android:src="@drawable/userprofile"
-    android:contentDescription="TODO" />
+    android:layout_height="wrap_content">
+
    <androidx.cardview.widget.CardView
-       android:layout_width="32dp"
-       android:layout_height="32dp"
-      app:cardCornerRadius="16dp"
+       android:layout_width="24dp"
+       android:layout_height="24dp"
+      app:cardCornerRadius="15dp"
       app:cardElevation="0dp">
    <ImageView
        android:layout_width="match_parent"

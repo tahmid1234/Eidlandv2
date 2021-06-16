@@ -34,29 +34,30 @@ public class MainActivity extends BaseActivity {
     String Seats, UserName;
     ProgressDialog progressDialog;
     TextView tvuname;
-    ImageView ivuphoto,button_join;
-    String userid,username,imageurl,description;
+    ImageView ivuphoto, button_join;
+    String userid, username, imageurl, description;
     RecyclerView rvrooms;
     adapter_Rooms myadapter;
     ProgressBar progressbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  FirebaseDatabase.getInstance().getReference("Rooms").child("testroom").child("room created").child("WhatToDo").setValue("a");
+        //  FirebaseDatabase.getInstance().getReference("Rooms").child("testroom").child("room created").child("WhatToDo").setValue("a");
         progressbar = findViewById(R.id.progressbar);
         tvuname = findViewById(R.id.username);
         ivuphoto = findViewById(R.id.userimage);
         button_join = findViewById(R.id.button_join);
         rvrooms = findViewById(R.id.rvrooms);
-        rvrooms.setLayoutManager(new GridLayoutManager(this,2));
+        rvrooms.setLayoutManager(new GridLayoutManager(this, 2));
         FirebaseRecyclerOptions<Rooms> options
                 = new FirebaseRecyclerOptions.Builder<Rooms>()
-                .setQuery(FirebaseDatabase.getInstance().getReference("AllRooms") , Rooms.class)
+                .setQuery(FirebaseDatabase.getInstance().getReference("AllRooms"), Rooms.class)
                 .build();
         myadapter = new adapter_Rooms(options);
         rvrooms.setAdapter(myadapter);
-        String  id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         progressDialog = new ProgressDialog(this);
@@ -68,11 +69,11 @@ public class MainActivity extends BaseActivity {
         FirebaseDatabase.getInstance().getReference("admins").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               if (snapshot.hasChild(userid)){
-                   button_join.setVisibility(View.VISIBLE);
-               }else {
-                   button_join.setVisibility(View.INVISIBLE);
-               }
+                if (snapshot.hasChild(userid)) {
+                    button_join.setVisibility(View.VISIBLE);
+                } else {
+                    button_join.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -82,21 +83,21 @@ public class MainActivity extends BaseActivity {
         });
 
 
-                    username = Staticconfig.user.getName();
-                    imageurl = Staticconfig.user.getImageurl();
-                    tvuname.setText(username);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        if(!MainActivity.this.isDestroyed())
-                        Glide.with(MainActivity.this).load(imageurl).into(ivuphoto);
-                    }
-                    else {
+        username = Staticconfig.user.getName();
+        imageurl = Staticconfig.user.getImageurl();
+        tvuname.setText(username);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (!MainActivity.this.isDestroyed())
+                Glide.with(MainActivity.this).load(imageurl).into(ivuphoto);
+        } else {
 
-                        Glide.with(MainActivity.this).load(imageurl).into(ivuphoto);
-                    }
-                    progressbar.setVisibility(View.GONE);
+            Glide.with(MainActivity.this).load(imageurl).into(ivuphoto);
+        }
+        progressbar.setVisibility(View.GONE);
 
 
     }
+
     @Override
     protected void initUIandEvent() {
 
@@ -127,24 +128,26 @@ public class MainActivity extends BaseActivity {
         super.onStop();
         myadapter.stopListening();
     }
+
     public void onClickJoin(View view) {
         // show dialog to choose role
         roomcheck();
 
     }
+
     public void myProfile(View view) {
         Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
         startActivity(intent);
 
     }
+
     public void roomcheck() {
 
-         startActivity(new Intent(MainActivity.this, EnterRoomActivity.class));
+        startActivity(new Intent(MainActivity.this, EnterRoomActivity.class));
 
 //
 
-                }
-
+    }
 
 
 //        Intent i = new Intent(MainActivity.this, LiveRoomActivity.class);
