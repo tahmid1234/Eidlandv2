@@ -1719,7 +1719,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 selectamnt = 30;
                 break;
             case R.id.iv200redflower:
-
                 setselct(iv200flower);
                 selectamnt = 3;
                 break;
@@ -1918,7 +1917,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         switch (id){
             case "hearts":
                 simplegift.setImageResource(R.drawable.ic_heart);
+<<<<<<< Updated upstream
                 //   Constants.user.setDimond(Constants.user.getDimond()-500);
+=======
+                confetti.setImageResource(R.drawable.heart_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
+>>>>>>> Stashed changes
                 break;
             case "like1":
                 simplegift.setImageResource(R.drawable.ic_like_1);
@@ -1926,7 +1930,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
             case "smilereact":
                 simplegift.setImageResource(R.drawable.ic_heart_1_);
+<<<<<<< Updated upstream
                 //  talntcoins.setText(Constants.user.getDimond()+"");
+=======
+
+>>>>>>> Stashed changes
                 break;
             case "pigions":
                 simplegift.setImageResource(R.drawable.ic_pigeon);
