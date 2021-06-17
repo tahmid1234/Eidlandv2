@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.eidland.auxilium.voice.only.model.ConstantApp;
 import com.eidland.auxilium.voice.only.model.Staticconfig;
 import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.ImageSelectActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -300,13 +301,8 @@ public class SignUpData extends Activity {
     }
 
     // chose profile photo onclick
-    public void ChangeImage(View view) {
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1, 1)
-                .setRequestedSize(1000, 1000, CropImageView.RequestSizeOptions.RESIZE_EXACT)
-                .start(SignUpData.this);
-    }
+    public void chooseAvatar(View view) {
+        startActivity(new Intent(SignUpData.this, ImageSelectActivity.class));    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
