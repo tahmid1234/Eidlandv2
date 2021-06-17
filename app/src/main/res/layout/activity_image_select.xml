@@ -80,66 +80,15 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/stockImage1"
-                android:layout_width="135dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/queen" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/stockImage2"
-                android:layout_width="135dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/king" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/stockImage3"
-                android:layout_width="135dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/neckless" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <GridView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/stockImage4"
-                android:layout_width="135dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/ladiesbag" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/stockImage5"
-                android:layout_width="135dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/dimondring" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/stockImage6"
-                android:layout_width="135dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/flowerbucket" />
-
-        </LinearLayout>
+            android:horizontalSpacing="6dp"
+            android:numColumns="3"
+            android:verticalSpacing="6dp"
+            android:id="@+id/gridview"
+            >
+        </GridView>
 
         <RelativeLayout
 
