@@ -115,8 +115,6 @@ public class MyProfile extends AppCompatActivity {
                     if (!status) {
                         String url = jsonObject.getString("thumb");
                         AddData(url);
-
-
                     } else {
 
                         Toast.makeText(MyProfile.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
