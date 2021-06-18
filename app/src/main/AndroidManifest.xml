@@ -57,7 +57,8 @@
 
         <activity android:name="com.eidland.auxilium.voice.only.MyProfile" />
         <activity android:name="com.eidland.auxilium.voice.only.VerifyotpActivity" />
-        <activity android:name="com.eidland.auxilium.voice.only.SignUpData" />
+        <activity android:name="com.eidland.auxilium.voice.only.SignUpData"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name="com.eidland.auxilium.voice.only.ImageSelectActivity" />
 
         <activity
