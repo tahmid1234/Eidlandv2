@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/close"
             android:layout_width="30dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:padding="3dp"
@@ -28,26 +28,31 @@
             android:src="@drawable/closebrod"
             android:contentDescription="TODO" />
     </LinearLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginStart="10dp"
+    android:background="@drawable/border"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/textViewpopup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:gravity="center"
-        android:lines="2"
+        android:lines="1"
         android:text="Online Users"
         android:fontFamily="@font/open_sans_bold"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="20sp"
          />
+</LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/userrecycler"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+
         android:layout_marginBottom="20dp"
-        android:layout_height="200dp">
+        android:layout_height="300dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
