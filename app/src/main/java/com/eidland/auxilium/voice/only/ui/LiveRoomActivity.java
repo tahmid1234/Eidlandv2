@@ -1862,20 +1862,29 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     public void setOnlineMembers() {
+        if (viewerlist!=null)viewerslist.clear();
         eventListener = new ChildEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Viewer viewer = dataSnapshot.getValue(Viewer.class);
 
-                boolean isexist = false;
+              boolean isexist = false;
                 for (int i = 0; i < viewerslist.size(); i++) {
                     assert viewer != null;
                     log.error(String.valueOf(i), viewer.getPhotoUrl());
-                    if (viewerslist.get(i).getUid().equals(viewer.getUid())) {
+                    if (viewerslist.get(i).getUid().equals(viewer.getUid())&& viewerslist.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
                         isexist = true;
                         break;
                     }
+                    else if (viewerslist.get(i).getUid().equals(viewer.getUid())&& !viewerslist.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
+                        viewerslist.remove(i);
+                        break;
+                    }
+                  /*  if () {
+                        isexist = true;
+                        break;
+                    }*/
 
                 }
 
