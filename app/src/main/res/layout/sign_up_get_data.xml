@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/open_sans_bold"
         android:letterSpacing="0.01"
         android:lineHeight="21sp"
@@ -36,9 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        >
+        android:orientation="vertical">
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imageViewprofile"
             android:layout_width="126dp"
@@ -64,11 +62,31 @@
                     android:padding="10dp"
 
                     android:gravity="center"
-                    android:onClick="chooseAvatar"
+                    android:onClick="ChangeImage"
                     android:contentDescription="TODO" />
             </LinearLayout>
         </RelativeLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:letterSpacing="0.01"
+            android:lineHeight="21sp"
+            android:padding="10dp"
+            android:text="Or choose one of the images below"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <GridView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="6dp"
+            android:numColumns="4"
+            android:verticalSpacing="6dp"
+            android:id="@+id/gridview"
+            android:adjustViewBounds="true"
+            >
+        </GridView>
         <EditText
             android:id="@+id/username"
             android:layout_width="260dp"

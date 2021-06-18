@@ -1,23 +1,40 @@
 package com.eidland.auxilium.voice.only.adapter;
 
-import com.eidland.auxilium.voice.only.R;
+import android.app.job.JobInfo;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class ImageAdapter extends BaseAdapter {
+
+    private static final String TAG = " ";
     private Context mContext;
+    private String[] imageList;
 
     // Constructor
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, String[] imageList) {
         mContext = c;
+        this.imageList = imageList;
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return imageList.length;
     }
 
     public Object getItem(int position) {
@@ -31,10 +48,9 @@ public class ImageAdapter extends BaseAdapter {
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
-
         if (convertView == null) {
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
+            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         }
@@ -42,13 +58,7 @@ public class ImageAdapter extends BaseAdapter {
         {
             imageView = (ImageView) convertView;
         }
-        imageView.setImageResource(mThumbIds[position]);
+        Glide.with(mContext).load(imageList[position]).into(imageView);
         return imageView;
     }
-
-    // Keep all Images in array
-    public Integer[] mThumbIds = {
-            R.drawable.queen, R.drawable.king, R.drawable.neckless,
-            R.drawable.ladiesbag, R.drawable.dimondring, R.drawable.flowerbucket
-    };
 }
