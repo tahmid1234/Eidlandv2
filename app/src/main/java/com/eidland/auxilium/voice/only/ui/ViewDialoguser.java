@@ -42,7 +42,7 @@ public class ViewDialoguser {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.online_users);
-        dialog.getWindow().setLayout(1000, 800);
+        dialog.getWindow().setLayout(1000, 1200);
         recyclerView = dialog.findViewById(R.id.userrecycler);
         ImageView cross = dialog.findViewById(R.id.close);
         cross.setOnClickListener(new View.OnClickListener() {

@@ -53,8 +53,6 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-
-
         return position;
     }
     @Override

@@ -46,7 +46,7 @@ public class MyProfileActivity extends AppCompatActivity {
     ImageView userimg;
     LinearLayout button_join, lrnrefrsh;
     String userid;
-    TextView txtname, txtcoins;
+    TextView txtname, txtcoins, txtrcvcoins;
     DecimalFormat formatter;
     String finalText, coincomma;
     FirebaseAuth mAuth;
@@ -61,6 +61,7 @@ public class MyProfileActivity extends AppCompatActivity {
         userimg = findViewById(R.id.userimg);
         txtname = findViewById(R.id.txtname);
         txtcoins = findViewById(R.id.txtcoins);
+        txtrcvcoins = findViewById(R.id.txtrcvcoins);
         button_join = findViewById(R.id.lrnjoin);
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Uri ir = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
@@ -162,6 +163,8 @@ public class MyProfileActivity extends AppCompatActivity {
             txtname.setText(Staticconfig.user.getName());
             coincomma = formattedtext(Staticconfig.user.getCoins());
             txtcoins.setText(coincomma);
+            coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
+            txtrcvcoins.setText(coincomma);
             PhotoUrl=Staticconfig.user.getImageurl();
             Glide.with(MyProfileActivity.this).load(Staticconfig.user.getImageurl()).into(userimg);
         }
