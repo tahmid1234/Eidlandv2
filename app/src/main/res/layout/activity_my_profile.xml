@@ -55,7 +55,7 @@
                     android:padding="10dp"
 
                     android:gravity="center"
-                    android:onClick="chooseAvatar"
+                    android:onClick="ChangeImage"
                     android:contentDescription="TODO" />
             </LinearLayout>
         </RelativeLayout>
