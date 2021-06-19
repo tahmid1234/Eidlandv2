@@ -69,9 +69,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/open_sans_semibold"
             android:letterSpacing="0.01"
-            android:lineHeight="21sp"
+            android:lineHeight="20sp"
             android:padding="10dp"
             android:text="Or choose one of the images below"
             android:textAlignment="center"
