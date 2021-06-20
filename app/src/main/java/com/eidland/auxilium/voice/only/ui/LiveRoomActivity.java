@@ -97,7 +97,7 @@ import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, View.OnClickListener, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
-    String Seats, type, UserName, SeatsName, AgainSeat, leave = null, run;
+    String type, SeatsName, AgainSeat, leave = null, run;
     TextView onlineUserCount, broadName, SendGift, userAvailableCoin;
     ImageView sencmnt;
     ProgressDialog progressDialog;
@@ -117,7 +117,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     EditText commentBox;
     String Clickedseat = null;
     private final static Logger log = LoggerFactory.getLogger(LiveRoomActivity.class);
-    CircleImageView popup_user, commentuser;
+    CircleImageView popup_user;
     TextView popup_uname;
     private volatile boolean mAudioMuted = false;
     ImageView userImage;
@@ -128,8 +128,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     ImageView bottom_action_end_call;
     ArrayList<Comment> comments;
     CommentAdapter commentAdapter;
-    ViewerListAdapter viewerListAdapter;
-    ImageView roomGift, closeGiftBox, singleUserClose, singleimg, senderimg;
+    ImageView roomGift, closeGiftBox, singleUserClose, singleimg;
     LinearLayout crystal;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
     RelativeLayout singlegift;
@@ -1020,7 +1019,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         ImageView iv = (ImageView) view;
 
         if (mAudioMuted) {
-
             Glide.with(LiveRoomActivity.this).load(R.drawable.ic_mic_off).into(iv);
         } else {
             Glide.with(LiveRoomActivity.this).load(R.drawable.ic_mic_on).into(iv);
@@ -1313,10 +1311,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         System.out.println("not okay");
                         System.out.println(e);
                     }
-                    if (animatedLayout.getVisibility() == View.GONE && giftslist.size() > 0) {
-//                            giftsend(giftslist.get(0));
-                        System.out.println("okoko");
-                    }
                 } else
                     isnotfirst = true;
             }
@@ -1332,17 +1326,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
         switch (id) {
             case "hearts":
-                simplegift.setImageResource(R.drawable.ic_heart);
+                simpleGift.setImageResource(R.drawable.ic_heart);
                 confetti.setImageResource(R.drawable.heart_fill_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "like1":
-                simplegift.setImageResource(R.drawable.ic_like_1);
+                simpleGift.setImageResource(R.drawable.ic_like_1);
                 confetti.setImageResource(R.drawable.like_many_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "smilereact":
-                simplegift.setImageResource(R.drawable.ic_heart_1_);
+                simpleGift.setImageResource(R.drawable.ic_heart_1_);
                 confetti.setImageResource(R.drawable.heart_burst);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
@@ -1357,7 +1351,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
 
             case "like2":
-                simplegift.setImageResource(R.drawable.ic_like);
+                simpleGift.setImageResource(R.drawable.ic_like);
                 confetti.setImageResource(R.drawable.like_big_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
@@ -1370,7 +1364,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "fire":
-                simplegift.setImageResource(R.drawable.ic_fire);
+                simpleGift.setImageResource(R.drawable.ic_fire);
                 confetti.setImageResource(R.drawable.flames_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
@@ -1379,12 +1373,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
 
             case "castle":
-                simplegift.setImageResource(R.drawable.ic_sand_castle);
+                simpleGift.setImageResource(R.drawable.ic_sand_castle);
                 confetti.setImageResource(R.drawable.castle_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "crown":
-                simplegift.setImageResource(R.drawable.ic_crown);
+                simpleGift.setImageResource(R.drawable.ic_crown);
                 confetti.setImageResource(R.drawable.crown_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
@@ -1396,7 +1390,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 simpleGift.setImageResource(R.drawable.ic_champion_belt);
                 break;
             case "clap":
-                simplegift.setImageResource(R.drawable.ic_clapping);
+                simpleGift.setImageResource(R.drawable.ic_clapping);
                 confetti.setImageResource(R.drawable.clap_gif);
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
