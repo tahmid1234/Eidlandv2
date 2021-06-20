@@ -1266,26 +1266,23 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     int index = giftslist.size() - 1;
                     giftAnimation(giftslist.get(index).getGift(), giftslist.get(index), giftslist.get(index).getReceiverName());
 
-
-                    LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);// getting wrong hostuid
-                    System.out.println(leaderBoard.getTopContributor());
-                    System.out.println(leaderBoard.getTopWinner());
+                    LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
 
                     try {
                         if (leaderBoard.winners.get(0) != null) {
                             speaker1.setVisibility(View.VISIBLE);
-                            speaker1Coin.setText(Long.toString(leaderBoard.winners.get(0).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.winners.get(0).imgUrl).placeholder(R.drawable.ic_mic).into(speaker1Img);
+                            speaker1Coin.setText(Long.toString(leaderBoard.getTopWinner().get(0).coins));
+                            Glide.with(getApplicationContext()).load(leaderBoard.getTopWinner().get(0).imgUrl).placeholder(R.drawable.ic_mic).into(speaker1Img);
                         }
                         if (leaderBoard.winners.get(1) != null) {
                             speaker2.setVisibility(View.VISIBLE);
-                            speaker2Coin.setText(Long.toString(leaderBoard.winners.get(1).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.winners.get(1).imgUrl).placeholder(R.drawable.ic_mic).into(speaker2Img);
+                            speaker2Coin.setText(Long.toString(leaderBoard.getTopWinner().get(1).coins));
+                            Glide.with(getApplicationContext()).load(leaderBoard.getTopWinner().get(1).imgUrl).placeholder(R.drawable.ic_mic).into(speaker2Img);
                         }
                         if (leaderBoard.winners.get(2) != null) {
                             speaker3.setVisibility(View.VISIBLE);
-                            speaker3Coin.setText(Long.toString(leaderBoard.winners.get(2).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.winners.get(2).imgUrl).placeholder(R.drawable.ic_mic).into(speaker3Img);
+                            speaker3Coin.setText(Long.toString(leaderBoard.getTopWinner().get(2).coins));
+                            Glide.with(getApplicationContext()).load(leaderBoard.getTopWinner().get(2).imgUrl).placeholder(R.drawable.ic_mic).into(speaker3Img);
                         }
                     } catch (Exception e) {
                         System.out.println("is working? " + e);
@@ -1293,19 +1290,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     try {
                         if (leaderBoard.contributors.get(0) != null) {
                             supporter1.setVisibility(View.VISIBLE);
-                            supporter1Coin.setText(Long.toString(leaderBoard.contributors.get(0).coins));
-
-                            Glide.with(getApplicationContext()).load(leaderBoard.contributors.get(0).imgUrl).placeholder(R.drawable.ic_mic).into(supporter1Img);
+                            supporter1Coin.setText(Long.toString(leaderBoard.getTopContributor().get(0).coins));
+                            Glide.with(getApplicationContext()).load(leaderBoard.getTopContributor().get(0).imgUrl).placeholder(R.drawable.ic_mic).into(supporter1Img);
                         }
                         if (leaderBoard.contributors.get(1) != null) {
                             supporter2.setVisibility(View.VISIBLE);
-                            supporter2Coin.setText(Long.toString(leaderBoard.contributors.get(1).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.contributors.get(1).imgUrl).placeholder(R.drawable.ic_mic).into(supporter2Img);
+                            supporter2Coin.setText(Long.toString(leaderBoard.getTopContributor().get(1).coins));
+                            Glide.with(getApplicationContext()).load(leaderBoard.getTopContributor().get(1).imgUrl).placeholder(R.drawable.ic_mic).into(supporter2Img);
                         }
                         if (leaderBoard.contributors.get(2) != null) {
                             supporter3.setVisibility(View.VISIBLE);
-                            supporter3Coin.setText(Long.toString(leaderBoard.contributors.get(2).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.contributors.get(2).imgUrl).placeholder(R.drawable.ic_mic).into(supporter3Img);
+                            supporter3Coin.setText(Long.toString(leaderBoard.getTopContributor().get(2).coins));
+                            Glide.with(getApplicationContext()).load(leaderBoard.getTopContributor().get(2).imgUrl).placeholder(R.drawable.ic_mic).into(supporter3Img);
                         }
                     } catch (Exception e) {
                         System.out.println("not okay");
