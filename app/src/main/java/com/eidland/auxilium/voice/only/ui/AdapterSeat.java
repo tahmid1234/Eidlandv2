@@ -68,49 +68,6 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
 
             }
         });
-
-//        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child("seat"+position).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                if (snapshot.exists()) {
-//                    try{
-//                        Viewer viewer = snapshot.getValue(Viewer.class);
-//                        holder.seatName.setText(viewer.name);
-//                        Glide.with(context).load(viewer.getPhotoUrl()).placeholder(R.drawable.ic_mic).into(holder.seatImage);
-//                    }catch (Exception e){
-//                        System.out.println(e);
-//                        holder.seatName.setText("Seat #" + (position + 1));
-//                        holder.seatImage.setImageResource(R.drawable.ic_mic);
-//                    }
-//                }else {
-//                    holder.seatName.setText("Seat #" + (position + 1));
-//                    holder.seatImage.setImageResource(R.drawable.ic_mic);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.getValue() != null) {
-//                    holder.seatName.setText("Seat #" + (position + 1));
-//                    holder.seatImage.setImageResource(R.drawable.ic_mic);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
     }
 
     @Override
