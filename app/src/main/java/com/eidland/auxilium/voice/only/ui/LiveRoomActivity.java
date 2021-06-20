@@ -1332,13 +1332,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
         switch (id) {
             case "hearts":
-                simpleGift.setImageResource(R.drawable.ic_heart);
+                simplegift.setImageResource(R.drawable.ic_heart);
+                confetti.setImageResource(R.drawable.heart_fill_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "like1":
-                simpleGift.setImageResource(R.drawable.ic_like_1);
+                simplegift.setImageResource(R.drawable.ic_like_1);
+                confetti.setImageResource(R.drawable.like_many_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "smilereact":
-                simpleGift.setImageResource(R.drawable.ic_heart_1_);
+                simplegift.setImageResource(R.drawable.ic_heart_1_);
+                confetti.setImageResource(R.drawable.heart_burst);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "pigions":
                 simpleGift.setImageResource(R.drawable.ic_pigeon);
@@ -1351,7 +1357,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 break;
 
             case "like2":
-                simpleGift.setImageResource(R.drawable.ic_like);
+                simplegift.setImageResource(R.drawable.ic_like);
+                confetti.setImageResource(R.drawable.like_big_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "star":
                 simpleGift.setImageResource(R.drawable.ic_star);
@@ -1362,17 +1370,23 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "fire":
-                simpleGift.setImageResource(R.drawable.ic_fire);
+                simplegift.setImageResource(R.drawable.ic_fire);
+                confetti.setImageResource(R.drawable.flames_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "debate":
                 simpleGift.setImageResource(R.drawable.ic_debate);
                 break;
 
             case "castle":
-                simpleGift.setImageResource(R.drawable.ic_sand_castle);
+                simplegift.setImageResource(R.drawable.ic_sand_castle);
+                confetti.setImageResource(R.drawable.castle_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
             case "crown":
-                simpleGift.setImageResource(R.drawable.ic_crown);
+                simplegift.setImageResource(R.drawable.ic_crown);
+                confetti.setImageResource(R.drawable.crown_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
 
             case "carousel":
@@ -1382,7 +1396,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 simpleGift.setImageResource(R.drawable.ic_champion_belt);
                 break;
             case "clap":
-                simpleGift.setImageResource(R.drawable.ic_clapping);
+                simplegift.setImageResource(R.drawable.ic_clapping);
+                confetti.setImageResource(R.drawable.clap_gif);
+                confettiLayout.setVisibility(View.VISIBLE);
                 break;
         }
         sendername.setText(gift.getSenderName() + " Rewarded to ");

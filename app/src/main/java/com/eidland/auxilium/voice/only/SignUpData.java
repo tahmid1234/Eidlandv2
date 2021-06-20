@@ -93,6 +93,7 @@ public class SignUpData extends Activity {
         initialViews();
         GridView gridView = findViewById(R.id.gridview);
         ImageAdapter imageAdapter = new ImageAdapter(this, imageList);
+
         gridView.setAdapter(imageAdapter);
         gridView.invalidateViews();
         Glide.with(SignUpData.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
