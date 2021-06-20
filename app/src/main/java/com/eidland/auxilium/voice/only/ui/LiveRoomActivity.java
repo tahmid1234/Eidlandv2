@@ -1290,7 +1290,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             Glide.with(getApplicationContext()).load(leaderBoard.winners.get(2).imgUrl).placeholder(R.drawable.ic_mic).into(speaker3Img);
                         }
                     } catch (Exception e) {
-                        System.out.println("is working?");
                         System.out.println("is working? " + e);
                     }
                     try {
