@@ -98,11 +98,10 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, View.OnClickListener, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
     String Seats, type, UserName, SeatsName, AgainSeat, leave = null, run;
-    TextView onlineUserCount, broadName, textSendGift, textUserCoin;
+    TextView onlineUserCount, broadName, SendGift, userAvailableCoin;
     ImageView sencmnt;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
-    LinearLayout showusers;
     TextView ModUserRemove;
     Boolean muteClicked = false;
     ImageView button2, imgbroad;
@@ -115,7 +114,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     String hostuid, roomName;
     Spinner spinner;
     String selectuseruid;
-    EditText txtcmnt;
+    EditText commentBox;
     String Clickedseat = null;
     private final static Logger log = LoggerFactory.getLogger(LiveRoomActivity.class);
     CircleImageView popup_user, commentuser;
@@ -127,18 +126,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     String imgUrl;
     RecyclerView viewers, viewerlist;
     ImageView bottom_action_end_call;
-    RecyclerView recyclerView;
     ArrayList<Comment> comments;
     CommentAdapter commentAdapter;
     ViewerListAdapter viewerListAdapter;
-    ImageView btngift, closegift, close, singleimg, senderimg;
+    ImageView roomGift, closeGiftBox, singleUserClose, singleimg, senderimg;
     LinearLayout crystal;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
     RelativeLayout singlegift;
     DatabaseReference userRef;
     FirebaseUser currentUser;
     Viewer selectedViewer = new Viewer();
-    RelativeLayout singl;
+    RelativeLayout singleUserBox;
     ImageView button;
     LinearLayout contentView;
 
@@ -194,29 +192,28 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         singlegift = findViewById(R.id.singlesendgift);
         txtsinglename = findViewById(R.id.txtnamepopup);
         singleimg = findViewById(R.id.singleimg);
-        close = findViewById(R.id.close);
+        singleUserClose = findViewById(R.id.close);
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);
         receivername = findViewById(R.id.receivername);
         popup_uname = findViewById(R.id.txtnamepopup);
         popup_user = findViewById(R.id.userimgpopup);
-        showusers = findViewById(R.id.showonlineusers);
         animatedLayout = findViewById(R.id.animatedlayout);
         confetti = findViewById(R.id.confetti);
         confettiLayout = findViewById(R.id.confettiLayout);
         giftslist = new ArrayList<>();
         leaderGiftList = new ArrayList<>();
-        singl = findViewById(R.id.reltivesingle);
+        singleUserBox = findViewById(R.id.single_user_box);
         viewers = findViewById(R.id.viewersrecyler);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        textSendGift = findViewById(R.id.txtsendgift);
-        textUserCoin = findViewById(R.id.txtusercoin);
+        SendGift = findViewById(R.id.send_gift);
+        userAvailableCoin = findViewById(R.id.user_available_coin);
         spinner = findViewById(R.id.spinner);
         crystal = findViewById(R.id.giftslayout);
-        closegift = findViewById(R.id.closegift);
-        btngift = findViewById(R.id.btngift);
-        txtcmnt = findViewById(R.id.txtcmnt);
+        closeGiftBox = findViewById(R.id.closegift);
+        roomGift = findViewById(R.id.room_gift);
+        commentBox = findViewById(R.id.comment_box);
         sencmnt = findViewById(R.id.sndcmnt);
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
@@ -250,27 +247,62 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowUser();
+                ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this);
+                viewDialoguser.showDialog(onlineUserList);
             }
         });
-        closegift.setOnClickListener(this);
-        btngift.setOnClickListener(this);
-        close.setOnClickListener(new View.OnClickListener() {
+        closeGiftBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                singl.setVisibility(View.GONE);
+                crystal.setVisibility(View.GONE);
+            }
+        });
+        roomGift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+                selectedViewer.name = nameOfRoom;
+                selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
+                selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+                txtsinglename.setText(nameOfRoom);
+                crystal.setVisibility(View.VISIBLE);
+            }
+        });
+        singleUserClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                singleUserBox.setVisibility(View.GONE);
             }
         });
 
-        textUserCoin.setOnClickListener(this);
-        textSendGift.setOnClickListener(this);
-        showusers.setOnClickListener(this);
+        userAvailableCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LiveRoomActivity.this, WalletActivity.class));
+            }
+        });
+
+
 
         comments = new ArrayList<>();
-        recyclerView = findViewById(R.id.cmntrecyler);
+        RecyclerView commentRecyclerView = findViewById(R.id.live_comment_recyler);
+        commentAdapter = new CommentAdapter(this, comments, new ItemClickListener1() {
+            @Override
+            public void onPositionClicked(View view, final int position) {
+                if (position == 0) {
+                }
 
+            }
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            @Override
+            public void onLongClicked(int position) {
+
+            }
+        });
+        commentRecyclerView.hasFixedSize();
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commentRecyclerView.setAdapter(commentAdapter);
+
 
 
         nameOfRoom = getIntent().getStringExtra("UserName");
@@ -286,7 +318,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             comments.add(comment);
         }
         if (nameOfRoom.contentEquals("Eidland Battle Royale")) {
-
             comment.setComment("Welcome to Eidland! We are glad to have you here! Please tap on a seat to start speaking");
             comment.setName("Eidland Staff \uD83E\uDD73");
             imgUrl = getIntent().getStringExtra("profile");
@@ -295,23 +326,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         }
 
 
-        commentAdapter = new CommentAdapter(this, comments, new ItemClickListener1() {
-            @Override
-            public void onPositionClicked(View view, final int position) {
-                if (position == 0) {
-                    Toast.makeText(LiveRoomActivity.this, "This is auto Generated Text for every live", Toast.LENGTH_SHORT).show();
-                }
 
-            }
+        SendGift.setOnClickListener(this);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-            @Override
-            public void onLongClicked(int position) {
-
-            }
-        });
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(commentAdapter);
         setOnlineMembers();
         type = getIntent().getStringExtra("User");
 
@@ -401,11 +419,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         sencmnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!TextUtils.isEmpty(txtcmnt.getText().toString())) {
-                    Comment comment1 = new Comment(Staticconfig.user.getName(), txtcmnt.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", Staticconfig.user.getImageurl());
+                if (!TextUtils.isEmpty(commentBox.getText().toString())) {
+                    Comment comment1 = new Comment(Staticconfig.user.getName(), commentBox.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", Staticconfig.user.getImageurl());
 
                     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment1);
-                    txtcmnt.setText("");
+                    commentBox.setText("");
                 }
             }
         });
@@ -414,20 +432,20 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         singlegift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                singl.setVisibility(View.GONE);
+                singleUserBox.setVisibility(View.GONE);
                 crystal.setVisibility(View.VISIBLE);
             }
         });
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).onDisconnect().removeValue();
         coinWithComma = getFormattedText(Staticconfig.user.getCoins());
-        textUserCoin.setText(coinWithComma);
+        userAvailableCoin.setText(coinWithComma);
         userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 Staticconfig.user = user;
                 coinWithComma = getFormattedText(Staticconfig.user.getCoins());
-                textUserCoin.setText(coinWithComma);
+                userAvailableCoin.setText(coinWithComma);
 
             }
 
@@ -437,6 +455,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         });
         setNameAllSeats();
+
+        giftsListner();
+
+
+
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -444,7 +467,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     comments.add(childd.getValue(Comment.class));
                 }
                 commentAdapter.notifyDataSetChanged();
-                recyclerView.smoothScrollToPosition(comments.size());
+                commentRecyclerView.smoothScrollToPosition(comments.size());
             }
 
             @Override
@@ -452,7 +475,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
             }
         });
-        giftsListner();
 
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
@@ -503,7 +525,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seat).removeValue();
                             Toast.makeText(LiveRoomActivity.this, "user removed", Toast.LENGTH_LONG).show();
-                            singl.setVisibility(View.INVISIBLE);
+                            singleUserBox.setVisibility(View.INVISIBLE);
                         }
                     });
                 } else {
@@ -661,7 +683,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         CheckModerator(currentUser.getUid(), selectuseruid, seats);
                         Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).into(popup_user);
                         txtsinglename.setText(viewer.getName());
-                        singl.setVisibility(View.VISIBLE);
+                        singleUserBox.setVisibility(View.VISIBLE);
                     } else {
 
                         boolean checkPermissionResult = checkSelfPermissions();
@@ -693,7 +715,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         CheckModerator(currentUser.getUid(), selectuseruid, seats);
                         Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
                         txtsinglename.setText(viewer.getName());
-                        singl.setVisibility(View.VISIBLE);
+                        singleUserBox.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -1143,108 +1165,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.closegift:
-                crystal.setVisibility(View.GONE);
-                break;
-            case R.id.btngift: //gift icon beside keyboard
-                selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
-                selectedViewer.name = nameOfRoom;
-                selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
-                selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
-                txtsinglename.setText(nameOfRoom);
-                crystal.setVisibility(View.VISIBLE);
-                break;
-
-//            case R.id.iv500hearts:
-//                setselct(iv500hearts);
-//                selectamnt = 30;
-//                break;
-//            case R.id.iv200redflower:
-//
-//                setselct(iv200flower);
-//                selectamnt = 3;
-//                break;
-//            case R.id.oscar:
-//                setselct(ivoscar);
-//                selectamnt = 500;
-//                break;
-//            case R.id.pigion:
-//
-//                setselct(ivpigions);
-//                selectamnt = 99;
-//                break;
-//            case R.id.iv1000cake:
-//
-//                setselct(iv1000cake);
-//
-//                selectamnt = 15;
-//                break;
-//            case R.id.iv15khappybirthday:
-//                setselct(iv15happy);
-//                selectamnt = 5;
-//
-//                break;
-//            case R.id.iv20kgift:
-//                setselct(iv20giftpack);
-//                selectamnt = 50;
-//
-//                break;
-//            case R.id.iv25kheartcake:
-//                setselct(iv25kheartcake);
-//
-//                selectamnt = 20;
-//                break;
-//
-//            case R.id.neckless:
-//                setselct(iv30kneckless);
-//
-//                selectamnt = 75;
-//                break;
-//            case R.id.dimond:
-//                setselct(iv40kring);
-//
-//                selectamnt = 25;
-//                break;
-//            case R.id.queen:
-//                setselct(iv50queen);
-//
-//
-//                selectamnt = 999;
-//
-//                break;
-//            case R.id.king:
-//                setselct(iv50kking);
-//
-//                selectamnt = 1000;
-//
-//                break;
-//
-//            case R.id.earing:
-//                setselct(iv50earring);
-//
-//                selectamnt = 69;
-//
-//
-//                break;
-//
-//            case R.id.flowerbuckt:
-//                setselct(iv50kbucket);
-//
-//                selectamnt = 100;
-//
-//                break;
-//            case R.id.iv10kbag:
-//                setselct(iv10kladiesbag);
-//
-//                selectamnt = 1;
-//                break;
-//
-//            case R.id.handband:
-//                setselct(iv25kband);
-//                selectamnt = 10;
-//
-//                break;
-            case R.id.txtsendgift: //gift layout send button
+            case R.id.send_gift: //gift layout send button
                 if (selectuseruid == null)
                     selectuseruid = hostuid;
                 if (!selectuseruid.equals(currentUser.getUid())) {
@@ -1261,7 +1182,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
                                     User user = currentData.getValue(User.class);
-                                    //do some calculations
                                     user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
                                     currentData.setValue(user);
                                     return Transaction.success(currentData);
@@ -1273,7 +1193,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                     User user = currentData.getValue(User.class);
                                     Staticconfig.user = user;
                                     coinWithComma = getFormattedText(user.coins);
-                                    textUserCoin.setText(coinWithComma);
+                                    userAvailableCoin.setText(coinWithComma);
                                 }
                             });
                             FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
@@ -1283,14 +1203,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
                                     User user = currentData.<User>getValue(User.class);
                                     assert user != null;
-                                    Log.d("User1", user.getName());
-                                    //do some calculations
-
                                     try {
-                                        Log.d("User2", user.getReceivedCoins());
                                         user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
                                     } catch (Exception e) {
-
                                         System.out.println(e);
                                     }
 
@@ -1321,12 +1236,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                     Toast.makeText(this, "You can not send gift to yourself", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
-            case R.id.txtusercoin:
-                startActivity(new Intent(LiveRoomActivity.this, WalletActivity.class));
-
-                break;
-
 
         }
 
@@ -1735,8 +1644,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     public void ShowUser() {
-        ViewDialogUser viewDialoguser = new ViewDialogUser(this);
-        viewDialoguser.showDialog(onlineUserList);
     }
 
 }
