@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewDialoguser {
+public class ViewDialogUser {
 
     Activity activity;
     Dialog dialog;
@@ -31,7 +31,7 @@ public class ViewDialoguser {
     ArrayList<Viewer> viewerArrayList;
     ViewerListAdapter viewerListAdapter;
 
-    public ViewDialoguser(Activity activity) {
+    public ViewDialogUser(Activity activity) {
         this.activity = activity;
     }
 
