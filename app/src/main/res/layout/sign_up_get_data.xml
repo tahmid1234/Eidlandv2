@@ -21,7 +21,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="50dp"
         android:fontFamily="@font/open_sans_bold"
         android:letterSpacing="0.01"
@@ -55,7 +54,6 @@
                 android:layout_marginLeft="80dp"
                 android:background="@drawable/ic_upload_photo_button"
                 >
-
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -77,16 +75,18 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp" />
-        <GridView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:horizontalSpacing="6dp"
-            android:numColumns="4"
-            android:verticalSpacing="6dp"
-            android:id="@+id/gridview"
-            android:adjustViewBounds="true"
-            >
-        </GridView>
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/avatarImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1" />
+
+        </RelativeLayout>
         <EditText
             android:id="@+id/username"
             android:layout_width="260dp"
