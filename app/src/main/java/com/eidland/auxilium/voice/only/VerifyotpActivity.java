@@ -147,8 +147,6 @@ public class VerifyotpActivity extends AppCompatActivity {
                         dialoge.cancel();
                         if (code != null) {
                             pin.setText(code);
-
-
                         }
                     }
 

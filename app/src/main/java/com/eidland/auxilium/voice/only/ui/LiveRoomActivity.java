@@ -2,14 +2,11 @@ package com.eidland.auxilium.voice.only.ui;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
 import android.os.Build;
@@ -35,7 +32,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -48,8 +44,8 @@ import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.MyProfileActivity;
 import com.eidland.auxilium.voice.only.adapter.CommentAdapter;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
-import com.eidland.auxilium.voice.only.adapter.ViewerListAdapter;
 import com.eidland.auxilium.voice.only.model.AGEventHandler;
+import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.ConstantApp;
 import com.eidland.auxilium.voice.only.model.Gift;
@@ -81,8 +77,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,9 +90,11 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, View.OnClickListener, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
-    String type, SeatsName, AgainSeat, leave = null, run;
-    TextView onlineUserCount, broadName, SendGift, userAvailableCoin;
+import static com.eidland.auxilium.voice.only.ui.Helper.getFormattedText;
+
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
+    String type, SeatsName, AgainSeat, run;
+    TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
@@ -106,9 +102,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     Boolean muteClicked = false;
     ImageView button2, imgbroad;
     ImageView button1;
+    ImageView leaveRoom;
     String pushid = "";
-    DecimalFormat formatter;
-    String finalText, coinWithComma;
     ArrayList<Viewer> onlineUserList;
     ViewerAdapter viewerAdapter;
     String hostuid, roomName;
@@ -137,33 +132,20 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     Viewer selectedViewer = new Viewer();
     RelativeLayout singleUserBox;
     ImageView button;
-    LinearLayout contentView;
 
     RelativeLayout animatedLayout;
     RelativeLayout confettiLayout;
     GifImageView confetti;
     GifImageView simpleGift;
     boolean flag;
-    ArrayList<Gift> giftslist, leaderGiftList;
+    ArrayList<Gift> giftList, leaderGiftList;
     int height, width;
 
     String nameOfRoom;
 
-
-    LinearLayout speaker1, speaker2, speaker3;
-    ImageView speaker1Img, speaker2Img, speaker3Img;
-    TextView speaker1Coin, speaker2Coin, speaker3Coin;
-
-    LinearLayout supporter1, supporter2, supporter3;
-    ImageView supporter1Img, supporter2Img, supporter3Img;
-    TextView supporter1Coin, supporter2Coin, supporter3Coin;
-
-    private GridLayoutManager seatLayoutManager, giftLayoutManager;
-    private AdapterSeat adapterSeat;
-    private AdapterGift adapterGift;
-
     ImageView lastImg;
     int selectedGiftAmount = 0;
+    boolean isnotfirst = true;
 
 
     @Override
@@ -181,6 +163,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
 
+        leaveRoom = findViewById(R.id._leave);
         userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
         button1 = (ImageView) findViewById(R.id.switch_broadcasting_id);
@@ -200,13 +183,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         animatedLayout = findViewById(R.id.animatedlayout);
         confetti = findViewById(R.id.confetti);
         confettiLayout = findViewById(R.id.confettiLayout);
-        giftslist = new ArrayList<>();
+        giftList = new ArrayList<>();
         leaderGiftList = new ArrayList<>();
         singleUserBox = findViewById(R.id.single_user_box);
         viewers = findViewById(R.id.viewersrecyler);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        SendGift = findViewById(R.id.send_gift);
+        sendGiftBtn = findViewById(R.id.send_gift);
         userAvailableCoin = findViewById(R.id.user_available_coin);
         spinner = findViewById(R.id.spinner);
         crystal = findViewById(R.id.giftslayout);
@@ -216,31 +199,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         sencmnt = findViewById(R.id.sndcmnt);
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
-
-
-        speaker1 = findViewById(R.id.s1);
-        speaker2 = findViewById(R.id.s2);
-        speaker3 = findViewById(R.id.s3);
-
-        speaker1Img = findViewById(R.id.s1i);
-        speaker2Img = findViewById(R.id.s2i);
-        speaker3Img = findViewById(R.id.s3i);
-
-        speaker1Coin = findViewById(R.id.s1t);
-        speaker2Coin = findViewById(R.id.s2t);
-        speaker3Coin = findViewById(R.id.s3t);
-
-        supporter1 = findViewById(R.id.c1);
-        supporter2 = findViewById(R.id.c2);
-        supporter3 = findViewById(R.id.c3);
-
-        supporter1Img = findViewById(R.id.c1i);
-        supporter2Img = findViewById(R.id.c2i);
-        supporter3Img = findViewById(R.id.c3i);
-
-        supporter1Coin = findViewById(R.id.c1t);
-        supporter2Coin = findViewById(R.id.c2t);
-        supporter3Coin = findViewById(R.id.c3t);
 
 
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
@@ -281,28 +239,26 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         });
 
-
-
+        leaveRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                End1();
+            }
+        });
         comments = new ArrayList<>();
         RecyclerView commentRecyclerView = findViewById(R.id.live_comment_recyler);
         commentAdapter = new CommentAdapter(this, comments, new ItemClickListener1() {
             @Override
             public void onPositionClicked(View view, final int position) {
-                if (position == 0) {
-                }
-
             }
 
             @Override
             public void onLongClicked(int position) {
-
             }
         });
         commentRecyclerView.hasFixedSize();
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentRecyclerView.setAdapter(commentAdapter);
-
-
 
         nameOfRoom = getIntent().getStringExtra("UserName");
         final Comment comment = new Comment();
@@ -325,8 +281,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         }
 
 
-
-        SendGift.setOnClickListener(this);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         setOnlineMembers();
@@ -410,8 +364,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         .setCancelable(false)
                         .show();
             }
-
-
         });
 
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).addChildEventListener(eventListener);
@@ -435,16 +387,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 crystal.setVisibility(View.VISIBLE);
             }
         });
+
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).onDisconnect().removeValue();
-        coinWithComma = getFormattedText(Staticconfig.user.getCoins());
-        userAvailableCoin.setText(coinWithComma);
+        userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
         userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 Staticconfig.user = user;
-                coinWithComma = getFormattedText(Staticconfig.user.getCoins());
-                userAvailableCoin.setText(coinWithComma);
+                userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
 
             }
 
@@ -456,8 +407,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         setNameAllSeats();
 
         giftsListner();
-
-
 
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
@@ -477,35 +426,102 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
-        seatLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 5, GridLayoutManager.VERTICAL, false);
-        adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
+        GridLayoutManager seatLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 5, GridLayoutManager.VERTICAL, false);
+        AdapterSeat adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
         seatRecycler.setLayoutManager(seatLayoutManager);
         adapterSeat.notifyDataSetChanged();
         seatRecycler.setAdapter(adapterSeat);
 
-
         RecyclerView giftRecycler = findViewById(R.id.gift_recycler);
         giftRecycler.setHasFixedSize(true);
-        giftLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        adapterGift = new AdapterGift(LiveRoomActivity.this, this, roomName);
+        GridLayoutManager giftLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, roomName);
         giftRecycler.setLayoutManager(giftLayoutManager);
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);
+
+
+        sendGiftBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (selectuseruid == null)
+                    selectuseruid = hostuid;
+                if (!selectuseruid.equals(currentUser.getUid())) {
+                    if (selectedGiftAmount > 0) {
+                        Long curnt = Long.parseLong(Staticconfig.user.getCoins());
+                        if (curnt > selectedGiftAmount) {
+                            crystal.setVisibility(View.GONE);
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
+                                @NonNull
+                                @Override
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+
+                                    User user = currentData.getValue(User.class);
+                                    user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
+                                    currentData.setValue(user);
+                                    return Transaction.success(currentData);
+                                }
+
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+
+                                    User user = currentData.getValue(User.class);
+                                    Staticconfig.user = user;
+                                    userAvailableCoin.setText(getFormattedText(user.coins));
+                                }
+                            });
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
+                                @NonNull
+                                @Override
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+
+                                    User user = currentData.<User>getValue(User.class);
+                                    assert user != null;
+                                    try {
+                                        user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
+                                    } catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+
+                                    currentData.setValue(user);
+                                    return Transaction.success(currentData);
+                                }
+
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+
+                                    System.out.println(error);
+                                }
+                            });
+                            sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+                        } else {
+                            if (selectedGiftAmount == 0) {
+                                Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
+                            } else Toast.makeText(getApplicationContext(), "Low Balance Please Purchase Coins", Toast.LENGTH_SHORT).show();
+                        }
+                    } else
+                        Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You can not send gift to yourself", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
     public void onSeatClick(int position) {
-        CheckSeats("seat"+ position);
-        Clickedseat = "seat"+ position;
+        CheckSeats("seat" + position);
+        Clickedseat = "seat" + position;
     }
 
     @Override
     public void onGiftClick(int position, ImageView icon) {
         GiftItem giftItem = ConstantApp.giftList().get(position);
-        try{
-            if(lastImg!=null) lastImg.setImageResource(0);
+        try {
+            if (lastImg != null) lastImg.setImageResource(0);
             lastImg = icon;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         icon.setImageResource(R.drawable.ic_check_1_gift_select);
@@ -539,42 +555,24 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         });
     }
 
-    public String getFormattedText(String coin) {
-        BigDecimal val = new BigDecimal(coin);
-        formatter = new DecimalFormat("#,###,###");
-        finalText = formatter.format(val);
-        return finalText;
-    }
-
     public void inist(String token) {
         event().addEventHandler(this);
-
         Intent i = getIntent();
-
         int cRole = i.getIntExtra(ConstantApp.ACTION_KEY_CROLE, 0);
-
         if (cRole == 0) {
             throw new RuntimeException("Should not reach here");
         }
 
         String roomName = i.getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
-
         doConfigEngine(cRole);
-
         ImageView button1 = findViewById(R.id.switch_broadcasting_id);
-
 
         if (isBroadcaster(cRole)) {
             broadcasterUI(button1, button2);
         } else {
             audienceUI(button1, button2);
         }
-
         worker().joinChannel(token, roomName, config().mUid);
-
-        TextView textRoomName = findViewById(R.id.room_name);
-        // textRoomName.setText("CS & IT  Room");
-
         optional();
     }
 
@@ -588,7 +586,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
         SeatsName = "seat1";
         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom);
-        // ali
         FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(SeatsName).setValue(viewer);
         AgainSeat = SeatsName;
         inist(token);
@@ -692,7 +689,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                             doSwitchToBroadcaster(true);
                             AgainSeat = seats;
                         }
-
                     }
                 }
 
@@ -716,7 +712,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         txtsinglename.setText(viewer.getName());
                         singleUserBox.setVisibility(View.VISIBLE);
                     }
-
                 }
 
                 @Override
@@ -726,7 +721,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             });
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -774,14 +768,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                                 case UPDATE_UI_MESSAGE:
                                     String content = (String) (msg.obj);
                                     break;
-
                                 default:
                                     break;
                             }
-
                         }
                     };
-
                 }
 
                 mMainHandler.removeMessages(UPDATE_UI_MESSAGE);
@@ -809,7 +800,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
 
@@ -828,21 +818,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         return cRole == Constants.CLIENT_ROLE_BROADCASTER;
     }
 
-    private boolean isBroadcaster() {
-        return isBroadcaster(config().mClientRole);
-    }
-
     @Override
     protected void deInitUIandEvent() {
         optionalDestroy();
-
         doLeaveChannel();
         event().removeEventHandler(this);
     }
 
     private void doLeaveChannel() {
         worker().leaveChannel(config().mChannel);
-
     }
 
     public void onEndCallClicked(View view) {
@@ -852,47 +836,37 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             if (flag == true) {
                 Glide.with(LiveRoomActivity.this).load(R.drawable.ic_mic_on).into(button);
             }
-
             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
-
             AgainSeat = null;
-
         }
     }
 
     @Override
     public void onBackPressed() {
-        leave = "dialoge";
         End1();
-
-
     }
 
     private void End1() {
-        if (leave.equals("dialoge")) {
-            AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-            dialoge.setTitle("Confirm Exit")
-                    .setMessage("Are you sure you want to leave Eidland?")
-                    .setPositiveButton("Exit & Leave App", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            run = "1";
-                            progressDialog.show();
-                            EndMeeting();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
-        } else {
-            progressDialog.show();
-            EndMeeting();
-        }
+
+        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
+        dialoge.setTitle("Confirm Exit")
+                .setMessage("Are you sure you want to leave Eidland?")
+                .setPositiveButton("Exit & Leave App", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        run = "1";
+                        progressDialog.show();
+                        EndMeeting();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 
 
@@ -1139,10 +1113,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     public void notifyHeadsetPlugged(final int routing) {
-        log.info("notifyHeadsetPlugged " + routing);
-
         mAudioRouting = routing;
-
         ImageView iv = findViewById(R.id.switch_speaker_id);
         if (mAudioRouting == 3) { // Speakerphone
             iv.setColorFilter(getResources().getColor(R.color.agora_blue), PorterDuff.Mode.MULTIPLY);
@@ -1152,161 +1123,46 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
 
-    public void leave(View view) {
-        leave = "dialoge";
-        End1();
-    }
-
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.send_gift: //gift layout send button
-                if (selectuseruid == null)
-                    selectuseruid = hostuid;
-                if (!selectuseruid.equals(currentUser.getUid())) {
-                    if (selectedGiftAmount > 0) {
-                        Long curnt = Long.parseLong(Staticconfig.user.getCoins());
-
-                        if (curnt > selectedGiftAmount) {
-                            crystal.setVisibility(View.GONE);
-
-
-                            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
-                                @NonNull
-                                @Override
-                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-
-                                    User user = currentData.getValue(User.class);
-                                    user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
-                                    currentData.setValue(user);
-                                    return Transaction.success(currentData);
-                                }
-
-                                @Override
-                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-
-                                    User user = currentData.getValue(User.class);
-                                    Staticconfig.user = user;
-                                    coinWithComma = getFormattedText(user.coins);
-                                    userAvailableCoin.setText(coinWithComma);
-                                }
-                            });
-                            FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
-                                @NonNull
-                                @Override
-                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-
-                                    User user = currentData.<User>getValue(User.class);
-                                    assert user != null;
-                                    try {
-                                        user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
-                                    } catch (Exception e) {
-                                        System.out.println(e);
-                                    }
-
-                                    currentData.setValue(user);
-                                    return Transaction.success(currentData);
-                                }
-
-                                @Override
-                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-
-                                    System.out.println(error);
-                                }
-                            });
-
-
-                            sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
-
-
-                        } else {
-                            if (selectedGiftAmount == 0) {
-                                Toast.makeText(this, "No Gift is selected", Toast.LENGTH_SHORT).show();
-                            } else Toast.makeText(this, "Low Balance Please Purchase Coins", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } else
-                        Toast.makeText(this, "No Gift is selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "You can not send gift to yourself", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-        }
-
-    }
-
-
-    boolean isnotfirst = true;
-
     public void giftsListner() {
-        addpoints();
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (isnotfirst) {
-                    giftslist.clear();
+                    giftList.clear();
                     leaderGiftList.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         Gift gift = dataSnapshot1.getValue(Gift.class);
 
                         assert gift != null;
                         if (gift.getGift() != null && gift.getSenderName() != null) {
-                            giftslist.add(gift);
+                            giftList.add(gift);
                         }
                         if (gift.getGift() != null && gift.getSenderName() != null) {
                             leaderGiftList.add(gift);
                         }
                     }
 
-                    Log.d("giftsizeout", String.valueOf(giftslist.size()));
-                    int index = giftslist.size() - 1;
-                    giftAnimation(giftslist.get(index).getGift(), giftslist.get(index), giftslist.get(index).getReceiverName());
+                    int index = giftList.size() - 1;
+                    giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
                     LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
 
-                    try {
-                        if (leaderBoard.winners.get(0) != null) {
-                            speaker1.setVisibility(View.VISIBLE);
-                            speaker1Coin.setText(Long.toString(leaderBoard.getTopWinner().get(0).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.getTopWinner().get(0).imgUrl).placeholder(R.drawable.ic_mic).into(speaker1Img);
-                        }
-                        if (leaderBoard.winners.get(1) != null) {
-                            speaker2.setVisibility(View.VISIBLE);
-                            speaker2Coin.setText(Long.toString(leaderBoard.getTopWinner().get(1).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.getTopWinner().get(1).imgUrl).placeholder(R.drawable.ic_mic).into(speaker2Img);
-                        }
-                        if (leaderBoard.winners.get(2) != null) {
-                            speaker3.setVisibility(View.VISIBLE);
-                            speaker3Coin.setText(Long.toString(leaderBoard.getTopWinner().get(2).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.getTopWinner().get(2).imgUrl).placeholder(R.drawable.ic_mic).into(speaker3Img);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("is working? " + e);
-                    }
-                    try {
-                        if (leaderBoard.contributors.get(0) != null) {
-                            supporter1.setVisibility(View.VISIBLE);
-                            supporter1Coin.setText(Long.toString(leaderBoard.getTopContributor().get(0).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.getTopContributor().get(0).imgUrl).placeholder(R.drawable.ic_mic).into(supporter1Img);
-                        }
-                        if (leaderBoard.contributors.get(1) != null) {
-                            supporter2.setVisibility(View.VISIBLE);
-                            supporter2Coin.setText(Long.toString(leaderBoard.getTopContributor().get(1).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.getTopContributor().get(1).imgUrl).placeholder(R.drawable.ic_mic).into(supporter2Img);
-                        }
-                        if (leaderBoard.contributors.get(2) != null) {
-                            supporter3.setVisibility(View.VISIBLE);
-                            supporter3Coin.setText(Long.toString(leaderBoard.getTopContributor().get(2).coins));
-                            Glide.with(getApplicationContext()).load(leaderBoard.getTopContributor().get(2).imgUrl).placeholder(R.drawable.ic_mic).into(supporter3Img);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("not okay");
-                        System.out.println(e);
-                    }
+                    RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
+                    topSpeakerRecycler.setHasFixedSize(true);
+                    LinearLayoutManager giftLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                    AdapterLeadUser adapterLeader = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopSpeaker());
+                    topSpeakerRecycler.setLayoutManager(giftLayoutManager);
+                    adapterLeader.notifyDataSetChanged();
+                    topSpeakerRecycler.setAdapter(adapterLeader);
+
+                    RecyclerView topContributorRecycler = findViewById(R.id.top_contributor);
+                    topContributorRecycler.setHasFixedSize(true);
+                    LinearLayoutManager contributorLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                    AdapterLeadUser adapterLeaderContributor = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopContributor());
+                    topContributorRecycler.setLayoutManager(contributorLayoutManager);
+                    adapterLeader.notifyDataSetChanged();
+                    topContributorRecycler.setAdapter(adapterLeaderContributor);
+
                 } else
                     isnotfirst = true;
             }
@@ -1320,77 +1176,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
 
     public void giftAnimation(String id, Gift gift, String receiver) {
 
-        switch (id) {
-            case "hearts":
-                simpleGift.setImageResource(R.drawable.ic_heart);
-                confetti.setImageResource(R.drawable.heart_fill_gif);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "like1":
-                simpleGift.setImageResource(R.drawable.ic_like_1);
-                confetti.setImageResource(R.drawable.like_many_gif);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "smilereact":
-                simpleGift.setImageResource(R.drawable.ic_heart_1_);
-                confetti.setImageResource(R.drawable.heart_burst);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "pigions":
-                simpleGift.setImageResource(R.drawable.ic_pigeon);
-                break;
-            case "oscar":
-                simpleGift.setImageResource(R.drawable.ic_oscar);
-                break;
-            case "heartcomment":
-                simpleGift.setImageResource(R.drawable.ic_heartcomment);
-                break;
 
-            case "like2":
-                simpleGift.setImageResource(R.drawable.ic_like);
-                confetti.setImageResource(R.drawable.like_big_gif);
+        for (AnimationItem animationItem :
+                ConstantApp.animationItems()) {
+            if (animationItem.name.equals(id)) {
+                simpleGift.setImageResource(animationItem.giftIconId);
+                confetti.setImageResource(animationItem.gifIconId);
                 confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "star":
-                simpleGift.setImageResource(R.drawable.ic_star);
-                break;
-            case "medal":
-                simpleGift.setImageResource(R.drawable.ic_medal);
-                confetti.setImageResource(R.drawable.confetti);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "fire":
-                simpleGift.setImageResource(R.drawable.ic_fire);
-                confetti.setImageResource(R.drawable.flames_gif);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "debate":
-                simpleGift.setImageResource(R.drawable.ic_debate);
-                break;
-
-            case "castle":
-                simpleGift.setImageResource(R.drawable.ic_sand_castle);
-                confetti.setImageResource(R.drawable.castle_gif);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-            case "crown":
-                simpleGift.setImageResource(R.drawable.ic_crown);
-                confetti.setImageResource(R.drawable.crown_gif);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
-
-            case "carousel":
-                simpleGift.setImageResource(R.drawable.ic_carousel);
-                break;
-            case "championbelt":
-                simpleGift.setImageResource(R.drawable.ic_champion_belt);
-                break;
-            case "clap":
-                simpleGift.setImageResource(R.drawable.ic_clapping);
-                confetti.setImageResource(R.drawable.clap_gif);
-                confettiLayout.setVisibility(View.VISIBLE);
-                break;
+            }
         }
+
         sendername.setText(gift.getSenderName() + " Rewarded to ");
         receivername.setText(receiver);
         Handler enterScreen = new Handler();
@@ -1413,7 +1208,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                 animatedLayout.setVisibility(View.GONE);
                 confettiLayout.setVisibility(View.GONE);
                 try {
-                    giftslist.remove(0);
+                    giftList.remove(0);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -1423,56 +1218,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     private void sendGift(Gift gift) {
-
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
-
         Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", Staticconfig.user.getImageurl());
-
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
-
-        giftAnimation(selectedGiftName, gift, gift.receiverName);
-    }
-
-    ArrayList<Point> path;
-
-    public void addpoints() {
-
-        path = new ArrayList<>();
-        int y = 100;
-
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(-1, height));
-        path.add(new Point(-2, height));
-        path.add(new Point(width + 200, height));
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void animateCurveMotion() {
-
-        Path path = new Path();
-
-        path.moveTo(this.path.get(0).x, this.path.get(0).y);
-
-        for (int i = 1; i < this.path.size(); i++) {
-            path.lineTo(this.path.get(i).x, this.path.get(i).y);
-        }
-        ObjectAnimator objectAnimator =
-                ObjectAnimator.ofFloat(animatedLayout, View.X, View.Y, path);
-        setAnimValues(objectAnimator, 2000, ValueAnimator.INFINITE);
-        objectAnimator.start();
     }
 
     public void setAnimValues(ObjectAnimator objectAnimator, int duration, int repeatMode) {
@@ -1482,22 +1230,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
         objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (Staticconfig.user != null) {
-            Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
-        }
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                String strEditText = data.getStringExtra("editTextValue");
-            }
-        }
-    }
 
     public void setOnlineMembers() {
         if (viewerlist != null) onlineUserList.clear();
@@ -1542,12 +1274,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
                         onlineUserList.remove(i);
                         break;
                     }
-
                 }
                 FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
                 viewerAdapter.notifyDataSetChanged();
                 onlineUserCount.setText(onlineUserList.size() + " Online");
-
             }
 
             @Override
@@ -1574,7 +1304,42 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         });
         viewers.setAdapter(viewerAdapter);
+    }
 
+
+    public void CallAlert() {
+        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
+        dialoge.setTitle("Welcome to Eidland")
+                .setMessage("Please ensure your microphone and storage permission is given in order to get most of Eidland")
+                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean checkPermissionResult = checkSelfPermissions();
+                        if (checkPermissionResult) {
+                            dialog.cancel();
+                        } else {
+                            Log.e("no permission", "Not Found");
+                        }
+                    }
+                }).setCancelable(false).show();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Staticconfig.user != null) {
+            Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                String strEditText = data.getStringExtra("editTextValue");
+            }
+        }
     }
 
     private boolean checkSelfPermissions() {
@@ -1583,7 +1348,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
     }
 
     public boolean checkSelfPermission(String permission, int requestCode) {
-        //   log.debug("checkSelfPermission " + permission + " " + requestCode);
         if (ContextCompat.checkSelfPermission(this,
                 permission)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -1630,25 +1394,4 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Vi
             }
         }
     }
-
-    public void CallAlert() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-        dialoge.setTitle("Welcome to Eidland")
-                .setMessage("Please ensure your microphone and storage permission is given in order to get most of Eidland")
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean checkPermissionResult = checkSelfPermissions();
-                        if (checkPermissionResult) {
-                            dialog.cancel();
-                        } else {
-                            Log.e("no permission", "Not Found");
-                        }
-                    }
-                }).setCancelable(false).show();
-    }
-
-    public void ShowUser() {
-    }
-
 }

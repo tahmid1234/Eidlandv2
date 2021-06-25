@@ -43,4 +43,27 @@ public class ConstantApp {
         giftItems.add(new GiftItem("oscar",500, R.drawable.ic_gift___oscar2));
         return giftItems;
     }
+
+    public static List<AnimationItem> animationItems(){
+        List<AnimationItem> animationItemList = new ArrayList<>();
+
+        animationItemList.add(new AnimationItem("hearts", R.drawable.ic_heart, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("like1", R.drawable.ic_like_1, R.drawable.like_many_gif));
+        animationItemList.add(new AnimationItem("smilereact", R.drawable.ic_heart_1_, R.drawable.heart_burst));
+        animationItemList.add(new AnimationItem("pigions", R.drawable.ic_pigeon, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("oscar", R.drawable.ic_oscar, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("heartcomment", R.drawable.ic_heartcomment, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("like2", R.drawable.ic_like, R.drawable.like_big_gif));
+        animationItemList.add(new AnimationItem("star", R.drawable.ic_star, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("medal", R.drawable.ic_medal, R.drawable.confetti));
+        animationItemList.add(new AnimationItem("fire", R.drawable.ic_fire, R.drawable.flames_gif));
+        animationItemList.add(new AnimationItem("debate", R.drawable.ic_debate, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("castle", R.drawable.ic_sand_castle, R.drawable.castle_gif));
+        animationItemList.add(new AnimationItem("crown", R.drawable.ic_crown, R.drawable.crown_gif));
+        animationItemList.add(new AnimationItem("carousel", R.drawable.ic_carousel, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("championbelt", R.drawable.ic_champion_belt, R.drawable.heart_fill_gif));
+        animationItemList.add(new AnimationItem("clap", R.drawable.ic_clapping, R.drawable.clap_gif));
+
+        return animationItemList;
+    }
 }

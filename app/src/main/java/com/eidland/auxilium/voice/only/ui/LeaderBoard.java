@@ -68,7 +68,7 @@ public class LeaderBoard {
         return contributors;
     }
 
-    List<Leader> getTopWinner() {
+    List<Leader> getTopSpeaker() {
 
         Collections.sort(winners, new Comparator<Leader>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
