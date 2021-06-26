@@ -119,7 +119,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     private volatile int mAudioRouting = -1; // Default
     ChildEventListener eventListener;
     String imgUrl;
-    RecyclerView viewers, viewerlist;
+    RecyclerView viewers;
     ImageView bottom_action_end_call;
     ArrayList<Comment> comments;
     CommentAdapter commentAdapter;
@@ -1232,13 +1232,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     public void setOnlineMembers() {
-        if (viewerlist != null) onlineUserList.clear();
         eventListener = new ChildEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Viewer viewer = dataSnapshot.getValue(Viewer.class);
-
+                onlineUserList.clear();
                 boolean isexist = false;
                 for (int i = 0; i < onlineUserList.size(); i++) {
                     assert viewer != null;
@@ -1293,16 +1292,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         onlineUserList = new ArrayList<>();
         viewers.hasFixedSize();
         viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList, new ItemClickListener1() {
-            @Override
-            public void onPositionClicked(View view, int position) {
-            }
-
-            @Override
-            public void onLongClicked(int position) {
-
-            }
-        });
+        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
         viewers.setAdapter(viewerAdapter);
     }
 

@@ -306,16 +306,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
         viewerslist = new ArrayList<>();
         viewers.hasFixedSize();
         viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        viewerAdapter = new ViewerAdapter(CallActivity.this, viewerslist, new ItemClickListener1() {
-            @Override
-            public void onPositionClicked(View view, int position) {
-            }
-
-            @Override
-            public void onLongClicked(int position) {
-
-            }
-        });
+        viewerAdapter = new ViewerAdapter(CallActivity.this, viewerslist);
         viewers.setAdapter(viewerAdapter);
 
         type = getIntent().getStringExtra("User");
