@@ -9,107 +9,136 @@
     android:weightSum="2"
     tools:context="com.eidland.auxilium.voice.only.Sign_Up_Activity">
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="180dp"
-            android:layout_height="58dp"
-            android:layout_marginTop="196dp"
-            android:background="@drawable/ic_el_logo"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="202dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginBottom="50dp"
-            android:fontFamily="@font/interregular"
-            android:gravity="center"
-            android:letterSpacing="0.01"
-            android:lines="2"
-            android:text="@string/phn_num_input_msg"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:lineHeight="21dp" />
-
-        <LinearLayout
-            android:layout_width="260dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginEnd="45dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/phonenumber_back"
-            android:gravity="center"
-            android:weightSum="3">
-
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/ccp"
-                android:layout_width="30dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:saveEnabled="false"
-                app:ccp_autoDetectCountry="true"
-                app:ccp_contentColor="#263238"
-                app:ccp_showFlag="true"
-                app:ccp_showNameCode="false" />
-
-            <EditText
-                android:id="@+id/txtnumber"
-                style="@style/PinWidget.PinView"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="6dp"
-                android:layout_weight="2"
-                android:hint="@string/phn_no_hint"
-                android:imeOptions="actionGo"
-                android:inputType="number"
-                android:lines="1"
-                android:textAlignment="textStart"
-                android:textSize="17sp" />
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/phn_next"
-                android:layout_width="130dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:background="@drawable/join_button">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="180dp"
+                    android:layout_height="58dp"
+                    android:layout_marginTop="196dp"
+                    android:background="@drawable/ic_el_logo"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="202dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/open_sans_bold"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginBottom="50dp"
+                    android:fontFamily="@font/interregular"
                     android:gravity="center"
-                    android:text="@string/next"
-                    android:textColor="@color/white">
-                </TextView>
-            </RelativeLayout>
+                    android:letterSpacing="0.01"
+                    android:lines="2"
+                    android:text="@string/phn_num_input_msg"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:lineHeight="21dp" />
+
+                <LinearLayout
+                    android:layout_width="260dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/phonenumber_back"
+                    android:gravity="center"
+                    android:weightSum="3">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp"
+                        android:layout_width="30dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:saveEnabled="false"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_contentColor="#263238"
+                        app:ccp_showFlag="true"
+                        app:ccp_showNameCode="false" />
+
+                    <EditText
+                        android:id="@+id/txtnumber"
+                        style="@style/PinWidget.PinView"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="2"
+                        android:hint="@string/phn_no_hint"
+                        android:imeOptions="actionGo"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:textAlignment="textStart"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/phn_next"
+                        android:layout_width="130dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/join_button">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:gravity="center"
+                            android:text="@string/next"
+                            android:textColor="@color/white">
+                        </TextView>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="50dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

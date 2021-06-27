@@ -113,6 +113,7 @@ public class SplashActivity extends AppCompatActivity {
         mFirebaseRemoteConfig.setConfigSettingsAsync(new FirebaseRemoteConfigSettings.Builder().build());
         mFirebaseRemoteConfig.setDefaultsAsync(defaultMap);
         Task<Void> fetchTask = mFirebaseRemoteConfig.fetch(BuildConfig.DEBUG ? 0 : TimeUnit.HOURS.toSeconds(4));
+
         fetchTask.addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -150,7 +151,6 @@ public class SplashActivity extends AppCompatActivity {
         String value = mFirebaseRemoteConfig.getString(parameterKey);
         if (TextUtils.isEmpty(value))
             value = (String) defaultMap.get(parameterKey);
-
         return value;
     }
 

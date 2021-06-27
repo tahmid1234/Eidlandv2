@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
@@ -202,36 +203,12 @@ public class VerifyotpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    FirebaseDatabase.getInstance().getReference("Users").child(userid).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getValue() == null) {
-                                Intent intent = new Intent(VerifyotpActivity.this, SignUpData.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Staticconfig.user = snapshot.getValue(User.class);
-                                Intent intent = new Intent(VerifyotpActivity.this, LiveRoomActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("User", "Participent");
-                                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                                intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-                                intent.putExtra("UserName", "Eidland Battle Royale");
-                                intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                                intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    Toast.makeText(VerifyotpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if(user!=null){
+                        accessGranted(user);
+                    }else{
+                        Toast.makeText(VerifyotpActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(VerifyotpActivity.this, "Signin Code Error", Toast.LENGTH_LONG).show();
                 }
@@ -253,5 +230,38 @@ public class VerifyotpActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    public void accessGranted(FirebaseUser user){
+        String userid = user.getUid();
+        FirebaseDatabase.getInstance().getReference("Users").child(userid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    Intent intent = new Intent(VerifyotpActivity.this, SignUpData.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Staticconfig.user = snapshot.getValue(User.class);
+                    Intent intent = new Intent(VerifyotpActivity.this, LiveRoomActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("User", "Participent");
+                    intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+                    intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                    intent.putExtra("UserName", "Eidland Battle Royale");
+                    intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+                    intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Toast.makeText(VerifyotpActivity.this, "Success", Toast.LENGTH_SHORT).show();
     }
 }
