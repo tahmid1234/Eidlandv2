@@ -2,10 +2,8 @@ package com.eidland.auxilium.voice.only;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -14,18 +12,16 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.eidland.auxilium.voice.only.adapter.ImageAdapter;
+import com.eidland.auxilium.voice.only.adapter.RecyclerViewAdapter;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.eidland.auxilium.voice.only.model.ConstantApp;
@@ -52,13 +48,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
 
 import com.eidland.auxilium.voice.only.ui.ViewDialog;
 
-public class SignUpData extends Activity {
+public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClickListener {
     TextView imgerror;
     RelativeLayout singupactive;
     String finalImage;
@@ -76,7 +71,7 @@ public class SignUpData extends Activity {
     Boolean ImageUploaded = false, isLoggedin = false;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
-
+    RecyclerViewAdapter recyclerViewAdapter;
     public String[] imageList = {
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png",
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/2.png",
@@ -91,11 +86,6 @@ public class SignUpData extends Activity {
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.sign_up_get_data);
         initialViews();
-        GridView gridView = findViewById(R.id.gridview);
-        ImageAdapter imageAdapter = new ImageAdapter(this, imageList);
-
-        gridView.setAdapter(imageAdapter);
-        gridView.invalidateViews();
         Glide.with(SignUpData.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
         intent = getIntent();
         viewDialog = new ViewDialog(this);
@@ -111,14 +101,12 @@ public class SignUpData extends Activity {
             email.setTextColor(Color.GRAY);
             email.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                filePath= Uri.parse(imageList[i]);
-                Glide.with(SignUpData.this).load(imageList[i]).into(profileimageView);// getImageUri( resultUri,1);
-            }
-        });
+        RecyclerView recyclerView = findViewById(R.id.avatarImages);
+        int numberOfColumns = 5;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        recyclerViewAdapter = new RecyclerViewAdapter(this, imageList);
+        recyclerViewAdapter.setClickListener(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         singupactive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,18 +117,12 @@ public class SignUpData extends Activity {
                     return;
                 } else {
                     viewDialog.showDialog();
-                    if (filePath.equals(Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png"))) {
-                        AddData(String.valueOf(filePath));
-                    } else {
-                        uplnamephoto();
-
-                    }
+                    AddData(String.valueOf(filePath));
+                    uplnamephoto();
                 }
             }
         });
     }
-
-
   /*  public void uplnamephoto() {
         RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php/";
@@ -470,5 +452,11 @@ public class SignUpData extends Activity {
 
         Log.e("LOOK", imageEncoded);
         return imageEncoded;
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        filePath= Uri.parse(imageList[position]);
+        Glide.with(SignUpData.this).load(imageList[position]).into(profileimageView);
     }
 }
