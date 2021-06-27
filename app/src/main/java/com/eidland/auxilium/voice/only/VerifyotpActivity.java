@@ -53,22 +53,17 @@ public class VerifyotpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
 
-
         backBTN = findViewById(R.id.back_to_phn);
-        // Hide ActionBar
-//        getSupportActionBar().hide();
-        // progress dialoge
-        progressdialogeshow();
-        //   dialoge.show();
-        // getting ids from layout
-        findviewbyids();
-        //get data from Activity
-        String number = getdata();
-        // call the otp send function
+        pin = findViewById(R.id.pin);
+        verifyotp = findViewById(R.id.verifyotp);
+        setphonenumber = findViewById(R.id.setphonenumber);
 
-        Log.e("signup", (String) setphonenumber.getText());
-        sendotp(phoneNumber);
+        phoneNumber = getIntent().getStringExtra("mobileNumber");
         setphonenumber.setText(phoneNumber);
+
+        progressdialogeshow();
+
+        sendotp(phoneNumber);
 
         verifyotp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +76,6 @@ public class VerifyotpActivity extends AppCompatActivity {
                 } else {
                     pin.setError(null);
                     Callalert();
-
-
                 }
             }
         });
@@ -110,7 +103,6 @@ public class VerifyotpActivity extends AppCompatActivity {
                         } else Log.e("no permission", "Not Found");
                     }
                 })
-
                 .setCancelable(false)
                 .show();
     }
@@ -119,18 +111,6 @@ public class VerifyotpActivity extends AppCompatActivity {
         dialoge = new ProgressDialog(VerifyotpActivity.this);
         dialoge.setMessage("Loading, Please Wait!");
         dialoge.setCancelable(false);
-    }
-
-    private void findviewbyids() {
-        pin = findViewById(R.id.pin);
-        verifyotp = findViewById(R.id.verifyotp);
-
-        setphonenumber = findViewById(R.id.setphonenumber);
-    }
-
-    private String getdata() {
-        phoneNumber = getIntent().getStringExtra("mobileNumber");
-        return phoneNumber;
     }
 
     private void sendotp(String phoneNumber) {
@@ -171,7 +151,6 @@ public class VerifyotpActivity extends AppCompatActivity {
     }
 
     public boolean checkSelfPermission(String permission, int requestCode) {
-        //   log.debug("checkSelfPermission " + permission + " " + requestCode);
         if (ContextCompat.checkSelfPermission(this,
                 permission)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -191,7 +170,6 @@ public class VerifyotpActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // Log.e("onRequestPermissionsResult " + requestCode + " " + Arrays.toString(permissions) + " " + Arrays.toString(grantResults));
         switch (requestCode) {
             case ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO: {
                 if (grantResults.length > 0
@@ -225,7 +203,6 @@ public class VerifyotpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
                     FirebaseDatabase.getInstance().getReference("Users").child(userid).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -241,10 +218,8 @@ public class VerifyotpActivity extends AppCompatActivity {
                                 intent.putExtra("User", "Participent");
                                 intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                                 intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
                                 intent.putExtra("UserName", "Eidland Battle Royale");
                                 intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
                                 intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                                 startActivity(intent);
                                 finish();
@@ -257,17 +232,11 @@ public class VerifyotpActivity extends AppCompatActivity {
                         }
                     });
                     Toast.makeText(VerifyotpActivity.this, "Success", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(VerifyotpActivity.this, ForgetPassword3Activity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            intent.putExtra("mobileNumber",phoneNumber);
-//                            startActivity(intent);
-//                            finish();
                 } else {
                     Toast.makeText(VerifyotpActivity.this, "Signin Code Error", Toast.LENGTH_LONG).show();
                 }
                 dialoge.dismiss();
             }
-
         });
     }
 
@@ -281,9 +250,7 @@ public class VerifyotpActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onBackPressed();
-
             }
-
         });
         dialog.show();
     }

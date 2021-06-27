@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phn_no_hint">1673090995</string>
+    <string name="phn_num_input_msg">Please enter your mobile number to begin</string>
+    <string name="next">Next</string>
+</resources>

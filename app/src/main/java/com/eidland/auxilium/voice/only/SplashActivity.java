@@ -50,37 +50,39 @@ import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
 
-public class SplashActivity extends AppCompatActivity
-         {
+public class SplashActivity extends AppCompatActivity {
     DatabaseReference myRef;
     Intent intent;
-    TextView textView;
-    private static final String FB_RC_KEY_TITLE="update_title";
-    private static final String FB_RC_KEY_DESCRIPTION="update_description";
-    private static final String FB_RC_KEY_FORCE_UPDATE_VERSION="force_update_version";
-    private static final String FB_RC_KEY_LATEST_VERSION="latest_version";
+    private static final String FB_RC_KEY_TITLE = "update_title";
+    private static final String FB_RC_KEY_DESCRIPTION = "update_description";
+    private static final String FB_RC_KEY_FORCE_UPDATE_VERSION = "force_update_version";
+    private static final String FB_RC_KEY_LATEST_VERSION = "latest_version";
     AppUpdateDialog appUpdateDialog;
     FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
     protected void onStart() {
         super.onStart();
-        checkAppUpdate();
-
+//        checkAppUpdate();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId  = "FCM";
+            String channelId = "FCM";
             String channelName = "FCM";
             NotificationManager notificationManager =
                     getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(new NotificationChannel(channelId,
                     channelName, NotificationManager.IMPORTANCE_LOW));
         }
+
+
+
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
 
@@ -95,130 +97,110 @@ public class SplashActivity extends AppCompatActivity
                         Log.d(TAG, token);
                     }
                 });
+
+        CheckNextActivity();
     }
 
-             public void checkAppUpdate() {
+    public void checkAppUpdate() {
 
-                 final int versionCode = BuildConfig.VERSION_CODE;
+        final int versionCode = BuildConfig.VERSION_CODE;
+        final HashMap<String, Object> defaultMap = new HashMap<>();
+        defaultMap.put(FB_RC_KEY_TITLE, "Update Available");
+        defaultMap.put(FB_RC_KEY_DESCRIPTION, "A new version of the application is available please click below to update the latest version.");
+        defaultMap.put(FB_RC_KEY_FORCE_UPDATE_VERSION, "" + versionCode);
+        defaultMap.put(FB_RC_KEY_LATEST_VERSION, "" + versionCode);
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(new FirebaseRemoteConfigSettings.Builder().build());
+        mFirebaseRemoteConfig.setDefaultsAsync(defaultMap);
+        Task<Void> fetchTask = mFirebaseRemoteConfig.fetch(BuildConfig.DEBUG ? 0 : TimeUnit.HOURS.toSeconds(4));
+        fetchTask.addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    // After config data is successfully fetched, it must be activated before newly fetched
+                    // values are returned.
+                    mFirebaseRemoteConfig.fetchAndActivate();
+                    String title = getValue(FB_RC_KEY_TITLE, defaultMap);
+                    String description = getValue(FB_RC_KEY_DESCRIPTION, defaultMap);
+                    int forceUpdateVersion = Integer.parseInt(getValue(FB_RC_KEY_FORCE_UPDATE_VERSION, defaultMap));
+                    int latestAppVersion = Integer.parseInt(getValue(FB_RC_KEY_LATEST_VERSION, defaultMap));
+                    boolean isCancelable = true;
+                    if (latestAppVersion > versionCode) {
+                        if (forceUpdateVersion > versionCode)
+                            isCancelable = false;
 
-                 final HashMap<String, Object> defaultMap = new HashMap<>();
-                 defaultMap.put(FB_RC_KEY_TITLE, "Update Available");
-                 defaultMap.put(FB_RC_KEY_DESCRIPTION, "A new version of the application is available please click below to update the latest version.");
-                 defaultMap.put(FB_RC_KEY_FORCE_UPDATE_VERSION, ""+versionCode);
-                 defaultMap.put(FB_RC_KEY_LATEST_VERSION, ""+versionCode);
+                        appUpdateDialog = new AppUpdateDialog(SplashActivity.this, title, description, isCancelable);
+                        appUpdateDialog.setCancelable(false);
+                        appUpdateDialog.show();
 
-                 mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+                        Window window = appUpdateDialog.getWindow();
+                        assert window != null;
+                        window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
 
-                 mFirebaseRemoteConfig.setConfigSettingsAsync(new FirebaseRemoteConfigSettings.Builder().build());
+                    } else CheckNextActivity();
+                } else {
+                    Toast.makeText(SplashActivity.this, "Fetch Failed",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
-                 mFirebaseRemoteConfig.setDefaultsAsync(defaultMap);
+    public String getValue(String parameterKey, HashMap<String, Object> defaultMap) {
+        String value = mFirebaseRemoteConfig.getString(parameterKey);
+        if (TextUtils.isEmpty(value))
+            value = (String) defaultMap.get(parameterKey);
 
-                 Task<Void> fetchTask=mFirebaseRemoteConfig.fetch(BuildConfig.DEBUG?0: TimeUnit.HOURS.toSeconds(4));
+        return value;
+    }
 
-                 fetchTask.addOnCompleteListener(new OnCompleteListener<Void>() {
-                     @Override
-                     public void onComplete(@NonNull Task<Void> task) {
-                         if (task.isSuccessful()) {
-                             // After config data is successfully fetched, it must be activated before newly fetched
-                             // values are returned.
-                             mFirebaseRemoteConfig.fetchAndActivate();
+    public void CheckNextActivity() {
+        Handler handler = new Handler();
+        handler.postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                            myRef = FirebaseDatabase.getInstance().getReference();
+                            myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue() != null) {
+                                        String value = getSharedPreferences("Auxilium", MODE_PRIVATE).getString("Signupcomplete", "no");
+                                        if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
+                                            Staticconfig.user = dataSnapshot.getValue(User.class);
+                                            //  Toast.makeText(SplashActivity.this, ""+StaticConfig.user.getCoin(), Toast.LENGTH_SHORT).show();
 
-                             String title=getValue(FB_RC_KEY_TITLE,defaultMap);
-                             String description=getValue(FB_RC_KEY_DESCRIPTION,defaultMap);
-                             int forceUpdateVersion= Integer.parseInt(getValue(FB_RC_KEY_FORCE_UPDATE_VERSION,defaultMap));
-                             int latestAppVersion= Integer.parseInt(getValue(FB_RC_KEY_LATEST_VERSION,defaultMap));
+                                            intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
+                                            intent.putExtra("User", "Participent");
+                                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+                                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                                            intent.putExtra("UserName", "Eidland Battle Royale");
+                                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
-                             boolean isCancelable=true;
+                                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
 
-                             if(latestAppVersion>versionCode)
-                             {
-                                 if(forceUpdateVersion>versionCode)
-                                     isCancelable=false;
+                                            startActivity(intent);
+                                            finish();
+                                        } else
+                                            startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
 
-                                 appUpdateDialog = new AppUpdateDialog(SplashActivity.this, title, description, isCancelable);
-                                 appUpdateDialog.setCancelable(false);
-                                 appUpdateDialog.show();
-
-                                 Window window = appUpdateDialog.getWindow();
-                                 assert window != null;
-                                 window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-
-                             }
-                          else CheckNextActivity();
-                         } else {
-                             Toast.makeText(SplashActivity.this, "Fetch Failed",
-                                     Toast.LENGTH_SHORT).show();
-                         }
-                     }
-                 });
-             }
-
-             public String getValue(String parameterKey,HashMap<String, Object> defaultMap)
-             {
-                 String value=mFirebaseRemoteConfig.getString(parameterKey);
-                 if(TextUtils.isEmpty(value))
-                     value= (String) defaultMap.get(parameterKey);
-
-                 return value;
-             }
-             public void CheckNextActivity()
-             {
-                 Handler handler = new Handler();
-                 handler.postDelayed(
-                         new Runnable() {
-                             @Override
-                             public void run() {
-                                 if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                                     myRef = FirebaseDatabase.getInstance().getReference();
-
-                                     myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                         @Override
-                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                             if (dataSnapshot.getValue() != null) {
-                                                 String value = getSharedPreferences("Auxilium", MODE_PRIVATE).getString("Signupcomplete", "no");
-                                                 if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
-                                                     Staticconfig.user = dataSnapshot.getValue(User.class);
-                                                     //  Toast.makeText(SplashActivity.this, ""+StaticConfig.user.getCoin(), Toast.LENGTH_SHORT).show();
-
-                                                     intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
-                                                     intent.putExtra("User", "Participent");
-                                                     intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                                                     intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                                                     intent.putExtra("UserName", "Eidland Battle Royale");
-                                                     intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-                                                     intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-
-                                                     startActivity(intent);
-                                                     finish();
+                                    } else
+                                        startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
 
 
-                                                 } else
-                                                     startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-
-                                             } else
-                                                 startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+                                }
 
 
-                                         }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-
-                                         @Override
-                                         public void onCancelled(DatabaseError databaseError) {
-
-                                         }
-                                     });
-
-
-                                 } else {
-
-
-                                     startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-
-
-                                 }
-                             }
-                         }, 1000);
-             }
+                                }
+                            });
+                        } else {
+                            startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+                        }
+                    }
+                }, 1000);
+    }
 }

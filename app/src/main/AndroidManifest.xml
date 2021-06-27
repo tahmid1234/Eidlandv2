@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="com.android.vending.BILLING"/>
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name="com.eidland.auxilium.voice.only.AGApplication"
@@ -18,7 +18,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.eidland.auxilium.voice.only.ui.CallActivity" android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name="com.eidland.auxilium.voice.only.ui.CallActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name="com.eidland.auxilium.voice.only.MyProfileActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.SplashActivity">
             <intent-filter>
@@ -29,6 +31,7 @@
         </activity>
         <activity android:name="com.eidland.auxilium.voice.only.ui.WalletActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.EnterRoomActivity" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -39,13 +42,8 @@
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--            </intent-filter>-->
-        </activity>
+            android:exported="true"/>
+
         <service android:name="com.eidland.auxilium.voice.only.Services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -57,8 +55,9 @@
 
         <activity android:name="com.eidland.auxilium.voice.only.MyProfile" />
         <activity android:name="com.eidland.auxilium.voice.only.VerifyotpActivity" />
-        <activity android:name="com.eidland.auxilium.voice.only.SignUpData"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="com.eidland.auxilium.voice.only.SignUpData"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

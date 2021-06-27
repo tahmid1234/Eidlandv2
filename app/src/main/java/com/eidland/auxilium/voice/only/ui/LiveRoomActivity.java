@@ -371,7 +371,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(commentBox.getText().toString())) {
                     Comment comment1 = new Comment(Staticconfig.user.getName(), commentBox.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", Staticconfig.user.getImageurl());
-
                     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment1);
                     commentBox.setText("");
                 }

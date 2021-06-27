@@ -4,38 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    android:weightSum="2"
     android:background="@drawable/splash_new_backgroundv4"
+    android:orientation="vertical"
+    android:weightSum="2"
     tools:context="com.eidland.auxilium.voice.only.Sign_Up_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:gravity="center"
         android:orientation="vertical">
-
-        <!-- Eidland -->
-
-
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="180dp"
             android:layout_height="58dp"
-
-            android:scaleType="centerCrop"
             android:layout_marginTop="196dp"
             android:background="@drawable/ic_el_logo"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            android:contentDescription="TODO" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,18 +34,16 @@
         android:layout_marginTop="50dp"
         android:layout_weight="1"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="202dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginBottom="50dp"
             android:fontFamily="@font/interregular"
-
             android:gravity="center"
             android:letterSpacing="0.01"
             android:lines="2"
-            android:text="Please enter your mobile number to begin"
+            android:text="@string/phn_num_input_msg"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -64,11 +52,11 @@
         <LinearLayout
             android:layout_width="260dp"
             android:layout_height="44dp"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginStart="45dp"
             android:layout_marginEnd="45dp"
-            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/phonenumber_back"
             android:gravity="center"
             android:weightSum="3">
@@ -79,10 +67,9 @@
                 android:layout_height="44dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:saveEnabled="false"
                 app:ccp_autoDetectCountry="true"
                 app:ccp_contentColor="#263238"
-
-                android:saveEnabled="false"
                 app:ccp_showFlag="true"
                 app:ccp_showNameCode="false" />
 
@@ -91,34 +78,26 @@
                 style="@style/PinWidget.PinView"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
-
                 android:layout_marginStart="6dp"
                 android:layout_weight="2"
-                android:hint="1673090995"
+                android:hint="@string/phn_no_hint"
                 android:imeOptions="actionGo"
-                android:textSize="17sp"
                 android:inputType="number"
                 android:lines="1"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <RelativeLayout
-
                 android:id="@+id/phn_next"
                 android:layout_width="130dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-
                 android:background="@drawable/join_button">
 
                 <TextView
@@ -127,132 +106,10 @@
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
-                    android:text="Next"
+                    android:text="@string/next"
                     android:textColor="@color/white">
-
                 </TextView>
             </RelativeLayout>
-
-
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            android:layout_marginBottom="19dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="or"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_gravity="center"
-                android:fontFamily="@font/interregular"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-
-
-        </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="wrap_content"
-    android:background="@drawable/fbstyel"
-    android:visibility="gone"
-    android:layout_marginHorizontal="30dp"
-    android:onClick="facebooklogin"
-    android:layout_marginBottom="10dp">
-    <ImageView
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/facebookicon"
-        android:layout_marginLeft="20dp"
-        android:padding="5dp"
-        app:tint="#fff"
-        android:contentDescription="TODO" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="Continue with Facebook"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-</RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="44dp"
-android:visibility="gone"
-            android:layout_marginStart="45dp"
-            android:layout_marginEnd="45dp"
-            android:layout_marginBottom="10dp">
-
-
-            <com.google.android.gms.common.SignInButton
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="google_login"
-                android:layout_gravity="center_horizontal"
-                android:text="Share on Google+" />
-
-
-
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="260dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="10dp"
-            android:gravity="left"
-            android:layout_marginStart="45dp"
-            android:visibility="gone"
-            android:layout_marginEnd="45dp"
-            android:onClick="google_login"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            android:clickable="true"
-            android:id="@+id/googlesignup" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:adjustViewBounds="true"
-                android:layout_marginStart="5dp"
-
-                android:padding="12dp"
-                android:src="@drawable/ic_google_icon"
-                android:contentDescription="TODO" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:typeface="normal"
-                android:textSize="14sp"
-                android:text="Sign in with Google"
-                android:textStyle="normal"
-                android:textColor="#757575"/>
-
-        </RelativeLayout>
-
-
-
     </LinearLayout>
-
 </LinearLayout>
