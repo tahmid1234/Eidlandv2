@@ -1,152 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_rectangle_18"
+    android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.SignUpData">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center_vertical|center_horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:letterSpacing="0.01"
-        android:lineHeight="21sp"
-        android:padding="10dp"
-        android:text="Set Your Avatar"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-</RelativeLayout>
-</LinearLayout>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:orientation="vertical">
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/imageViewprofile"
-            android:layout_width="126dp"
-            android:layout_height="126dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_default_image_1"
-            />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="-32dp">
-            <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="80dp"
-                android:background="@drawable/ic_upload_photo_button"
-                >
+        android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="10dp"
-
-                    android:gravity="center"
-                    android:onClick="ChangeImage"
-                    android:contentDescription="TODO" />
-            </LinearLayout>
-        </RelativeLayout>
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_bold"
-            android:letterSpacing="0.01"
-            android:lineHeight="18sp"
-            android:padding="10dp"
-            android:text="Or choose one of the images below"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-        <GridView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:horizontalSpacing="6dp"
-            android:numColumns="4"
-            android:verticalSpacing="6dp"
-            android:id="@+id/gridview"
-            android:adjustViewBounds="true"
-            >
-        </GridView>
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="260dp"
-            android:layout_height="41dp"
+            android:layout_height="match_parent">
 
-            android:layout_marginHorizontal="2dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="30dp"
-            android:padding="6dp"
-            android:background="@drawable/ic_background"
-            android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
-            android:hint="Your Name"
-            android:textColor="@color/white"
-            android:textColorHint="@color/lightgray"
-            android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="260dp"
-            android:layout_height="41dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical|center_horizontal">
 
-            android:layout_marginHorizontal="2dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="30dp"
-            android:padding="6dp"
-            android:background="@drawable/ic_background"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-            android:hint="Your Email Address"
-            android:textColorHint="@color/lightgray"
-            android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            />
+                        android:layout_marginTop="50dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:letterSpacing="0.01"
+                        android:lineHeight="21sp"
+                        android:padding="10dp"
+                        android:text="Set Your Avatar"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </RelativeLayout>
+            </LinearLayout>
 
-
-        <RelativeLayout
-
-            android:id="@+id/singupactive"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-
-            android:background="@drawable/join_button">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="center"
-                android:text="Join Eidland"
-                android:textColor="@color/white">
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical">
 
-            </TextView>
-        </RelativeLayout>
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imageViewprofile"
+                    android:layout_width="126dp"
+                    android:layout_height="126dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_default_image_1" />
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-32dp">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="80dp"
+                        android:background="@drawable/ic_upload_photo_button">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:contentDescription="TODO"
+
+                            android:gravity="center"
+                            android:onClick="ChangeImage"
+                            android:padding="10dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:letterSpacing="0.01"
+                    android:lineHeight="18sp"
+                    android:padding="10dp"
+                    android:text="Or choose one of the images below"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:horizontalSpacing="6dp"
+                    android:numColumns="5"
+                    android:verticalSpacing="6dp"/>
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="260dp"
+                    android:layout_height="41dp"
+
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/ic_background"
+                    android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
+                    android:hint="Your Name"
+                    android:padding="6dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/lightgray"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="260dp"
+                    android:layout_height="41dp"
+
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/ic_background"
+                    android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
+
+                    android:hint="Your Email Address"
+                    android:padding="6dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/lightgray"
+                    android:textSize="18sp" />
+
+
+                <RelativeLayout
+
+                    android:id="@+id/singupactive"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+
+                    android:background="@drawable/join_button">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center"
+                        android:text="Join Eidland"
+                        android:textColor="@color/white">
+
+                    </TextView>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 </LinearLayout>
