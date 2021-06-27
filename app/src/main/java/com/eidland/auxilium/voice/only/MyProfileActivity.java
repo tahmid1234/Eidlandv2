@@ -46,10 +46,12 @@ public class MyProfileActivity extends AppCompatActivity {
     ImageView userimg;
     LinearLayout button_join, lrnrefrsh;
     String userid;
-    TextView txtname, txtcoins;
+    TextView txtname, txtcoins, txtrcvcoins;
     DecimalFormat formatter;
     String finalText, coincomma;
     FirebaseAuth mAuth;
+    Boolean edited=false;
+    String PhotoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +61,11 @@ public class MyProfileActivity extends AppCompatActivity {
         userimg = findViewById(R.id.userimg);
         txtname = findViewById(R.id.txtname);
         txtcoins = findViewById(R.id.txtcoins);
+        txtrcvcoins = findViewById(R.id.txtrcvcoins);
         button_join = findViewById(R.id.lrnjoin);
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Uri ir = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-        if (userid.equals("A3qP5qyS34aGkFxQa3caaXxmHGl2")) {
+        if (userid.equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3")) {
             lrnrefrsh.setVisibility(View.VISIBLE);
         }
         FirebaseDatabase.getInstance().getReference("admins").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,15 +139,15 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Uri img = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()), Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
+        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), PhotoUrl, Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
         Staticconfig.user = obj;
 
         Intent intent = new Intent(MyProfileActivity.this, LiveRoomActivity.class);
         intent.putExtra("User", "Participent");
-        intent.putExtra("userid", "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+        intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
 
-        intent.putExtra("UserName", "Eidland Welcome Hall");
+        intent.putExtra("UserName", "Eidland Battle Royale");
         intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
 
         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
@@ -160,16 +163,19 @@ public class MyProfileActivity extends AppCompatActivity {
             txtname.setText(Staticconfig.user.getName());
             coincomma = formattedtext(Staticconfig.user.getCoins());
             txtcoins.setText(coincomma);
+            coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
+            txtrcvcoins.setText(coincomma);
+            PhotoUrl=Staticconfig.user.getImageurl();
             Glide.with(MyProfileActivity.this).load(Staticconfig.user.getImageurl()).into(userimg);
         }
     }
 
     public void refreshtoken(View view) {
 
-        Log.e("valueee", FirebaseAuth.getInstance().getCurrentUser().getUid() + "" + "A3qP5qyS34aGkFxQa3caaXxmHGl2");
-        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals("A3qP5qyS34aGkFxQa3caaXxmHGl2"))
+        Log.e("valueee", FirebaseAuth.getInstance().getCurrentUser().getUid() + "" + "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3"))
             if (getSharedPreferences("auxilium", MODE_PRIVATE).getInt("dayofmonth", 0) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
-                Log.e("valueee", "today  " + "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                Log.e("valueee", "today  " + "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                 getSharedPreferences("auxilium", MODE_PRIVATE).edit().putInt("dayofmonth", Calendar.getInstance().get(Calendar.DAY_OF_MONTH)).apply();
                 Toast.makeText(this, "Please wait token going refresh, this is take place one time in  a day", Toast.LENGTH_SHORT).show();
                 FirebaseDatabase.getInstance().getReference("AllRooms").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -177,7 +183,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             gettoken(dataSnapshot.getKey());
-                            Log.e("valueee", dataSnapshot.getKey() + "    " + "A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                            Log.e("valueee", dataSnapshot.getKey() + "    " + "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
                         }
                     }
 

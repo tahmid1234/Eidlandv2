@@ -8,6 +8,75 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:617168201197:android:86d356503799ab32c4b3e4",
+        "android_client_info": {
+          "package_name": "com.eidland.auxilium.voice.only"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617168201197-185i05dd1naf3tfcfoqvh0pgr527qq1p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eidland.auxilium.voice.only",
+            "certificate_hash": "72d9e33fa0648f8afaffb384c43506f4670c34b9"
+          }
+        },
+        {
+          "client_id": "617168201197-bardfhstseut9jsurn6qqc0kp0jmthuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eidland.auxilium.voice.only",
+            "certificate_hash": "4e7457f77dbc6c49e410818cb3bff63e78a6be7d"
+          }
+        },
+        {
+          "client_id": "617168201197-e1vjvcg66e985q51jdlgc9gqm914mlpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eidland.auxilium.voice.only",
+            "certificate_hash": "265432cc9b646d455f588eadb6c4bda24d19f8f6"
+          }
+        },
+        {
+          "client_id": "617168201197-nvq14tol5an199f05nukl6qpe3ijfg04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eidland.auxilium.voice.only",
+            "certificate_hash": "99337cde57f2f91ce6f0f4fbfcb5867122201c30"
+          }
+        },
+        {
+          "client_id": "617168201197-q3cj82cfdi60mjes9vshmhml5hpkq0g0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eidland.auxilium.voice.only",
+            "certificate_hash": "b4adcf830473b623b925e395d3b3961f31da2866"
+          }
+        },
+        {
+          "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy0BeJhbi863hsCG4xfZ-jemrHZKMHaRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617168201197-fkso163bqjn7ugqbhu33sg20e4qfous3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:617168201197:android:ebe5e8edcf763a8bc4b3e4",
         "android_client_info": {
           "package_name": "com.zcorridor.openlive.voice.only"

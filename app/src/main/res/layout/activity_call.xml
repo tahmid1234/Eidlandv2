@@ -478,7 +478,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
-                    android:id="@+id/cmntrecyler"/>
+                    android:id="@+id/live_comment_recyler"/>
             </LinearLayout>
 
             <LinearLayout
@@ -524,7 +524,7 @@
                     android:src="@drawable/btn_endcall"
                     android:contentDescription="TODO" />
                 <ImageView
-                    android:id="@+id/btngift"
+                    android:id="@+id/room_gift"
                     android:layout_width="40dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_height="40dp"
@@ -774,7 +774,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:id="@+id/txtusercoin"
+                    android:id="@+id/user_available_coin"
                     android:text="Recharge"
                     android:textColor="#fff"
                     android:gravity="center_vertical"
@@ -795,7 +795,7 @@
                     android:layout_marginVertical="10dp"
                     android:textColor="#fff"
                     android:layout_marginHorizontal="20dp"
-                    android:id="@+id/txtsendgift"
+                    android:id="@+id/send_gift"
                     android:background="@drawable/buttonstyel"/>
             </LinearLayout>
         </LinearLayout>
@@ -807,7 +807,7 @@
             android:background="@drawable/topcornorroundwhite"
             android:visibility="gone"
             android:layout_marginBottom="40dp"
-            android:id="@+id/reltivesingle"
+            android:id="@+id/single_user_box"
             >
             <ImageView
                 android:layout_width="30dp"
@@ -1002,6 +1002,6 @@
             android:layout_marginHorizontal="10dp"
             android:textColor="#fff"
             android:textColorHint="#A3FFFFFF"
-            android:id="@+id/txtcmnt"/>
+            android:id="@+id/comment_box"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

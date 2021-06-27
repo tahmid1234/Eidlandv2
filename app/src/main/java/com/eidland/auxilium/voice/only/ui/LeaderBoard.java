@@ -20,7 +20,7 @@ public class LeaderBoard {
     List<Leader> winners = new ArrayList<Leader>();
     List<Gift> giftList = new ArrayList<Gift>();
 
-    public LeaderBoard(List<Gift> giftList) {
+    public LeaderBoard(List<Gift> giftList, String roomId) {
         uniqueWinner.clear();
         contributors.clear();
         uniqueContributor.clear();
@@ -40,13 +40,15 @@ public class LeaderBoard {
                         }
                     }
                 }
-                if (!uniqueWinner.contains(gift.receiverUID)) {
-                    uniqueWinner.add(gift.receiverUID);
-                    winners.add(new Leader(gift.receiverName, gift.giftValue, gift.receiverImg, gift.receiverUID));
-                } else {
-                    for (Leader lead : winners) {
-                        if (lead.uid.equals(gift.receiverUID)) {
-                            lead.coins = lead.coins + gift.giftValue;
+                if(!gift.receiverUID.equals(roomId)) {
+                    if (!uniqueWinner.contains(gift.receiverUID)) {
+                        uniqueWinner.add(gift.receiverUID);
+                        winners.add(new Leader(gift.receiverName, gift.giftValue, gift.receiverImg, gift.receiverUID));
+                    } else {
+                        for (Leader lead : winners) {
+                            if (lead.uid.equals(gift.receiverUID)) {
+                                lead.coins = lead.coins + gift.giftValue;
+                            }
                         }
                     }
                 }
@@ -66,7 +68,7 @@ public class LeaderBoard {
         return contributors;
     }
 
-    List<Leader> getTopWinner() {
+    List<Leader> getTopSpeaker() {
 
         Collections.sort(winners, new Comparator<Leader>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)

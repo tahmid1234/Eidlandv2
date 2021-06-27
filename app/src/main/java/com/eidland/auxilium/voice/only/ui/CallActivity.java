@@ -118,16 +118,16 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
         txtsinglename = findViewById(R.id.singlename);
         singleimg = findViewById(R.id.singleimg);
         close = findViewById(R.id.close);
-        singl = findViewById(R.id.reltivesingle);
+        singl = findViewById(R.id.single_user_box);
         viewers = findViewById(R.id.viewersrecyler);
         userref = FirebaseDatabase.getInstance().getReference().child("Users");
-        txtsendgift = findViewById(R.id.txtsendgift);
-        txtusercoin = findViewById(R.id.txtusercoin);
+        txtsendgift = findViewById(R.id.send_gift);
+        txtusercoin = findViewById(R.id.user_available_coin);
         spinner = findViewById(R.id.spinner);
         crystal = findViewById(R.id.giftslayout);
         closegift = findViewById(R.id.closegift);
-        btngift = findViewById(R.id.btngift);
-        txtcmnt = findViewById(R.id.txtcmnt);
+        btngift = findViewById(R.id.room_gift);
+        txtcmnt = findViewById(R.id.comment_box);
         sencmnt = findViewById(R.id.sndcmnt);
         _seat0 = findViewById(R.id._seat0);
         imgbroad = findViewById(R.id.hostimg);
@@ -215,7 +215,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
         _seat9.setOnClickListener(this);
         lastimg = iv200flower;
         comments = new ArrayList<>();
-        recyclerView = findViewById(R.id.cmntrecyler);
+        recyclerView = findViewById(R.id.live_comment_recyler);
         final Comment comment = new Comment();
         comment.setComment("Nice to meet you ");
         comment.setName("Auxilium");
@@ -306,16 +306,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
         viewerslist = new ArrayList<>();
         viewers.hasFixedSize();
         viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        viewerAdapter = new ViewerAdapter(CallActivity.this, viewerslist, new ItemClickListener1() {
-            @Override
-            public void onPositionClicked(View view, int position) {
-            }
-
-            @Override
-            public void onLongClicked(int position) {
-
-            }
-        });
+        viewerAdapter = new ViewerAdapter(CallActivity.this, viewerslist);
         viewers.setAdapter(viewerAdapter);
 
         type = getIntent().getStringExtra("User");
@@ -1223,7 +1214,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
             case R.id.closegift:
                 crystal.setVisibility(View.GONE);
                 break;
-            case R.id.btngift:
+            case R.id.room_gift:
                 selectuseruid = hostuid;
                 txtsinglename.setText(UserName);
                 crystal.setVisibility(View.VISIBLE);
@@ -1310,7 +1301,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                 selectamnt = 25000;
 
                 break;
-            case R.id.txtsendgift:
+            case R.id.send_gift:
                 if(!selectuseruid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     if (selectamnt > 0) {
                         Long curnt = Long.parseLong(Staticconfig.user.getCoins());
@@ -1360,7 +1351,7 @@ public class CallActivity extends AppCompatActivity implements AGEventHandler, V
                 }
                 break;
 
-            case R.id.txtusercoin:
+            case R.id.user_available_coin:
                 startActivity(new Intent(CallActivity.this, WalletActivity.class));
 
                 break;
