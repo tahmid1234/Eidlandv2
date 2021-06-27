@@ -19,51 +19,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        ItemClickListener1 itemClickListener1;
-
-        PlacesViewHolder placesViewHolder=null;
+    PlacesViewHolder placesViewHolder = null;
     Context context;
     ArrayList<Viewer> countryInfoArrayList;
 
-    public ViewerListAdapter(Context context, ArrayList<Viewer> cameraobject1s, ItemClickListener1 itemClickListener1) {
+    public ViewerListAdapter(Context context, ArrayList<Viewer> cameraobject1s) {
         this.context = context;
         countryInfoArrayList = cameraobject1s;
-        this.itemClickListener1=itemClickListener1;
-
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
-        View view;
-
-
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singleuser, parent, false);
-
-            PlacesViewHolder placesViewHolder = new PlacesViewHolder(view,itemClickListener1);
-
-
-            return placesViewHolder;
-
-
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singleuser, parent, false);
+        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view);
+        return placesViewHolder;
     }
 
     @Override
     public int getItemViewType(int position) {
-
-
         return position;
     }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            placesViewHolder=(PlacesViewHolder) holder;
-        Glide.with(context).load( countryInfoArrayList.get(position).getPhotoUrl()).into(placesViewHolder.ivFamousPlace);
-       String t= countryInfoArrayList.get(position).getName();
+        placesViewHolder = (PlacesViewHolder) holder;
+        Glide.with(context).load(countryInfoArrayList.get(position).getPhotoUrl()).into(placesViewHolder.ivFamousPlace);
+        String t = countryInfoArrayList.get(position).getName();
         placesViewHolder.UName.setText(t);
-
     }
 
     @Override
@@ -71,35 +53,20 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return countryInfoArrayList.size();
     }
 
-    public static class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class PlacesViewHolder extends RecyclerView.ViewHolder {
 
         View view;
         ImageView ivFamousPlace;
         TextView UName;
-        ImageView superimg;
-        ItemClickListener1 itemClickListener1;
 
-        public PlacesViewHolder(View itemView, ItemClickListener1 listener1) {
+        public PlacesViewHolder(View itemView) {
             super(itemView);
-            itemClickListener1=listener1;
             view = itemView;
-
             ivFamousPlace = view.findViewById(R.id.userimglist);
-            UName=view.findViewById(R.id.usernamelist);
-
-          view.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View view) {
-                itemClickListener1.onPositionClicked(view,getAdapterPosition());
-
-
+            UName = view.findViewById(R.id.usernamelist);
         }
 
     }
-
 
 
 }

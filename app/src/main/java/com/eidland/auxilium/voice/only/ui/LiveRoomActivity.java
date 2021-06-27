@@ -154,10 +154,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         setContentView(R.layout.activity_live_room);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = displayMetrics.heightPixels / 2;
-        height = height - 150;
+        height = (int) (displayMetrics.heightPixels*0.8);
+        width = (int) (displayMetrics.widthPixels*0.8);
 
-        width = displayMetrics.widthPixels;
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...");
         progressDialog.setMessage("Your Room is being ready..");
@@ -722,6 +721,173 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
     }
 
+    public void giftsListner() {
+        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (isnotfirst) {
+                    giftList.clear();
+                    leaderGiftList.clear();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        Gift gift = dataSnapshot1.getValue(Gift.class);
+
+                        assert gift != null;
+                        if (gift.getGift() != null && gift.getSenderName() != null) {
+                            giftList.add(gift);
+                        }
+                        if (gift.getGift() != null && gift.getSenderName() != null) {
+                            leaderGiftList.add(gift);
+                        }
+                    }
+
+                    int index = giftList.size() - 1;
+                    giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+
+                    LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
+
+                    RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
+                    topSpeakerRecycler.setHasFixedSize(true);
+                    LinearLayoutManager giftLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                    AdapterLeadUser adapterLeader = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopSpeaker());
+                    topSpeakerRecycler.setLayoutManager(giftLayoutManager);
+                    adapterLeader.notifyDataSetChanged();
+                    topSpeakerRecycler.setAdapter(adapterLeader);
+
+                    RecyclerView topContributorRecycler = findViewById(R.id.top_contributor);
+                    topContributorRecycler.setHasFixedSize(true);
+                    LinearLayoutManager contributorLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                    AdapterLeadUser adapterLeaderContributor = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopContributor());
+                    topContributorRecycler.setLayoutManager(contributorLayoutManager);
+                    adapterLeader.notifyDataSetChanged();
+                    topContributorRecycler.setAdapter(adapterLeaderContributor);
+
+                } else
+                    isnotfirst = true;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void giftAnimation(String id, Gift gift, String receiver) {
+
+
+        for (AnimationItem animationItem :
+                ConstantApp.animationItems()) {
+            if (animationItem.name.equals(id)) {
+                simpleGift.setImageResource(animationItem.giftIconId);
+                confetti.setImageResource(animationItem.gifIconId);
+                confettiLayout.setVisibility(View.VISIBLE);
+            }
+        }
+
+        sendername.setText(gift.getSenderName() + " Rewarded to ");
+        receivername.setText(receiver);
+        Handler enterScreen = new Handler();
+        enterScreen.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    animatedLayout.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+                    animatedLayout.setAnimation(animation);
+                }
+            }
+        }, 1500);
+        Handler exitScreen = new Handler();
+        exitScreen.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
+                animatedLayout.setAnimation(animation2);
+                animatedLayout.setVisibility(View.GONE);
+                confettiLayout.setVisibility(View.GONE);
+                try {
+                    giftList.remove(0);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }, 3000);
+    }
+
+    private void sendGift(Gift gift) {
+        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
+        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", Staticconfig.user.getImageurl());
+        FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
+    }
+
+    public void setOnlineMembers() {
+        eventListener = new ChildEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Viewer viewer = dataSnapshot.getValue(Viewer.class);
+                onlineUserList.clear();
+                boolean isexist = false;
+                for (int i = 0; i < onlineUserList.size(); i++) {
+                    assert viewer != null;
+                    log.error(String.valueOf(i), viewer.getPhotoUrl());
+                    if (onlineUserList.get(i).getUid().equals(viewer.getUid()) && onlineUserList.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
+                        isexist = true;
+                        break;
+                    } else if (onlineUserList.get(i).getUid().equals(viewer.getUid()) && !onlineUserList.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
+                        onlineUserList.remove(i);
+                        break;
+                    }
+                }
+
+                if (!isexist) {
+                    onlineUserList.add(viewer);
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
+                    viewerAdapter.notifyDataSetChanged();
+                    onlineUserCount.setText(onlineUserList.size() + " Online");
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                for (int i = 0; i < onlineUserList.size(); i++) {
+                    if (onlineUserList.get(i).getUid().equals(dataSnapshot.getValue(Viewer.class).getUid())) {
+                        onlineUserList.remove(i);
+                        break;
+                    }
+                }
+                FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
+                viewerAdapter.notifyDataSetChanged();
+                onlineUserCount.setText(onlineUserList.size() + " Online");
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+
+        onlineUserList = new ArrayList<>();
+        viewers.hasFixedSize();
+        viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
+        viewers.setAdapter(viewerAdapter);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
@@ -732,11 +898,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         return false;
     }
 
-
     private Handler mMainHandler;
 
     private static final int UPDATE_UI_MESSAGE = 0x1024;
-
 
     StringBuffer mMessageCache = new StringBuffer();
 
@@ -788,9 +952,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
-    private void optionalDestroy() {
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -820,7 +981,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     protected void deInitUIandEvent() {
-        optionalDestroy();
         doLeaveChannel();
         event().removeEventHandler(this);
     }
@@ -1120,180 +1280,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         } else {
             iv.clearColorFilter();
         }
-    }
-
-
-    public void giftsListner() {
-        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (isnotfirst) {
-                    giftList.clear();
-                    leaderGiftList.clear();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Gift gift = dataSnapshot1.getValue(Gift.class);
-
-                        assert gift != null;
-                        if (gift.getGift() != null && gift.getSenderName() != null) {
-                            giftList.add(gift);
-                        }
-                        if (gift.getGift() != null && gift.getSenderName() != null) {
-                            leaderGiftList.add(gift);
-                        }
-                    }
-
-                    int index = giftList.size() - 1;
-                    giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-
-                    LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
-
-                    RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
-                    topSpeakerRecycler.setHasFixedSize(true);
-                    LinearLayoutManager giftLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                    AdapterLeadUser adapterLeader = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopSpeaker());
-                    topSpeakerRecycler.setLayoutManager(giftLayoutManager);
-                    adapterLeader.notifyDataSetChanged();
-                    topSpeakerRecycler.setAdapter(adapterLeader);
-
-                    RecyclerView topContributorRecycler = findViewById(R.id.top_contributor);
-                    topContributorRecycler.setHasFixedSize(true);
-                    LinearLayoutManager contributorLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                    AdapterLeadUser adapterLeaderContributor = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopContributor());
-                    topContributorRecycler.setLayoutManager(contributorLayoutManager);
-                    adapterLeader.notifyDataSetChanged();
-                    topContributorRecycler.setAdapter(adapterLeaderContributor);
-
-                } else
-                    isnotfirst = true;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public void giftAnimation(String id, Gift gift, String receiver) {
-
-
-        for (AnimationItem animationItem :
-                ConstantApp.animationItems()) {
-            if (animationItem.name.equals(id)) {
-                simpleGift.setImageResource(animationItem.giftIconId);
-                confetti.setImageResource(animationItem.gifIconId);
-                confettiLayout.setVisibility(View.VISIBLE);
-            }
-        }
-
-        sendername.setText(gift.getSenderName() + " Rewarded to ");
-        receivername.setText(receiver);
-        Handler enterScreen = new Handler();
-        enterScreen.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    animatedLayout.setVisibility(View.VISIBLE);
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
-                    animatedLayout.setAnimation(animation);
-                }
-            }
-        }, 1500);
-        Handler exitScreen = new Handler();
-        exitScreen.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
-                animatedLayout.setAnimation(animation2);
-                animatedLayout.setVisibility(View.GONE);
-                confettiLayout.setVisibility(View.GONE);
-                try {
-                    giftList.remove(0);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-        }, 3000);
-
-    }
-
-    private void sendGift(Gift gift) {
-        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
-        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", Staticconfig.user.getImageurl());
-        FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
-    }
-
-    public void setAnimValues(ObjectAnimator objectAnimator, int duration, int repeatMode) {
-        objectAnimator.setDuration(duration);
-        objectAnimator.setRepeatCount(0);
-        objectAnimator.setRepeatMode(repeatMode);
-        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-    }
-
-
-    public void setOnlineMembers() {
-        eventListener = new ChildEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Viewer viewer = dataSnapshot.getValue(Viewer.class);
-                onlineUserList.clear();
-                boolean isexist = false;
-                for (int i = 0; i < onlineUserList.size(); i++) {
-                    assert viewer != null;
-                    log.error(String.valueOf(i), viewer.getPhotoUrl());
-                    if (onlineUserList.get(i).getUid().equals(viewer.getUid()) && onlineUserList.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
-                        isexist = true;
-                        break;
-                    } else if (onlineUserList.get(i).getUid().equals(viewer.getUid()) && !onlineUserList.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
-                        onlineUserList.remove(i);
-                        break;
-                    }
-                }
-
-                if (!isexist) {
-                    onlineUserList.add(viewer);
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
-                    viewerAdapter.notifyDataSetChanged();
-                    onlineUserCount.setText(onlineUserList.size() + " Online");
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                for (int i = 0; i < onlineUserList.size(); i++) {
-                    if (onlineUserList.get(i).getUid().equals(dataSnapshot.getValue(Viewer.class).getUid())) {
-                        onlineUserList.remove(i);
-                        break;
-                    }
-                }
-                FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
-                viewerAdapter.notifyDataSetChanged();
-                onlineUserCount.setText(onlineUserList.size() + " Online");
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        onlineUserList = new ArrayList<>();
-        viewers.hasFixedSize();
-        viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
-        viewers.setAdapter(viewerAdapter);
     }
 
 

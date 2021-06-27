@@ -281,9 +281,6 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-
-
-                        android:contentDescription="TODO"
                         android:src="@drawable/viewersicon" />
 
                     <TextView
@@ -292,7 +289,6 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:padding="8dp"
-
                         android:text="10 Members"
                         android:textColor="#fff"
                         android:textSize="12sp" />
