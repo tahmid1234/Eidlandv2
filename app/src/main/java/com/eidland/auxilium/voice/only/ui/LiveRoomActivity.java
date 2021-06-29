@@ -104,8 +104,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView button1;
     ImageView leaveRoom;
     String pushid = "";
-    ArrayList<Viewer> onlineUserList;
-    ViewerAdapter viewerAdapter;
+    ArrayList<Viewer> onlineUserList = new ArrayList<>();
     String hostuid, roomName;
     Spinner spinner;
     String selectuseruid;
@@ -282,7 +281,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        setOnlineMembers();
         type = getIntent().getStringExtra("User");
 
         imgUrl = getIntent().getStringExtra("profile");
@@ -352,6 +350,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     finish();
 
                                 }
+                                try{
+
+                                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).removeValue();
+                                }catch (Exception e){
+
+                                }
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -365,7 +369,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).addChildEventListener(eventListener);
         sencmnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -438,6 +441,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);
 
+
+        setOnlineMembers();
 
         sendGiftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -820,31 +825,45 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void setOnlineMembers() {
+
+
+        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                onlineUserList.clear();
+                if (snapshot.exists()) {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        try {
+                            Viewer viewer = data.getValue(Viewer.class);
+                            onlineUserList.add(viewer);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+                }
+
+                RecyclerView viewers = findViewById(R.id.viewersrecyler);
+                viewers.hasFixedSize();
+                viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
+                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
+                viewers.setAdapter(viewerAdapter);
+                viewerAdapter.notifyDataSetChanged();
+                onlineUserCount.setText(onlineUserList.size() + " Online");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         eventListener = new ChildEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Viewer viewer = dataSnapshot.getValue(Viewer.class);
-                onlineUserList.clear();
-                boolean isexist = false;
-                for (int i = 0; i < onlineUserList.size(); i++) {
-                    assert viewer != null;
-                    log.error(String.valueOf(i), viewer.getPhotoUrl());
-                    if (onlineUserList.get(i).getUid().equals(viewer.getUid()) && onlineUserList.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
-                        isexist = true;
-                        break;
-                    } else if (onlineUserList.get(i).getUid().equals(viewer.getUid()) && !onlineUserList.get(i).getPhotoUrl().equals(viewer.getPhotoUrl())) {
-                        onlineUserList.remove(i);
-                        break;
-                    }
-                }
 
-                if (!isexist) {
-                    onlineUserList.add(viewer);
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
-                    viewerAdapter.notifyDataSetChanged();
-                    onlineUserCount.setText(onlineUserList.size() + " Online");
-                }
             }
 
             @Override
@@ -856,15 +875,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                for (int i = 0; i < onlineUserList.size(); i++) {
-                    if (onlineUserList.get(i).getUid().equals(dataSnapshot.getValue(Viewer.class).getUid())) {
-                        onlineUserList.remove(i);
-                        break;
-                    }
-                }
-                FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).child("viewers").setValue(onlineUserList.size() + "");
-                viewerAdapter.notifyDataSetChanged();
-                onlineUserCount.setText(onlineUserList.size() + " Online");
             }
 
             @Override
@@ -878,12 +888,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         };
 
-
-        onlineUserList = new ArrayList<>();
-        viewers.hasFixedSize();
-        viewers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
-        viewers.setAdapter(viewerAdapter);
+        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).addChildEventListener(eventListener);
     }
 
 
@@ -960,6 +965,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     @Override
     protected void onStop() {
         super.onStop();
+
     }
 
 
