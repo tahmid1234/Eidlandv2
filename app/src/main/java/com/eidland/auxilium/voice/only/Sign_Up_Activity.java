@@ -71,7 +71,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_sign__up_);
 
         signInButton = findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
 
 
         mAuth = FirebaseAuth.getInstance();

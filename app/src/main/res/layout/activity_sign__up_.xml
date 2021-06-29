@@ -121,22 +121,29 @@
                             android:textColor="@color/white">
                         </TextView>
                     </RelativeLayout>
-
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_margin="50dp"
                 android:layout_gravity="center"
+                android:orientation="vertical"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content">
 
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="OR"
+                    android:textColor="@color/browser_actions_bg_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/sign_in_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="266dp"
+                    app:buttonSize="wide"
+                    android:layout_height="50dp" />
 
             </LinearLayout>
         </LinearLayout>
