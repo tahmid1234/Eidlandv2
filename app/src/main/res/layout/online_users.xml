@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="0dp"
     android:gravity="center"
     android:layout_gravity="center"
     android:background="@color/white">
@@ -33,7 +34,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="100dp"
+            android:layout_marginHorizontal="50dp"
             android:background="@drawable/border"
             android:gravity="center"
             android:orientation="vertical">
@@ -44,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
                 android:lines="1"
-                android:text="Online Users"
+                android:text="     Online Users     "
                 android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
