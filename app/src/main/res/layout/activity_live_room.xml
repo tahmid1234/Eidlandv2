@@ -112,6 +112,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/logout"
+                    android:contentDescription="TODO"
+                    android:onClick="leave"
                     android:padding="3dp"
                     android:text="Leave"
                     android:textAllCaps="false"
@@ -287,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:padding="8dp"
-                        android:text="0 Member"
+                        android:text="10 Members"
                         android:textColor="#fff"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -315,6 +317,8 @@
                 android:id="@+id/animatedlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="-55dp"
+                android:translationZ="1.0dp"
                 android:orientation="vertical"
                 android:visibility="invisible">
 

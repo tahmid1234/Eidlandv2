@@ -804,7 +804,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void run() {
                 Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
                 animatedLayout.setAnimation(animation2);
-                animatedLayout.setVisibility(View.GONE);
+                animatedLayout.setVisibility(View.INVISIBLE);
                 confettiLayout.setVisibility(View.GONE);
                 try {
                     giftList.remove(0);
