@@ -129,14 +129,14 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content">
 
-                <TextView
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="or"
-                    android:padding="20dp"
-                    android:textColor="@color/browser_actions_bg_grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+<!--                 <TextView -->
+<!--                     android:gravity="center" -->
+<!--                     android:layout_gravity="center" -->
+<!--                     android:text="or" -->
+<!--                     android:padding="20dp" -->
+<!--                     android:textColor="@color/browser_actions_bg_grey" -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:layout_height="wrap_content"/> -->
 
 <!--                 <ImageButton -->
 <!--                     android:id="@+id/sign_in_button" -->
