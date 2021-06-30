@@ -1,59 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center|top"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_gravity="end"
-        android:gravity="end"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:padding="3dp"
-
-            android:src="@drawable/closebrod"
-            android:contentDescription="TODO" />
-    </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_marginStart="10dp"
-    android:background="@drawable/border"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/textViewpopup"
+    android:layout_gravity="center"
+    android:background="@color/white">
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:lines="1"
-        android:text="Online Users"
-        android:fontFamily="@font/open_sans_bold"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-         />
-</LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/userrecycler"
-        android:layout_marginLeft="20dp"
+        android:gravity="center|top"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        android:layout_marginBottom="20dp"
-        android:layout_height="300dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end">
 
-    </androidx.recyclerview.widget.RecyclerView>
-</LinearLayout>
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:padding="3dp"
+                android:src="@drawable/closebrod" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewpopup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:lines="1"
+                android:text="Online Users"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_gravity="start"
+            android:id="@+id/userrecycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 </LinearLayout>

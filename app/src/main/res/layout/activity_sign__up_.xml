@@ -65,9 +65,7 @@
                     android:layout_height="44dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_marginStart="45dp"
-                    android:layout_marginEnd="45dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginVertical="20dp"
                     android:background="@drawable/phonenumber_back"
                     android:gravity="center"
                     android:weightSum="3">
@@ -125,7 +123,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="50dp"
+                android:layout_marginHorizontal="50dp"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:layout_height="wrap_content"
@@ -134,16 +132,27 @@
                 <TextView
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:text="OR"
+                    android:text="or"
+                    android:padding="20dp"
                     android:textColor="@color/browser_actions_bg_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-                <com.google.android.gms.common.SignInButton
+                <ImageButton
                     android:id="@+id/sign_in_button"
-                    android:layout_width="266dp"
-                    app:buttonSize="wide"
-                    android:layout_height="50dp" />
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent1"
+                    android:src="@drawable/ic_google_sso"/>
+
+<!--                <com.google.android.gms.common.SignInButton-->
+<!--                    android:id="@+id/sign_in_button"-->
+<!--                    android:layout_width="270dp"-->
+<!--                    android:layout_height="55dp"-->
+<!--                    android:layout_margin="0dp"-->
+<!--                    android:textAlignment="textStart"-->
+<!--                    android:padding="0dp"-->
+<!--                    app:buttonSize="wide"/>-->
 
             </LinearLayout>
         </LinearLayout>

@@ -103,7 +103,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView button2, imgbroad;
     ImageView button1;
     ImageView leaveRoom;
-    String pushid = "";
     ArrayList<Viewer> onlineUserList = new ArrayList<>();
     String hostuid, roomName;
     Spinner spinner;
@@ -292,8 +291,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, Staticconfig.user.getEmail(), "host");
-            pushid = FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).push().getKey();
-            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).setValue(viewer);
+            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
@@ -311,8 +309,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             hostuid = getIntent().getStringExtra("userid");
 
             Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), Staticconfig.user.getImageurl(), Staticconfig.user.getEmail(), Staticconfig.user.getName());
-            pushid = FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).push().getKey();
-            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).setValue(comment1);
+            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
@@ -352,7 +349,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 }
                                 try{
 
-                                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).removeValue();
+                                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
                                 }catch (Exception e){
 
                                 }
@@ -389,7 +386,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).onDisconnect().removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).onDisconnect().removeValue();
         userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
         userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -1036,7 +1033,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     private void EndMeeting() {
-        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(pushid).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
         if (AgainSeat != null) {
             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
             log.info("onBackPressed");
