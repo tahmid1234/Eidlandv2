@@ -150,10 +150,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_room);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        height = (int) (displayMetrics.heightPixels*0.8);
-        width = (int) (displayMetrics.widthPixels*0.8);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...");
@@ -201,7 +202,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this);
+                ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
                 viewDialoguser.showDialog(onlineUserList);
             }
         });
@@ -433,7 +434,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView giftRecycler = findViewById(R.id.gift_recycler);
         giftRecycler.setHasFixedSize(true);
         GridLayoutManager giftLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, roomName);
+        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, width/4);
         giftRecycler.setLayoutManager(giftLayoutManager);
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);

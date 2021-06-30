@@ -24,12 +24,12 @@ public class AdapterGift extends RecyclerView.Adapter<AdapterGift.ViewHolder> {
 
     private Context context;
     private OnGiftClickListener onGiftClickListener;
-    private String roomName;
+    private int width;
 
-    public AdapterGift(Context context, OnGiftClickListener onGiftClickListener, String roomName) {
+    public AdapterGift(Context context, OnGiftClickListener onGiftClickListener, int width) {
         this.context = context;
         this.onGiftClickListener = onGiftClickListener;
-        this.roomName = roomName;
+        this.width = width;
     }
 
     @NonNull
@@ -40,6 +40,7 @@ public class AdapterGift extends RecyclerView.Adapter<AdapterGift.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.giftLayout.setMinimumWidth(width);
         holder.giftIcon.setBackgroundResource(ConstantApp.giftList().get(position).image);
     }
 
@@ -50,12 +51,14 @@ public class AdapterGift extends RecyclerView.Adapter<AdapterGift.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView giftIcon;
+        LinearLayout giftLayout;
 
         OnGiftClickListener onGiftClickListener;
 
         public ViewHolder(@NonNull View itemView, OnGiftClickListener onGiftClickListener) {
             super(itemView);
             giftIcon = itemView.findViewById(R.id.gift_icon);
+            giftLayout = itemView.findViewById(R.id.gift_layout);
             this.onGiftClickListener = onGiftClickListener;
             itemView.setOnClickListener(this);
         }

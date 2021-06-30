@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +31,12 @@ public class ViewDialogUser {
     RecyclerView recyclerView;
     ArrayList<Viewer> viewerArrayList;
     ViewerListAdapter viewerListAdapter;
+    int width, height;
 
-    public ViewDialogUser(Activity activity) {
+    public ViewDialogUser(Activity activity, int width, int height) {
         this.activity = activity;
+        this.width = width;
+        this.height = height;
     }
 
     public void showDialog(ArrayList<Viewer> instruction) {
@@ -41,6 +45,9 @@ public class ViewDialogUser {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.online_users);
+        LinearLayout onlineLayout = dialog.findViewById(R.id.online_layout);
+        onlineLayout.setMinimumWidth(width);
+        onlineLayout.setMinimumHeight(height);
         recyclerView = dialog.findViewById(R.id.userrecycler);
         ImageView cross = dialog.findViewById(R.id.close);
         cross.setOnClickListener(new View.OnClickListener() {
