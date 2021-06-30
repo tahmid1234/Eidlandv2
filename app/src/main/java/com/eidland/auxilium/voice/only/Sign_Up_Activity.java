@@ -69,7 +69,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign__up_);
 
-        signInButton = findViewById(R.id.sign_in_button);
+        //signInButton = findViewById(R.id.sign_in_button);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -80,19 +80,19 @@ public class Sign_Up_Activity extends AppCompatActivity {
             accessGranted(user);
         }else {
 
-            signInButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(Sign_Up_Activity.this, "Please Wait", Toast.LENGTH_LONG).show();
-                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(getString(R.string.default_web_client_id))
-                            .requestEmail()
-                            .build();
-                    mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
-                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, RC_SIGN_IN);
-                }
-            });
+//            signInButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Toast.makeText(Sign_Up_Activity.this, "Please Wait", Toast.LENGTH_LONG).show();
+//                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                            .requestIdToken(getString(R.string.default_web_client_id))
+//                            .requestEmail()
+//                            .build();
+//                    mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
+//                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//                    startActivityForResult(signInIntent, RC_SIGN_IN);
+//                }
+//            });
         }
 
         viewDialog = new ViewDialog(this);
