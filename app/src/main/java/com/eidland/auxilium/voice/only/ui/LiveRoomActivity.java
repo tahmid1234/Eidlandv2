@@ -1,7 +1,6 @@
 package com.eidland.auxilium.voice.only.ui;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -132,8 +130,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView button;
 
     RelativeLayout animatedLayout;
-    RelativeLayout confettiLayout;
-    GifImageView confetti;
+    RelativeLayout backgroundGIFLayout;
+    GifImageView backgrundGIF;
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
@@ -178,8 +176,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         popup_uname = findViewById(R.id.txtnamepopup);
         popup_user = findViewById(R.id.userimgpopup);
         animatedLayout = findViewById(R.id.animatedlayout);
-        confetti = findViewById(R.id.confetti);
-        confettiLayout = findViewById(R.id.confettiLayout);
+        backgrundGIF = findViewById(R.id.backgrundGIF);
+        backgroundGIFLayout = findViewById(R.id.backgroundGIFLayout);
         giftList = new ArrayList<>();
         leaderGiftList = new ArrayList<>();
         singleUserBox = findViewById(R.id.single_user_box);
@@ -780,8 +778,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 ConstantApp.animationItems()) {
             if (animationItem.name.equals(id)) {
                 simpleGift.setImageResource(animationItem.giftIconId);
-                confetti.setImageResource(animationItem.gifIconId);
-                confettiLayout.setVisibility(View.VISIBLE);
+                backgrundGIF.setImageResource(animationItem.gifIconId);
+                backgroundGIFLayout.setVisibility(View.VISIBLE);
             }
         }
 
@@ -805,7 +803,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
                 animatedLayout.setAnimation(animation2);
                 animatedLayout.setVisibility(View.INVISIBLE);
-                confettiLayout.setVisibility(View.GONE);
+                backgroundGIFLayout.setVisibility(View.GONE);
                 try {
                     giftList.remove(0);
                 } catch (Exception e) {

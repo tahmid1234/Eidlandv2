@@ -17,13 +17,14 @@
         android:padding="0dp">
 
         <RelativeLayout
-            android:id="@+id/confettiLayout"
+            android:id="@+id/backgroundGIFLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:translationZ="1.0dp"
             android:visibility="invisible">
 
             <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/confetti"
+                android:id="@+id/backgrundGIF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter" />
