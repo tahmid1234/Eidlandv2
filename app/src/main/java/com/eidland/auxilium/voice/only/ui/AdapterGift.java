@@ -40,7 +40,8 @@ public class AdapterGift extends RecyclerView.Adapter<AdapterGift.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.giftLayout.setMinimumWidth(width);
+        holder.giftIcon.setMaxWidth(width);
+        holder.giftIcon.setMinimumWidth(width);
         holder.giftIcon.setBackgroundResource(ConstantApp.giftList().get(position).image);
     }
 
