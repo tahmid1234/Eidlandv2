@@ -135,7 +135,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
-    int height, width;
 
     String nameOfRoom;
 

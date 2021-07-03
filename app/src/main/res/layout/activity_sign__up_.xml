@@ -65,7 +65,7 @@
                     android:layout_height="44dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginVertical="0dp"
                     android:background="@drawable/phonenumber_back"
                     android:gravity="center"
                     android:weightSum="3">
@@ -100,6 +100,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:gravity="center">
 
                     <RelativeLayout
@@ -129,30 +130,22 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content">
 
-<!--                 <TextView -->
-<!--                     android:gravity="center" -->
-<!--                     android:layout_gravity="center" -->
-<!--                     android:text="or" -->
-<!--                     android:padding="20dp" -->
-<!--                     android:textColor="@color/browser_actions_bg_grey" -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:layout_height="wrap_content"/> -->
+                 <TextView
+                     android:gravity="center"
+                     android:layout_gravity="center"
+                     android:text="or"
+                     android:padding="15dp"
+                     android:textColor="@color/browser_actions_bg_grey"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
 
-<!--                 <ImageButton -->
-<!--                     android:id="@+id/sign_in_button" -->
-<!--                     android:layout_width="260dp" -->
-<!--                     android:layout_height="wrap_content" -->
-<!--                     android:background="@color/transparent1" -->
-<!--                     android:src="@drawable/ic_google_sso"/> -->
+                 <ImageButton
+                     android:id="@+id/sign_in_button"
+                     android:layout_width="260dp"
+                     android:layout_height="wrap_content"
+                     android:background="@color/transparent1"
+                     android:src="@drawable/ic_google_sso"/>
 
-<!--                <com.google.android.gms.common.SignInButton-->
-<!--                    android:id="@+id/sign_in_button"-->
-<!--                    android:layout_width="270dp"-->
-<!--                    android:layout_height="55dp"-->
-<!--                    android:layout_margin="0dp"-->
-<!--                    android:textAlignment="textStart"-->
-<!--                    android:padding="0dp"-->
-<!--                    app:buttonSize="wide"/>-->
 
             </LinearLayout>
         </LinearLayout>

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -90,6 +91,12 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
         intent = getIntent();
         viewDialog = new ViewDialog(this);
         // get ids from layout
+
+        if(mAuth.getCurrentUser().getEmail()!= null){
+            email.setText(mAuth.getCurrentUser().getEmail().toString());
+            email.setInputType(InputType.TYPE_NULL);
+            email.setCompoundDrawables(null, null, null, null);
+        }
 
         if (intent.hasExtra("gName")) {
             gNaame = getIntent().getStringExtra("gName");

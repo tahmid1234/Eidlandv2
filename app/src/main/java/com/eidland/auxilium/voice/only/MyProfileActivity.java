@@ -26,6 +26,8 @@ import com.eidland.auxilium.voice.only.model.Staticconfig;
 import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
 import com.eidland.auxilium.voice.only.ui.WalletActivity;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -206,6 +208,11 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
+        try {
+            GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut();
+        }catch (Exception e){
+            System.out.println(e);
+        }
         Intent intent = new Intent(MyProfileActivity.this, Sign_Up_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
