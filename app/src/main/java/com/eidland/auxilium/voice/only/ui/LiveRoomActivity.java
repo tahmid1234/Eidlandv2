@@ -386,19 +386,25 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
 
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).onDisconnect().removeValue();
-        userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
-        userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                Staticconfig.user = user;
-                userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
+                try{
+                    User user = snapshot.getValue(User.class);
+                    Staticconfig.user = user;
+                    userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
+                    System.out.println("okok");
+                }catch (Exception e){
+
+                }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                System.out.println(error);
             }
         });
         setNameAllSeats();
@@ -456,18 +462,26 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
-                                    User user = currentData.getValue(User.class);
-                                    user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
-                                    currentData.setValue(user);
+                                    try{
+                                        User user = currentData.getValue(User.class);
+                                        user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
+                                        currentData.setValue(user);
+                                    }catch (Exception e){
+                                        System.out.println(e);
+                                    }
                                     return Transaction.success(currentData);
                                 }
 
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
 
-                                    User user = currentData.getValue(User.class);
-                                    Staticconfig.user = user;
-                                    userAvailableCoin.setText(getFormattedText(user.coins));
+                                    try{
+                                        User user = currentData.getValue(User.class);
+                                        Staticconfig.user = user;
+                                        userAvailableCoin.setText(getFormattedText(user.coins));
+                                    }catch (Exception e){
+                                        System.out.println(e);
+                                    }
                                 }
                             });
                             FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
@@ -475,21 +489,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
-                                    User user = currentData.<User>getValue(User.class);
-                                    assert user != null;
                                     try {
+                                        User user = currentData.getValue(User.class);
+                                        assert user != null;
                                         user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
+                                        currentData.setValue(user);
                                     } catch (Exception e) {
                                         System.out.println(e);
                                     }
-
-                                    currentData.setValue(user);
                                     return Transaction.success(currentData);
                                 }
 
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-
                                     System.out.println(error);
                                 }
                             });

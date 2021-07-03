@@ -98,8 +98,12 @@ public class VerifyotpActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         boolean checkPermissionResult = checkSelfPermissions();
                         if (checkPermissionResult) {
-                            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
-                            signInWithPhoneAuthCredential(credential);
+                            try{
+                                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
+                                signInWithPhoneAuthCredential(credential);
+                            }catch (Exception e){
+                                System.out.println(e);
+                            }
                             dialog.cancel();
                         } else Log.e("no permission", "Not Found");
                     }
