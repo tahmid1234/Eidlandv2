@@ -131,11 +131,17 @@ public class Sign_Up_Activity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
+            if(resultCode == RESULT_OK){
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    firebaseAuthWithGoogle(account.getIdToken());
+                } catch (ApiException e) {
+
+                }
+            }else {
+
+                Toast.makeText(Sign_Up_Activity.this, "Something went wrong!"+ resultCode, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -164,7 +170,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
     public void accessGranted(FirebaseUser user){
         String userid = user.getUid();
-        FirebaseDatabase.getInstance().getReference("Users").child(userid).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
@@ -174,6 +180,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                     finish();
                 } else {
                     Staticconfig.user = snapshot.getValue(User.class);
+
                     Intent intent = new Intent(Sign_Up_Activity.this, LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("User", "Participent");
@@ -192,6 +199,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
             }
         });
+
         Toast.makeText(Sign_Up_Activity.this, "Success", Toast.LENGTH_SHORT).show();
     }
 }

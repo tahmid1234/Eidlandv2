@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-  public   String name;
-    public String email;
-    public String imageurl;
-    public String coins;
-    public String receivedCoins;
+  public   String name= "User";
+    public String email = "user@gmail.com";
+    public String imageurl= "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png";
+    public String coins = "0";
+    public String receivedCoins = "0";
+
 
     public User() {
     }
