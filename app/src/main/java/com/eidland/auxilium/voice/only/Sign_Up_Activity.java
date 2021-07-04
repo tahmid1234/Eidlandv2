@@ -136,6 +136,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
+                Toast.makeText(Sign_Up_Activity.this, (CharSequence) e, Toast.LENGTH_SHORT).show();
             }
         }
     }
