@@ -436,7 +436,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView giftRecycler = findViewById(R.id.gift_recycler);
         giftRecycler.setHasFixedSize(true);
         GridLayoutManager giftLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, (width/4));
+        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, width/4);
         giftRecycler.setLayoutManager(giftLayoutManager);
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);

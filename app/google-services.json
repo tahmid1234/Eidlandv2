@@ -39,22 +39,6 @@
           }
         },
         {
-          "client_id": "617168201197-f34jdnnrgrhr8hcdgv9gvasveh33093b.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.eidland.auxilium.voice.only",
-            "certificate_hash": "ab171f1aec5c7483ba94b5143f70decf21997e08"
-          }
-        },
-        {
-          "client_id": "617168201197-lcs3f1gq4s25qberem1ml7fhc4dkonqj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.eidland.auxilium.voice.only",
-            "certificate_hash": "b05ef135880e45e70e5d88e27fc9fb23a68aee47"
-          }
-        },
-        {
           "client_id": "617168201197-nvq14tol5an199f05nukl6qpe3ijfg04.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

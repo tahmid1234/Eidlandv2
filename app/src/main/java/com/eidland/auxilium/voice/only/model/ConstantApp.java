@@ -54,7 +54,7 @@ public class ConstantApp {
         animationItemList.add(new AnimationItem("oscar", R.drawable.ic_oscar, R.drawable.heart_fill_gif));
         animationItemList.add(new AnimationItem("heartcomment", R.drawable.ic_heartcomment, R.drawable.heart_fill_gif));
         animationItemList.add(new AnimationItem("like2", R.drawable.ic_like, R.drawable.like_big_gif));
-        animationItemList.add(new AnimationItem("star", R.drawable.ic_star, R.drawable.star_gif));
+        animationItemList.add(new AnimationItem("star", R.drawable.ic_star, R.drawable.heart_fill_gif));
         animationItemList.add(new AnimationItem("medal", R.drawable.ic_medal, R.drawable.confetti));
         animationItemList.add(new AnimationItem("fire", R.drawable.ic_fire, R.drawable.flames_gif));
         animationItemList.add(new AnimationItem("debate", R.drawable.ic_debate, R.drawable.heart_fill_gif));
