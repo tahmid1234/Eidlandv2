@@ -119,7 +119,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView bottom_action_end_call;
     ArrayList<Comment> comments;
     CommentAdapter commentAdapter;
-    ImageView roomGift, closeGiftBox, singleUserClose;
+    ImageView roomGift, closeGiftBox, singleUserClose, singleimg;
     LinearLayout crystal;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
     RelativeLayout singlegift;
@@ -168,6 +168,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         txtsinglegiftsend = findViewById(R.id.singlegiftsend);
         singlegift = findViewById(R.id.singlesendgift);
         txtsinglename = findViewById(R.id.txtnamepopup);
+        singleimg = findViewById(R.id.singleimg);
         singleUserClose = findViewById(R.id.close);
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);

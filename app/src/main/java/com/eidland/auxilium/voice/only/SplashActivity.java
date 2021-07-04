@@ -161,16 +161,15 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-                            User user =new  User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0");
-                            Staticconfig.user = user;
                             myRef = FirebaseDatabase.getInstance().getReference();
                             myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() != null) {
+                                        String value = getSharedPreferences("Auxilium", MODE_PRIVATE).getString("Signupcomplete", "no");
                                         if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
                                             Staticconfig.user = dataSnapshot.getValue(User.class);
+                                            //  Toast.makeText(SplashActivity.this, ""+StaticConfig.user.getCoin(), Toast.LENGTH_SHORT).show();
 
                                             intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
                                             intent.putExtra("User", "Participent");
@@ -178,14 +177,16 @@ public class SplashActivity extends AppCompatActivity {
                                             intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
                                             intent.putExtra("UserName", "Eidland Battle Royale");
                                             intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+
                                             intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+
                                             startActivity(intent);
                                             finish();
                                         } else
                                             startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-                                    } else {
+
+                                    } else
                                         startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
-                                    }
 
 
                                 }
@@ -196,9 +197,6 @@ public class SplashActivity extends AppCompatActivity {
 
                                 }
                             });
-
-
-
                         } else {
                             startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
                         }

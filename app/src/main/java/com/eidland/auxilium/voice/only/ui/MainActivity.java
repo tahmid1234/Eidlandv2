@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //  FirebaseDatabase.getInstance().getReference("Rooms").child("testroom").child("room created").child("WhatToDo").setValue("a");
         progressbar = findViewById(R.id.progressbar);
         tvuname = findViewById(R.id.username);
         ivuphoto = findViewById(R.id.userimage);

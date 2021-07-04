@@ -667,6 +667,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/singlename"
+                    android:gravity="center">
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
