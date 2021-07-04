@@ -238,7 +238,7 @@ public class VerifyotpActivity extends AppCompatActivity {
 
     public void accessGranted(FirebaseUser user){
         String userid = user.getUid();
-        FirebaseDatabase.getInstance().getReference("Users").child(userid).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
