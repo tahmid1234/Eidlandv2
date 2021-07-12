@@ -74,11 +74,15 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
     FirebaseAuth.AuthStateListener mAuthListener;
     RecyclerViewAdapter recyclerViewAdapter;
     public String[] imageList = {
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/2.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/3.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/4.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/5.png"
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit1.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit2.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit3.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit4.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit5.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit6.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit7.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit8.png",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit9.png"
     };
 
     @Override

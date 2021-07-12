@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_new_backgroundv4"
+    android:background="@drawable/chatroom_background"
     android:orientation="vertical"
     android:weightSum="2"
     tools:context="com.eidland.auxilium.voice.only.Sign_Up_Activity">

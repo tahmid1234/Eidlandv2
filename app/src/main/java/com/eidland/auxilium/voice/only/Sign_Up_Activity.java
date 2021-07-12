@@ -148,6 +148,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Log.v("user", user.getEmail());
                             accessGranted(user);
                         } else {
                             Toast.makeText(Sign_Up_Activity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
