@@ -141,7 +141,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
-
+    boolean hasEnteredRoom = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -771,6 +771,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     adapterLeader.notifyDataSetChanged();
                     topContributorRecycler.setAdapter(adapterLeaderContributor);
 
+                    if(hasEnteredRoom){
+                        simpleGift.setImageResource(R.drawable.hello_pana);
+                        backgrundGIF.setImageResource(R.drawable.fireworks_gif);
+                        backgroundGIFLayout.setVisibility(View.VISIBLE);
+                        sendername.setText("Hey "+ Staticconfig.user.getName() + "!");
+                        receivername.setText("Welcome to " +nameOfRoom);
+                        hasEnteredRoom = false;
+                    }
+
                 } else
                     isnotfirst = true;
             }
@@ -784,7 +793,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     public void giftAnimation(String id, Gift gift, String receiver) {
 
-
         for (AnimationItem animationItem :
                 ConstantApp.animationItems()) {
             if (animationItem.name.equals(id)) {
@@ -793,9 +801,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
             }
         }
-
         sendername.setText(gift.getSenderName() + " Rewarded to ");
         receivername.setText(receiver);
+
         Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
             @Override
@@ -807,6 +815,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 }
             }
         }, 1500);
+
         Handler exitScreen = new Handler();
         exitScreen.postDelayed(new Runnable() {
             @Override

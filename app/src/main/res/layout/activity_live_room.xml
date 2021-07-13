@@ -353,10 +353,11 @@
 
                         <TextView
                             android:id="@+id/receivername"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
                             android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:text="contributed"
                             android:textColor="#C551F6"
                             android:textSize="10sp" />
