@@ -19,15 +19,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name="com.eidland.auxilium.voice.only.MyProfileActivity" />
-        <activity android:name="com.eidland.auxilium.voice.only.SplashActivity">
+        <activity android:name="com.eidland.auxilium.voice.only.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.eidland.auxilium.voice.only.ui.WalletActivity" />
-        <activity android:name="com.eidland.auxilium.voice.only.EnterRoomActivity" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.WalletActivity" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.EnterRoomActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -54,7 +54,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name="com.eidland.auxilium.voice.only.MyProfile" />
-        <activity android:name="com.eidland.auxilium.voice.only.VerifyotpActivity" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity" />
         <activity
             android:name="com.eidland.auxilium.voice.only.SignUpData"
             android:windowSoftInputMode="adjustPan"
@@ -63,12 +63,12 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name="com.eidland.auxilium.voice.only.ui.MainActivity" />
-        <activity android:name="com.eidland.auxilium.voice.only.Sign_Up_Activity" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.MainActivity" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.SignUpActivity" />
         <activity
-            android:name="com.eidland.auxilium.voice.only.ui.LiveRoomActivity"
+            android:name="com.eidland.auxilium.voice.only.activity.LiveRoomActivity"
             android:launchMode="singleTask"
-            android:parentActivityName="com.eidland.auxilium.voice.only.ui.MainActivity"
+            android:parentActivityName="com.eidland.auxilium.voice.only.activity.MainActivity"
             android:screenOrientation="portrait"
 
             android:windowSoftInputMode="adjustPan" />

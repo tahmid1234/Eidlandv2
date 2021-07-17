@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -40,17 +40,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.MyProfileActivity;
+import com.eidland.auxilium.voice.only.adapter.AdapterGift;
+import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
+import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
 import com.eidland.auxilium.voice.only.adapter.CommentAdapter;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
+import com.eidland.auxilium.voice.only.helper.LeaderBoard;
 import com.eidland.auxilium.voice.only.model.AGEventHandler;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.model.Gift;
 import com.eidland.auxilium.voice.only.model.GiftItem;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.Viewer;
-import com.eidland.auxilium.voice.only.ui.RoomsRecycler.Rooms;
+import com.eidland.auxilium.voice.only.model.Rooms;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -80,7 +84,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.User;
+import com.eidland.auxilium.voice.only.model.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
@@ -88,7 +92,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-import static com.eidland.auxilium.voice.only.ui.Helper.getFormattedText;
+import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
     String type, SeatsName, AgainSeat, run;
@@ -245,10 +249,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onPositionClicked(View view, final int position) {
             }
-
-            @Override
-            public void onLongClicked(int position) {
-            }
         });
         commentRecyclerView.hasFixedSize();
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -287,7 +287,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         if (type.equals("Host")) {
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, Staticconfig.user.getEmail(), "host");
+            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host");
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -305,13 +305,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = getIntent().getStringExtra("userid");
 
-            Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), Staticconfig.user.getImageurl(), Staticconfig.user.getEmail(), Staticconfig.user.getName());
+            Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName());
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
-                    Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
+                    Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
             } else {
-                Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
+                Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
             }
 
             getToken(false);
@@ -367,7 +367,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(commentBox.getText().toString())) {
-                    Comment comment1 = new Comment(Staticconfig.user.getName(), commentBox.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", Staticconfig.user.getImageurl());
+                    Comment comment1 = new Comment(StaticConfig.user.getName(), commentBox.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", StaticConfig.user.getImageurl());
                     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment1);
                     commentBox.setText("");
                 }
@@ -391,8 +391,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try{
                     User user = snapshot.getValue(User.class);
-                    Staticconfig.user = user;
-                    userAvailableCoin.setText(getFormattedText(Staticconfig.user.getCoins()));
+                    StaticConfig.user = user;
+                    userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
                     System.out.println("okok");
                 }catch (Exception e){
 
@@ -452,7 +452,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     selectuseruid = hostuid;
                 if (!selectuseruid.equals(currentUser.getUid())) {
                     if (selectedGiftAmount > 0) {
-                        Long curnt = Long.parseLong(Staticconfig.user.getCoins());
+                        Long curnt = Long.parseLong(StaticConfig.user.getCoins());
                         if (curnt > selectedGiftAmount) {
                             crystal.setVisibility(View.GONE);
                             FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
@@ -475,7 +475,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                                     try{
                                         User user = currentData.getValue(User.class);
-                                        Staticconfig.user = user;
+                                        StaticConfig.user = user;
                                         userAvailableCoin.setText(getFormattedText(user.coins));
                                     }catch (Exception e){
                                         System.out.println(e);
@@ -503,7 +503,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     System.out.println(error);
                                 }
                             });
-                            sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), Staticconfig.user.name, Staticconfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+                            sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
                         } else {
                             if (selectedGiftAmount == 0) {
                                 Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
@@ -693,7 +693,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         boolean checkPermissionResult = checkSelfPermissions();
                         if (checkPermissionResult) {
-                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), Staticconfig.user.getImageurl(), Staticconfig.user.getEmail(), Staticconfig.user.getName());
+                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName());
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).setValue(viewer);
                             doSwitchToBroadcaster(true);
                             AgainSeat = seats;
@@ -775,7 +775,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         simpleGift.setImageResource(R.drawable.hello_pana);
                         backgrundGIF.setImageResource(R.drawable.fireworks_gif);
                         backgroundGIFLayout.setVisibility(View.VISIBLE);
-                        sendername.setText("Hey "+ Staticconfig.user.getName() + "!");
+                        sendername.setText("Hey "+ StaticConfig.user.getName() + "!");
                         receivername.setText("Welcome to " +nameOfRoom);
                         hasEnteredRoom = false;
                     }
@@ -835,7 +835,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     private void sendGift(Gift gift) {
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
-        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", Staticconfig.user.getImageurl());
+        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + txtsinglename.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
     }
 
@@ -1324,8 +1324,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     @Override
     public void onResume() {
         super.onResume();
-        if (Staticconfig.user != null) {
-            Glide.with(LiveRoomActivity.this).load(Staticconfig.user.getImageurl()).into(userImage);
+        if (StaticConfig.user != null) {
+            Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
         }
     }
 
@@ -1368,7 +1368,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
                     ((AGApplication) getApplication()).initWorkerThread();
-                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), Staticconfig.user.getImageurl(), Staticconfig.user.getEmail(), Staticconfig.user.getName());
+                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName());
                     FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(Clickedseat).setValue(viewer);
                     doSwitchToBroadcaster(true);
                     AgainSeat = Clickedseat;

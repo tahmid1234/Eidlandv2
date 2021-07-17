@@ -1,11 +1,10 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.ViewConfiguration;
@@ -24,7 +23,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.BuildConfig;
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.model.CurrentUserSettings;
 import com.eidland.auxilium.voice.only.model.EngineConfig;
 import com.eidland.auxilium.voice.only.model.MyEngineEventHandler;

@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,15 +18,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.eidland.auxilium.voice.only.model.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
-import com.facebook.CallbackManager;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.SignUpData;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,11 +40,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
-import com.eidland.auxilium.voice.only.ui.ViewDialog;
 
 import io.agora.rtc.Constants;
 
-public class Sign_Up_Activity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -83,7 +82,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(Sign_Up_Activity.this, "Please Wait", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpActivity.this, "Please Wait", Toast.LENGTH_LONG).show();
                     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                             .requestIdToken(getString(R.string.default_web_client_id))
                             .requestEmail()
@@ -108,7 +107,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_GO) {
-                    Intent intent = new Intent(Sign_Up_Activity.this, VerifyotpActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, VerifyOTPActivity.class);
                     intent.putExtra("mobileNumber", ccp.getFullNumberWithPlus().trim());
                     startActivity(intent);
                     return true;
@@ -119,7 +118,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
         continueBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Sign_Up_Activity.this, VerifyotpActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, VerifyOTPActivity.class);
                 intent.putExtra("mobileNumber", ccp.getFullNumberWithPlus().trim());
                 startActivity(intent);
                 finish();
@@ -151,7 +150,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                             Log.v("user", user.getEmail());
                             accessGranted(user);
                         } else {
-                            Toast.makeText(Sign_Up_Activity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -169,13 +168,13 @@ public class Sign_Up_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
-                    Intent intent = new Intent(Sign_Up_Activity.this, SignUpData.class);
+                    Intent intent = new Intent(SignUpActivity.this, SignUpData.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 } else {
-                    Staticconfig.user = snapshot.getValue(User.class);
-                    Intent intent = new Intent(Sign_Up_Activity.this, LiveRoomActivity.class);
+                    StaticConfig.user = snapshot.getValue(User.class);
+                    Intent intent = new Intent(SignUpActivity.this, LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("User", "Participent");
                     intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
@@ -193,6 +192,6 @@ public class Sign_Up_Activity extends AppCompatActivity {
 
             }
         });
-        Toast.makeText(Sign_Up_Activity.this, "Success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
     }
 }

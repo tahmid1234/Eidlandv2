@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,8 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.eidland.auxilium.voice.only.MyProfile;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 
@@ -51,7 +50,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         viewDialog = new ViewDialog(this);
 
         txtcurrent = findViewById(R.id.txtname);
-        coincomma = formattedtext(Staticconfig.user.getCoins());
+        coincomma = formattedtext(StaticConfig.user.getCoins());
         txtcurrent.setText(coincomma);
 
         buy100.setOnClickListener(this);
@@ -105,10 +104,10 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onProductPurchased(String productId, TransactionDetails details) {
         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String currentCoins = Staticconfig.user.getCoins();
+        String currentCoins = StaticConfig.user.getCoins();
         long coininnumber = Long.parseLong(currentCoins);
         long finalcoin = coininnumber + Long.parseLong(productId);
-        Staticconfig.user.setCoins(finalcoin + "");
+        StaticConfig.user.setCoins(finalcoin + "");
 
         verifypurchase();
     }
@@ -132,11 +131,11 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
     public void verifypurchase() {
         viewDialog.showDialog("Please wait for a while");
-        FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(Staticconfig.user).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(StaticConfig.user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(WalletActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                coincomma = formattedtext(Staticconfig.user.getCoins());
+                coincomma = formattedtext(StaticConfig.user.getCoins());
                 txtcurrent.setText(coincomma);
                 Toast.makeText(WalletActivity.this, "Purchased Successfully", Toast.LENGTH_SHORT).show();
                 // lrnmethod.setVisibility(View.GONE);

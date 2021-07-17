@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -22,6 +22,10 @@ import androidx.core.content.ContextCompat;
 import io.agora.rtc.Constants;
 
 import com.chaos.view.PinView;
+import com.eidland.auxilium.voice.only.AGApplication;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.SignUpData;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -34,14 +38,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class VerifyotpActivity extends AppCompatActivity {
+public class VerifyOTPActivity extends AppCompatActivity {
     TextView setphonenumber;
     PinView pin;
     RelativeLayout verifyotp;
@@ -90,7 +92,7 @@ public class VerifyotpActivity extends AppCompatActivity {
     }
 
     public void Callalert() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(VerifyotpActivity.this);
+        AlertDialog.Builder dialoge = new AlertDialog.Builder(VerifyOTPActivity.this);
         dialoge.setTitle("Welcome to Eidland")
                 .setMessage("Please ensure your microphone and storage permission is given in order to get most out of Eidland")
                 .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
@@ -113,7 +115,7 @@ public class VerifyotpActivity extends AppCompatActivity {
     }
 
     private void progressdialogeshow() {
-        dialoge = new ProgressDialog(VerifyotpActivity.this);
+        dialoge = new ProgressDialog(VerifyOTPActivity.this);
         dialoge.setMessage("Loading, Please Wait!");
         dialoge.setCancelable(false);
     }
@@ -145,7 +147,7 @@ public class VerifyotpActivity extends AppCompatActivity {
                     public void onVerificationFailed(@NonNull FirebaseException e) {
                         dialoge.cancel();
                         error = e.getMessage();
-                        ShowDialogue(VerifyotpActivity.this);
+                        ShowDialogue(VerifyOTPActivity.this);
                     }
                 });
     }
@@ -211,10 +213,10 @@ public class VerifyotpActivity extends AppCompatActivity {
                     if(user!=null){
                         accessGranted(user);
                     }else{
-                        Toast.makeText(VerifyotpActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(VerifyOTPActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(VerifyotpActivity.this, "Signin Code Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(VerifyOTPActivity.this, "Signin Code Error", Toast.LENGTH_LONG).show();
                 }
                 dialoge.dismiss();
             }
@@ -222,7 +224,7 @@ public class VerifyotpActivity extends AppCompatActivity {
     }
 
 
-    public void ShowDialogue(VerifyotpActivity view) {
+    public void ShowDialogue(VerifyOTPActivity view) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(view);
         dialog.setTitle("Error");
         dialog.setCancelable(false);
@@ -242,13 +244,13 @@ public class VerifyotpActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
-                    Intent intent = new Intent(VerifyotpActivity.this, SignUpData.class);
+                    Intent intent = new Intent(VerifyOTPActivity.this, SignUpData.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 } else {
-                    Staticconfig.user = snapshot.getValue(User.class);
-                    Intent intent = new Intent(VerifyotpActivity.this, LiveRoomActivity.class);
+                    StaticConfig.user = snapshot.getValue(User.class);
+                    Intent intent = new Intent(VerifyOTPActivity.this, LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("User", "Participent");
                     intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
@@ -266,6 +268,6 @@ public class VerifyotpActivity extends AppCompatActivity {
 
             }
         });
-        Toast.makeText(VerifyotpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(VerifyOTPActivity.this, "Success", Toast.LENGTH_SHORT).show();
     }
 }

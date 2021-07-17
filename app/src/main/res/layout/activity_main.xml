@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout
-    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-     tools:context="com.eidland.auxilium.voice.only.ui.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.eidland.auxilium.voice.only.activity.MainActivity">
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_rectangle_18"
+        android:contentDescription="TODO"
         android:scaleType="centerCrop"
-        android:contentDescription="TODO" />
+        android:src="@drawable/ic_rectangle_18" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/appbar_back"
             android:gravity="center"
-            android:paddingTop="30dp"
             android:paddingStart="16dp"
-            android:paddingEnd="15dp"
-          android:background="@drawable/appbar_back">
-
+            android:paddingTop="30dp"
+            android:paddingEnd="15dp">
 
 
             <TextView
@@ -37,111 +39,123 @@
                 android:gravity="left|center"
                 android:text="Eidland"
                 android:textAppearance="@style/eidlandappbar" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:onClick="myProfile"
-                app:cardCornerRadius="18dp"
-                >
+                app:cardCornerRadius="18dp">
+
                 <ImageView
-                    android:src="@drawable/background"
+                    android:id="@+id/userimage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="TODO"
                     android:scaleType="centerCrop"
-                    android:id="@+id/userimage"
-                    android:contentDescription="TODO"></ImageView>
+                    android:src="@drawable/background"/>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="12sp"
-        android:visibility="gone"
-        app:cardCornerRadius="10dp">
-        <LinearLayout
-            android:orientation="horizontal"
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingHorizontal="10dp"
-            tools:context="com.eidland.auxilium.voice.only.MyProfile">
+            android:layout_height="120dp"
+            android:layout_margin="12sp"
+            android:visibility="gone"
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
-                android:layout_marginHorizontal="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="2"
-                android:orientation="vertical">
-                <TextView
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                tools:context="com.eidland.auxilium.voice.only.MyProfile">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="test"
-                    android:gravity="center|left"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:id="@+id/username"></TextView>
-                <TextView
-                    android:text="Welcome on Auxilium"
-                    android:gravity="top"
-                    android:textSize="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:id="@+id/userEmail"></TextView>
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center|left"
+                        android:text="test"
+                        android:textColor="#000"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/userEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="top"
+                        android:text="Welcome on Auxilium"
+                        android:textSize="10dp"/>
+                </LinearLayout>
+
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-<ProgressBar
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/progressbar"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:background="@drawable/chatrooms_b"
-        android:layout_weight="1">
-        <androidx.recyclerview.widget.RecyclerView
+        <ProgressBar
+            android:id="@+id/progressbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/singleroomxml"
-            android:id="@+id/rvrooms"
-            ></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content" />
 
-    </RelativeLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:visibility="gone"
-    android:padding="8dp">
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:src="@drawable/home"
-        android:contentDescription="TODO" />
-    <ImageView
-        android:id="@+id/button_join"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/golive"
-        android:backgroundTint="@color/purple"
-        android:textColor="@color/white"
-        android:onClick="onClickJoin"
-        android:contentDescription="TODO" />
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:src="@drawable/profil"
-        android:contentDescription="TODO" />
-</LinearLayout></LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/chatrooms_b"
+            android:padding="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/singleroomxml"></androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="TODO"
+                android:padding="8dp"
+                android:src="@drawable/home" />
+
+            <ImageView
+                android:id="@+id/button_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/purple"
+                android:contentDescription="TODO"
+                android:onClick="onClickJoin"
+                android:src="@drawable/golive"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="TODO"
+                android:padding="8dp"
+                android:src="@drawable/profil" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

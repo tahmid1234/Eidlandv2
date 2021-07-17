@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.Activity;
 import android.app.Dialog;

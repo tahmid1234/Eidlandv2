@@ -1,6 +1,8 @@
-package com.eidland.auxilium.voice.only.model;
+package com.eidland.auxilium.voice.only.helper;
 
 import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.GiftItem;
 
 import java.util.ArrayList;
 import java.util.List;

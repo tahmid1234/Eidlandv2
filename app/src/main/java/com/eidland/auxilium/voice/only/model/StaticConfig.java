@@ -1,7 +1,5 @@
 package com.eidland.auxilium.voice.only.model;
 
-import com.eidland.auxilium.voice.only.User;
-
-public class Staticconfig {
+public class StaticConfig {
     public static User user;
 }

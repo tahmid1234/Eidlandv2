@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -6,16 +6,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.DrawableImageViewTarget;
-import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.adapter.CommentAdapter;
 import com.eidland.auxilium.voice.only.adapter.ViewerListAdapter;
 import com.eidland.auxilium.voice.only.model.Viewer;
 

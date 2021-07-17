@@ -23,11 +23,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.adapter.RecyclerViewAdapter;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -52,7 +53,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
 
-import com.eidland.auxilium.voice.only.ui.ViewDialog;
+import com.eidland.auxilium.voice.only.activity.ViewDialog;
 
 public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClickListener {
     TextView imgerror;
@@ -191,7 +192,7 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
         String Userid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         User obj = new User(_username, _email, urlimg, "100", "0");
-        Staticconfig.user = obj;
+        StaticConfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

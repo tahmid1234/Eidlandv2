@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.helper;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

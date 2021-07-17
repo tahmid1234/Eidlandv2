@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
 import com.eidland.auxilium.voice.only.model.Leader;
 
 import java.util.List;

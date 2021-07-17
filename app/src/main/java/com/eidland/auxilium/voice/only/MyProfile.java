@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.eidland.auxilium.voice.only.model.Staticconfig;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,8 +41,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.ui.ViewDialog;
+import com.eidland.auxilium.voice.only.activity.ViewDialog;
 
 public class MyProfile extends AppCompatActivity {
     TextView tvname, tvmail;
@@ -63,10 +63,10 @@ public class MyProfile extends AppCompatActivity {
         imageViewuphoto = findViewById(R.id.userimage);
 
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        tvname.setText(Staticconfig.user.getName());
-        tvmail.setText(Staticconfig.user.getEmail());
-        ImageUrl = Staticconfig.user.getImageurl();
-        Glide.with(MyProfile.this).load(Staticconfig.user.getImageurl()).into(imageViewuphoto);
+        tvname.setText(StaticConfig.user.getName());
+        tvmail.setText(StaticConfig.user.getEmail());
+        ImageUrl = StaticConfig.user.getImageurl();
+        Glide.with(MyProfile.this).load(StaticConfig.user.getImageurl()).into(imageViewuphoto);
     }
 
     public void SignOut(View view) {
@@ -86,8 +86,8 @@ public class MyProfile extends AppCompatActivity {
 
     private void AddData(String url) {
         String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
-        Staticconfig.user = obj;
+        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins());
+        StaticConfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

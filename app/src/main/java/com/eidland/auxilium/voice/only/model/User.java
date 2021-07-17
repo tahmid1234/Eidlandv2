@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.model;
 
 import com.google.firebase.database.Exclude;
 

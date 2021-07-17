@@ -2,6 +2,8 @@ package com.eidland.auxilium.voice.only.model;
 
 import android.content.Context;
 
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 

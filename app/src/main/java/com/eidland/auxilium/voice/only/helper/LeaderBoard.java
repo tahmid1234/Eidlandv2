@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.helper;
 
 import android.os.Build;
 
@@ -57,7 +57,7 @@ public class LeaderBoard {
     }
 
 
-    List<Leader> getTopContributor() {
+    public List<Leader> getTopContributor() {
 
         Collections.sort(contributors, new Comparator<Leader>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -68,7 +68,7 @@ public class LeaderBoard {
         return contributors;
     }
 
-    List<Leader> getTopSpeaker() {
+    public List<Leader> getTopSpeaker() {
 
         Collections.sort(winners, new Comparator<Leader>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)

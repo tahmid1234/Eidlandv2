@@ -7,7 +7,7 @@
     android:background="@drawable/chatroom_background"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context="com.eidland.auxilium.voice.only.Sign_Up_Activity">
+    tools:context="com.eidland.auxilium.voice.only.activity.SignUpActivity">
 
 
     <ScrollView

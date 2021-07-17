@@ -1,51 +1,40 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
-import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import io.agora.rtc.Constants;
 
-import com.eidland.auxilium.voice.only.ui.AppUpdateDialog;
+import com.eidland.auxilium.voice.only.BuildConfig;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
@@ -163,15 +152,16 @@ public class SplashActivity extends AppCompatActivity {
                         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
                             User user =new  User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0");
-                            Staticconfig.user = user;
+                            StaticConfig.user = user;
                             myRef = FirebaseDatabase.getInstance().getReference();
                             myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() != null) {
                                         if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
-                                            Staticconfig.user = dataSnapshot.getValue(User.class);
+                                            StaticConfig.user = dataSnapshot.getValue(User.class);
 
+//                                            intent = new Intent(SplashActivity.this, MainActivity.class);
                                             intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
                                             intent.putExtra("User", "Participent");
                                             intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
@@ -182,9 +172,9 @@ public class SplashActivity extends AppCompatActivity {
                                             startActivity(intent);
                                             finish();
                                         } else
-                                            startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+                                            startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
                                     } else {
-                                        startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+                                        startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
                                     }
 
 
@@ -200,7 +190,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
                         } else {
-                            startActivity(new Intent(SplashActivity.this, Sign_Up_Activity.class));
+                            startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
                         }
                     }
                 }, 1000);

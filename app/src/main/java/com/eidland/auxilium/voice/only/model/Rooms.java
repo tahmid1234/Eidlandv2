@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui.RoomsRecycler;
+package com.eidland.auxilium.voice.only.model;
 
 public class Rooms {
    public String name,imageurl,hostuid,token,viewers,roomname;

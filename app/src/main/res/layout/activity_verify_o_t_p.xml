@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/chatroom_background"
-    tools:context="com.eidland.auxilium.voice.only.VerifyotpActivity"
+    tools:context="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity"
     android:orientation="vertical">
 
     <LinearLayout

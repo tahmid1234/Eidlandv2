@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,9 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.eidland.auxilium.voice.only.model.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,8 +40,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
-import com.eidland.auxilium.voice.only.R;
 
 import io.agora.rtc.Constants;
 
@@ -65,9 +63,8 @@ public class EnterRoomActivity extends AppCompatActivity {
         btncreate = findViewById(R.id.btncreate);
         txttitle = findViewById(R.id.txttitle);
         userimg = findViewById(R.id.userimage);
-        if (Staticconfig.user != null) {
-            Glide.with(this).load(Staticconfig.user.imageurl).error(R.drawable.appicon).into(userimg);
-
+        if (StaticConfig.user != null) {
+            Glide.with(this).load(StaticConfig.user.imageurl).error(R.drawable.appicon).into(userimg);
         }
         btncreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +79,7 @@ public class EnterRoomActivity extends AppCompatActivity {
                         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
-                        intent.putExtra("profile", Staticconfig.user.getImageurl());
+                        intent.putExtra("profile", StaticConfig.user.getImageurl());
                         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                     }

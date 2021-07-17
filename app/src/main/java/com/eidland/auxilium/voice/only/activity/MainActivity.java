@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.ui;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.RoomsRecycler.Rooms;
-import com.eidland.auxilium.voice.only.ui.RoomsRecycler.adapter_Rooms;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.Rooms;
+import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.eidland.auxilium.voice.only.EnterRoomActivity;
 import com.eidland.auxilium.voice.only.MyProfileActivity;
 import com.eidland.auxilium.voice.only.R;
 
@@ -37,7 +36,7 @@ public class MainActivity extends BaseActivity {
     ImageView ivuphoto, button_join;
     String userid, username, imageurl, description;
     RecyclerView rvrooms;
-    adapter_Rooms myadapter;
+    AdapterRoom myadapter;
     ProgressBar progressbar;
 
     @Override
@@ -54,7 +53,7 @@ public class MainActivity extends BaseActivity {
                 = new FirebaseRecyclerOptions.Builder<Rooms>()
                 .setQuery(FirebaseDatabase.getInstance().getReference("AllRooms"), Rooms.class)
                 .build();
-        myadapter = new adapter_Rooms(options);
+        myadapter = new AdapterRoom(options);
         rvrooms.setAdapter(myadapter);
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -82,8 +81,8 @@ public class MainActivity extends BaseActivity {
         });
 
 
-        username = Staticconfig.user.getName();
-        imageurl = Staticconfig.user.getImageurl();
+        username = StaticConfig.user.getName();
+        imageurl = StaticConfig.user.getImageurl();
         tvuname.setText(username);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             if (!MainActivity.this.isDestroyed())
@@ -147,13 +146,5 @@ public class MainActivity extends BaseActivity {
 //
 
     }
-
-
-//        Intent i = new Intent(MainActivity.this, LiveRoomActivity.class);
-//        i.putExtra(ConstantApp.ACTION_KEY_CROLE, cRole);
-//        i.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "room");
-//
-//        startActivity(i);
-
 
 }

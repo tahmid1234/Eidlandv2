@@ -11,7 +11,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

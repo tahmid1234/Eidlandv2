@@ -21,10 +21,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.eidland.auxilium.voice.only.model.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Staticconfig;
-import com.eidland.auxilium.voice.only.ui.LiveRoomActivity;
-import com.eidland.auxilium.voice.only.ui.WalletActivity;
+import com.eidland.auxilium.voice.only.activity.EnterRoomActivity;
+import com.eidland.auxilium.voice.only.activity.SignUpActivity;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.User;
+import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.activity.WalletActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -141,8 +144,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
         Uri img = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User obj = new User(Staticconfig.user.getName(), Staticconfig.user.getEmail(), PhotoUrl, Staticconfig.user.getCoins(), Staticconfig.user.getReceivedCoins());
-        Staticconfig.user = obj;
+        User obj = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins());
+        StaticConfig.user = obj;
 
         Intent intent = new Intent(MyProfileActivity.this, LiveRoomActivity.class);
         intent.putExtra("User", "Participent");
@@ -161,14 +164,14 @@ public class MyProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Staticconfig.user != null) {
-            txtname.setText(Staticconfig.user.getName());
-            coincomma = formattedtext(Staticconfig.user.getCoins());
+        if (StaticConfig.user != null) {
+            txtname.setText(StaticConfig.user.getName());
+            coincomma = formattedtext(StaticConfig.user.getCoins());
             txtcoins.setText(coincomma);
-            coincomma = formattedtext(Staticconfig.user.getReceivedCoins());
+            coincomma = formattedtext(StaticConfig.user.getReceivedCoins());
             txtrcvcoins.setText(coincomma);
-            PhotoUrl=Staticconfig.user.getImageurl();
-            Glide.with(MyProfileActivity.this).load(Staticconfig.user.getImageurl()).into(userimg);
+            PhotoUrl= StaticConfig.user.getImageurl();
+            Glide.with(MyProfileActivity.this).load(StaticConfig.user.getImageurl()).into(userimg);
         }
     }
 
@@ -213,7 +216,7 @@ public class MyProfileActivity extends AppCompatActivity {
         }catch (Exception e){
             System.out.println(e);
         }
-        Intent intent = new Intent(MyProfileActivity.this, Sign_Up_Activity.class);
+        Intent intent = new Intent(MyProfileActivity.this, SignUpActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
