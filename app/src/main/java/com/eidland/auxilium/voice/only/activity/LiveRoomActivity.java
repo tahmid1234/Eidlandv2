@@ -39,7 +39,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
-import com.eidland.auxilium.voice.only.MyProfileActivity;
 import com.eidland.auxilium.voice.only.adapter.AdapterGift;
 import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;

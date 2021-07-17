@@ -1,6 +1,5 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,12 +41,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.eidland.auxilium.voice.only.activity.ViewDialog;
-
-public class MyProfile extends AppCompatActivity {
+public class ProfileEditActivity extends AppCompatActivity {
     TextView tvname, tvmail;
     ImageView imageViewuphoto;
-    String userid, UserName, Email, ImageUrl, imgpath;
+    String userid, ImageUrl, imgpath;
     Uri filePath;
     ViewDialog viewDialog;
 
@@ -56,7 +54,6 @@ public class MyProfile extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
         viewDialog = new ViewDialog(this);
 
-
         tvname = findViewById(R.id.username);
         tvmail = findViewById(R.id.userEmail);
         imageViewuphoto = findViewById(R.id.userimage);
@@ -65,7 +62,7 @@ public class MyProfile extends AppCompatActivity {
         tvname.setText(StaticConfig.user.getName());
         tvmail.setText(StaticConfig.user.getEmail());
         ImageUrl = StaticConfig.user.getImageurl();
-        Glide.with(MyProfile.this).load(StaticConfig.user.getImageurl()).into(imageViewuphoto);
+        Glide.with(ProfileEditActivity.this).load(StaticConfig.user.getImageurl()).into(imageViewuphoto);
     }
 
     public void SignOut(View view) {
@@ -90,7 +87,7 @@ public class MyProfile extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(MyProfile.this, "Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileEditActivity.this, "Saved", Toast.LENGTH_SHORT).show();
                 viewDialog.hideDialog();
                 onBackPressed();
 
@@ -100,7 +97,7 @@ public class MyProfile extends AppCompatActivity {
 
     public void uplnamephoto() {
         viewDialog.showDialog("Please wait for a while");
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(MyProfile.this);
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(ProfileEditActivity.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -116,12 +113,12 @@ public class MyProfile extends AppCompatActivity {
                         AddData(url);
                     } else {
 
-                        Toast.makeText(MyProfile.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditActivity.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
-                    Toast.makeText(MyProfile.this, "Json", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileEditActivity.this, "Json", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -154,7 +151,7 @@ public class MyProfile extends AppCompatActivity {
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1, 1)
                 .setRequestedSize(1000, 1000, CropImageView.RequestSizeOptions.RESIZE_EXACT)
-                .start(MyProfile.this);
+                .start(ProfileEditActivity.this);
     }
 
     @Override

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_rectangle_18"
-    tools:context="com.eidland.auxilium.voice.only.MyProfileActivity">
+    tools:context="com.eidland.auxilium.voice.only.activity.ProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"

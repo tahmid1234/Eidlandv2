@@ -22,7 +22,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import com.eidland.auxilium.voice.only.MyProfileActivity;
 import com.eidland.auxilium.voice.only.R;
 
 public class MainActivity extends BaseActivity {
@@ -113,7 +112,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void myProfile(View view) {
-        Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
         startActivity(intent);
 
     }

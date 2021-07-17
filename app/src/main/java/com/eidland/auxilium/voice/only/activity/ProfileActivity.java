@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,28 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import io.agora.rtc.Constants;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.eidland.auxilium.voice.only.activity.EnterRoomActivity;
-import com.eidland.auxilium.voice.only.activity.MainActivity;
-import com.eidland.auxilium.voice.only.activity.SignUpActivity;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.helper.Helper;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.User;
-import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
-import com.eidland.auxilium.voice.only.activity.WalletActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -43,13 +35,12 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
     ImageView userimg;
     LinearLayout button_join, lrnrefrsh;
     String userid;
@@ -98,7 +89,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void gettoken(final String roomname) {
 
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(MyProfileActivity.this);
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(ProfileActivity.this);
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.GET, "https://auxilium2.herokuapp.com/access_token?channel=" + roomname, new Response.Listener<String>() {
             @Override
@@ -108,7 +99,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
                     FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomname).child("token").setValue(token);
-                    Toast.makeText(MyProfileActivity.this, roomname + " token added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, roomname + " token added", Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     Log.e("roor", e.getLocalizedMessage() + "d");
@@ -135,7 +126,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void finish(View view) {
         StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins());
-        Intent intent = new Intent(MyProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -150,7 +141,7 @@ public class MyProfileActivity extends AppCompatActivity {
             coincomma = Helper.getFormattedText(StaticConfig.user.getReceivedCoins());
             txtrcvcoins.setText(coincomma);
             PhotoUrl = StaticConfig.user.getImageurl();
-            Glide.with(MyProfileActivity.this).load(StaticConfig.user.getImageurl()).into(userimg);
+            Glide.with(ProfileActivity.this).load(StaticConfig.user.getImageurl()).into(userimg);
         }
     }
 
@@ -180,11 +171,11 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void editprofile(View view) {
-        startActivity(new Intent(MyProfileActivity.this, MyProfile.class));
+        startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class));
     }
 
     public void Walllet(View view) {
-        startActivity(new Intent(MyProfileActivity.this, WalletActivity.class));
+        startActivity(new Intent(ProfileActivity.this, WalletActivity.class));
     }
 
     public void logout(View view) {
@@ -194,7 +185,7 @@ public class MyProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println(e);
         }
-        Intent intent = new Intent(MyProfileActivity.this, SignUpActivity.class);
+        Intent intent = new Intent(ProfileActivity.this, SignUpActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -210,6 +201,6 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void roomcheck() {
-        startActivity(new Intent(MyProfileActivity.this, EnterRoomActivity.class));
+        startActivity(new Intent(ProfileActivity.this, EnterRoomActivity.class));
     }
 }
