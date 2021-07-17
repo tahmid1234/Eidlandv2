@@ -19,12 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import io.agora.rtc.Constants;
-
 import com.chaos.view.PinView;
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.SignUpData;
 import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -244,20 +241,22 @@ public class VerifyOTPActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
-                    Intent intent = new Intent(VerifyOTPActivity.this, SignUpData.class);
+                    Intent intent = new Intent(VerifyOTPActivity.this, SignUpFormActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 } else {
                     StaticConfig.user = snapshot.getValue(User.class);
-                    Intent intent = new Intent(VerifyOTPActivity.this, LiveRoomActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("User", "Participent");
-                    intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                    intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-                    intent.putExtra("UserName", "Eidland Battle Royale");
-                    intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                    intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                    Intent intent = new Intent(VerifyOTPActivity.this, MainActivity.class);
+//                    Intent intent = new Intent(VerifyOTPActivity.this, LiveRoomActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    intent.putExtra("User", "Participent");
+//                    intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+//                    intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+//                    intent.putExtra("UserName", "Eidland Battle Royale");
+//                    intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+//                    intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+
                     startActivity(intent);
                     finish();
                 }

@@ -43,7 +43,7 @@ import com.eidland.auxilium.voice.only.MyProfileActivity;
 import com.eidland.auxilium.voice.only.adapter.AdapterGift;
 import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
-import com.eidland.auxilium.voice.only.adapter.CommentAdapter;
+import com.eidland.auxilium.voice.only.adapter.AdapterComment;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.helper.LeaderBoard;
 import com.eidland.auxilium.voice.only.model.AGEventHandler;
@@ -122,7 +122,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     RecyclerView viewers;
     ImageView bottom_action_end_call;
     ArrayList<Comment> comments;
-    CommentAdapter commentAdapter;
+    AdapterComment commentAdapter;
     ImageView roomGift, closeGiftBox, singleUserClose;
     LinearLayout crystal;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
@@ -240,12 +240,30 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         leaveRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                End1();
+                AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
+                dialoge.setTitle("Confirm Exit")
+                        .setMessage("Are you sure you want to leave Eidland?")
+                        .setPositiveButton("Exit & Leave App", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                run = "1";
+                                progressDialog.show();
+                                EndMeeting();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .setCancelable(false)
+                        .show();
             }
         });
         comments = new ArrayList<>();
         RecyclerView commentRecyclerView = findViewById(R.id.live_comment_recyler);
-        commentAdapter = new CommentAdapter(this, comments, new ItemClickListener1() {
+        commentAdapter = new AdapterComment(this, comments, new ItemClickListener1() {
             @Override
             public void onPositionClicked(View view, final int position) {
             }
@@ -321,45 +339,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-                dialoge.setTitle("Confirm")
-                        .setMessage("Are you sure you want to leave current session?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (AgainSeat != null) {
-
-                                    doSwitchToBroadcaster(false);
-                                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
-
-                                    AgainSeat = null;
-                                    Intent intent = new Intent(LiveRoomActivity.this, MyProfileActivity.class);
-                                    startActivity(intent);
-                                    finish();
-
-                                } else {
-
-                                    Intent intent = new Intent(LiveRoomActivity.this, MyProfileActivity.class);
-                                    startActivity(intent);
-                                    finish();
-
-                                }
-                                try{
-
-                                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
-                                }catch (Exception e){
-
-                                }
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setCancelable(false)
-                        .show();
+                goBack();
             }
         });
 
@@ -389,12 +369,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try{
+                try {
                     User user = snapshot.getValue(User.class);
                     StaticConfig.user = user;
                     userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
                     System.out.println("okok");
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -436,7 +416,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView giftRecycler = findViewById(R.id.gift_recycler);
         giftRecycler.setHasFixedSize(true);
         GridLayoutManager giftLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
-        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, width/4);
+        AdapterGift adapterGift = new AdapterGift(LiveRoomActivity.this, this, width / 4);
         giftRecycler.setLayoutManager(giftLayoutManager);
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);
@@ -460,11 +440,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
-                                    try{
+                                    try {
                                         User user = currentData.getValue(User.class);
                                         user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
                                         currentData.setValue(user);
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         System.out.println(e);
                                     }
                                     return Transaction.success(currentData);
@@ -473,11 +453,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
 
-                                    try{
+                                    try {
                                         User user = currentData.getValue(User.class);
                                         StaticConfig.user = user;
                                         userAvailableCoin.setText(getFormattedText(user.coins));
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         System.out.println(e);
                                     }
                                 }
@@ -590,16 +570,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         optional();
     }
 
-    public void joinChannel(String token) {
-        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName);
-        FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
-        SeatsName = "seat1";
-        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom);
-        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(SeatsName).setValue(viewer);
-        AgainSeat = SeatsName;
-        inist(token);
-    }
-
     public void getToken(final boolean isHost) {
 
         RequestQueue MyRequestQueue = Volley.newRequestQueue(LiveRoomActivity.this);
@@ -611,10 +581,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
-                    if (isHost)
-                        joinChannel(token);
-                    else
+                    if (isHost) {
+                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName);
+                        FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
+                        SeatsName = "seat1";
+                        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom);
+                        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(SeatsName).setValue(viewer);
+                        AgainSeat = SeatsName;
                         inist(token);
+                    } else {
+                        inist(token);
+                    }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
@@ -771,12 +748,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     adapterLeader.notifyDataSetChanged();
                     topContributorRecycler.setAdapter(adapterLeaderContributor);
 
-                    if(hasEnteredRoom){
+                    if (hasEnteredRoom) {
                         simpleGift.setImageResource(R.drawable.hello_pana);
                         backgrundGIF.setImageResource(R.drawable.fireworks_gif);
                         backgroundGIFLayout.setVisibility(View.VISIBLE);
-                        sendername.setText("Hey "+ StaticConfig.user.getName() + "!");
-                        receivername.setText("Welcome to " +nameOfRoom);
+                        sendername.setText("Hey " + StaticConfig.user.getName() + "!");
+                        receivername.setText("Welcome to " + nameOfRoom);
                         hasEnteredRoom = false;
                     }
 
@@ -840,8 +817,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void setOnlineMembers() {
-
-
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -980,14 +955,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
 
     public void onSwitchSpeakerClicked(View view) {
         RtcEngine rtcEngine = rtcEngine();
-        // Enables/Disables the audio playback route to the speakerphone.
-        // This method sets whether the audio is routed to the speakerphone or earpiece. After calling this method, the SDK returns the onAudioRouteChanged callback to indicate the changes.
         rtcEngine.setEnableSpeakerphone(mAudioRouting != 3);
     }
 
@@ -1001,19 +973,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     protected void deInitUIandEvent() {
-        doLeaveChannel();
-        event().removeEventHandler(this);
-    }
-
-    private void doLeaveChannel() {
         worker().leaveChannel(config().mChannel);
+        event().removeEventHandler(this);
     }
 
     public void onEndCallClicked(View view) {
 
         if (AgainSeat != null) {
             doSwitchToBroadcaster(false);
-            if (flag == true) {
+            if (flag) {
                 Glide.with(LiveRoomActivity.this).load(R.drawable.ic_mic_on).into(button);
             }
             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
@@ -1023,23 +991,36 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onBackPressed() {
-        End1();
+        goBack();
     }
 
-    private void End1() {
-
+    private void goBack() {
         AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-        dialoge.setTitle("Confirm Exit")
-                .setMessage("Are you sure you want to leave Eidland?")
-                .setPositiveButton("Exit & Leave App", new DialogInterface.OnClickListener() {
+        dialoge.setTitle("Confirm")
+                .setMessage("Are you sure you want to leave current session?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        run = "1";
-                        progressDialog.show();
-                        EndMeeting();
+                        if (AgainSeat != null) {
+                            doSwitchToBroadcaster(false);
+                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
+                            AgainSeat = null;
+                            Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        try {
+                            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

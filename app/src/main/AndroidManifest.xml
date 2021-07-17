@@ -56,7 +56,7 @@
         <activity android:name="com.eidland.auxilium.voice.only.MyProfile" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity" />
         <activity
-            android:name="com.eidland.auxilium.voice.only.SignUpData"
+            android:name="com.eidland.auxilium.voice.only.activity.SignUpFormActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 

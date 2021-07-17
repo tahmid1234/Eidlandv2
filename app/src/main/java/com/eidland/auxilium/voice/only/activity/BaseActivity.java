@@ -107,21 +107,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-       /* new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isFinishing()) {
-                    return;
-                }
-
-              //  boolean checkPermissionResult = checkSelfPermissions();
-
-                if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M)) {
-                    // so far we do not use OnRequestPermissionsResultCallback
-                }
-            }
-        }, 500);*/
     }
 
     private boolean checkSelfPermissions() {
@@ -132,9 +117,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         deInitUIandEvent();
-      /*  if (keyboardListenersAttached) {
-            rootLayout.getViewTreeObserver().removeGlobalOnLayoutListener(keyboardLayoutListener);
-        }*/
         super.onDestroy();
     }
 

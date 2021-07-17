@@ -19,8 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.SignUpData;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -40,8 +38,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
-
-import io.agora.rtc.Constants;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
@@ -168,20 +164,21 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() == null) {
-                    Intent intent = new Intent(SignUpActivity.this, SignUpData.class);
+                    Intent intent = new Intent(SignUpActivity.this, SignUpFormActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
                 } else {
                     StaticConfig.user = snapshot.getValue(User.class);
-                    Intent intent = new Intent(SignUpActivity.this, LiveRoomActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("User", "Participent");
-                    intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                    intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-                    intent.putExtra("UserName", "Eidland Battle Royale");
-                    intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                    intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+//                    Intent intent = new Intent(SignUpActivity.this, LiveRoomActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    intent.putExtra("User", "Participent");
+//                    intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+//                    intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+//                    intent.putExtra("UserName", "Eidland Battle Royale");
+//                    intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+//                    intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                     startActivity(intent);
                     finish();
                 }

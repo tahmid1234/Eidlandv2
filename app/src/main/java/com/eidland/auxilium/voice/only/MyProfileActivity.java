@@ -22,8 +22,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eidland.auxilium.voice.only.activity.EnterRoomActivity;
+import com.eidland.auxilium.voice.only.activity.MainActivity;
 import com.eidland.auxilium.voice.only.activity.SignUpActivity;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.helper.Helper;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.User;
 import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
@@ -55,7 +57,7 @@ public class MyProfileActivity extends AppCompatActivity {
     DecimalFormat formatter;
     String finalText, coincomma;
     FirebaseAuth mAuth;
-    Boolean edited=false;
+    Boolean edited = false;
     String PhotoUrl;
 
     @Override
@@ -70,6 +72,7 @@ public class MyProfileActivity extends AppCompatActivity {
         button_join = findViewById(R.id.lrnjoin);
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Uri ir = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
         if (userid.equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3")) {
             lrnrefrsh.setVisibility(View.VISIBLE);
         }
@@ -108,9 +111,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     Toast.makeText(MyProfileActivity.this, roomname + " token added", Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
-                    //   e.printStackTrace();
                     Log.e("roor", e.getLocalizedMessage() + "d");
-                    //  Toast.makeText(MainActivity.this, "Json", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -118,7 +119,6 @@ public class MyProfileActivity extends AppCompatActivity {
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
             public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
                 Log.e("volly error", error.getLocalizedMessage() + "vghg");
 
             }
@@ -133,30 +133,9 @@ public class MyProfileActivity extends AppCompatActivity {
         MyRequestQueue.add(MyStringRequest);
     }
 
-    public String formattedtext(String coin) {
-        BigDecimal val = new BigDecimal(coin);
-        formatter = new DecimalFormat("#,###,###");
-        finalText = formatter.format(val);
-        return finalText;
-    }
-
-    public void finishthis(View view) {
-
-        Uri img = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        User obj = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins());
-        StaticConfig.user = obj;
-
-        Intent intent = new Intent(MyProfileActivity.this, LiveRoomActivity.class);
-        intent.putExtra("User", "Participent");
-        intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-        intent.putExtra("UserName", "Eidland Battle Royale");
-        intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-        intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-
+    public void finish(View view) {
+        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins());
+        Intent intent = new Intent(MyProfileActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -166,11 +145,11 @@ public class MyProfileActivity extends AppCompatActivity {
         super.onResume();
         if (StaticConfig.user != null) {
             txtname.setText(StaticConfig.user.getName());
-            coincomma = formattedtext(StaticConfig.user.getCoins());
+            coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
             txtcoins.setText(coincomma);
-            coincomma = formattedtext(StaticConfig.user.getReceivedCoins());
+            coincomma = Helper.getFormattedText(StaticConfig.user.getReceivedCoins());
             txtrcvcoins.setText(coincomma);
-            PhotoUrl= StaticConfig.user.getImageurl();
+            PhotoUrl = StaticConfig.user.getImageurl();
             Glide.with(MyProfileActivity.this).load(StaticConfig.user.getImageurl()).into(userimg);
         }
     }
@@ -201,7 +180,6 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void editprofile(View view) {
-
         startActivity(new Intent(MyProfileActivity.this, MyProfile.class));
     }
 
@@ -213,7 +191,7 @@ public class MyProfileActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         try {
             GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         Intent intent = new Intent(MyProfileActivity.this, SignUpActivity.class);
@@ -223,9 +201,7 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void onClickJoin(View view) {
-        // show dialog to choose role
         roomcheck();
-
     }
 
     public void myProfile(View view) {
@@ -234,10 +210,6 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     public void roomcheck() {
-
         startActivity(new Intent(MyProfileActivity.this, EnterRoomActivity.class));
-
-//
-
     }
 }

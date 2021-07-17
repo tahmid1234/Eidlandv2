@@ -48,7 +48,6 @@ public class MyProfile extends AppCompatActivity {
     ImageView imageViewuphoto;
     String userid, UserName, Email, ImageUrl, imgpath;
     Uri filePath;
-    ProgressDialog progressDialog;
     ViewDialog viewDialog;
 
     @Override
