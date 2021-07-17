@@ -39,6 +39,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -55,7 +58,7 @@ import io.agora.rtc.Constants;
 
 import com.eidland.auxilium.voice.only.activity.ViewDialog;
 
-public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClickListener {
+public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapter.ItemClickListener {
     TextView imgerror;
     RelativeLayout singupactive;
     String finalImage;
@@ -72,18 +75,20 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
     String gNaame, gEmaail, gImage;
     Boolean ImageUploaded = false, isLoggedin = false;
     FirebaseAuth mAuth;
+    StorageReference mStorage;
     FirebaseAuth.AuthStateListener mAuthListener;
     RecyclerViewAdapter recyclerViewAdapter;
+
     public String[] imageList = {
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit1.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit2.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit3.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit4.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit5.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit6.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit7.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit8.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit9.png"
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit2.jpg?alt=media&token=4a1187ae-a0f0-4aa0-8c3e-edce32310f8e",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit3.jpg?alt=media&token=41366058-a93f-4090-ac95-b030a004b5cc",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit4.jpg?alt=media&token=16232610-aa99-47bb-becc-ca7bcc0d9556",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit5.jpg?alt=media&token=4096819b-491e-4652-af3a-856e08c1522b",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit6.jpg?alt=media&token=fbf7832e-357d-45a0-b90b-7d383e1af84c",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit7.jpg?alt=media&token=b018a286-d008-42f1-af0a-cb84126a306f",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit8.jpg?alt=media&token=05280825-3eed-4405-9fc2-1c9d8a916206",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit9.jpg?alt=media&token=befccdcf-ef37-4d72-b433-45ab57d20708"
     };
 
     @Override
@@ -92,7 +97,10 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.sign_up_get_data);
         initialViews();
-        Glide.with(SignUpData.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
+
+        mStorage = FirebaseStorage.getInstance().getReference().child("avatars");
+
+        Glide.with(SignUpData.this).load(imageList[(int)(Math.random()*9)]).into(profileimageView);//
         intent = getIntent();
         viewDialog = new ViewDialog(this);
         // get ids from layout
