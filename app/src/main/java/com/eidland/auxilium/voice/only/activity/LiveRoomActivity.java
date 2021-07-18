@@ -45,7 +45,7 @@ import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
 import com.eidland.auxilium.voice.only.adapter.AdapterComment;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.helper.LeaderBoard;
-import com.eidland.auxilium.voice.only.model.AGEventHandler;
+import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
@@ -311,9 +311,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
             } else {
-
                 Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
-
             }
             onlineUserList.clear();
             setOnlineMembers();

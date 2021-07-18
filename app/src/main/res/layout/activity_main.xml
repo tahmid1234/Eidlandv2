@@ -17,7 +17,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
 
         <LinearLayout
@@ -32,15 +31,14 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-
                 android:fontFamily="@font/pacificoregular"
                 android:gravity="left|center"
                 android:text="Eidland"
                 android:textAppearance="@style/eidlandappbar" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:onClick="myProfile"
                 app:cardCornerRadius="18dp">
 
