@@ -82,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressbar.setVisibility(View.GONE);
 
-//        userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        username = StaticConfig.user.getName();
-//        imageurl = StaticConfig.user.getImageurl();
-//        UserName.setText(username);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//            if (!MainActivity.this.isDestroyed())
-//                Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
-//        } else {
-//
-//            Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
-//        }
+        userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        username = StaticConfig.user.getName();
+        imageurl = StaticConfig.user.getImageurl();
+        UserName.setText(username);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (!MainActivity.this.isDestroyed())
+                Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
+        } else {
+
+            Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
+        }
     }
 
     public void onClickJoin(View view) {

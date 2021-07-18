@@ -139,57 +139,6 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
             }
         });
     }
-  /*  public void uplnamephoto() {
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
-        String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php/";
-        progressDialog.show();
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Log.e("response", response + "");
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    boolean status = jsonObject.getBoolean("error");
-                    if (!status) {
-                        final String url = jsonObject.getString("thumb");
-                        // Add data in firebase realtime database
-                        AddData(url);
-                    } else {
-                        Toast.makeText(SignUpData.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
-                    }
-
-                    progressDialog.dismiss();
-                } catch (JSONException e) {
-                    //   e.printStackTrace();
-                    progressDialog.dismiss();
-                    Toast.makeText(SignUpData.this, "Json", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-                if (error != null)
-                    Log.e("error", error.getLocalizedMessage() + "");
-                progressDialog.dismiss();
-            }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-
-                MyData.put("photo", imgpath); //Add the data you'd like to send to the server.
-
-
-                return MyData;
-            }
-        };
-
-
-        MyRequestQueue.add(MyStringRequest);
-    }*/
 
     private void AddData(final String urlimg) {
         Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
@@ -202,15 +151,6 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
             public void onComplete(@NonNull Task<Void> task) {
 
                 Intent intent = new Intent(SignUpFormActivity.this, MainActivity.class);
-//                Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-//                intent.putExtra("User", "Participent");
-//                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-//                intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-//                intent.putExtra("UserName", "Eidland Battle Royale");
-//                intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-//                intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 if (getIntent().hasExtra("gName")) {
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
                     SharedPreferences.Editor editor = pref.edit();
@@ -245,32 +185,6 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         }
     }
 
-    private void CheckSignin() {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(SignUpFormActivity.this, MainActivity.class);
-//                            Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-//                            intent.putExtra("User", "Participent");
-//                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-//                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-//                            intent.putExtra("UserName", "Eidland Battle Royale");
-//                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-//                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            viewDialog.hideDialog();
-                            Toast.makeText(SignUpFormActivity.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
     private boolean validateUserName() {
         if (_username.isEmpty()) {
             username.setError("Field can not be empty");
@@ -285,24 +199,19 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
     }
 
     private boolean validateimage() {
-
-
         if (filePath != null) {
             return true;
         } else {
             Toast.makeText(this, "Please Choose image", Toast.LENGTH_LONG).show();
             return false;
         }
-
     }
 
 
     private void Remove_Error(EditText e) {
         e.setError(null);
-
     }
 
-    // chose profile photo onclick
     public void ChangeImage(View view) {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -393,68 +302,6 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         MyRequestQueue.add(MyStringRequest);
     }
 
-    /*private void uploadImage() {
-
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
-        String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-
-    }
-    private void CreateUser(final String urlimage) {
-
-        FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            User userobj = new User(_username, _email, urlimage, "10000", "0");
-                            FirebaseDatabase.getInstance().getReference("Users").child(userid).setValue(userobj);
-                            Staticconfig.user = userobj;
-                            Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                            intent.putExtra("User", "Participent");
-                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                            intent.putExtra("UserName", "Eidland Battle Royale");
-                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            viewDialog.hideDialog();
-                            Toast.makeText(SignUpData.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }*/
 
     public String encodeTobase64(Bitmap image) {
         Bitmap immagex = image;
