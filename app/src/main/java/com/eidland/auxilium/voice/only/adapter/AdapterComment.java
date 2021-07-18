@@ -21,13 +21,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pl.droidsonroids.gif.GifImageView;
 
 
-public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ItemClickListener1 itemClickListener1;
     PlacesViewHolder placesViewHolder=null;
     Context context;
     ArrayList<Comment> countryInfoArrayList;
     URI phURI;
-    public CommentAdapter(Context context, ArrayList<Comment> cameraobject1s, ItemClickListener1 itemClickListener1) {
+    public AdapterComment(Context context, ArrayList<Comment> cameraobject1s, ItemClickListener1 itemClickListener1) {
         this.context = context;
         countryInfoArrayList = cameraobject1s;
         this.itemClickListener1=itemClickListener1;

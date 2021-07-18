@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.model;
+package com.eidland.auxilium.voice.only.Interface;
 
 public interface AGEventHandler {
     void onJoinChannelSuccess(String channel, int uid, int elapsed);

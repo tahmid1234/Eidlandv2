@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,13 +22,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.eidland.auxilium.voice.only.adapter.RecyclerViewAdapter;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.adapter.AdapterAvatar;
 import com.eidland.auxilium.voice.only.model.User;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
-import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -54,11 +53,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.agora.rtc.Constants;
 
 import com.eidland.auxilium.voice.only.activity.ViewDialog;
 
-public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapter.ItemClickListener {
+public class SignUpFormActivity<mStorage> extends Activity implements AdapterAvatar.ItemClickListener {
     TextView imgerror;
     RelativeLayout singupactive;
     String finalImage;
@@ -77,8 +75,7 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
     FirebaseAuth mAuth;
     StorageReference mStorage;
     FirebaseAuth.AuthStateListener mAuthListener;
-    RecyclerViewAdapter recyclerViewAdapter;
-
+    AdapterAvatar adapterAvatar;
     public String[] imageList = {
             "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959",
             "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit2.jpg?alt=media&token=4a1187ae-a0f0-4aa0-8c3e-edce32310f8e",
@@ -99,8 +96,7 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
         initialViews();
 
         mStorage = FirebaseStorage.getInstance().getReference().child("avatars");
-
-        Glide.with(SignUpData.this).load(imageList[(int)(Math.random()*9)]).into(profileimageView);//
+        Glide.with(SignUpFormActivity.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
         intent = getIntent();
         viewDialog = new ViewDialog(this);
         // get ids from layout
@@ -124,9 +120,9 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
         RecyclerView recyclerView = findViewById(R.id.avatarImages);
         int numberOfColumns = 5;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        recyclerViewAdapter = new RecyclerViewAdapter(this, imageList);
-        recyclerViewAdapter.setClickListener(this);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        adapterAvatar = new AdapterAvatar(this, imageList);
+        adapterAvatar.setClickListener(this);
+        recyclerView.setAdapter(adapterAvatar);
 
         singupactive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,15 +201,16 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-                Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                intent.putExtra("User", "Participent");
-                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+                Intent intent = new Intent(SignUpFormActivity.this, MainActivity.class);
+//                Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
+//                intent.putExtra("User", "Participent");
+//                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+//                intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+//                intent.putExtra("UserName", "Eidland Battle Royale");
+//                intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+//                intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                intent.putExtra("UserName", "Eidland Battle Royale");
-                intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (getIntent().hasExtra("gName")) {
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
                     SharedPreferences.Editor editor = pref.edit();
@@ -254,25 +251,21 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            String userid = mAuth.getCurrentUser().getUid();
-                            String email = mAuth.getCurrentUser().getEmail();
-                            Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                            intent.putExtra("User", "Participent");
-                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                            intent.putExtra("UserName", "Eidland Battle Royale");
-                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                            Intent intent = new Intent(SignUpFormActivity.this, MainActivity.class);
+//                            Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
+//                            intent.putExtra("User", "Participent");
+//                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+//                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+//                            intent.putExtra("UserName", "Eidland Battle Royale");
+//                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+//                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                             startActivity(intent);
                             finish();
 
                         } else {
                             // If sign in fails, display a message to the user.
                             viewDialog.hideDialog();
-                            Toast.makeText(SignUpData.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpFormActivity.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -315,7 +308,7 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1, 1)
                 .setRequestedSize(1000, 1000, CropImageView.RequestSizeOptions.RESIZE_EXACT)
-                .start(SignUpData.this);
+                .start(SignUpFormActivity.this);
     }
 
     @Override
@@ -348,7 +341,7 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
 
     public void uplnamephoto() {
 
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpFormActivity.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -367,12 +360,12 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
 
                     } else {
 
-                        Toast.makeText(SignUpData.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpFormActivity.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
-                    Toast.makeText(SignUpData.this, "Json", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpFormActivity.this, "Json", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -477,6 +470,6 @@ public class SignUpData<mStorage> extends Activity implements RecyclerViewAdapte
     @Override
     public void onItemClick(View view, int position) {
         filePath= Uri.parse(imageList[position]);
-        Glide.with(SignUpData.this).load(imageList[position]).into(profileimageView);
+        Glide.with(SignUpFormActivity.this).load(imageList[position]).into(profileimageView);
     }
 }

@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingHorizontal="10dp"
-            tools:context="com.eidland.auxilium.voice.only.MyProfile">
+            tools:context="com.eidland.auxilium.voice.only.activity.ProfileEditActivity">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
