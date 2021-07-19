@@ -41,7 +41,7 @@
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/_tvdes"
-                android:text="100 Members"
+                android:text="0 Online"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:paddingBottom="7dp"

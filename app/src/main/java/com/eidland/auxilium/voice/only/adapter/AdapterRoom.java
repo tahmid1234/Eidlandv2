@@ -20,6 +20,10 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.eidland.auxilium.voice.only.R;
 
 import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -36,9 +40,25 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+
+
         holder.roomName.setText(rooms.get(position).getName());
-        holder.memberNumber.setText("1.1K Members, ");
-        holder.memberNumber.append(rooms.get(position).getViewers() + " online");
+
+        FirebaseDatabase.getInstance().getReference("Viewers").child(rooms.get(position).roomname).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    holder.memberNumber.setText(snapshot.getChildrenCount()+" Online");
+                }else {
+                    holder.memberNumber.setText("0 Online");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         Glide.with(holder.roomPhoto.getContext()).load(rooms.get(position).getImageurl()).into(holder.roomPhoto);
