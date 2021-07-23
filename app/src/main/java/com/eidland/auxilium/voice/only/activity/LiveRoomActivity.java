@@ -50,6 +50,7 @@ import com.eidland.auxilium.voice.only.model.AGEventHandler;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.Game;
 import com.eidland.auxilium.voice.only.model.Gift;
 import com.eidland.auxilium.voice.only.model.GiftItem;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
@@ -123,8 +124,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView bottom_action_end_call;
     ArrayList<Comment> comments;
     CommentAdapter commentAdapter;
-    ImageView roomGift, closeGiftBox, singleUserClose;
+    ImageView roomGift, closeGiftBox, closeGame, singleUserClose;
     LinearLayout crystal;
+    LinearLayout gamesList;
+    LinearLayout gameButton;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
     RelativeLayout singlegift;
     DatabaseReference userRef;
@@ -139,6 +142,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
+    ArrayList<Game> gameList;
 
     String nameOfRoom;
 
@@ -185,7 +189,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         leaderGiftList = new ArrayList<>();
         singleUserBox = findViewById(R.id.single_user_box);
         viewers = findViewById(R.id.viewersrecyler);
-
+        gamesList = findViewById(R.id.gameslayout);
+        gameButton = findViewById(R.id.game_button);
+        closeGame = findViewById(R.id.closegame);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         sendGiftBtn = findViewById(R.id.send_gift);
         userAvailableCoin = findViewById(R.id.user_available_coin);
@@ -221,6 +227,23 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 txtsinglename.setText(nameOfRoom);
                 crystal.setVisibility(View.VISIBLE);
+            }
+        });
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+                selectedViewer.name = nameOfRoom;
+                selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
+                selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+                txtsinglename.setText(nameOfRoom);
+                gamesList.setVisibility(View.VISIBLE);
+            }
+        });
+        closeGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gamesList.setVisibility(View.GONE);
             }
         });
         singleUserClose.setOnClickListener(new View.OnClickListener() {

@@ -185,11 +185,11 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_speaker"
-                                android:orientation="horizontal"
-                                android:layout_gravity="left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_gravity="left"
+                                android:layout_weight="1"
+                                android:orientation="horizontal" />
 
                         </LinearLayout>
 
@@ -240,11 +240,11 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_contributor"
-                                android:orientation="horizontal"
-                                android:layout_gravity="left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_gravity="left"
+                                android:layout_weight="1"
+                                android:orientation="horizontal" />
 
                         </LinearLayout>
 
@@ -317,8 +317,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="-55dp"
-                android:translationZ="1.0dp"
                 android:orientation="vertical"
+                android:translationZ="1.0dp"
                 android:visibility="invisible">
 
                 <LinearLayout
@@ -381,6 +381,22 @@
                     android:id="@+id/live_comment_recyler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-28dp"
+                android:gravity="right">
+
+                <ImageView
+                    android:id="@+id/game_button_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:src="@drawable/game_image" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -486,12 +502,57 @@
                     android:src="@drawable/btn_request_broadcast"
                     android:visibility="gone"
                     tools:ignore="TooManyViews" />
+            </LinearLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/gameslayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            android:background="#E6000000"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:text="Select a Game to Enable!"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/closegame"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="TODO"
+                    android:src="@drawable/ic_fi_rr_cross_small_1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/game_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/giftslayout"
@@ -649,7 +710,7 @@
                 android:gravity="left"
                 android:text="Remove User"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
             <ImageView
