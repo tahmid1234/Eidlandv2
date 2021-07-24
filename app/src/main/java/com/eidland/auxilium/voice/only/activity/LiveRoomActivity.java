@@ -40,6 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.MyProfileActivity;
+import com.eidland.auxilium.voice.only.adapter.AdapterGame;
 import com.eidland.auxilium.voice.only.adapter.AdapterGift;
 import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
@@ -50,7 +51,7 @@ import com.eidland.auxilium.voice.only.model.AGEventHandler;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Game;
+import com.eidland.auxilium.voice.only.model.CardDeck;
 import com.eidland.auxilium.voice.only.model.Gift;
 import com.eidland.auxilium.voice.only.model.GiftItem;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
@@ -95,7 +96,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener {
     String type, SeatsName, AgainSeat, run;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
@@ -142,7 +143,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
-    ArrayList<Game> gameList;
+    ArrayList<CardDeck> cardDeckList;
 
     String nameOfRoom;
 
@@ -464,6 +465,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);
 
+        RecyclerView gameRecycler = findViewById(R.id.game_recycler);
+        gameRecycler.setHasFixedSize(true);
+        GridLayoutManager gameLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+        AdapterGame adapterGame = new AdapterGame(LiveRoomActivity.this, this, width);
+        gameRecycler.setLayoutManager(gameLayoutManager);
+        adapterGame.notifyDataSetChanged();
+        gameRecycler.setAdapter(adapterGame);
 
         setOnlineMembers();
 
@@ -1412,5 +1420,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 break;
             }
         }
+    }
+
+    @Override
+    public void onGameClick(int position, ImageView gameIcon) {
+        Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+        //write animation and stuff code here
     }
 }

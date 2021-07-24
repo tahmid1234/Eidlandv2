@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.eidland.auxilium.voice.only.adapter.RecyclerViewAdapter;
+import com.eidland.auxilium.voice.only.adapter.AdapterAvatar;
 import com.eidland.auxilium.voice.only.model.User;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -55,7 +55,7 @@ import io.agora.rtc.Constants;
 
 import com.eidland.auxilium.voice.only.activity.ViewDialog;
 
-public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClickListener {
+public class SignUpData extends Activity implements AdapterAvatar.ItemClickListener {
     TextView imgerror;
     RelativeLayout singupactive;
     String finalImage;
@@ -73,7 +73,7 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
     Boolean ImageUploaded = false, isLoggedin = false;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
-    RecyclerViewAdapter recyclerViewAdapter;
+    AdapterAvatar adapterAvatar;
     public String[] imageList = {
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit1.png",
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit2.png",
@@ -116,9 +116,9 @@ public class SignUpData extends Activity implements RecyclerViewAdapter.ItemClic
         RecyclerView recyclerView = findViewById(R.id.avatarImages);
         int numberOfColumns = 5;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        recyclerViewAdapter = new RecyclerViewAdapter(this, imageList);
-        recyclerViewAdapter.setClickListener(this);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        adapterAvatar = new AdapterAvatar(this, imageList);
+        adapterAvatar.setClickListener(this);
+        recyclerView.setAdapter(adapterAvatar);
 
         singupactive.setOnClickListener(new View.OnClickListener() {
             @Override

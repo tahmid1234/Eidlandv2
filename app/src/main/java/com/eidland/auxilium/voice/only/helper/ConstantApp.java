@@ -1,7 +1,10 @@
 package com.eidland.auxilium.voice.only.helper;
 
+import android.net.Uri;
+
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.CardsInADeck;
 import com.eidland.auxilium.voice.only.model.GiftItem;
 
 import java.util.ArrayList;
@@ -67,5 +70,13 @@ public class ConstantApp {
         animationItemList.add(new AnimationItem("clap", R.drawable.ic_clapping, R.drawable.clap_gif));
 
         return animationItemList;
+    }
+
+    public static List<CardsInADeck> gameList(){
+        List<CardsInADeck> randomDeck = new ArrayList<>();
+
+        randomDeck.add(new CardsInADeck("Random Cards", "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2F1.png?alt=media&token=ed276841-84a9-4390-982b-7bd3c8939f7d"));
+
+        return randomDeck;
     }
 }

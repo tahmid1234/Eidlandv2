@@ -11,7 +11,7 @@ import com.eidland.auxilium.voice.only.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class AdapterAvatar extends RecyclerView.Adapter<AdapterAvatar.ViewHolder> {
 
     private String[] mData;
     private LayoutInflater mInflater;
@@ -20,7 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ImageView imageView;
 
     // data is passed into the constructor
-    public RecyclerViewAdapter(Context context, String[] data) {
+    public AdapterAvatar(Context context, String[] data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -30,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View view = mInflater.inflate(R.layout.adapter_avatar, parent, false);
         return new ViewHolder(view);
     }
 
