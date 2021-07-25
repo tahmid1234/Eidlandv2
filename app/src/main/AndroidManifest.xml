@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.eidland.auxilium.voice.only.MyProfileActivity" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.ProfileActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,10 +53,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name="com.eidland.auxilium.voice.only.MyProfile" />
+        <activity android:name="com.eidland.auxilium.voice.only.activity.ProfileEditActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity" />
         <activity
-            android:name="com.eidland.auxilium.voice.only.SignUpData"
+            android:name="com.eidland.auxilium.voice.only.activity.SignUpFormActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 

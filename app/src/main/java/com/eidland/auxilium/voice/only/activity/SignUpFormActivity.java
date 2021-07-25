@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,13 +22,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.adapter.AdapterAvatar;
 import com.eidland.auxilium.voice.only.model.User;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
-import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +38,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -51,11 +53,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.agora.rtc.Constants;
 
 import com.eidland.auxilium.voice.only.activity.ViewDialog;
 
-public class SignUpData extends Activity implements AdapterAvatar.ItemClickListener {
+public class SignUpFormActivity<mStorage> extends Activity implements AdapterAvatar.ItemClickListener {
     TextView imgerror;
     RelativeLayout singupactive;
     String finalImage;
@@ -72,18 +73,19 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
     String gNaame, gEmaail, gImage;
     Boolean ImageUploaded = false, isLoggedin = false;
     FirebaseAuth mAuth;
+    StorageReference mStorage;
     FirebaseAuth.AuthStateListener mAuthListener;
     AdapterAvatar adapterAvatar;
     public String[] imageList = {
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit1.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit2.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit3.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit4.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit5.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit6.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit7.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit8.png",
-            "https://auxiliumlivestreaming.000webhostapp.com/avatar/fruit9.png"
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit2.jpg?alt=media&token=4a1187ae-a0f0-4aa0-8c3e-edce32310f8e",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit3.jpg?alt=media&token=41366058-a93f-4090-ac95-b030a004b5cc",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit4.jpg?alt=media&token=16232610-aa99-47bb-becc-ca7bcc0d9556",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit5.jpg?alt=media&token=4096819b-491e-4652-af3a-856e08c1522b",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit6.jpg?alt=media&token=fbf7832e-357d-45a0-b90b-7d383e1af84c",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit7.jpg?alt=media&token=b018a286-d008-42f1-af0a-cb84126a306f",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit8.jpg?alt=media&token=05280825-3eed-4405-9fc2-1c9d8a916206",
+            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit9.jpg?alt=media&token=befccdcf-ef37-4d72-b433-45ab57d20708"
     };
 
     @Override
@@ -92,7 +94,9 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.sign_up_get_data);
         initialViews();
-        Glide.with(SignUpData.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
+
+        mStorage = FirebaseStorage.getInstance().getReference().child("avatars");
+        Glide.with(SignUpFormActivity.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
         intent = getIntent();
         viewDialog = new ViewDialog(this);
         // get ids from layout
@@ -135,57 +139,6 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
             }
         });
     }
-  /*  public void uplnamephoto() {
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
-        String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php/";
-        progressDialog.show();
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Log.e("response", response + "");
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    boolean status = jsonObject.getBoolean("error");
-                    if (!status) {
-                        final String url = jsonObject.getString("thumb");
-                        // Add data in firebase realtime database
-                        AddData(url);
-                    } else {
-                        Toast.makeText(SignUpData.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
-                    }
-
-                    progressDialog.dismiss();
-                } catch (JSONException e) {
-                    //   e.printStackTrace();
-                    progressDialog.dismiss();
-                    Toast.makeText(SignUpData.this, "Json", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-                if (error != null)
-                    Log.e("error", error.getLocalizedMessage() + "");
-                progressDialog.dismiss();
-            }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-
-                MyData.put("photo", imgpath); //Add the data you'd like to send to the server.
-
-
-                return MyData;
-            }
-        };
-
-
-        MyRequestQueue.add(MyStringRequest);
-    }*/
 
     private void AddData(final String urlimg) {
         Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
@@ -197,15 +150,7 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-                Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                intent.putExtra("User", "Participent");
-                intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                intent.putExtra("UserName", "Eidland Battle Royale");
-                intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(SignUpFormActivity.this, MainActivity.class);
                 if (getIntent().hasExtra("gName")) {
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
                     SharedPreferences.Editor editor = pref.edit();
@@ -240,36 +185,6 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
         }
     }
 
-    private void CheckSignin() {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            String userid = mAuth.getCurrentUser().getUid();
-                            String email = mAuth.getCurrentUser().getEmail();
-                            Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                            intent.putExtra("User", "Participent");
-                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                            intent.putExtra("UserName", "Eidland Battle Royale");
-                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            viewDialog.hideDialog();
-                            Toast.makeText(SignUpData.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
     private boolean validateUserName() {
         if (_username.isEmpty()) {
             username.setError("Field can not be empty");
@@ -284,30 +199,25 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
     }
 
     private boolean validateimage() {
-
-
         if (filePath != null) {
             return true;
         } else {
             Toast.makeText(this, "Please Choose image", Toast.LENGTH_LONG).show();
             return false;
         }
-
     }
 
 
     private void Remove_Error(EditText e) {
         e.setError(null);
-
     }
 
-    // chose profile photo onclick
     public void ChangeImage(View view) {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1, 1)
                 .setRequestedSize(1000, 1000, CropImageView.RequestSizeOptions.RESIZE_EXACT)
-                .start(SignUpData.this);
+                .start(SignUpFormActivity.this);
     }
 
     @Override
@@ -340,7 +250,7 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
 
     public void uplnamephoto() {
 
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpFormActivity.this);
         String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -359,12 +269,12 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
 
                     } else {
 
-                        Toast.makeText(SignUpData.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpFormActivity.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
-                    Toast.makeText(SignUpData.this, "Json", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpFormActivity.this, "Json", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -392,68 +302,6 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
         MyRequestQueue.add(MyStringRequest);
     }
 
-    /*private void uploadImage() {
-
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(SignUpData.this);
-        String url = "https://auxiliumlivestreaming.000webhostapp.com/addphoto.php";
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-
-    }
-    private void CreateUser(final String urlimage) {
-
-        FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            User userobj = new User(_username, _email, urlimage, "10000", "0");
-                            FirebaseDatabase.getInstance().getReference("Users").child(userid).setValue(userobj);
-                            Staticconfig.user = userobj;
-                            Intent intent = new Intent(SignUpData.this, LiveRoomActivity.class);
-                            intent.putExtra("User", "Participent");
-                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-
-                            intent.putExtra("UserName", "Eidland Battle Royale");
-                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-
-                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            viewDialog.hideDialog();
-                            Toast.makeText(SignUpData.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }*/
 
     public String encodeTobase64(Bitmap image) {
         Bitmap immagex = image;
@@ -469,6 +317,6 @@ public class SignUpData extends Activity implements AdapterAvatar.ItemClickListe
     @Override
     public void onItemClick(View view, int position) {
         filePath= Uri.parse(imageList[position]);
-        Glide.with(SignUpData.this).load(imageList[position]).into(profileimageView);
+        Glide.with(SignUpFormActivity.this).load(imageList[position]).into(profileimageView);
     }
 }

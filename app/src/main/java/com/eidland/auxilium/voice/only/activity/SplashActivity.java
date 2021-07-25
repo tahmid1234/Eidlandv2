@@ -161,14 +161,14 @@ public class SplashActivity extends AppCompatActivity {
                                         if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
                                             StaticConfig.user = dataSnapshot.getValue(User.class);
 
-//                                            intent = new Intent(SplashActivity.this, MainActivity.class);
-                                            intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
-                                            intent.putExtra("User", "Participent");
-                                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-                                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-                                            intent.putExtra("UserName", "Eidland Battle Royale");
-                                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                                            intent = new Intent(SplashActivity.this, MainActivity.class);
+//                                            intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
+//                                            intent.putExtra("User", "Participent");
+//                                            intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
+//                                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
+//                                            intent.putExtra("UserName", "Eidland Battle Royale");
+//                                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+//                                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                                             startActivity(intent);
                                             finish();
                                         } else

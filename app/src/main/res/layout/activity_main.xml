@@ -17,7 +17,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,24 +24,21 @@
             android:layout_height="wrap_content"
             android:background="@drawable/appbar_back"
             android:gravity="center"
-            android:paddingStart="16dp"
-            android:paddingTop="30dp"
-            android:paddingEnd="15dp">
+            android:padding="10dp">
 
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-
                 android:fontFamily="@font/pacificoregular"
                 android:gravity="left|center"
                 android:text="Eidland"
                 android:textAppearance="@style/eidlandappbar" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:onClick="myProfile"
                 app:cardCornerRadius="18dp">
 
@@ -69,7 +65,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
-                tools:context="com.eidland.auxilium.voice.only.MyProfile">
+                tools:context="com.eidland.auxilium.voice.only.activity.ProfileEditActivity">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,10 +97,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -118,9 +110,15 @@
                 android:id="@+id/rvrooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/singleroomxml"></androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/singleroomxml"/>
 
         </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"

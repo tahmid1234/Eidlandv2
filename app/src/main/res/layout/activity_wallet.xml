@@ -295,7 +295,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="20dp"
-        android:onClick="finishthis"
+        android:onClick="finish"
         android:layout_marginTop="20dp"
         android:src="@drawable/ic_fi_rr_arrow_left_1"
         android:contentDescription="TODO" />

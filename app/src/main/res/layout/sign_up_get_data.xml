@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/chatroom_background"
     android:orientation="vertical"
-    tools:context="com.eidland.auxilium.voice.only.SignUpData">
+    tools:context="com.eidland.auxilium.voice.only.activity.SignUpFormActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewprofile"
                     android:layout_width="126dp"
                     android:layout_height="126dp"
