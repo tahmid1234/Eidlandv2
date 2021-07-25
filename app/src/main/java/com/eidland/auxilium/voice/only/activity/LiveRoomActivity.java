@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
+import com.eidland.auxilium.voice.only.adapter.AdapterGame;
 import com.eidland.auxilium.voice.only.adapter.AdapterGift;
 import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
@@ -93,7 +94,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener {
     String type, SeatsName, AgainSeat, run;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
@@ -138,6 +139,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
+
+    LinearLayout gameButton;
+    LinearLayout gamesLayout;
+    ImageView closeGame;
 
     String nameOfRoom;
 
@@ -197,6 +202,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
 
+        gameButton = findViewById(R.id.game_button);
+        gamesLayout = findViewById(R.id.gameslayout);
+        closeGame = findViewById(R.id.closegame);
 
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +219,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 crystal.setVisibility(View.GONE);
             }
         });
+
         roomGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,6 +269,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         .show();
             }
         });
+
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gamesLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        closeGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gamesLayout.setVisibility(View.GONE);
+            }
+        });
+
         comments = new ArrayList<>();
         RecyclerView commentRecyclerView = findViewById(R.id.live_comment_recyler);
         commentAdapter = new AdapterComment(this, comments, new ItemClickListener1() {
@@ -417,6 +441,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         giftRecycler.setLayoutManager(giftLayoutManager);
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);
+
+        RecyclerView gameRecycler = findViewById(R.id.game_recycler);
+        giftRecycler.setHasFixedSize(true);
+        GridLayoutManager gameLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+        AdapterGame adapterGame = new AdapterGame(LiveRoomActivity.this, this, width);
+        gameRecycler.setLayoutManager(gameLayoutManager);
+        adapterGame.notifyDataSetChanged();
+        gameRecycler.setAdapter(adapterGame);
 
 
         setOnlineMembers();
@@ -1367,5 +1399,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 break;
             }
         }
+    }
+
+    @Override
+    public void onGameClick(int position, ImageView gameIcon) {
+        Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
     }
 }
