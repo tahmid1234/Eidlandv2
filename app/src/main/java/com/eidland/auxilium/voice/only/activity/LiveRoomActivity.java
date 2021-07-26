@@ -444,7 +444,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         RecyclerView gameRecycler = findViewById(R.id.game_recycler);
         giftRecycler.setHasFixedSize(true);
-        GridLayoutManager gameLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gameLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
         AdapterGame adapterGame = new AdapterGame(LiveRoomActivity.this, this, width);
         gameRecycler.setLayoutManager(gameLayoutManager);
         adapterGame.notifyDataSetChanged();
