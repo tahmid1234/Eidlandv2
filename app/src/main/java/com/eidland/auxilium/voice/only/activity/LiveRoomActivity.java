@@ -249,9 +249,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-                dialoge.setTitle("Confirm Exit")
-                        .setMessage("Are you sure you want to leave Eidland?")
-                        .setPositiveButton("Exit & Leave App", new DialogInterface.OnClickListener() {
+                dialoge.setTitle("Confirm Leave")
+                        .setMessage("Are you sure you want to leave the room?")
+                        .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 run = "1";
