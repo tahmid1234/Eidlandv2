@@ -1486,7 +1486,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     gamesLayout.setVisibility(View.GONE);
                                     modHasShuffledCards = true;
                                     Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
-
                                 }
                             })
                             .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
@@ -1503,7 +1502,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
                 }
 
-                if (modHasShuffledCards){
+                if (modHasShuffledCards == true){
                     Handler showLoadingPopup = new Handler();
                     showLoadingPopup.postDelayed(new Runnable() {
                         @Override
@@ -1547,9 +1546,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             }
         });
-
-
-
 
     }
 }
