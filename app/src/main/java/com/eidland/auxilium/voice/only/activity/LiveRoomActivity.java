@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -163,6 +164,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView displayCardImage;
     ImageView closeCard;
     ImageView minimizedCard;
+    boolean modHasShuffledCards = false;
 
     String nameOfRoom;
 
@@ -1448,85 +1450,106 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
-        if (isModerator){
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append((int) ((Math.random() * (19)) + 2));
-            stringBuilder.append(".png");
-            String imageURL = stringBuilder.toString();
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
+        modHasShuffledCards = false;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append((int) ((Math.random() * (19)) + 2));
+        stringBuilder.append(".png");
+        String imageURL = stringBuilder.toString();
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                minimizedCard.setVisibility(View.INVISIBLE);
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                displayCardImage.setImageBitmap(bmp);
+                minimizedCard.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+            }
+        });
 
-            AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
-            gameDescription.setTitle("Situational Cards")
-                    .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
-                    .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Mods").child(currentUser.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    gameDescription.setTitle("Situational Cards")
+                            .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
+                            .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    gamesLayout.setVisibility(View.GONE);
+                                    modHasShuffledCards = true;
+                                    Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+
+                                }
+                            })
+                            .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
+                }
+
+                else{
+                    Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
+                }
+
+                if (modHasShuffledCards){
+                    Handler showLoadingPopup = new Handler();
+                    showLoadingPopup.postDelayed(new Runnable() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            gamesLayout.setVisibility(View.GONE);
-                            isModerator = false;
-                            Handler showLoadingPopup = new Handler();
-                            showLoadingPopup.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                        cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
-                                        minimizedCard.setVisibility(View.INVISIBLE);
-                                    }
-                                }
-                            }, 300);
-                            final long ONE_MEGABYTE = 1024 * 1024;
-                            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                @Override
-                                public void onSuccess(byte[] bytes) {
-                                    minimizedCard.setVisibility(View.INVISIBLE);
-                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                    displayCardImage.setImageBitmap(bmp);
-                                    minimizedCard.setImageBitmap(bmp);
+                        public void run() {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
+                                minimizedCard.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }, 300);
 
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                            Handler endLoadingPopup = new Handler();
-                            endLoadingPopup.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                        cardLoadingAnimationLayout.setVisibility(View.GONE);
-                                        selectedCardGIF.setVisibility(View.VISIBLE);
-                                        displayCardLayout.setVisibility(View.VISIBLE);
-                                        minimizedCard.setVisibility(View.VISIBLE);
-                                        Handler endCardConfetti = new Handler();
-                                        endCardConfetti.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                    selectedCardGIF.setVisibility(View.INVISIBLE);
-                                                }
+                    Handler endLoadingPopup = new Handler();
+                    endLoadingPopup.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                if (imageURL != null)
+                                {
+                                    cardLoadingAnimationLayout.setVisibility(View.GONE);
+                                    selectedCardGIF.setVisibility(View.VISIBLE);
+                                    displayCardLayout.setVisibility(View.VISIBLE);
+                                    minimizedCard.setVisibility(View.VISIBLE);
+                                    Handler endCardConfetti = new Handler();
+                                    endCardConfetti.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                selectedCardGIF.setVisibility(View.INVISIBLE);
                                             }
-                                        }, 1000);
-
-                                    }
+                                        }
+                                    }, 1000);
                                 }
-                            }, 6000);
+                            }
                         }
-                    })
-                    .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
-        }
+                    }, 6000);
+                }
+            }
 
-        else{
-            Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
 
     }
 }
