@@ -6,8 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +66,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -85,6 +91,8 @@ import java.util.Map;
 
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
@@ -133,6 +141,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     RelativeLayout singleUserBox;
     ImageView button;
 
+    boolean isModerator = false;
+
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout;
     GifImageView backgrundGIF;
@@ -140,9 +150,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
 
-    LinearLayout gameButton;
+    ImageView gameButton;
     LinearLayout gamesLayout;
-    ImageView closeGame;
+    RelativeLayout cardLoadingAnimationLayout;
+    GifImageView cardLoadingAnimationGIF;
+    GifImageView cardConfetti;
+    ImageView selectedCard;
+    RelativeLayout cardLayout;
+    ImageView closeGameDrawer;
+    RelativeLayout displayCardLayout;
+    GifImageView selectedCardGIF;
+    ImageView displayCardImage;
+    ImageView closeCard;
+    ImageView minimizedCard;
 
     String nameOfRoom;
 
@@ -202,9 +222,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
 
-        gameButton = findViewById(R.id.game_button);
+        gameButton = findViewById(R.id.game_button_icon);
         gamesLayout = findViewById(R.id.gameslayout);
-        closeGame = findViewById(R.id.closegame);
+        cardLoadingAnimationLayout = findViewById(R.id.card_loading_animation_layout);
+        cardLoadingAnimationGIF = findViewById(R.id.card_loading_animation_GIF);
+        closeGameDrawer = findViewById(R.id.closegamedrawer);
+        displayCardLayout = findViewById(R.id.display_card_layout);
+        selectedCardGIF = findViewById(R.id.selected_card_GIF);
+        displayCardImage = findViewById(R.id.display_card_image);
+        closeCard = findViewById(R.id.closecard);
+        minimizedCard = findViewById(R.id.card_minimized);
 
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,10 +304,27 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         });
 
-        closeGame.setOnClickListener(new View.OnClickListener() {
+        closeGameDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gamesLayout.setVisibility(View.GONE);
+            }
+        });
+
+        closeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayCardLayout.setVisibility(View.GONE);
+                minimizedCard.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        minimizedCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                minimizedCard.setVisibility(View.INVISIBLE);
+                displayCardLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -552,6 +596,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(st)) {
+                    isModerator = true;
                     ModUserRemove.setVisibility(View.VISIBLE);
                     ModUserRemove.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -1403,6 +1448,85 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
-        Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+        if (isModerator){
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append((int) ((Math.random() * (19)) + 2));
+            stringBuilder.append(".png");
+            String imageURL = stringBuilder.toString();
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
+
+            AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
+            gameDescription.setTitle("Situational Cards")
+                    .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
+                    .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gamesLayout.setVisibility(View.GONE);
+                            isModerator = false;
+                            Handler showLoadingPopup = new Handler();
+                            showLoadingPopup.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
+                                        minimizedCard.setVisibility(View.INVISIBLE);
+                                    }
+                                }
+                            }, 300);
+                            final long ONE_MEGABYTE = 1024 * 1024;
+                            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                @Override
+                                public void onSuccess(byte[] bytes) {
+                                    minimizedCard.setVisibility(View.INVISIBLE);
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    displayCardImage.setImageBitmap(bmp);
+                                    minimizedCard.setImageBitmap(bmp);
+
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            Handler endLoadingPopup = new Handler();
+                            endLoadingPopup.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        cardLoadingAnimationLayout.setVisibility(View.GONE);
+                                        selectedCardGIF.setVisibility(View.VISIBLE);
+                                        displayCardLayout.setVisibility(View.VISIBLE);
+                                        minimizedCard.setVisibility(View.VISIBLE);
+                                        Handler endCardConfetti = new Handler();
+                                        endCardConfetti.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                    selectedCardGIF.setVisibility(View.INVISIBLE);
+                                                }
+                                            }
+                                        }, 1000);
+
+                                    }
+                                }
+                            }, 6000);
+                        }
+                    })
+                    .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+
+        else{
+            Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
+        }
+
     }
 }

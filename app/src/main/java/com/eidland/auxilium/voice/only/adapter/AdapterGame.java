@@ -35,10 +35,11 @@ public class AdapterGame extends RecyclerView.Adapter<AdapterGame.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.gameIcon.setMaxWidth(width/3);
-        holder.gameIcon.setMinimumWidth(width/3);
-        Glide.with(context).load(ConstantApp.gameList().get(position).image).into(holder.gameIcon);
-        holder.gameName.setText(ConstantApp.gameList().get(position).name);
+        holder.gameIcon.setMaxWidth(width);
+        holder.gameIcon.setMinimumWidth(width);
+        Glide.with(context).load(ConstantApp.gameList().get(position).deckImage).into(holder.gameIcon);
+        holder.gameName.setText(ConstantApp.gameList().get(position).deckName);
+
     }
 
     @Override

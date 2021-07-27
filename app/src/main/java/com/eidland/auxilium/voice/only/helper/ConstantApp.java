@@ -4,8 +4,13 @@ import android.net.Uri;
 
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.CardDeck;
 import com.eidland.auxilium.voice.only.model.CardsInADeck;
 import com.eidland.auxilium.voice.only.model.GiftItem;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +77,9 @@ public class ConstantApp {
         return animationItemList;
     }
 
-    public static List<CardsInADeck> gameList(){
-        List<CardsInADeck> randomDeck = new ArrayList<>();
-
-        randomDeck.add(new CardsInADeck("Random Cards", "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2F1.png?alt=media&token=ed276841-84a9-4390-982b-7bd3c8939f7d"));
+    public static List<CardDeck> gameList(){
+        List<CardDeck> randomDeck = new ArrayList<>();
+        randomDeck.add(new CardDeck("In The Shoes", "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/game_decks%2Fyellow%2F10.png?alt=media&token=5fdc9a30-e5c3-48ca-9b36-f5c1e80478e1"));
 
         return randomDeck;
     }

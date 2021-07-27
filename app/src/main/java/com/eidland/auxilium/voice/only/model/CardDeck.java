@@ -9,12 +9,12 @@ import java.util.Map;
 
 public class CardDeck {
 
-    public Uri deckImage;
+    public String deckImage;
     public String deckName;
 
-    public CardDeck(Uri deckImage, String gameName) {
+    public CardDeck(String deckName, String deckImage) {
         this.deckImage = deckImage;
-        this.deckName = gameName;
+        this.deckName = deckName;
 
     }
 
@@ -26,9 +26,9 @@ public class CardDeck {
         return result;
     }
 
-    public Uri getDeckImage() { return deckImage; }
+    public String getDeckImage() { return deckImage; }
 
-    public void setDeckImage(Uri deckImage) { this.deckImage = deckImage; }
+    public void setDeckImage(String deckImage) { this.deckImage = deckImage; }
 
     public String getDeckName() { return deckName; }
 
