@@ -5,14 +5,16 @@ public class Viewer {
     public String photo;
     public String type;
     public String name;
+    public int uid;
     public Viewer(){
 
     }
-    public Viewer(String uid, String photo, String type, String n){
-        this.id = uid;
+    public Viewer(String id, String photo, String type, String n, int uid){
+        this.id = id;
         this.photo = photo;
         this.type=type;
         this.name=n;
+        this.uid=uid;
     }
 
     public String getName() {
@@ -27,16 +29,16 @@ public class Viewer {
         return photo;
     }
 
-    public String getUid() {
-        return id;
+    public int getUid() {
+        return uid;
     }
 
     public void setPhotoUrl(String photo) {
         this.photo = photo;
     }
 
-    public void setUid(String uid) {
-        this.id = uid;
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public String getType() {
@@ -45,5 +47,13 @@ public class Viewer {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

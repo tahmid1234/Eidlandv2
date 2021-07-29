@@ -5,12 +5,14 @@ import android.content.Context;
 import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
 
+
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,7 +21,7 @@ public class MyEngineEventHandler {
         this.mContext = ctx;
         this.mConfig = config;
     }
-
+    private ArrayList<AGEventHandler> mHandler = new ArrayList<>();
     private final EngineConfig mConfig;
 
     private final Context mContext;
@@ -33,6 +35,7 @@ public class MyEngineEventHandler {
     public void removeEventHandler(AGEventHandler handler) {
         this.mEventHandlerList.remove(handler);
     }
+
 
     final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
         private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -53,6 +56,8 @@ public class MyEngineEventHandler {
          * @param uid ID of the user or host who joins the channel.
          * @param elapsed Time delay (ms) from the local user calling joinChannel/setClientRole until this callback is triggered.
          */
+
+
         @Override
         public void onUserJoined(int uid, int elapsed) {
         }

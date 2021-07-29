@@ -80,6 +80,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.eidland.auxilium.voice.only.R;
@@ -126,6 +127,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout crystal;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
     RelativeLayout singlegift;
+    AdapterSeat adapterSeat;
     DatabaseReference userRef;
     FirebaseUser currentUser;
     Viewer selectedViewer = new Viewer();
@@ -304,7 +306,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         if (type.equals("Host")) {
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host");
+            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host",config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -320,7 +322,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = getIntent().getStringExtra("userid");
 
-            Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName());
+            Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(),config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
@@ -405,10 +407,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
         GridLayoutManager seatLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 5, GridLayoutManager.VERTICAL, false);
-        AdapterSeat adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
+         adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
         seatRecycler.setLayoutManager(seatLayoutManager);
         adapterSeat.notifyDataSetChanged();
         seatRecycler.setAdapter(adapterSeat);
+
 
         RecyclerView giftRecycler = findViewById(R.id.gift_recycler);
         giftRecycler.setHasFixedSize(true);
@@ -582,7 +585,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName);
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
-                        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom);
+                        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom,config().mUid);
                         FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(SeatsName).setValue(viewer);
                         AgainSeat = SeatsName;
                         inist(token);
@@ -628,7 +631,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
                     Viewer seat00 = snapshot.getValue(Viewer.class);
-                    String UserID = seat00.getUid();
+                    String UserID = seat00.getId();
                     if (UserID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         doSwitchToBroadcaster(false);
                         System.out.println("doSwitchToBroadcaster");
@@ -656,7 +659,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
                         Viewer viewer = snapshot.getValue(Viewer.class);
-                        selectuseruid = viewer.getUid();
+                        selectuseruid = viewer.getId();
 
                         selectedViewer = viewer;
                         CheckModerator(currentUser.getUid(), selectuseruid, seats);
@@ -667,7 +670,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         boolean checkPermissionResult = checkSelfPermissions();
                         if (checkPermissionResult) {
-                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName());
+                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(),config().mUid);
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).setValue(viewer);
                             doSwitchToBroadcaster(true);
                             AgainSeat = seats;
@@ -687,7 +690,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
                         Viewer viewer = snapshot.getValue(Viewer.class);
-                        selectuseruid = viewer.getUid();
+                        selectuseruid = viewer.getId();
 
                         selectedViewer = viewer;
                         CheckModerator(currentUser.getUid(), selectuseruid, seats);
@@ -1166,6 +1169,20 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     }
 
+    public void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
+      if(speakers.length>0) {
+          List<Integer> uidList = new ArrayList<>();
+          for (IRtcEngineEventHandler.AudioVolumeInfo info : speakers) {
+              if (info.volume <= 70) return;
+              if (info.uid == 0)
+                  uidList.add(config().mUid);
+              else
+                  uidList.add(info.uid);
+          }
+          adapterSeat.indicateSpeaking(uidList);
+      }
+       // Toast.makeText(this, ""+uidList.size(), Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onUserOffline(int uid, int reason) {
         String msg = "onUserOffline " + (uid & 0xFFFFFFFFL) + " " + reason;
@@ -1173,6 +1190,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         notifyMessageChanged(msg);
 
+    }
+
+
+    public void onAudioChangeindicator(IRtcEngineEventHandler.AudioVolumeInfo[] speakerInfos, int totalVolume) {
+        Toast.makeText(this, "sdsdsdsd", Toast.LENGTH_SHORT).show();
+        onAudioVolumeIndication(speakerInfos,totalVolume);
     }
 
     @Override
@@ -1215,7 +1238,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             case AGEventHandler.EVENT_TYPE_ON_SPEAKER_STATS: {
                 IRtcEngineEventHandler.AudioVolumeInfo[] infos = (IRtcEngineEventHandler.AudioVolumeInfo[]) data[0];
-
+                onAudioVolumeIndication(infos,1);
                 if (infos.length == 1 && infos[0].uid == 0) { // local guy, ignore it
                     break;
                 }
@@ -1346,7 +1369,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
                     ((AGApplication) getApplication()).initWorkerThread();
-                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName());
+                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(),config().mUid);
                     FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(Clickedseat).setValue(viewer);
                     doSwitchToBroadcaster(true);
                     AgainSeat = Clickedseat;

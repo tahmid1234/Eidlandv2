@@ -173,8 +173,10 @@ public class SplashActivity extends AppCompatActivity {
                                             finish();
                                         } else
                                             startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                                        finish();
                                     } else {
                                         startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                                        finish();
                                     }
 
 
@@ -191,6 +193,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         } else {
                             startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                            finish();
                         }
                     }
                 }, 1000);
