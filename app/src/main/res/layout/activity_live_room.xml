@@ -369,6 +369,7 @@
 
 
             <LinearLayout
+                android:id="@+id/seatlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -645,7 +646,7 @@
             android:layout_alignParentBottom="true"
             android:background="#E6000000"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

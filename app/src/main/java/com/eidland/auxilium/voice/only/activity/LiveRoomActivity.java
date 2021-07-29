@@ -102,6 +102,7 @@ import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener {
     String type, SeatsName, AgainSeat, run;
+    LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
     ProgressDialog progressDialog;
@@ -181,6 +182,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
 
+        seatLayout = findViewById(R.id.seatlayout);
         leaveRoom = findViewById(R.id._leave);
         userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
@@ -239,6 +241,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 crystal.setVisibility(View.GONE);
+                gameButton.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.VISIBLE);
             }
         });
 
@@ -251,6 +255,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 txtsinglename.setText(nameOfRoom);
                 crystal.setVisibility(View.VISIBLE);
+                gameButton.setVisibility(View.GONE);
+                commentBox.setVisibility(View.GONE);
             }
         });
         singleUserClose.setOnClickListener(new View.OnClickListener() {
@@ -312,6 +318,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 displayCardLayout.setVisibility(View.GONE);
                 minimizedCard.setVisibility(View.VISIBLE);
 
+                gameButton.setVisibility(View.VISIBLE);
+                seatLayout.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.VISIBLE);
+                roomGift.setVisibility(View.VISIBLE);
             }
         });
 
@@ -320,6 +330,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 minimizedCard.setVisibility(View.INVISIBLE);
                 displayCardLayout.setVisibility(View.VISIBLE);
+                gameButton.setVisibility(View.GONE);
+                seatLayout.setVisibility(View.GONE);
+                commentBox.setVisibility(View.GONE);
+                roomGift.setVisibility(View.GONE);
+
             }
         });
 
@@ -420,6 +435,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 singleUserBox.setVisibility(View.GONE);
                 crystal.setVisibility(View.VISIBLE);
+                gamesLayout.setVisibility(View.GONE);
+                commentBox.setVisibility(View.GONE);
             }
         });
 
@@ -504,6 +521,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         Long curnt = Long.parseLong(StaticConfig.user.getCoins());
                         if (curnt > selectedGiftAmount) {
                             crystal.setVisibility(View.GONE);
+                            gamesLayout.setVisibility(View.VISIBLE);
+                            commentBox.setVisibility(View.VISIBLE);
                             FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -1528,6 +1547,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                             selectedCardGIF.setVisibility(View.VISIBLE);
                                                             displayCardLayout.setVisibility(View.VISIBLE);
                                                             minimizedCard.setVisibility(View.VISIBLE);
+
+                                                            gameButton.setVisibility(View.GONE);
+                                                            seatLayout.setVisibility(View.GONE);
+                                                            commentBox.setVisibility(View.GONE);
+                                                            roomGift.setVisibility(View.GONE);
+
                                                             Handler endCardConfetti = new Handler();
                                                             endCardConfetti.postDelayed(new Runnable() {
                                                                 @Override
