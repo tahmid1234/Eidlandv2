@@ -645,7 +645,7 @@
             android:layout_alignParentBottom="true"
             android:background="#E6000000"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"

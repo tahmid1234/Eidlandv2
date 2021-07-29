@@ -3,15 +3,13 @@ package com.eidland.auxilium.voice.only.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,24 +39,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.eidland.auxilium.voice.only.AGApplication;
-import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
-import com.eidland.auxilium.voice.only.adapter.AdapterGame;
-import com.eidland.auxilium.voice.only.adapter.AdapterGift;
-import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
-import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
-import com.eidland.auxilium.voice.only.adapter.AdapterComment;
-import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
-import com.eidland.auxilium.voice.only.helper.LeaderBoard;
-import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
-import com.eidland.auxilium.voice.only.model.AnimationItem;
-import com.eidland.auxilium.voice.only.model.Comment;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Gift;
-import com.eidland.auxilium.voice.only.model.GiftItem;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
-import com.eidland.auxilium.voice.only.model.Viewer;
-import com.eidland.auxilium.voice.only.model.Rooms;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -67,6 +46,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.AGApplication;
+import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
+import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.adapter.AdapterComment;
+import com.eidland.auxilium.voice.only.adapter.AdapterGame;
+import com.eidland.auxilium.voice.only.adapter.AdapterGift;
+import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
+import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
+import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.helper.LeaderBoard;
+import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.Comment;
+import com.eidland.auxilium.voice.only.model.Gift;
+import com.eidland.auxilium.voice.only.model.GiftItem;
+import com.eidland.auxilium.voice.only.model.Rooms;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.User;
+import com.eidland.auxilium.voice.only.model.Viewer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,6 +79,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,11 +90,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.model.User;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
@@ -142,8 +138,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     RelativeLayout singleUserBox;
     ImageView button;
 
-    boolean isModerator = false;
-
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout;
     GifImageView backgrundGIF;
@@ -155,9 +149,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout gamesLayout;
     RelativeLayout cardLoadingAnimationLayout;
     GifImageView cardLoadingAnimationGIF;
-    GifImageView cardConfetti;
-    ImageView selectedCard;
-    RelativeLayout cardLayout;
     ImageView closeGameDrawer;
     RelativeLayout displayCardLayout;
     GifImageView selectedCardGIF;
@@ -598,7 +589,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(st)) {
-                    isModerator = true;
                     ModUserRemove.setVisibility(View.VISIBLE);
                     ModUserRemove.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -1450,42 +1440,92 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
+
         modHasShuffledCards = false;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append((int) ((Math.random() * (19)) + 2));
         stringBuilder.append(".png");
         String imageURL = stringBuilder.toString();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
-        final long ONE_MEGABYTE = 1024 * 1024;
-        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                minimizedCard.setVisibility(View.INVISIBLE);
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                displayCardImage.setImageBitmap(bmp);
-                minimizedCard.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
-            }
-        });
 
         AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Mods").child(currentUser.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        //user privilege check moderator
+        FirebaseDatabase.getInstance().getReference("Mods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.hasChild(currentUser.getUid())) {
                     gameDescription.setTitle("Situational Cards")
                             .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
                             .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+
+                                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
+                                    final long ONE_MEGABYTE = 1024 * 1024;
+                                    System.out.println(storageRef);
+                                    storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                        @Override
+                                        public void onSuccess(byte[] bytes) {
+                                            minimizedCard.setVisibility(View.INVISIBLE);
+                                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            displayCardImage.setImageBitmap(bmp);
+                                            minimizedCard.setImageBitmap(bmp);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
                                     gamesLayout.setVisibility(View.GONE);
-                                    modHasShuffledCards = true;
                                     Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+                                    Handler showLoadingPopup = new Handler();
+                                    showLoadingPopup.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
+                                                minimizedCard.setVisibility(View.INVISIBLE);
+                                            }
+                                        }
+                                    }, 300);
+
+                                    cardLoadingAnimationLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                                        @Override
+                                        public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                                            Handler endLoadingPopup = new Handler();
+                                            endLoadingPopup.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        if (imageURL != null)
+                                                        {
+                                                            cardLoadingAnimationLayout.setVisibility(View.GONE);
+                                                            selectedCardGIF.setVisibility(View.VISIBLE);
+                                                            displayCardLayout.setVisibility(View.VISIBLE);
+                                                            minimizedCard.setVisibility(View.VISIBLE);
+                                                            Handler endCardConfetti = new Handler();
+                                                            endCardConfetti.postDelayed(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                                        selectedCardGIF.setVisibility(View.INVISIBLE);
+                                                                    }
+                                                                }
+                                                            }, 1000);
+                                                        }
+                                                    }
+                                                }
+                                            }, 6000);
+                                        }
+                                    });
+//                                            setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+//                                        @Override
+//                                        public void onSystemUiVisibilityChange(int i) {
+//                                        }
+//                                    });
+
                                 }
                             })
                             .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
@@ -1496,49 +1536,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             })
                             .setCancelable(false)
                             .show();
-                }
-
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
                 }
 
-                if (modHasShuffledCards == true){
-                    Handler showLoadingPopup = new Handler();
-                    showLoadingPopup.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
-                                minimizedCard.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    }, 300);
-
-                    Handler endLoadingPopup = new Handler();
-                    endLoadingPopup.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                if (imageURL != null)
-                                {
-                                    cardLoadingAnimationLayout.setVisibility(View.GONE);
-                                    selectedCardGIF.setVisibility(View.VISIBLE);
-                                    displayCardLayout.setVisibility(View.VISIBLE);
-                                    minimizedCard.setVisibility(View.VISIBLE);
-                                    Handler endCardConfetti = new Handler();
-                                    endCardConfetti.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                selectedCardGIF.setVisibility(View.INVISIBLE);
-                                            }
-                                        }
-                                    }, 1000);
-                                }
-                            }
-                        }
-                    }, 6000);
-                }
             }
 
             @Override
@@ -1546,6 +1547,5 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             }
         });
-
     }
 }
