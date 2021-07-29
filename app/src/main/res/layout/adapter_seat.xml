@@ -30,10 +30,31 @@
                 android:text="Seat No"
                 android:textColor="#fff"
                 android:textSize="12sp"  />
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/cardback"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    app:cardCornerRadius="25dp"
+                    app:cardBackgroundColor="#E63A3A"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/cardback1"
 
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:cardCornerRadius="25dp"
+                    app:cardBackgroundColor="#E63A3A"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+
+                android:layout_centerInParent="true"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="25dp">
 
@@ -46,6 +67,7 @@
                     android:src="@drawable/ic_mic" />
 
             </androidx.cardview.widget.CardView>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
