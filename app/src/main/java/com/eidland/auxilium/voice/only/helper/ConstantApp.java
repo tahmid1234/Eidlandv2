@@ -1,8 +1,16 @@
 package com.eidland.auxilium.voice.only.helper;
 
+import android.net.Uri;
+
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.CardDeck;
+import com.eidland.auxilium.voice.only.model.CardsInADeck;
 import com.eidland.auxilium.voice.only.model.GiftItem;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +75,12 @@ public class ConstantApp {
         animationItemList.add(new AnimationItem("clap", R.drawable.ic_clapping, R.drawable.clap_gif));
 
         return animationItemList;
+    }
+
+    public static List<CardDeck> gameList(){
+        List<CardDeck> randomDeck = new ArrayList<>();
+        randomDeck.add(new CardDeck("In The Shoes", "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/game_decks%2Fyellow%2F10.png?alt=media&token=5fdc9a30-e5c3-48ca-9b36-f5c1e80478e1"));
+
+        return randomDeck;
     }
 }

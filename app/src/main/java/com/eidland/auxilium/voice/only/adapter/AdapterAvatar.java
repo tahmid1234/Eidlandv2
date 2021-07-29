@@ -30,7 +30,7 @@ public class AdapterAvatar extends RecyclerView.Adapter<AdapterAvatar.ViewHolder
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View view = mInflater.inflate(R.layout.adapter_avatar, parent, false);
         return new ViewHolder(view);
     }
 

@@ -6,36 +6,40 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_rectangle_18"
     tools:context="com.eidland.auxilium.voice.only.activity.WalletActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="101dp"
-                android:id="@+id/lrnt"
 
-                android:gravity="center"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/lrnt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="101dp"
+                android:gravity="center">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userimg"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:id="@+id/userimg"
-                    android:src="@drawable/ic_coin"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_coin" />
 
 
             </RelativeLayout>
+
             <LinearLayout
+                android:id="@+id/lrnname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:id="@+id/lrnname"
                 android:layout_below="@id/lrnt"
+                android:layout_marginTop="10dp"
                 android:gravity="center">
 
                 <TextView
@@ -45,53 +49,53 @@
                     android:fontFamily="@font/open_sans"
                     android:text="1000"
                     android:textColor="#fff"
-                    android:textSize="54sp"
- />
-
+                    android:textSize="54sp" />
 
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lrnfigures"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:weightSum="1"
-                android:visibility="visible"
-                android:id="@+id/lrnfigures"
                 android:layout_below="@id/lrnname"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:gravity="top"
-                    android:layout_width="0dp"
-                    android:orientation="vertical"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="1">
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="match_parent">
+
+                    android:gravity="top"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txtcoins"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
                         android:text="Coins"
                         android:textColor="#FD9F35"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:textSize="24sp"></TextView>
+                        android:textSize="24sp" />
 
                 </LinearLayout>
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/lrnfigures"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
                     android:id="@+id/buy100"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
 
                     android:layout_marginStart="40dp"
                     android:orientation="horizontal">
@@ -99,78 +103,81 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:padding="12dp"
                         android:background="@drawable/ic_fi_rr_coin_5"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="TODO"
+                        android:gravity="center"
+                        android:padding="12dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_marginStart="15dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center|left"
+                        android:lineHeight="24dp"
                         android:text="250"
-                        android:lineHeight="24dp"
                         android:textColor="#fff"
                         android:textSize="18sp" />
+
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="25dp"
-
-                        android:gravity="center"
                         android:layout_gravity="center"
 
+                        android:layout_marginEnd="25dp"
                         android:background="@drawable/ic_buy_button"
-                        android:contentDescription="TODO" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
 
+                        android:contentDescription="TODO"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/buy1000"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="50dp"
                     android:layout_marginStart="40dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:padding="12dp"
                         android:background="@drawable/ic_fi_rr_coin_5"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="TODO"
+                        android:gravity="center"
+                        android:padding="12dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_marginStart="15dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center|left"
+                        android:lineHeight="24dp"
                         android:text="1,000"
-                        android:lineHeight="24dp"
                         android:textColor="#fff"
                         android:textSize="18sp" />
+
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="25dp"
-
-                        android:gravity="center"
                         android:layout_gravity="center"
 
+                        android:layout_marginEnd="25dp"
                         android:background="@drawable/ic_buy_button_1"
-                        android:contentDescription="TODO" />
+
+                        android:contentDescription="TODO"
+                        android:gravity="center" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
                     android:id="@+id/buy5000"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
 
                     android:layout_marginStart="40dp"
                     android:orientation="horizontal">
@@ -178,110 +185,114 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:padding="12dp"
                         android:background="@drawable/ic_fi_rr_coin_5"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="TODO"
+                        android:gravity="center"
+                        android:padding="12dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_marginStart="15dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center|left"
+                        android:lineHeight="24dp"
                         android:text="5,000"
-                        android:lineHeight="24dp"
                         android:textColor="#fff"
                         android:textSize="18sp" />
+
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="25dp"
-
-                        android:gravity="center"
                         android:layout_gravity="center"
 
+                        android:layout_marginEnd="25dp"
                         android:background="@drawable/ic_buy_button_4"
-                        android:contentDescription="TODO" />
+
+                        android:contentDescription="TODO"
+                        android:gravity="center" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/buy12000"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="40dp"
-                   android:id="@+id/buy12000"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:padding="12dp"
                         android:background="@drawable/ic_fi_rr_coin_5"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="TODO"
+                        android:gravity="center"
+                        android:padding="12dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_marginStart="15dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center|left"
+                        android:lineHeight="24dp"
                         android:text="12,000"
-                        android:lineHeight="24dp"
-                        android:textColor="#fff"
-                        android:textSize="18sp"/>
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="25dp"
-
-                        android:gravity="center"
-                        android:layout_gravity="center"
-
-                        android:background="@drawable/ic_buy_button_2"
-                        android:contentDescription="TODO" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="40dp"
-                    android:id="@+id/buy36500"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:padding="12dp"
-                        android:background="@drawable/ic_fi_rr_coin_5"
-                        android:contentDescription="TODO" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginStart="15dp"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:gravity="center|left"
-                        android:text="36,500"
-                        android:lineHeight="24dp"
                         android:textColor="#fff"
                         android:textSize="18sp" />
+
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="25dp"
-
-                        android:gravity="center"
                         android:layout_gravity="center"
 
+                        android:layout_marginEnd="25dp"
+                        android:background="@drawable/ic_buy_button_2"
+
+                        android:contentDescription="TODO"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buy36500"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_fi_rr_coin_5"
+                        android:contentDescription="TODO"
+                        android:gravity="center"
+                        android:padding="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center|left"
+                        android:lineHeight="24dp"
+                        android:text="36,500"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+
+                        android:layout_marginEnd="25dp"
                         android:background="@drawable/ic_buy_button_3"
-                        android:contentDescription="TODO" />
+
+                        android:contentDescription="TODO"
+                        android:gravity="center" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -291,14 +302,12 @@
     </ScrollView>
 
     <ImageView
+        android:id="@+id/wallet_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="20dp"
-        android:onClick="finish"
         android:layout_marginTop="20dp"
-        android:src="@drawable/ic_fi_rr_arrow_left_1"
-        android:contentDescription="TODO" />
-    />
+        android:src="@drawable/ic_fi_rr_arrow_left_1" />
 
 </RelativeLayout>

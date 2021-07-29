@@ -17,6 +17,81 @@
         android:padding="0dp">
 
         <RelativeLayout
+            android:id="@+id/display_card_layout"
+            android:translationZ="1.0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/selected_card_GIF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="80dp"
+                android:translationZ="1.0dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"                android:scaleType="fitCenter"
+                android:visibility="visible"
+                android:background="@drawable/card_confetti"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="80dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/display_card_image"
+                    android:layout_width="350dp"
+                    android:layout_height="500dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/flag_japan"/>
+
+                <ImageView
+                    android:id="@+id/closecard"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="TODO"
+                    android:src="@drawable/cancel" />
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/card_loading_animation_layout"
+            android:translationZ="1.0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/card_loading_animation_GIF"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:background="@drawable/card_loading"/>
+            <TextView
+                android:id="@+id/game_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/coiny"
+                android:textSize="20dp"
+                android:text="Shuffling..." />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/backgroundGIFLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -93,7 +168,6 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-
                     app:cardCornerRadius="18dp">
 
                     <ImageView
@@ -101,7 +175,6 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="20dp"
-                        android:contentDescription="TODO"
                         android:scaleType="centerCrop" />
                 </androidx.cardview.widget.CardView>
 
@@ -112,7 +185,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/logout"
-                    android:contentDescription="TODO"
                     android:padding="3dp"
                     android:text="Leave"
                     android:textAllCaps="false"
@@ -185,11 +257,11 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_speaker"
-                                android:orientation="horizontal"
-                                android:layout_gravity="left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_gravity="left"
+                                android:layout_weight="1"
+                                android:orientation="horizontal" />
 
                         </LinearLayout>
 
@@ -240,11 +312,11 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_contributor"
-                                android:orientation="horizontal"
-                                android:layout_gravity="left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_gravity="left"
+                                android:layout_weight="1"
+                                android:orientation="horizontal" />
 
                         </LinearLayout>
 
@@ -317,8 +389,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="-55dp"
-                android:translationZ="1.0dp"
                 android:orientation="vertical"
+                android:translationZ="1.0dp"
                 android:visibility="invisible">
 
                 <LinearLayout
@@ -381,6 +453,33 @@
                     android:id="@+id/live_comment_recyler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-150dp"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card_minimized"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="fitXY"
+                    android:visibility="invisible"
+                    android:src="@drawable/flag_japan" />
+
+                <ImageView
+                    android:id="@+id/game_button_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:src="@drawable/game_image" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -486,12 +585,58 @@
                     android:src="@drawable/btn_request_broadcast"
                     android:visibility="gone"
                     tools:ignore="TooManyViews" />
+            </LinearLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/gameslayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            android:background="#E6000000"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center|right">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inder"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:text="Select a Game to Play!"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/closegamedrawer"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="TODO"
+                    android:src="@drawable/ic_fi_rr_cross_small_1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/game_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/giftslayout"
@@ -500,7 +645,7 @@
             android:layout_alignParentBottom="true"
             android:background="#E6000000"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -604,12 +749,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#000"></View>
+                android:background="#000"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#000"></View>
+                android:background="#000"/>
         </LinearLayout>
 
         <LinearLayout
@@ -649,7 +794,7 @@
                 android:gravity="left"
                 android:text="Remove User"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
             <ImageView

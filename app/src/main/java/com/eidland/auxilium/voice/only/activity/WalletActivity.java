@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     BillingProcessor billingProcessor;
     String coincomma, Userid;
     ViewDialog viewDialog;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +46,18 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         buy12000 = findViewById(R.id.buy12000);
         buy36500 = findViewById(R.id.buy36500);
         viewDialog = new ViewDialog(this);
+        back = findViewById(R.id.wallet_back);
 
         txtcurrent = findViewById(R.id.txtname);
         coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
         txtcurrent.setText(coincomma);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         buy100.setOnClickListener(this);
         buy1000.setOnClickListener(this);
@@ -68,9 +79,6 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void finsishthis(View view) {
-        finish();
-    }
 
     @Override
     public void onDestroy() {
@@ -131,9 +139,6 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    public void finishthis(View view) {
-        finish();
-    }
 
     String selectedkey = "";
 

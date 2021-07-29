@@ -3,9 +3,11 @@ package com.eidland.auxilium.voice.only.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
 import android.os.Build;
@@ -37,23 +39,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.eidland.auxilium.voice.only.AGApplication;
-import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
-import com.eidland.auxilium.voice.only.adapter.AdapterGift;
-import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
-import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
-import com.eidland.auxilium.voice.only.adapter.AdapterComment;
-import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
-import com.eidland.auxilium.voice.only.helper.LeaderBoard;
-import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
-import com.eidland.auxilium.voice.only.model.AnimationItem;
-import com.eidland.auxilium.voice.only.model.Comment;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.model.Gift;
-import com.eidland.auxilium.voice.only.model.GiftItem;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
-import com.eidland.auxilium.voice.only.model.Viewer;
-import com.eidland.auxilium.voice.only.model.Rooms;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -61,6 +46,28 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.AGApplication;
+import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
+import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.adapter.AdapterComment;
+import com.eidland.auxilium.voice.only.adapter.AdapterGame;
+import com.eidland.auxilium.voice.only.adapter.AdapterGift;
+import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
+import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
+import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.helper.LeaderBoard;
+import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.Comment;
+import com.eidland.auxilium.voice.only.model.Gift;
+import com.eidland.auxilium.voice.only.model.GiftItem;
+import com.eidland.auxilium.voice.only.model.Rooms;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.User;
+import com.eidland.auxilium.voice.only.model.Viewer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -72,6 +79,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,9 +92,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.model.User;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
@@ -94,7 +100,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener {
     String type, SeatsName, AgainSeat, run;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
@@ -140,6 +146,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
+
+    ImageView gameButton;
+    LinearLayout gamesLayout;
+    RelativeLayout cardLoadingAnimationLayout;
+    GifImageView cardLoadingAnimationGIF;
+    ImageView closeGameDrawer;
+    RelativeLayout displayCardLayout;
+    GifImageView selectedCardGIF;
+    ImageView displayCardImage;
+    ImageView closeCard;
+    ImageView minimizedCard;
+    boolean modHasShuffledCards = false;
 
     String nameOfRoom;
 
@@ -199,6 +217,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
 
+        gameButton = findViewById(R.id.game_button_icon);
+        gamesLayout = findViewById(R.id.gameslayout);
+        cardLoadingAnimationLayout = findViewById(R.id.card_loading_animation_layout);
+        cardLoadingAnimationGIF = findViewById(R.id.card_loading_animation_GIF);
+        closeGameDrawer = findViewById(R.id.closegamedrawer);
+        displayCardLayout = findViewById(R.id.display_card_layout);
+        selectedCardGIF = findViewById(R.id.selected_card_GIF);
+        displayCardImage = findViewById(R.id.display_card_image);
+        closeCard = findViewById(R.id.closecard);
+        minimizedCard = findViewById(R.id.card_minimized);
 
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +241,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 crystal.setVisibility(View.GONE);
             }
         });
+
         roomGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -242,9 +271,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-                dialoge.setTitle("Confirm Exit")
-                        .setMessage("Are you sure you want to leave Eidland?")
-                        .setPositiveButton("Exit & Leave App", new DialogInterface.OnClickListener() {
+                dialoge.setTitle("Confirm Leave")
+                        .setMessage("Are you sure you want to leave the room?")
+                        .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 run = "1";
@@ -262,6 +291,38 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         .show();
             }
         });
+
+        gameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gamesLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        closeGameDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gamesLayout.setVisibility(View.GONE);
+            }
+        });
+
+        closeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayCardLayout.setVisibility(View.GONE);
+                minimizedCard.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        minimizedCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                minimizedCard.setVisibility(View.INVISIBLE);
+                displayCardLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
         comments = new ArrayList<>();
         RecyclerView commentRecyclerView = findViewById(R.id.live_comment_recyler);
         commentAdapter = new AdapterComment(this, comments, new ItemClickListener1() {
@@ -420,6 +481,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         giftRecycler.setLayoutManager(giftLayoutManager);
         adapterGift.notifyDataSetChanged();
         giftRecycler.setAdapter(adapterGift);
+
+        RecyclerView gameRecycler = findViewById(R.id.game_recycler);
+        giftRecycler.setHasFixedSize(true);
+        GridLayoutManager gameLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
+        AdapterGame adapterGame = new AdapterGame(LiveRoomActivity.this, this, width);
+        gameRecycler.setLayoutManager(gameLayoutManager);
+        adapterGame.notifyDataSetChanged();
+        gameRecycler.setAdapter(adapterGame);
 
 
         setOnlineMembers();
@@ -1390,5 +1459,116 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 break;
             }
         }
+    }
+
+    @Override
+    public void onGameClick(int position, ImageView gameIcon) {
+
+        modHasShuffledCards = false;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append((int) ((Math.random() * (19)) + 2));
+        stringBuilder.append(".png");
+        String imageURL = stringBuilder.toString();
+
+        AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
+
+        //user privilege check moderator
+        FirebaseDatabase.getInstance().getReference("Mods").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(currentUser.getUid())) {
+                    gameDescription.setTitle("Situational Cards")
+                            .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
+                            .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
+                                    final long ONE_MEGABYTE = 1024 * 1024;
+                                    System.out.println(storageRef);
+                                    storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                        @Override
+                                        public void onSuccess(byte[] bytes) {
+                                            minimizedCard.setVisibility(View.INVISIBLE);
+                                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                            displayCardImage.setImageBitmap(bmp);
+                                            minimizedCard.setImageBitmap(bmp);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                                    gamesLayout.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+                                    Handler showLoadingPopup = new Handler();
+                                    showLoadingPopup.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
+                                                minimizedCard.setVisibility(View.INVISIBLE);
+                                            }
+                                        }
+                                    }, 300);
+
+                                    cardLoadingAnimationLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                                        @Override
+                                        public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                                            Handler endLoadingPopup = new Handler();
+                                            endLoadingPopup.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        if (imageURL != null)
+                                                        {
+                                                            cardLoadingAnimationLayout.setVisibility(View.GONE);
+                                                            selectedCardGIF.setVisibility(View.VISIBLE);
+                                                            displayCardLayout.setVisibility(View.VISIBLE);
+                                                            minimizedCard.setVisibility(View.VISIBLE);
+                                                            Handler endCardConfetti = new Handler();
+                                                            endCardConfetti.postDelayed(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                                        selectedCardGIF.setVisibility(View.INVISIBLE);
+                                                                    }
+                                                                }
+                                                            }, 1000);
+                                                        }
+                                                    }
+                                                }
+                                            }, 6000);
+                                        }
+                                    });
+//                                            setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+//                                        @Override
+//                                        public void onSystemUiVisibilityChange(int i) {
+//                                        }
+//                                    });
+
+                                }
+                            })
+                            .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
