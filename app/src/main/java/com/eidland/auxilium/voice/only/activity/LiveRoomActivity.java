@@ -138,6 +138,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     RelativeLayout singleUserBox;
     ImageView button;
 
+    LinearLayout seatLayout;
+
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout;
     GifImageView backgrundGIF;
@@ -155,6 +157,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView displayCardImage;
     ImageView closeCard;
     ImageView minimizedCard;
+    String cardImageURL;
     boolean modHasShuffledCards = false;
 
     String nameOfRoom;
@@ -178,7 +181,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         progressDialog.setTitle("Please Wait...");
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
-
+        seatLayout = findViewById(R.id.seat_layout);
         leaveRoom = findViewById(R.id._leave);
         userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
@@ -294,6 +297,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 gamesLayout.setVisibility(View.VISIBLE);
+                minimizedCard.setVisibility(View.GONE);
             }
         });
 
@@ -301,6 +305,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 gamesLayout.setVisibility(View.GONE);
+                minimizedCard.setVisibility(View.VISIBLE);
             }
         });
 
@@ -309,6 +314,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 displayCardLayout.setVisibility(View.GONE);
                 minimizedCard.setVisibility(View.VISIBLE);
+                seatLayout.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.VISIBLE);
+                roomGift.setVisibility(View.VISIBLE);
+                gameButton.setVisibility(View.VISIBLE);
 
             }
         });
@@ -318,6 +327,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 minimizedCard.setVisibility(View.INVISIBLE);
                 displayCardLayout.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.GONE);
+                roomGift.setVisibility(View.GONE);
+                gameButton.setVisibility(View.GONE);
+                seatLayout.setVisibility(View.GONE);
             }
         });
 
@@ -501,6 +514,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         Long curnt = Long.parseLong(StaticConfig.user.getCoins());
                         if (curnt > selectedGiftAmount) {
                             crystal.setVisibility(View.GONE);
+                            gameButton.setVisibility(View.VISIBLE);
+                            commentBox.setVisibility(View.VISIBLE);
                             FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -1438,18 +1453,79 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
     }
 
-    @Override
-    public void onGameClick(int position, ImageView gameIcon) {
+    public void gameListener(){
 
-        modHasShuffledCards = false;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append((int) ((Math.random() * (19)) + 2));
         stringBuilder.append(".png");
-        String imageURL = stringBuilder.toString();
+        cardImageURL = stringBuilder.toString();
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(cardImageURL);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        System.out.println(storageRef);
+
+        FirebaseStorage.getInstance().getReference();
+        storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                minimizedCard.setVisibility(View.INVISIBLE);
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                displayCardImage.setImageBitmap(bmp);
+                minimizedCard.setImageBitmap(bmp);
+
+                Handler showLoadingPopup = new Handler();
+                showLoadingPopup.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
+                            minimizedCard.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }, 300);
+
+                Handler endLoadingPopup = new Handler();
+                endLoadingPopup.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            if (cardImageURL != null)
+                            {
+                                cardLoadingAnimationLayout.setVisibility(View.GONE);
+                                selectedCardGIF.setVisibility(View.VISIBLE);
+                                displayCardLayout.setVisibility(View.VISIBLE);
+                                minimizedCard.setVisibility(View.VISIBLE);
+
+                                gameButton.setVisibility(View.GONE);
+                                seatLayout.setVisibility(View.GONE);
+                                commentBox.setVisibility(View.GONE);
+                                roomGift.setVisibility(View.GONE);
+
+                                Handler endCardConfetti = new Handler();
+                                endCardConfetti.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                            selectedCardGIF.setVisibility(View.INVISIBLE);
+                                        }
+                                    }
+                                }, 1000);
+                            }
+                        }
+                    }
+                }, 6000);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    @Override
+    public void onGameClick(int position, ImageView gameIcon) {
 
         AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
-
-        //user privilege check moderator
         FirebaseDatabase.getInstance().getReference("Mods").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -1459,25 +1535,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
-                                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(imageURL);
-                                    final long ONE_MEGABYTE = 1024 * 1024;
-                                    System.out.println(storageRef);
-                                    storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                        @Override
-                                        public void onSuccess(byte[] bytes) {
-                                            minimizedCard.setVisibility(View.INVISIBLE);
-                                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                            displayCardImage.setImageBitmap(bmp);
-                                            minimizedCard.setImageBitmap(bmp);
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception exception) {
-                                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-
                                     gamesLayout.setVisibility(View.GONE);
                                     Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
                                     Handler showLoadingPopup = new Handler();
@@ -1499,7 +1556,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                 @Override
                                                 public void run() {
                                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        if (imageURL != null)
+                                                        if (cardImageURL != null)
                                                         {
                                                             cardLoadingAnimationLayout.setVisibility(View.GONE);
                                                             selectedCardGIF.setVisibility(View.VISIBLE);
@@ -1520,11 +1577,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             }, 6000);
                                         }
                                     });
-//                                            setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//                                        @Override
-//                                        public void onSystemUiVisibilityChange(int i) {
-//                                        }
-//                                    });
+
+                                    gameListener();
 
                                 }
                             })
