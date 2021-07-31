@@ -10,4 +10,9 @@ public class CardsInADeck {
         this.name = name;
         this.image = image;
     }
+    public CardsInADeck()
+    {
+
+    }
+
 }
