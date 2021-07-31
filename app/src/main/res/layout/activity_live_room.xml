@@ -168,6 +168,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+
                     app:cardCornerRadius="18dp">
 
                     <ImageView
@@ -175,6 +176,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="20dp"
+                        android:contentDescription="TODO"
                         android:scaleType="centerCrop" />
                 </androidx.cardview.widget.CardView>
 
@@ -185,6 +187,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
                     android:background="@drawable/logout"
+                    android:contentDescription="TODO"
                     android:padding="3dp"
                     android:text="Leave"
                     android:textAllCaps="false"
@@ -257,11 +260,11 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_speaker"
+                                android:orientation="horizontal"
+                                android:layout_gravity="left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="1"
-                                android:orientation="horizontal" />
+                                android:layout_weight="1" />
 
                         </LinearLayout>
 
@@ -312,11 +315,11 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_contributor"
+                                android:orientation="horizontal"
+                                android:layout_gravity="left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="1"
-                                android:orientation="horizontal" />
+                                android:layout_weight="1" />
 
                         </LinearLayout>
 
@@ -369,8 +372,8 @@
 
 
             <LinearLayout
-                android:id="@+id/seat_layout"
                 android:layout_width="match_parent"
+                android:id="@+id/seat_layout"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -390,8 +393,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="-55dp"
-                android:orientation="vertical"
                 android:translationZ="1.0dp"
+                android:orientation="vertical"
                 android:visibility="invisible">
 
                 <LinearLayout
@@ -455,7 +458,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/game_button"
                 android:layout_width="match_parent"
@@ -482,7 +484,6 @@
                     android:src="@drawable/game_image" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
@@ -586,9 +587,11 @@
                     android:src="@drawable/btn_request_broadcast"
                     android:visibility="gone"
                     tools:ignore="TooManyViews" />
-            </LinearLayout>
-        </LinearLayout>
 
+
+            </LinearLayout>
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/gameslayout"
             android:layout_width="match_parent"
@@ -750,12 +753,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#000"/>
+                android:background="#000"></View>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#000"/>
+                android:background="#000"></View>
         </LinearLayout>
 
         <LinearLayout
@@ -795,7 +798,7 @@
                 android:gravity="left"
                 android:text="Remove User"
                 android:textColor="@color/white"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
 
             <ImageView

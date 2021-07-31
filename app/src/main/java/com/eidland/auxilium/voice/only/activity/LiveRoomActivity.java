@@ -145,7 +145,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     RelativeLayout singleUserBox;
     ImageView button;
 
-    LinearLayout seatLayout;
 
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout;
@@ -192,7 +191,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         progressDialog.setCancelable(false);
         seatLayout = findViewById(R.id.seat_layout);
 
-        seatLayout = findViewById(R.id.seatlayout);
         leaveRoom = findViewById(R.id._leave);
         userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
@@ -1505,7 +1503,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         FirebaseDatabase.getInstance().getReference().child("game_decks").child("yellow").orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks/yellow").child(cardImageURL);
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(cardImageURL);
                 final long ONE_MEGABYTE = 1024 * 1024;
                 FirebaseStorage.getInstance().getReference();
                 storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -1527,7 +1525,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             }
                         }, 300);
 
-                                    cardLoadingAnimationLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                                    /*cardLoadingAnimationLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                                         @Override
                                         public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
                                             Handler endLoadingPopup = new Handler();
@@ -1561,7 +1559,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                 }
                                             }, 6000);
                                         }
-                                    });
+                                    });*/
 //                                            setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
 //                                        @Override
 //                                        public void onSystemUiVisibilityChange(int i) {

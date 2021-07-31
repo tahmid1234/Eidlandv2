@@ -127,7 +127,7 @@ public class SplashActivity extends AppCompatActivity {
                         assert window != null;
                         window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
 
-                    } else CheckNextActivity();
+                    }
                 } else {
                     Toast.makeText(SplashActivity.this, "Fetch Failed",
                             Toast.LENGTH_SHORT).show();
