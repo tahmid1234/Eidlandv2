@@ -5,7 +5,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chatroom_newbackground"
+    android:background="@drawable/chatroom_background"
     android:keepScreenOn="true"
     android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.activity.LiveRoomActivity">
@@ -369,7 +369,7 @@
 
 
             <LinearLayout
-                android:id="@+id/seatlayout"
+                android:id="@+id/seat_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
