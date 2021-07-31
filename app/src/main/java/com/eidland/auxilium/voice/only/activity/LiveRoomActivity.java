@@ -59,6 +59,7 @@ import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.helper.LeaderBoard;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
+import com.eidland.auxilium.voice.only.model.CardsInADeck;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.Gift;
 import com.eidland.auxilium.voice.only.model.GiftItem;
@@ -394,7 +395,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         if (type.equals("Host")) {
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host",config().mUid);
+            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host", config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -410,7 +411,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = getIntent().getStringExtra("userid");
 
-            Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(),config().mUid);
+            Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
@@ -479,7 +480,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         giftsListner();
 
-        gameListener();
+        gameListener("5");
 
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
@@ -500,7 +501,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
         GridLayoutManager seatLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 5, GridLayoutManager.VERTICAL, false);
-         adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
+        adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
         seatRecycler.setLayoutManager(seatLayoutManager);
         adapterSeat.notifyDataSetChanged();
         seatRecycler.setAdapter(adapterSeat);
@@ -689,7 +690,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName);
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
-                        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom,config().mUid);
+                        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom, config().mUid);
                         FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(SeatsName).setValue(viewer);
                         AgainSeat = SeatsName;
                         inist(token);
@@ -775,7 +776,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         boolean checkPermissionResult = checkSelfPermissions();
                         if (checkPermissionResult) {
-                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(),config().mUid);
+                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).setValue(viewer);
                             doSwitchToBroadcaster(true);
                             AgainSeat = seats;
@@ -1276,19 +1277,20 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
-      if(speakers.length>0) {
-          List<Integer> uidList = new ArrayList<>();
-          for (IRtcEngineEventHandler.AudioVolumeInfo info : speakers) {
-              if (info.volume <= 70) return;
-              if (info.uid == 0)
-                  uidList.add(config().mUid);
-              else
-                  uidList.add(info.uid);
-          }
-          adapterSeat.indicateSpeaking(uidList);
-      }
-       // Toast.makeText(this, ""+uidList.size(), Toast.LENGTH_SHORT).show();
+        if (speakers.length > 0) {
+            List<Integer> uidList = new ArrayList<>();
+            for (IRtcEngineEventHandler.AudioVolumeInfo info : speakers) {
+                if (info.volume <= 70) return;
+                if (info.uid == 0)
+                    uidList.add(config().mUid);
+                else
+                    uidList.add(info.uid);
+            }
+            adapterSeat.indicateSpeaking(uidList);
+        }
+        // Toast.makeText(this, ""+uidList.size(), Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onUserOffline(int uid, int reason) {
         String msg = "onUserOffline " + (uid & 0xFFFFFFFFL) + " " + reason;
@@ -1301,7 +1303,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     public void onAudioChangeindicator(IRtcEngineEventHandler.AudioVolumeInfo[] speakerInfos, int totalVolume) {
         Toast.makeText(this, "sdsdsdsd", Toast.LENGTH_SHORT).show();
-        onAudioVolumeIndication(speakerInfos,totalVolume);
+        onAudioVolumeIndication(speakerInfos, totalVolume);
     }
 
     @Override
@@ -1344,7 +1346,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             case AGEventHandler.EVENT_TYPE_ON_SPEAKER_STATS: {
                 IRtcEngineEventHandler.AudioVolumeInfo[] infos = (IRtcEngineEventHandler.AudioVolumeInfo[]) data[0];
-                onAudioVolumeIndication(infos,1);
+                onAudioVolumeIndication(infos, 1);
                 if (infos.length == 1 && infos[0].uid == 0) { // local guy, ignore it
                     break;
                 }
@@ -1475,7 +1477,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
                     ((AGApplication) getApplication()).initWorkerThread();
-                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(),config().mUid);
+                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
                     FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(Clickedseat).setValue(viewer);
                     doSwitchToBroadcaster(true);
                     AgainSeat = Clickedseat;
@@ -1498,12 +1500,23 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
     }
 
-    public void gameListener() {
+    public void gameListener(String cardNumber) {
 
-        FirebaseDatabase.getInstance().getReference().child("game_decks").child("yellow").orderByKey().addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("game_decks").child("yellow").child(cardNumber).orderByKey().addValueEventListener(new ValueEventListener() {
+            CardsInADeck cardsInADeck = new CardsInADeck("","");
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(cardImageURL);
+                if (isnotfirst) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        cardsInADeck = dataSnapshot.getValue(CardsInADeck.class);
+                        System.out.println("cardImageURL: " + cardsInADeck);
+                        assert cardImageURL != null;
+                    }
+
+                } else
+                    isnotfirst = true;
+
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(cardsInADeck.image);
                 final long ONE_MEGABYTE = 1024 * 1024;
                 FirebaseStorage.getInstance().getReference();
                 storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -1524,47 +1537,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 }
                             }
                         }, 300);
-
-                                    /*cardLoadingAnimationLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                                        @Override
-                                        public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
-                                            Handler endLoadingPopup = new Handler();
-                                            endLoadingPopup.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        if (imageURL != null)
-                                                        {
-                                                            cardLoadingAnimationLayout.setVisibility(View.GONE);
-                                                            selectedCardGIF.setVisibility(View.VISIBLE);
-                                                            displayCardLayout.setVisibility(View.VISIBLE);
-                                                            minimizedCard.setVisibility(View.VISIBLE);
-
-                                                            gameButton.setVisibility(View.GONE);
-                                                            seatLayout.setVisibility(View.GONE);
-                                                            commentBox.setVisibility(View.GONE);
-                                                            roomGift.setVisibility(View.GONE);
-
-                                                            Handler endCardConfetti = new Handler();
-                                                            endCardConfetti.postDelayed(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                                        selectedCardGIF.setVisibility(View.INVISIBLE);
-                                                                    }
-                                                                }
-                                                            }, 1000);
-                                                        }
-                                                    }
-                                                }
-                                            }, 6000);
-                                        }
-                                    });*/
-//                                            setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-//                                        @Override
-//                                        public void onSystemUiVisibilityChange(int i) {
-//                                        }
-//                                    });
                         Handler endLoadingPopup = new Handler();
                         endLoadingPopup.postDelayed(new Runnable() {
                             @Override
@@ -1627,10 +1599,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
                                     StringBuilder stringBuilder = new StringBuilder();
                                     stringBuilder.append((int) ((Math.random() * (19)) + 2));
-                                    FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(stringBuilder.toString()).child("status").setValue(Math.random());
+                                    String cardNumber = stringBuilder.toString();
+                                    FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
                                     stringBuilder.append(".png");
                                     cardImageURL = stringBuilder.toString();
-                                    gameListener();
+                                    gameListener(cardNumber);
 
                                 }
                             })
