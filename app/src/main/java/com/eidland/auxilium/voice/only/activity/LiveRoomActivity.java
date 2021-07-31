@@ -1519,6 +1519,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             displayCardImage.setImageBitmap(bmp);
                             minimizedCard.setImageBitmap(bmp);
+                            Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
 
                             Handler showLoadingPopup = new Handler();
                             showLoadingPopup.postDelayed(new Runnable() {
@@ -1602,7 +1603,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
                                     stringBuilder.append(".png");
                                     cardImageURL = stringBuilder.toString();
-                                    gameListener(cardNumber);
+                                    gameListener(FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).getKey());
 
                                 }
                             })
