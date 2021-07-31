@@ -166,7 +166,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
     boolean hasEnteredRoom = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,6 +195,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         singleUserClose = findViewById(R.id.close);
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);
+
         receivername = findViewById(R.id.receivername);
         popup_uname = findViewById(R.id.txtnamepopup);
         popup_user = findViewById(R.id.userimgpopup);
@@ -263,6 +263,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 singleUserBox.setVisibility(View.GONE);
+
             }
         });
 
@@ -316,7 +317,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 displayCardLayout.setVisibility(View.GONE);
-                minimizedCard.setVisibility(View.VISIBLE);
+               // minimizedgameholder.setVisibility(View.VISIBLE);
+
 
                 gameButton.setVisibility(View.VISIBLE);
                 seatLayout.setVisibility(View.VISIBLE);
@@ -434,6 +436,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 singleUserBox.setVisibility(View.GONE);
+
                 crystal.setVisibility(View.VISIBLE);
                 gamesLayout.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
@@ -754,6 +757,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).into(popup_user);
                         txtsinglename.setText(viewer.getName());
                         singleUserBox.setVisibility(View.VISIBLE);
+
                     } else {
 
                         boolean checkPermissionResult = checkSelfPermissions();
@@ -785,6 +789,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
                         txtsinglename.setText(viewer.getName());
                         singleUserBox.setVisibility(View.VISIBLE);
+
                     }
                 }
 

@@ -40,7 +40,7 @@
                     android:visibility="gone"
                     android:layout_centerInParent="true"
                     app:cardCornerRadius="25dp"
-                    app:cardBackgroundColor="#E63A3A"/>
+                    app:cardBackgroundColor="#FCC529"/>
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -49,7 +49,7 @@
                     android:layout_centerInParent="true"
                     android:visibility="gone"
                     app:cardCornerRadius="25dp"
-                    app:cardBackgroundColor="#E63A3A"/>
+                    app:cardBackgroundColor="#FCC529"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
