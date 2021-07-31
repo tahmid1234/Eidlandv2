@@ -173,7 +173,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
-    boolean hasEnteredRoom = true;
+    boolean hasEnteredRoom = true,newlyjoined = true;
 
     int game = 1;
 
@@ -1502,90 +1502,91 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void gameListener() {
+        if (!newlyjoined) {
+            FirebaseDatabase.getInstance().getReference().child("LastCard").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot currsnap) {
+                    String p = String.valueOf(currsnap.getValue());
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(p);
+                    stringBuilder.append(".png");
 
-        FirebaseDatabase.getInstance().getReference().child("LastCard").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot currsnap) {
-                String p = String.valueOf(currsnap.getValue());
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(p);
-                stringBuilder.append(".png");
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(stringBuilder.toString());
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    FirebaseStorage.getInstance().getReference();
+                    storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            minimizedCard.setVisibility(View.INVISIBLE);
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            displayCardImage.setImageBitmap(bmp);
+                            minimizedCard.setImageBitmap(bmp);
+                            Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
 
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(stringBuilder.toString());
-                final long ONE_MEGABYTE = 1024 * 1024;
-                FirebaseStorage.getInstance().getReference();
-                storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        minimizedCard.setVisibility(View.INVISIBLE);
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        displayCardImage.setImageBitmap(bmp);
-                        minimizedCard.setImageBitmap(bmp);
-                        Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
-
-                        Handler showLoadingPopup = new Handler();
-                        showLoadingPopup.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
-                                    minimizedCard.setVisibility(View.INVISIBLE);
-                                    cardImageURL=stringBuilder.toString();
-                                }
-                            }
-                        }, 300);
-
-                        Handler endLoadingPopup = new Handler();
-                        endLoadingPopup.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    if (cardImageURL != null) {
-                                        cardLoadingAnimationLayout.setVisibility(View.GONE);
-                                        selectedCardGIF.setVisibility(View.VISIBLE);
-                                        displayCardLayout.setVisibility(View.VISIBLE);
-                                        minimizedCard.setVisibility(View.VISIBLE);
-
-                                        gameButton.setVisibility(View.GONE);
-                                        seatLayout.setVisibility(View.GONE);
-                                        commentBox.setVisibility(View.GONE);
-                                        roomGift.setVisibility(View.GONE);
-
-                                        Handler endCardConfetti = new Handler();
-                                        endCardConfetti.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                    selectedCardGIF.setVisibility(View.INVISIBLE);
-                                                }
-                                            }
-                                        }, 1000);
+                            Handler showLoadingPopup = new Handler();
+                            showLoadingPopup.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
+                                        minimizedCard.setVisibility(View.INVISIBLE);
+                                        cardImageURL = stringBuilder.toString();
                                     }
                                 }
-                            }
-                        }, 6000);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
-                    }
-                });
+                            }, 300);
+
+                            Handler endLoadingPopup = new Handler();
+                            endLoadingPopup.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        if (cardImageURL != null) {
+                                            cardLoadingAnimationLayout.setVisibility(View.GONE);
+                                            selectedCardGIF.setVisibility(View.VISIBLE);
+                                            displayCardLayout.setVisibility(View.VISIBLE);
+                                            minimizedCard.setVisibility(View.VISIBLE);
+
+                                            gameButton.setVisibility(View.GONE);
+                                            seatLayout.setVisibility(View.GONE);
+                                            commentBox.setVisibility(View.GONE);
+                                            roomGift.setVisibility(View.GONE);
+
+                                            Handler endCardConfetti = new Handler();
+                                            endCardConfetti.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        selectedCardGIF.setVisibility(View.INVISIBLE);
+                                                    }
+                                                }
+                                            }, 1000);
+                                        }
+                                    }
+                                }
+                            }, 6000);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                        }
+                    });
 
 
+                }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // ...
-            }
-        });
-
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // ...
+                }
+            });
 
 
+        }
+        else {
+            newlyjoined=false;
+        }
     }
-
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
 
