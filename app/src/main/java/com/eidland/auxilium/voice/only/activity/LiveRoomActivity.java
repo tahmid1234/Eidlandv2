@@ -166,7 +166,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView closeCard;
     ImageView minimizedCard;
     String cardImageURL,cardImageURL2;
-    boolean modHasShuffledCards = false;
+
+    ImageView inviteButton;
 
     String nameOfRoom;
 
@@ -240,6 +241,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         displayCardImage = findViewById(R.id.display_card_image);
         closeCard = findViewById(R.id.closecard);
         minimizedCard = findViewById(R.id.card_minimized);
+
+        inviteButton = findViewById(R.id.invite_icon);
 
         onlineUserCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -349,6 +352,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 roomGift.setVisibility(View.GONE);
                 gameButton.setVisibility(View.GONE);
                 seatLayout.setVisibility(View.GONE);
+            }
+        });
+
+        inviteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReferralActivity referralActivity = new ReferralActivity();
+                referralActivity.createLink();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
 
