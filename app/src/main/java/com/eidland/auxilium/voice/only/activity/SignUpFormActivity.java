@@ -64,7 +64,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
     String stringUri, _username, _email;
     CircleImageView imageView;
     AuthCredential credential;
-    Uri filePath = Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/images/4.png");
+    Uri filePath = Uri.parse("https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959");
     String imgpath;
     Intent intent;
     ProgressDialog progressDialog;
@@ -96,15 +96,18 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         initialViews();
 
         mStorage = FirebaseStorage.getInstance().getReference().child("avatars");
-        Glide.with(SignUpFormActivity.this).load(imageList[(int)(Math.random()*5)]).into(profileimageView);
+        filePath = Uri.parse(imageList[(int)(Math.random()*5)]);
+        Glide.with(SignUpFormActivity.this).load(filePath).into(profileimageView);
         intent = getIntent();
         viewDialog = new ViewDialog(this);
         // get ids from layout
 
         if(mAuth.getCurrentUser().getEmail()!= null){
-            email.setText(mAuth.getCurrentUser().getEmail().toString());
-            email.setInputType(InputType.TYPE_NULL);
-            email.setCompoundDrawables(null, null, null, null);
+            if(mAuth.getCurrentUser().getEmail().length()>0){
+                email.setText(mAuth.getCurrentUser().getEmail().toString());
+                email.setInputType(InputType.TYPE_NULL);
+                email.setCompoundDrawables(null, null, null, null);
+            }
         }
 
         if (intent.hasExtra("gName")) {
@@ -133,8 +136,9 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
                     return;
                 } else {
                     viewDialog.showDialog();
-                    AddData(String.valueOf(filePath));
-                    uplnamephoto();
+
+                    if(ImageUploaded) uplnamephoto();
+                    else AddData(String.valueOf(filePath));
                 }
             }
         });

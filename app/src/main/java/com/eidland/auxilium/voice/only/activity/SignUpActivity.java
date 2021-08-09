@@ -65,16 +65,12 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign__up_);
 
         signInButton = findViewById(R.id.sign_in_button);
-
-
         mAuth = FirebaseAuth.getInstance();
-
         user = mAuth.getCurrentUser();
 
-        if(user!=null){
+        if (user != null) {
             accessGranted(user);
-        }else {
-
+        } else {
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -158,7 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
         ((Activity) getApplicationContext()).finish();
     }
 
-    public void accessGranted(FirebaseUser user){
+    public void accessGranted(FirebaseUser user) {
         String userid = user.getUid();
         FirebaseDatabase.getInstance().getReference("Users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -171,14 +167,6 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     StaticConfig.user = snapshot.getValue(User.class);
                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-//                    Intent intent = new Intent(SignUpActivity.this, LiveRoomActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    intent.putExtra("User", "Participent");
-//                    intent.putExtra("userid", "cJupIaBOKXN8QqWzAQMQYFwHzVC3");
-//                    intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2");
-//                    intent.putExtra("UserName", "Eidland Battle Royale");
-//                    intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-//                    intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                     startActivity(intent);
                     finish();
                 }
