@@ -776,14 +776,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
-                        Viewer viewer = snapshot.getValue(Viewer.class);
-                        selectuseruid = viewer.getId();
-
-                        selectedViewer = viewer;
-                        CheckModerator(currentUser.getUid(), selectuseruid, seats);
-                        Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).into(popup_user);
-                        txtsinglename.setText(viewer.getName());
-                        singleUserBox.setVisibility(View.VISIBLE);
+                        try {
+                            Viewer viewer = snapshot.getValue(Viewer.class);
+                            selectuseruid = viewer.getId();
+                            selectedViewer = viewer;
+                            CheckModerator(currentUser.getUid(), selectuseruid, seats);
+                            Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).into(popup_user);
+                            txtsinglename.setText(viewer.getName());
+                            singleUserBox.setVisibility(View.VISIBLE);
+                        }catch (Exception e){
+                            System.out.println(e);
+                        }
 
                     } else {
 
