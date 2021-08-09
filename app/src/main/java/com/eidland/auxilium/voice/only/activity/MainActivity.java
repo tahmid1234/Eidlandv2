@@ -10,12 +10,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.installreferrer.api.InstallReferrerClient;
+import com.android.installreferrer.api.InstallReferrerStateListener;
+import com.android.installreferrer.api.ReferrerDetails;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
@@ -93,6 +97,42 @@ public class MainActivity extends AppCompatActivity {
 
             Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
         }
+
+        InstallReferrerClient mReferrerClient;
+        mReferrerClient = InstallReferrerClient.newBuilder(this).build();
+        mReferrerClient.startConnection(new InstallReferrerStateListener() {
+            @Override
+            public void onInstallReferrerSetupFinished(int responseCode) {
+                switch (responseCode) {
+                    case InstallReferrerClient.InstallReferrerResponse.OK:
+                        // Connection established
+                        try {
+                            ReferrerDetails response = mReferrerClient.getInstallReferrer();
+                            String referralURL = response.getInstallReferrer();
+                            Toast.makeText(getApplicationContext(), referralURL, Toast.LENGTH_LONG).show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        mReferrerClient.endConnection();
+                        break;
+                    case
+                            InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+                        Toast.makeText(getApplicationContext(), "Feature Not Supported", Toast.LENGTH_LONG).show();
+                        break;
+                    case
+                            InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+                        Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onInstallReferrerServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+            }
+        });
     }
 
     public void onClickJoin(View view) {
@@ -109,5 +149,4 @@ public class MainActivity extends AppCompatActivity {
     public void roomcheck() {
         startActivity(new Intent(MainActivity.this, EnterRoomActivity.class));
     }
-
 }

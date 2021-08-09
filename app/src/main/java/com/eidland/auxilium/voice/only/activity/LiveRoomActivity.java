@@ -358,8 +358,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReferralActivity referralActivity = new ReferralActivity();
-                referralActivity.createLink();
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });

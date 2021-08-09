@@ -1,8 +1,12 @@
 package com.eidland.auxilium.voice.only.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.installreferrer.api.InstallReferrerClient;
+import com.android.installreferrer.api.InstallReferrerStateListener;
+import com.android.installreferrer.api.ReferrerDetails;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,9 +33,13 @@ import com.eidland.auxilium.voice.only.model.User;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -50,6 +61,10 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     Boolean edited = false;
     String PhotoUrl;
+    TextView referralLinkText;
+    FirebaseUser currentUser;
+    String referralURL = "https://play.google.com/store/apps/details?id=com.eidland.auxilium.voice.only&referrer=";
+    String referralCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +76,15 @@ public class ProfileActivity extends AppCompatActivity {
         txtcoins = findViewById(R.id.txtcoins);
         txtrcvcoins = findViewById(R.id.txtrcvcoins);
         button_join = findViewById(R.id.lrnjoin);
+        referralLinkText = findViewById(R.id.referrallinktext);
+
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Uri ir = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
 
         if (userid.equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3")) {
             lrnrefrsh.setVisibility(View.VISIBLE);
         }
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase.getInstance().getReference("admins").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,9 +100,47 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
-        Uri img1 = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
 
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user.getReferralURL()=="null")
+                {
+                    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(referralURL);
+                    for (int i = 0; i < 8; i++) {
+                        int index = (int)(AlphaNumericString.length() * Math.random());
+                        referralCode += AlphaNumericString.charAt(index);
+                        sb.append(AlphaNumericString.charAt(index));
+                    }
+                    user.setReferralURL(referralCode);
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).setValue(user);
+                    referralURL = sb.toString();
+                    referralLinkText.setText(referralURL);
+                }
+                else{
+                    referralURL += user.getReferralURL();
+                    referralLinkText.setText(referralURL);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        referralLinkText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("url", referralURL);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Copied!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void gettoken(final String roomname) {
@@ -125,7 +181,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void finish(View view) {
-        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins());
+        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL());
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -203,4 +259,5 @@ public class ProfileActivity extends AppCompatActivity {
     public void roomcheck() {
         startActivity(new Intent(ProfileActivity.this, EnterRoomActivity.class));
     }
+
 }
