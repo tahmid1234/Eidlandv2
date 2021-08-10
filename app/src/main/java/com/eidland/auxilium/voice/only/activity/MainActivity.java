@@ -97,42 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
             Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
         }
-
-        InstallReferrerClient mReferrerClient;
-        mReferrerClient = InstallReferrerClient.newBuilder(this).build();
-        mReferrerClient.startConnection(new InstallReferrerStateListener() {
-            @Override
-            public void onInstallReferrerSetupFinished(int responseCode) {
-                switch (responseCode) {
-                    case InstallReferrerClient.InstallReferrerResponse.OK:
-                        // Connection established
-                        try {
-                            ReferrerDetails response = mReferrerClient.getInstallReferrer();
-                            String referralURL = response.getInstallReferrer();
-                            Toast.makeText(getApplicationContext(), referralURL, Toast.LENGTH_LONG).show();
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        mReferrerClient.endConnection();
-                        break;
-                    case
-                            InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
-                        Toast.makeText(getApplicationContext(), "Feature Not Supported", Toast.LENGTH_LONG).show();
-                        break;
-                    case
-                            InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
-                        Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onInstallReferrerServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-            }
-        });
     }
 
     public void onClickJoin(View view) {

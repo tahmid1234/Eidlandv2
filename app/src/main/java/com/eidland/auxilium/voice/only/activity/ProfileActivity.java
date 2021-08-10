@@ -101,8 +101,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
-        database.addValueEventListener(new ValueEventListener() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -133,6 +133,19 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
+        inviteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //add logic here
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
         referralLinkText.setOnClickListener(new View.OnClickListener() {
