@@ -26,10 +26,13 @@ import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.Rooms;
 import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.model.User;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.eidland.auxilium.voice.only.R;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView roomRecycler;
     ProgressBar progressbar;
     List<Rooms> roomsList = new ArrayList<Rooms>();
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+    DatabaseReference referralRef = FirebaseDatabase.getInstance().getReference().child("Referral");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
             Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
         }
+
+        referralcheck();
     }
 
     public void onClickJoin(View view) {
@@ -112,5 +120,58 @@ public class MainActivity extends AppCompatActivity {
 
     public void roomcheck() {
         startActivity(new Intent(MainActivity.this, EnterRoomActivity.class));
+    }
+
+    public void referralcheck(){
+        InstallReferrerClient mReferrerClient;
+        mReferrerClient = InstallReferrerClient.newBuilder(this).build();
+        mReferrerClient.startConnection(new InstallReferrerStateListener() {
+            @Override
+            public void onInstallReferrerSetupFinished(int responseCode) {
+                switch (responseCode) {
+                    case InstallReferrerClient.InstallReferrerResponse.OK:
+                        try {
+                            ReferrerDetails response = mReferrerClient.getInstallReferrer();
+                            if (!response.getInstallReferrer().contains("utm_source"))
+                            {
+                                Toast.makeText(getApplicationContext(), response.getInstallReferrer(), Toast.LENGTH_LONG).show();
+                                userRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        User user = snapshot.getValue(User.class);
+                                        user.setCoins(user.getCoins()+50);
+                                        userRef.child(currentUser.getUid()).child("Coins").setValue(user.getCoins());
+                                        Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        mReferrerClient.endConnection();
+                        break;
+                    case
+                            InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+                        Toast.makeText(getApplicationContext(), "Feature Not Supported", Toast.LENGTH_LONG).show();
+                        break;
+                    case
+                            InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+                        Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onInstallReferrerServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+            }
+        });
+
     }
 }
