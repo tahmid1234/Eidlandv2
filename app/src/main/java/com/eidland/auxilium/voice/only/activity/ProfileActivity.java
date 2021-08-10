@@ -111,17 +111,20 @@ public class ProfileActivity extends AppCompatActivity {
                     String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
                     StringBuilder sb = new StringBuilder();
                     sb.append(referralURL);
+                    referralCode= " ";
                     for (int i = 0; i < 8; i++) {
                         int index = (int)(AlphaNumericString.length() * Math.random());
                         referralCode += AlphaNumericString.charAt(index);
                         sb.append(AlphaNumericString.charAt(index));
                     }
                     user.setReferralURL(referralCode);
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).setValue(user);
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(user.getReferralURL());
+                    FirebaseDatabase.getInstance().getReference().child("Referrals").child(user.getReferralURL()).setValue("init");
                     referralURL = sb.toString();
                     referralLinkText.setText(referralURL);
                 }
                 else{
+                    referralURL = "https://play.google.com/store/apps/details?id=com.eidland.auxilium.voice.only&referrer=";
                     referralURL += user.getReferralURL();
                     referralLinkText.setText(referralURL);
                 }
