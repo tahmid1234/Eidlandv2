@@ -248,6 +248,8 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
+        // need to move this listener to a different place so that toast shows up even when I'm not in profile activity
+        // coins don't update dynamically, need to fix that
         inviteRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
