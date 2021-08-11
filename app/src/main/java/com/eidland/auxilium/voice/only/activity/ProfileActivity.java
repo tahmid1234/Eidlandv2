@@ -101,62 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user.getReferralURL()=="null")
-                {
-                    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(referralURL);
-                    referralCode= " ";
-                    for (int i = 0; i < 8; i++) {
-                        int index = (int)(AlphaNumericString.length() * Math.random());
-                        referralCode += AlphaNumericString.charAt(index);
-                        sb.append(AlphaNumericString.charAt(index));
-                    }
-                    user.setReferralURL(referralCode);
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(user.getReferralURL());
-                    FirebaseDatabase.getInstance().getReference().child("Referrals").child(user.getReferralURL()).setValue("init");
-                    referralURL = sb.toString();
-                    referralLinkText.setText(referralURL);
-                }
-                else{
-                    referralURL = "https://play.google.com/store/apps/details?id=com.eidland.auxilium.voice.only&referrer=";
-                    referralURL += user.getReferralURL();
-                    referralLinkText.setText(referralURL);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-
-        DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
-        inviteRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //add logic here
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        referralLinkText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("url", referralURL);
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "Copied!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        createInvitationLink();
     }
 
     public void gettoken(final String roomname) {
@@ -276,4 +221,68 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(new Intent(ProfileActivity.this, EnterRoomActivity.class));
     }
 
+    public void createInvitationLink(){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+
+                if (user.getReferralURL()=="null")
+                {
+                    referralCode= generateAlphanumericString(8);
+                    user.setReferralURL(referralCode);
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(user.getReferralURL());
+                    FirebaseDatabase.getInstance().getReference().child("Referrals").child(user.getReferralURL()).setValue("init");
+                    referralLinkText.setText(referralURL + referralCode);
+                }
+                else{
+                    referralLinkText.setText(referralURL + user.getReferralURL());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
+        inviteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(getApplicationContext(), "listener working properly", Toast.LENGTH_SHORT).show();
+                Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
+                currentBalance += 100;
+                StaticConfig.user.setCoins(currentBalance.toString());
+                userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
+                Toast.makeText(getApplicationContext(), "Congratulations!! you received 100 coins for referral!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        referralLinkText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("url", referralURL);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Copied!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public String generateAlphanumericString(int n){
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            int index = (int)(AlphaNumericString.length() * Math.random());
+            referralCode += AlphaNumericString.charAt(index);
+            sb.append(AlphaNumericString.charAt(index));
+        }
+        return sb.toString();
+    }
 }

@@ -92,6 +92,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'com.google.firebase:firebase-dynamic-links:20.1.1'
+    implementation 'com.google.android.gms:play-services-analytics-impl:17.0.0'
+    implementation 'com.google.android.gms:play-services-tagmanager-v4-impl:17.0.0'
 
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
 

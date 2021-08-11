@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +30,8 @@ import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.model.User;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.analytics.CampaignTrackingReceiver;
+import com.google.android.gms.tagmanager.InstallReferrerReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +44,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("AllRooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         roomsList.add(child.getValue(Rooms.class));
                     }
@@ -104,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
         }
 
-        try{
-            referralcheck();
-        }catch (Exception e){
+        try {
+            checkInstallReferrer();
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
     }
@@ -126,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, EnterRoomActivity.class));
     }
 
-    public void referralcheck(){
+    public void referralcheck() {
         InstallReferrerClient mReferrerClient;
         mReferrerClient = InstallReferrerClient.newBuilder(this).build();
         mReferrerClient.startConnection(new InstallReferrerStateListener() {
@@ -136,35 +142,21 @@ public class MainActivity extends AppCompatActivity {
                     case InstallReferrerClient.InstallReferrerResponse.OK:
                         try {
                             ReferrerDetails response = mReferrerClient.getInstallReferrer();
-                            if (!response.getInstallReferrer().contains("utm_source"))
-                            {
-                                Toast.makeText(getApplicationContext(), response.getInstallReferrer(), Toast.LENGTH_LONG).show();
-                                userRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        User user = snapshot.getValue(User.class);
-                                        user.setCoins(user.getCoins()+50);
-                                        userRef.child(currentUser.getUid()).child("Coins").setValue(user.getCoins());
-                                        Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-                            }
+                            Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
+                            currentBalance += 50;
+                            StaticConfig.user.setCoins(currentBalance.toString());
+                            userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
+                            Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         mReferrerClient.endConnection();
                         break;
-                    case
-                            InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
                         Toast.makeText(getApplicationContext(), "Feature Not Supported", Toast.LENGTH_LONG).show();
                         break;
-                    case
-                            InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
                         Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
                         break;
                 }
@@ -177,5 +169,85 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private final Executor backgroundExecutor = Executors.newSingleThreadExecutor();
+    private final String prefKey = "checkedInstallReferrer";
+
+    void checkInstallReferrer() {
+//        if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
+//            return;
+//        }
+
+        InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(this).build();
+        backgroundExecutor.execute(() -> getInstallReferrerFromClient(referrerClient));
+    }
+
+    void getInstallReferrerFromClient(InstallReferrerClient referrerClient) {
+
+        referrerClient.startConnection(new InstallReferrerStateListener() {
+            @Override
+            public void onInstallReferrerSetupFinished(int responseCode) {
+                switch (responseCode) {
+                    case InstallReferrerClient.InstallReferrerResponse.OK:
+                        ReferrerDetails response = null;
+//                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                        try {
+                            response = referrerClient.getInstallReferrer();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                        final String referrerUrl = response.getInstallReferrer();
+
+                        // TODO: If you're using GTM, call trackInstallReferrerforGTM instead.
+                        trackInstallReferrer(referrerUrl);
+
+                        // Only check this once.
+                        getPreferences(MODE_PRIVATE).edit().putBoolean(prefKey, true).commit();
+
+                        //reward logic
+                        Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
+                        currentBalance += 50;
+                        StaticConfig.user.setCoins(currentBalance.toString());
+                        userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
+                        Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
+
+                        if (StaticConfig.user.getReferralURL() != null ){
+                            referralRef.child(referrerUrl).child(StaticConfig.user.getReferralURL()).setValue("referred");
+                        }
+
+                        // End the connection
+                        referrerClient.endConnection();
+
+                        break;
+                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
+                        // API not available on the current Play Store app.
+                        break;
+                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
+                        // Connection couldn't be established.
+                        break;
+                }
+            }
+
+            @Override
+            public void onInstallReferrerServiceDisconnected() {
+
+            }
+        });
+    }
+
+    // Tracker for Classic GA (call this if you are using Classic GA only)
+    private void trackInstallReferrer(final String referrerUrl) {
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                CampaignTrackingReceiver receiver = new CampaignTrackingReceiver();
+                Intent intent = new Intent("com.android.vending.INSTALL_REFERRER");
+                intent.putExtra("referrer", referrerUrl);
+                receiver.onReceive(getApplicationContext(), intent);
+
+            }
+        });
     }
 }
