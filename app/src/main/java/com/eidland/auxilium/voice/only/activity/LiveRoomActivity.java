@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -85,6 +86,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.view.Change;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -143,6 +147,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     AdapterSeat adapterSeat;
     DatabaseReference userRef;
     FirebaseUser currentUser;
+    DatabaseReference currentRoom;
     Viewer selectedViewer = new Viewer();
     RelativeLayout singleUserBox;
     ImageView button;
@@ -170,6 +175,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView inviteButton;
 
     String nameOfRoom;
+    String inviteLink;
 
     ImageView lastImg;
     int selectedGiftAmount = 0;
@@ -358,7 +364,52 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                try{
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Rooms room = snapshot.getValue(Rooms.class);
+//                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
+                            if (room.getInviteLink() == "init"){
+                                String link = "https://room.eidland.com/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
+                                FirebaseDynamicLinks.getInstance().createDynamicLink()
+                                        .setLink(Uri.parse(link))
+                                        .setDomainUriPrefix("https://eidland.page.link")
+                                        .setAndroidParameters(
+                                                new DynamicLink.AndroidParameters.Builder("com.example.android")
+                                                        .setMinimumVersion(125)
+                                                        .build())
+                                        .buildShortDynamicLink()
+                                        .addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
+                                            @Override
+                                            public void onSuccess(ShortDynamicLink shortDynamicLink) {
+                                                try {
+                                                    Uri mInvitationUrl = shortDynamicLink.getShortLink();
+                                                    assert mInvitationUrl != null;
+                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(mInvitationUrl.toString());
+                                                    Toast.makeText(getApplicationContext(), mInvitationUrl.toString(), Toast.LENGTH_SHORT).show();
+                                                } catch (Exception e){
+                                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                            }
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, room.getInviteLink());
+                            sendIntent.setType("text/plain");
+                            Intent shareIntent = Intent.createChooser(sendIntent, null);
+                            startActivity(shareIntent);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -698,7 +749,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
                     if (isHost) {
-                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName);
+                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, inviteLink);
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
                         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom, config().mUid);

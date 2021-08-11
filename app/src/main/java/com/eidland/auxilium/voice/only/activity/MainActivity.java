@@ -104,7 +104,11 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(MainActivity.this).load(imageurl).into(UserPhoto);
         }
 
-        referralcheck();
+        try{
+            referralcheck();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onClickJoin(View view) {
