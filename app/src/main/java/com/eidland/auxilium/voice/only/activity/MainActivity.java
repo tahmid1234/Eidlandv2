@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     private final String prefKey = "checkedInstallReferrer";
 
     void checkInstallReferrer() {
-        //remove the if condition to check referrer
+        //remove the if condition to check referrer, need to check more on the prefKey usage
         if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
             return;
         }
