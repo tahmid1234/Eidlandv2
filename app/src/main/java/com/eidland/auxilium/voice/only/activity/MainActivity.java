@@ -175,9 +175,10 @@ public class MainActivity extends AppCompatActivity {
     private final String prefKey = "checkedInstallReferrer";
 
     void checkInstallReferrer() {
-//        if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
-//            return;
-//        }
+        //remove the if condition to check referrer
+        if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
+            return;
+        }
 
         InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(this).build();
         backgroundExecutor.execute(() -> getInstallReferrerFromClient(referrerClient));
