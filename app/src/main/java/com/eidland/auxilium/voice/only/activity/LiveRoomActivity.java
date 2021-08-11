@@ -365,12 +365,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 try{
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").addValueEventListener(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Rooms room = snapshot.getValue(Rooms.class);
 //                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
-                            if (room.getInviteLink() == "init"){
+                            // not entering the if condition
+//                            if (room.getInviteLink() == "init"){
+//                                Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                                 String link = "https://room.eidland.com/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
                                 FirebaseDynamicLinks.getInstance().createDynamicLink()
                                         .setLink(Uri.parse(link))
@@ -393,10 +395,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                 }
                                             }
                                         });
-                            }
+//                            }
                             Intent sendIntent = new Intent();
                             sendIntent.setAction(Intent.ACTION_SEND);
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, room.getInviteLink());
+                            //works only once on browser. works multiple times on apps.
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + link);
                             sendIntent.setType("text/plain");
                             Intent shareIntent = Intent.createChooser(sendIntent, null);
                             startActivity(shareIntent);
