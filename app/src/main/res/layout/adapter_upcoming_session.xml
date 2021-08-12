@@ -29,6 +29,7 @@
             android:textSize="18dp"
             android:textFontWeight="600"
             android:maxLines="1"
+            android:textStyle="bold"
             android:textColor="@color/white" />
 
         <TextView
@@ -92,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="23th, AUg, 2021"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:textColor="@color/lightgray" />
         </LinearLayout>
 

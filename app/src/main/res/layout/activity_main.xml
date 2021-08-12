@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/chatroom_background"
     android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.activity.MainActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="TODO"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_rectangle_18" />
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/ic_rectangle_18" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -126,6 +126,7 @@
                     android:textSize="20dp"
                     android:fontFamily="@font/open_sans"
                     android:padding="5dp"
+                    android:textStyle="bold"
                     android:text="Eidland Rooms"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -144,6 +145,7 @@
                     android:textSize="20dp"
                     android:fontFamily="@font/open_sans"
                     android:padding="5dp"
+                    android:textStyle="bold"
                     android:text="Upcoming Sessions"/>
 
 
