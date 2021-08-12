@@ -1,5 +1,7 @@
 package com.eidland.auxilium.voice.only.activity;
 
+import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -60,18 +62,13 @@ import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.helper.LeaderBoard;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
-import com.eidland.auxilium.voice.only.model.CardsInADeck;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.Gift;
 import com.eidland.auxilium.voice.only.model.GiftItem;
-import com.eidland.auxilium.voice.only.model.Lastshuffled;
 import com.eidland.auxilium.voice.only.model.Rooms;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.User;
 import com.eidland.auxilium.voice.only.model.Viewer;
-import com.firebase.ui.common.ChangeEventType;
-import com.firebase.ui.database.ChangeEventListener;
-import com.firebase.ui.database.FirebaseIndexArray;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -85,7 +82,6 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.view.Change;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
@@ -107,8 +103,6 @@ import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
-
-import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener {
     String type, SeatsName, AgainSeat, run;
@@ -147,7 +141,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     AdapterSeat adapterSeat;
     DatabaseReference userRef;
     FirebaseUser currentUser;
-    DatabaseReference currentRoom;
     Viewer selectedViewer = new Viewer();
     RelativeLayout singleUserBox;
     ImageView button;
@@ -170,7 +163,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView displayCardImage;
     ImageView closeCard;
     ImageView minimizedCard;
-    String cardImageURL,cardImageURL2;
+    String cardImageURL, cardImageURL2;
 
     ImageView inviteButton;
 
@@ -180,9 +173,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
-    boolean hasEnteredRoom = true,newlyjoined = true;
-
-    int game = 1;
+    boolean hasEnteredRoom = true, newlyjoined = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,14 +355,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         inviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").addListenerForSingleValueEvent(new ValueEventListener() {
+                try {
+                    Rooms room = new Rooms();
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Rooms room = snapshot.getValue(Rooms.class);
-//                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
+                            room.setInviteLink(snapshot.getValue().toString());
+                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                             // not entering the if condition
-                            if (room.getInviteLink() == "init"){
+                            if (room.getInviteLink() == "init") {
                                 Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                                 String link = "https://eidland.page.link/invite/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
                                 FirebaseDynamicLinks.getInstance().createDynamicLink()
@@ -391,13 +383,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                     room.setInviteLink(mInvitationUrl.toString());
                                                     FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(room.getInviteLink());
                                                     Toast.makeText(getApplicationContext(), mInvitationUrl.toString(), Toast.LENGTH_SHORT).show();
-                                                } catch (Exception e){
+                                                } catch (Exception e) {
                                                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                                                 }
                                             }
                                         });
                             }
-                            Intent sendIntent = new Intent();
+
+                            Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
+//                    Intent sendIntent = new Intent( "");
                             sendIntent.setAction(Intent.ACTION_SEND);
                             //works only once on browser. works multiple times on apps.
                             sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
@@ -411,7 +405,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         }
                     });
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -837,7 +831,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).into(popup_user);
                             txtsinglename.setText(viewer.getName());
                             singleUserBox.setVisibility(View.VISIBLE);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             System.out.println(e);
                         }
 
@@ -1650,11 +1644,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             });
 
 
-        }
-        else {
-            newlyjoined=false;
+        } else {
+            newlyjoined = false;
         }
     }
+
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
 
