@@ -369,11 +369,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Rooms room = snapshot.getValue(Rooms.class);
-                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                             // not entering the if condition
-//                            if (room.getInviteLink() == "init"){
-//                                Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
-                                String link = "https://room.eidland.com/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
+                            if (room.getInviteLink() == "init"){
+                                Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
+                                String link = "https://eidland.page.link/invite/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
                                 FirebaseDynamicLinks.getInstance().createDynamicLink()
                                         .setLink(Uri.parse(link))
                                         .setDomainUriPrefix("https://eidland.page.link")
@@ -396,7 +396,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                 }
                                             }
                                         });
-//                            }
+                            }
                             Intent sendIntent = new Intent();
                             sendIntent.setAction(Intent.ACTION_SEND);
                             //works only once on browser. works multiple times on apps.
