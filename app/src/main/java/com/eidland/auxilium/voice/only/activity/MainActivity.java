@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
+import com.eidland.auxilium.voice.only.adapter.AdapterUpcomingSession;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.Rooms;
 import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.model.UpcomingSession;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,36 +42,86 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     TextView UserName;
-    ImageView UserPhoto;
+    ImageView UserPhoto, homeImage;
     String userid, username, imageurl;
-    RecyclerView roomRecycler;
+    RecyclerView roomRecycler, upcomingSessionRV;
     ProgressBar progressbar;
     List<Rooms> roomsList = new ArrayList<Rooms>();
+    List<UpcomingSession> upcomingSessionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
         progressbar = findViewById(R.id.progressbar);
 
         UserName = findViewById(R.id.username);
         UserPhoto = findViewById(R.id.userimage);
+        homeImage = findViewById(R.id.home_image);
 
         roomRecycler = findViewById(R.id.rvrooms);
+        upcomingSessionRV = findViewById(R.id.upcomingSessionsRV);
+        
+        FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String url = snapshot.getValue().toString();
+                    Glide.with(MainActivity.this).load(url).apply(RequestOptions.bitmapTransform(new RoundedCorners(15))).into(homeImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         FirebaseDatabase.getInstance().getReference("AllRooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                roomsList.clear();
                 if(snapshot.exists()){
                     for (DataSnapshot child : snapshot.getChildren()) {
                         roomsList.add(child.getValue(Rooms.class));
                     }
-                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 2, GridLayoutManager.VERTICAL, false);
-                    AdapterRoom adapterRoom = new AdapterRoom(roomsList, MainActivity.this);
+                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
+                    AdapterRoom adapterRoom = new AdapterRoom(roomsList, MainActivity.this, width);
                     roomRecycler.setLayoutManager(seatLayoutManager);
                     adapterRoom.notifyDataSetChanged();
                     roomRecycler.setAdapter(adapterRoom);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        UpcomingSession upcomingSession = new UpcomingSession("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2", "nsdk sd sd sdsdsd sdss", "sdkfjdskf lksd flksd lfk ldskfj lksdj flkd sfljlsfajl asdjhfnssdfs dfsd fs dfsdsdf", "https://picsum.photos/200", "1628739171000");
+
+        FirebaseDatabase.getInstance().getReference("UpcomingSessions").child("sessionidss2aa231skldfjlsd").setValue(upcomingSession.toMap());
+
+        FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                upcomingSessionList.clear();
+                if(snapshot.exists()){
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        upcomingSessionList.add(child.getValue(UpcomingSession.class));
+                    }
+                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.VERTICAL, false);
+                    AdapterUpcomingSession adapterUpcomingSession = new AdapterUpcomingSession(MainActivity.this, upcomingSessionList);
+                    upcomingSessionRV.setLayoutManager(seatLayoutManager);
+                    adapterUpcomingSession.notifyDataSetChanged();
+                    upcomingSessionRV.setAdapter(adapterUpcomingSession);
                 }
             }
 

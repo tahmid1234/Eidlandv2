@@ -1,12 +1,27 @@
 package com.eidland.auxilium.voice.only.model;
 
 public class Rooms {
-   public String name,imageurl,hostuid,token,viewers,roomname;
+    public String name, imageurl, hostuid, token, viewers, roomname;
+    public String startTime;
+    public String endTime;
+    public String offTimeMsg;
 
     public Rooms() {
     }
 
-    public Rooms(String name, String imageurl, String hostuid, String token, String viewers,String roomname) {
+    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg) {
+        this.name = name;
+        this.imageurl = imageurl;
+        this.hostuid = hostuid;
+        this.token = token;
+        this.viewers = viewers;
+        this.roomname = roomname;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.offTimeMsg = offTimeMsg;
+    }
+
+    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname) {
         this.name = name;
         this.imageurl = imageurl;
         this.hostuid = hostuid;
@@ -61,5 +76,29 @@ public class Rooms {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getOffTimeMsg() {
+        return offTimeMsg;
+    }
+
+    public void setOffTimeMsg(String offTimeMsg) {
+        this.offTimeMsg = offTimeMsg;
     }
 }

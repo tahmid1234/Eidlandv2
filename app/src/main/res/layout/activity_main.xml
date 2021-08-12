@@ -98,21 +98,69 @@
         </androidx.cardview.widget.CardView>
 
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/chatrooms_b"
-            android:padding="10dp">
+            android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvrooms"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/singleroomxml"/>
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/chatrooms_b"
+                android:padding="10dp">
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/home_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/roomsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/home_image"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/open_sans"
+                    android:padding="5dp"
+                    android:text="Eidland Rooms"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvrooms"
+                    android:layout_below="@+id/roomsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:id="@+id/upcomingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rvrooms"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/open_sans"
+                    android:padding="5dp"
+                    android:text="Upcoming Sessions"/>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/upcomingSessionsRV"
+                    android:layout_below="@+id/upcomingTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
 
         <ProgressBar
             android:id="@+id/progressbar"
