@@ -369,7 +369,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Rooms room = snapshot.getValue(Rooms.class);
-//                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                             // not entering the if condition
 //                            if (room.getInviteLink() == "init"){
 //                                Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
@@ -388,7 +388,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                 try {
                                                     Uri mInvitationUrl = shortDynamicLink.getShortLink();
                                                     assert mInvitationUrl != null;
-                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(mInvitationUrl.toString());
+                                                    room.setInviteLink(mInvitationUrl.toString());
+                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(room.getInviteLink());
                                                     Toast.makeText(getApplicationContext(), mInvitationUrl.toString(), Toast.LENGTH_SHORT).show();
                                                 } catch (Exception e){
                                                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -399,7 +400,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Intent sendIntent = new Intent();
                             sendIntent.setAction(Intent.ACTION_SEND);
                             //works only once on browser. works multiple times on apps.
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + link);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
                             sendIntent.setType("text/plain");
                             Intent shareIntent = Intent.createChooser(sendIntent, null);
                             startActivity(shareIntent);
