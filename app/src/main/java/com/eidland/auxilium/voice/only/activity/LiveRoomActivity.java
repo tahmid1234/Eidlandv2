@@ -632,7 +632,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @NonNull
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-
                                     try {
                                         User user = currentData.getValue(User.class);
                                         assert user != null;

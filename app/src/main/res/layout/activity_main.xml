@@ -100,7 +100,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -136,25 +136,30 @@
                     android:layout_height="wrap_content"/>
 
 
-                <TextView
-                    android:id="@+id/upcomingTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rvrooms"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:fontFamily="@font/open_sans"
-                    android:padding="5dp"
-                    android:textStyle="bold"
-                    android:text="Upcoming Sessions"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/upcomingTitle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/rvrooms"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:fontFamily="@font/open_sans"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:text="Upcoming Sessions"/>-->
 
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/upcomingSessionsRV"
-                    android:layout_below="@+id/upcomingTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/upcomingSessionsRV"-->
+<!--                    android:layout_below="@+id/upcomingTitle"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+                    <View
+                        android:layout_below="@+id/rvrooms"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"/>
 
 
 

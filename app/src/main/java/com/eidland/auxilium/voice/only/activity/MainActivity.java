@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         homeImage = findViewById(R.id.home_image);
 
         roomRecycler = findViewById(R.id.rvrooms);
-        upcomingSessionRV = findViewById(R.id.upcomingSessionsRV);
+//        upcomingSessionRV = findViewById(R.id.upcomingSessionsRV);
 
         FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,27 +121,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                upcomingSessionList.clear();
-                if(snapshot.exists()){
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        upcomingSessionList.add(child.getValue(UpcomingSession.class));
-                    }
-                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.VERTICAL, false);
-                    AdapterUpcomingSession adapterUpcomingSession = new AdapterUpcomingSession(MainActivity.this, upcomingSessionList);
-                    upcomingSessionRV.setLayoutManager(seatLayoutManager);
-                    adapterUpcomingSession.notifyDataSetChanged();
-                    upcomingSessionRV.setAdapter(adapterUpcomingSession);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                upcomingSessionList.clear();
+//                if(snapshot.exists()){
+//                    for (DataSnapshot child : snapshot.getChildren()) {
+//                        upcomingSessionList.add(child.getValue(UpcomingSession.class));
+//                    }
+//                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.VERTICAL, false);
+//                    AdapterUpcomingSession adapterUpcomingSession = new AdapterUpcomingSession(MainActivity.this, upcomingSessionList);
+//                    upcomingSessionRV.setLayoutManager(seatLayoutManager);
+//                    adapterUpcomingSession.notifyDataSetChanged();
+//                    upcomingSessionRV.setAdapter(adapterUpcomingSession);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...!");
@@ -243,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case InstallReferrerClient.InstallReferrerResponse.OK:
                         ReferrerDetails response = null;
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                         try {
                             response = referrerClient.getInstallReferrer();
                         } catch (RemoteException e) {
