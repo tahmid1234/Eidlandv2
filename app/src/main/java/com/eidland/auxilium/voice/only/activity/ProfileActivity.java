@@ -233,12 +233,11 @@ public class ProfileActivity extends AppCompatActivity {
                     referralCode= generateAlphanumericString(8);
                     user.setReferralURL(referralCode);
                     FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(user.getReferralURL());
-                    FirebaseDatabase.getInstance().getReference().child("Referrals").child(user.getReferralURL()).setValue("init");
-                    referralLinkText.setText(referralURL + referralCode);
                 }
-                else{
-                    referralLinkText.setText(referralURL + user.getReferralURL());
+                else {
+                    referralCode = StaticConfig.user.getReferralURL();
                 }
+
             }
 
             @Override
@@ -269,10 +268,12 @@ public class ProfileActivity extends AppCompatActivity {
         referralLinkText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("url", referralURL);
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "Copied!", Toast.LENGTH_SHORT).show();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, use my link to join Eidland:\n" + referralURL +referralCode);
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
             }
         });
     }
