@@ -1,10 +1,12 @@
 package com.eidland.auxilium.voice.only.model;
 
 public class Rooms {
-    public String name, imageurl, hostuid, token, viewers, roomname;
-    public String startTime;
-    public String endTime;
-    public String offTimeMsg;
+   public String name;
+    public String imageurl;
+    public String hostuid;
+    public String token;
+    public String viewers;
+    public String roomname;
     public String inviteLink;
 
     public Rooms() {
@@ -27,7 +29,6 @@ public class Rooms {
     public String getRoomname() {
         return roomname;
     }
-
     public void setRoomname(String roomname) {
         this.roomname = roomname;
     }
@@ -35,7 +36,6 @@ public class Rooms {
     public String getViewers() {
         return viewers;
     }
-
     public void setViewers(String viewers) {
         this.viewers = viewers;
     }
@@ -43,7 +43,6 @@ public class Rooms {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -51,7 +50,6 @@ public class Rooms {
     public String getImageurl() {
         return imageurl;
     }
-
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
@@ -59,7 +57,6 @@ public class Rooms {
     public String getHostuid() {
         return hostuid;
     }
-
     public void setHostuid(String hostuid) {
         this.hostuid = hostuid;
     }
@@ -67,7 +64,6 @@ public class Rooms {
     public String getToken() {
         return token;
     }
-
     public void setToken(String token) {
         this.token = token;
     }

@@ -52,6 +52,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation "com.android.installreferrer:installreferrer:2.2"
+
 
     implementation('com.github.tony19:logback-android-classic:1.1.1-4') {
         // workaround issue #73
@@ -91,6 +93,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'com.google.firebase:firebase-dynamic-links:20.1.1'
     implementation 'com.google.android.gms:play-services-analytics-impl:17.0.0'
+    implementation 'com.google.android.gms:play-services-tagmanager-v4-impl:17.0.0'
 
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
 

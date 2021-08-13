@@ -64,13 +64,13 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.MainActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.SignUpActivity" />
+
         <activity
             android:name="com.eidland.auxilium.voice.only.activity.LiveRoomActivity"
             android:launchMode="singleTask"
             android:parentActivityName="com.eidland.auxilium.voice.only.activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
