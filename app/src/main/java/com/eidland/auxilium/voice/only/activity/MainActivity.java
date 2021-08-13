@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,16 +23,12 @@ import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
 import com.eidland.auxilium.voice.only.adapter.AdapterUpcomingSession;
-import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.Rooms;
 import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.model.UpcomingSession;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.analytics.CampaignTrackingReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -119,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        UpcomingSession upcomingSession = new UpcomingSession("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2", "nsdk sd sd sdsdsd sdss", "sdkfjdskf lksd flksd lfk ldskfj lksdj flkd sfljlsfajl asdjhfnssdfs dfsd fs dfsdsdf", "https://picsum.photos/200", "1628739171000");
-
-        FirebaseDatabase.getInstance().getReference("UpcomingSessions").child("sessionidss2aa231skldfjlsd").setValue(upcomingSession.toMap());
-
         FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -201,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (responseCode) {
                     case InstallReferrerClient.InstallReferrerResponse.OK:
                         ReferrerDetails response = null;
-//                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
                         try {
                             response = referrerClient.getInstallReferrer();
                         } catch (RemoteException e) {
