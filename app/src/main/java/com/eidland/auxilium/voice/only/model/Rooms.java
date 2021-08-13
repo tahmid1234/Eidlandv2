@@ -8,6 +8,10 @@ public class Rooms {
     public String viewers;
     public String roomname;
     public String inviteLink;
+    public String startTime;
+    public String endTime;
+    public String offTimeMsg;
+
 
     public Rooms() {
     }
