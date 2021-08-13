@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.installreferrer.api.InstallReferrerClient;
@@ -37,6 +38,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -247,17 +249,33 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
-        // need to move this listener to a different place so that toast shows up even when I'm not in profile activity
-        // coins don't update dynamically, need to fix that
-        inviteRef.addValueEventListener(new ValueEventListener() {
+        int count = 0;
+        inviteRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(getApplicationContext(), "listener working properly", Toast.LENGTH_SHORT).show();
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                currentBalance += 100;
-                StaticConfig.user.setCoins(currentBalance.toString());
-                userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
-                Toast.makeText(getApplicationContext(), "Congratulations!! you received 100 coins for referral!", Toast.LENGTH_LONG).show();
+                if (count < 1 ){
+                    Toast.makeText(getApplicationContext(), referralCode, Toast.LENGTH_LONG).show();
+                    currentBalance += 100;
+                    StaticConfig.user.setCoins(currentBalance.toString());
+                    userRef.child("coins").setValue(currentBalance.toString());
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
