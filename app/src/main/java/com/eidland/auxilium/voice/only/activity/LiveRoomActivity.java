@@ -425,6 +425,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         nameOfRoom = getIntent().getStringExtra("UserName");
         final Comment comment = new Comment();
+
         if (nameOfRoom.contentEquals("Board Gamers")) {
             comment.setComment("Fellow gamers! Welcome to the world of board games! ");
             comment.setName("Admin - Board Gamers");

@@ -23,7 +23,28 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="room.eidland.com"
+                    android:scheme="http" />
+                <data
+                    android:host="room.eidland.com"
+                    android:scheme="https" />
+                <data
+                    android:host="eidland.page.link"
+                    android:scheme="http" />
+                <data
+                    android:host="eidland.page.link"
+                    android:scheme="https" />
+                <data
+                    android:host="eidland.page.link"
+                    android:scheme="app" />
+
             </intent-filter>
+
         </activity>
         <activity android:name="com.eidland.auxilium.voice.only.activity.WalletActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.EnterRoomActivity" />
@@ -71,30 +92,6 @@
             android:parentActivityName="com.eidland.auxilium.voice.only.activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="room.eidland.com"
-                    android:scheme="http" />
-                <data
-                    android:host="room.eidland.com"
-                    android:scheme="https" />
-
-                <data
-                    android:host="eidland.page.link"
-                    android:scheme="http" />
-                <data
-                    android:host="eidland.page.link"
-                    android:scheme="https" />
-                <data
-                    android:host="eidland.page.link"
-                    android:scheme="app" />
-
-            </intent-filter>
         </activity>
     </application>
 
