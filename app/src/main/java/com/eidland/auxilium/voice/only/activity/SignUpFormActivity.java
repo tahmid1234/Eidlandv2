@@ -76,6 +76,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
     StorageReference mStorage;
     FirebaseAuth.AuthStateListener mAuthListener;
     AdapterAvatar adapterAvatar;
+    String referralURL = "";
     public String[] imageList = {
             "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959",
             "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit2.jpg?alt=media&token=4a1187ae-a0f0-4aa0-8c3e-edce32310f8e",
@@ -148,7 +149,15 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
         String Userid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        User obj = new User(_username, _email, urlimg, "100", "0");
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int index = (int)(AlphaNumericString.length() * Math.random());
+            sb.append(AlphaNumericString.charAt(index));
+        }
+        referralURL = sb.toString();
+
+        User obj = new User(_username, _email, urlimg, "100", "0", referralURL);
         StaticConfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

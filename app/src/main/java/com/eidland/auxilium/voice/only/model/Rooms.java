@@ -5,11 +5,12 @@ public class Rooms {
     public String startTime;
     public String endTime;
     public String offTimeMsg;
+    public String inviteLink;
 
     public Rooms() {
     }
 
-    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg) {
+    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg, String inviteLink) {
         this.name = name;
         this.imageurl = imageurl;
         this.hostuid = hostuid;
@@ -19,15 +20,8 @@ public class Rooms {
         this.startTime = startTime;
         this.endTime = endTime;
         this.offTimeMsg = offTimeMsg;
-    }
+        this.inviteLink = inviteLink;
 
-    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname) {
-        this.name = name;
-        this.imageurl = imageurl;
-        this.hostuid = hostuid;
-        this.token = token;
-        this.viewers = viewers;
-        this.roomname = roomname;
     }
 
     public String getRoomname() {
@@ -101,4 +95,7 @@ public class Rooms {
     public void setOffTimeMsg(String offTimeMsg) {
         this.offTimeMsg = offTimeMsg;
     }
+
+    public String getInviteLink() { return inviteLink; }
+    public void setInviteLink(String inviteLink) { this.inviteLink = inviteLink; }
 }
