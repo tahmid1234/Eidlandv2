@@ -382,7 +382,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                     assert mInvitationUrl != null;
                                                     room.setInviteLink(mInvitationUrl.toString());
                                                     FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(room.getInviteLink());
-                                                    Toast.makeText(getApplicationContext(), mInvitationUrl.toString(), Toast.LENGTH_SHORT).show();
                                                 } catch (Exception e) {
                                                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                                                 }

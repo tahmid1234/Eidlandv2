@@ -249,17 +249,13 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
-        int count = 0;
         inviteRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                if (count < 1 ){
-                    Toast.makeText(getApplicationContext(), referralCode, Toast.LENGTH_LONG).show();
                     currentBalance += 100;
                     StaticConfig.user.setCoins(currentBalance.toString());
                     userRef.child("coins").setValue(currentBalance.toString());
-                }
 
             }
 
