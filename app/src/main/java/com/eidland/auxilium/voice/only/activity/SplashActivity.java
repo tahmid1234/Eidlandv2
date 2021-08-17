@@ -150,7 +150,7 @@ public class SplashActivity extends AppCompatActivity {
                     public void run() {
                         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-                            User user = new User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0", "null");
+                            User user = new User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0", "null", "null");
                             StaticConfig.user = user;
                             myRef = FirebaseDatabase.getInstance().getReference();
                             myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
