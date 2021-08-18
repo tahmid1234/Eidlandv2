@@ -3,6 +3,8 @@ package com.eidland.auxilium.voice.only.activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SyncAdapterType;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -153,11 +155,27 @@ public class SplashActivity extends AppCompatActivity {
                             User user = new User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0", "null", "null");
                             StaticConfig.user = user;
                             myRef = FirebaseDatabase.getInstance().getReference();
+                            Intent appLinkIntent = getIntent();
+                            String appLinkAction = appLinkIntent.getAction();
+                            Uri appLinkData = appLinkIntent.getData();
                             myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() != null) {
                                         if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
+                                            Toast.makeText(getApplicationContext(), appLinkIntent.toString(), Toast.LENGTH_SHORT);
+                                            try {
+                                                if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null) {
+                                                    StaticConfig.user = dataSnapshot.getValue(User.class);
+                                                    intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
+                                                    Toast.makeText(getApplicationContext(), "action: " + appLinkAction, Toast.LENGTH_SHORT);
+                                                    Toast.makeText(getApplicationContext(), "data: " + appLinkData.toString(), Toast.LENGTH_SHORT);
+                                                }
+                                            } catch (Exception e) {
+                                                System.out.println(e);
+                                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
+                                            }
+
                                             StaticConfig.user = dataSnapshot.getValue(User.class);
                                             intent = new Intent(SplashActivity.this, MainActivity.class);
                                             startActivity(intent);

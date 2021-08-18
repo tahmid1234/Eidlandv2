@@ -379,6 +379,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             public void onSuccess(ShortDynamicLink shortDynamicLink) {
                                                 try {
                                                     Uri mInvitationUrl = shortDynamicLink.getShortLink();
+                                                    Intent intent = new Intent(String.valueOf(mInvitationUrl));
+                                                    intent.setAction(Intent.ACTION_VIEW);
                                                     assert mInvitationUrl != null;
                                                     room.setInviteLink(mInvitationUrl.toString());
                                                     FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(room.getInviteLink());
@@ -390,9 +392,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             }
 
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
-//                    Intent sendIntent = new Intent( "");
                             sendIntent.setAction(Intent.ACTION_SEND);
-                            //works only once on browser. works multiple times on apps.
                             sendIntent.putExtra("UserName", room.name);
                             sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
                             sendIntent.setType("text/plain");
@@ -879,6 +879,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void giftsListner() {
+//        Toast.makeText(getApplicationContext(), "entrerd!!", Toast.LENGTH_SHORT).show();
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -1564,7 +1565,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void gameListener() {
+//        int count = 0;
+//        count++;
+//        Toast.makeText(getApplicationContext(), String.valueOf(count), Toast.LENGTH_SHORT).show();
         if (!newlyjoined) {
+//            Toast.makeText(getApplicationContext(), "entrerd!!", Toast.LENGTH_SHORT);
             FirebaseDatabase.getInstance().getReference().child("LastCard").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot currsnap) {
@@ -1573,7 +1578,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     stringBuilder.append(p);
                     stringBuilder.append(".png");
 
+
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(stringBuilder.toString());
+                    Toast.makeText(getApplicationContext(), storageRef.toString(), Toast.LENGTH_LONG).show();
                     final long ONE_MEGABYTE = 1024 * 1024;
                     FirebaseStorage.getInstance().getReference();
                     storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -1582,14 +1589,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             minimizedCard.setVisibility(View.INVISIBLE);
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             displayCardImage.setImageBitmap(bmp);
+                            displayCardImage.setVisibility(View.VISIBLE);
+//                            Toast.makeText(getApplicationContext(), displayCardImage.toString(), Toast.LENGTH_LONG).show();
+
                             minimizedCard.setImageBitmap(bmp);
-                            Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Moderator has shuffled cards gamelistener!", Toast.LENGTH_SHORT).show();
 
                             Handler showLoadingPopup = new Handler();
                             showLoadingPopup.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        Toast.makeText(getApplicationContext(), "Moderator has shuffled cards handler!", Toast.LENGTH_SHORT).show();
                                         cardLoadingAnimationLayout.setVisibility(View.VISIBLE);
                                         minimizedCard.setVisibility(View.INVISIBLE);
                                         cardImageURL = stringBuilder.toString();
@@ -1602,7 +1613,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @Override
                                 public void run() {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        Toast.makeText(getApplicationContext(), cardImageURL, Toast.LENGTH_SHORT).show();
                                         if (cardImageURL != null) {
+                                            Toast.makeText(getApplicationContext(), "Moderator has shuffled cards endloading!", Toast.LENGTH_SHORT).show();
                                             cardLoadingAnimationLayout.setVisibility(View.GONE);
                                             selectedCardGIF.setVisibility(View.VISIBLE);
                                             displayCardLayout.setVisibility(View.VISIBLE);
@@ -1672,8 +1685,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     stringBuilder.append(".png");
                                     cardImageURL = stringBuilder.toString();
                                     FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
-                                    gameListener();
-
                                 }
                             })
                             .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
@@ -1686,6 +1697,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             .show();
                 } else {
                     Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
+//                    gameListener();
                 }
 
             }

@@ -190,11 +190,9 @@ public class MainActivity extends AppCompatActivity {
     void checkInstallReferrer() {
 //      remove the if condition to check referrer, need to check more on the prefKey usage
         if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
-            Toast.makeText(getApplicationContext(), StaticConfig.user.getReferrer(), Toast.LENGTH_SHORT);
-            if (StaticConfig.user.getReferrer()== null || StaticConfig.user.getReferrer()== "utm_source=google-play&utm_medium=organic"){
-                Toast.makeText(getApplicationContext(), "not eligible", Toast.LENGTH_SHORT);
-            }
+            if (StaticConfig.user.getReferrer()== null || StaticConfig.user.getReferrer().equals("utm_source=google-play&utm_medium=organic")){
             return;
+            }
         }
 
         InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(this).build();
