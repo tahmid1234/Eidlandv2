@@ -1678,7 +1678,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     gamesLayout.setVisibility(View.GONE);
                                     Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
                                     StringBuilder stringBuilder = new StringBuilder();
-                                    stringBuilder.append((int) ((Math.random() * (19)) + 2));
+                                    stringBuilder.append((int) ((Math.random() * (29)) + 1));
                                     String cardNumber = stringBuilder.toString();
                                     FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
                                     cardImageURL2 = stringBuilder.toString();
