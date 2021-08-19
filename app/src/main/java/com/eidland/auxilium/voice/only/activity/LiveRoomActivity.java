@@ -357,13 +357,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 try {
                     Rooms room = new Rooms();
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            room.setInviteLink(snapshot.getValue().toString());
-                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                             // not entering the if condition
-                            if (room.getInviteLink() == "init") {
+                            if (snapshot.getValue()== null) {
                                 Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                                 String link = "https://eidland.page.link/invite/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
                                 FirebaseDynamicLinks.getInstance().createDynamicLink()
@@ -378,6 +376,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             @Override
                                             public void onSuccess(ShortDynamicLink shortDynamicLink) {
                                                 try {
+                                                    Toast.makeText(getApplicationContext(), shortDynamicLink.toString(), Toast.LENGTH_LONG).show();
                                                     Uri mInvitationUrl = shortDynamicLink.getShortLink();
                                                     Intent intent = new Intent(String.valueOf(mInvitationUrl));
                                                     intent.setAction(Intent.ACTION_VIEW);
@@ -390,6 +389,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             }
                                         });
                             }
+
+                            room.setInviteLink(snapshot.getValue().toString());
+                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
 
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);

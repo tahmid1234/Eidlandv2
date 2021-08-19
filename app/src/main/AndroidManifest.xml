@@ -20,6 +20,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name="com.eidland.auxilium.voice.only.activity.ProfileActivity" />
         <activity android:name="com.eidland.auxilium.voice.only.activity.SplashActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -63,7 +64,8 @@
 
                 <data
                     android:scheme="http"
-                    android:host="eidland.page.link" />
+                    android:host="eidland.page.link"
+                    android:pathPrefix="/roomname"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
