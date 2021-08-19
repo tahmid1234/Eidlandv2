@@ -4,6 +4,7 @@ import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -73,6 +74,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -144,6 +147,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     Viewer selectedViewer = new Viewer();
     RelativeLayout singleUserBox;
     ImageView button;
+    int height, width;
 
 
     RelativeLayout animatedLayout;
@@ -182,8 +186,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...");
@@ -287,25 +291,46 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         leaveRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-                dialoge.setTitle("Confirm Leave")
-                        .setMessage("Are you sure you want to leave the room?")
-                        .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                run = "1";
-                                progressDialog.show();
-                                EndMeeting();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setCancelable(false)
-                        .show();
+
+                Dialog dialog = new Dialog(LiveRoomActivity.this);
+                dialog.setContentView(R.layout.layout_custom_dialog);
+                LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+                linearLayout.setMinimumWidth((int) (width* 0.8));
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                dialog.setCancelable(false);
+
+                ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setImageResource(R.drawable.popup_exit);
+
+                TextView msg = dialog.findViewById(R.id.msg);
+                msg.setVisibility(View.VISIBLE);
+                msg.setText("Are you sure you want to leave the room?");
+
+                TextView positive = dialog.findViewById(R.id.positive_btn);
+                positive.setVisibility(View.VISIBLE);
+                positive.setText("Leave");
+                positive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        run = "1";
+                        progressDialog.show();
+                        EndMeeting();
+                    }
+                });
+
+                TextView negative = dialog.findViewById(R.id.negative_btn);
+                negative.setVisibility(View.VISIBLE);
+                negative.setText("Cancel");
+                negative.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+
+
             }
         });
 
@@ -1165,39 +1190,58 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     private void goBack() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-        dialoge.setTitle("Confirm")
-                .setMessage("Are you sure you want to leave current session?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (AgainSeat != null) {
-                            doSwitchToBroadcaster(false);
-                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
-                            AgainSeat = null;
-                            Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                        try {
-                            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .setCancelable(false)
-                .show();
+
+        Dialog dialog = new Dialog(LiveRoomActivity.this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width* 0.8));
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
+
+        ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setImageResource(R.drawable.popup_exit);
+
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setVisibility(View.VISIBLE);
+        msg.setText("Are you sure you want to leave current session?");
+
+        TextView positive = dialog.findViewById(R.id.positive_btn);
+        positive.setVisibility(View.VISIBLE);
+        positive.setText("Yes");
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AgainSeat != null) {
+                    doSwitchToBroadcaster(false);
+                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
+                    AgainSeat = null;
+                    Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                try {
+                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        });
+
+        TextView negative = dialog.findViewById(R.id.negative_btn);
+        negative.setVisibility(View.VISIBLE);
+        negative.setText("No");
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 
 
@@ -1476,20 +1520,40 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     public void CallAlert() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-        dialoge.setTitle("Welcome to Eidland")
-                .setMessage("Please ensure your microphone and storage permission is given in order to get most of Eidland")
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean checkPermissionResult = checkSelfPermissions();
-                        if (checkPermissionResult) {
-                            dialog.cancel();
-                        } else {
-                            Log.e("no permission", "Not Found");
-                        }
-                    }
-                }).setCancelable(false).show();
+
+        Dialog dialog = new Dialog(LiveRoomActivity.this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width* 0.8));
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
+
+        ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+        imageView.setVisibility(View.VISIBLE);
+
+        TextView title = dialog.findViewById(R.id.dialog_title);
+        title.setVisibility(View.VISIBLE);
+        title.setText("Welcome to Eidland");
+
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setVisibility(View.VISIBLE);
+        msg.setText("Please ensure your microphone and storage permission is given in order to get most out of Eidland");
+
+        TextView positive = dialog.findViewById(R.id.positive_btn);
+        positive.setVisibility(View.VISIBLE);
+        positive.setText("Okay");
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checkPermissionResult = checkSelfPermissions();
+                if (checkPermissionResult) {
+                    dialog.cancel();
+                } else {
+                    Log.e("no permission", "Not Found");
+                }
+            }
+        });
+        dialog.show();
     }
 
 
