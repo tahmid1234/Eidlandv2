@@ -5,8 +5,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chatroom_newbackground"
-    android:scaleType="fitCenter"
+
+    android:background="@drawable/mike"
     android:keepScreenOn="true"
     android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.activity.LiveRoomActivity">
@@ -14,8 +14,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         android:layout_weight="1"
         android:padding="0dp">
+
+
 
         <RelativeLayout
             android:id="@+id/display_card_layout"
@@ -490,8 +493,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_margin="5dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="top"
+
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal"
                 android:paddingTop="5dp">
 
@@ -648,6 +651,7 @@
             android:id="@+id/giftslayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+
             android:layout_alignParentBottom="true"
             android:background="#E6000000"
             android:orientation="vertical"
@@ -696,6 +700,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
                 android:gravity="center">
 
                 <Spinner
@@ -718,6 +724,7 @@
                     android:paddingHorizontal="13dp"
                     android:text="00"
                     android:textColor="#fff"
+                    android:layout_marginBottom="10dp"
                     android:textSize="20dp" />
 
                 <TextView
@@ -725,7 +732,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
                     android:text="@string/Recharge"
@@ -737,6 +744,8 @@
                     android:layout_width="98dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/join_button"
                     android:gravity="center">
 
@@ -914,6 +923,7 @@
             </LinearLayout>
 
         </RelativeLayout>
+
     </RelativeLayout>
 
 </LinearLayout>
