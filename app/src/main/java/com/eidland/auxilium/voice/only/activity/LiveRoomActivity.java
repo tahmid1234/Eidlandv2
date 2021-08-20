@@ -513,7 +513,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBack();
+                goProfile();
             }
         });
 
@@ -1188,6 +1188,33 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onBackPressed() {
         goBack();
     }
+    private void goProfile() {
+
+
+                if (AgainSeat != null) {
+
+                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
+
+                    AgainSeat = null;
+                    Intent intent = new Intent(LiveRoomActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+
+
+                } else {
+
+                    Intent intent = new Intent(LiveRoomActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+
+
+                }
+
+                try {
+                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
 
     private void goBack() {
 
