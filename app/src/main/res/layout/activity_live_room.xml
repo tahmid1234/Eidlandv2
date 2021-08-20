@@ -166,20 +166,7 @@
 
                 </ImageView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
 
-                    app:cardCornerRadius="18dp">
-
-                    <ImageView
-                        android:id="@+id/_userchatroom"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="20dp"
-                        android:contentDescription="TODO"
-                        android:scaleType="centerCrop" />
-                </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/_leave"
@@ -187,6 +174,7 @@
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/logout"
                     android:contentDescription="TODO"
                     android:padding="3dp"

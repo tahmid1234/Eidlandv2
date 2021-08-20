@@ -170,7 +170,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String cardImageURL, cardImageURL2;
 
     ImageView inviteButton;
-
+    boolean isMod=false;
     String nameOfRoom;
     String inviteLink;
 
@@ -196,7 +196,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         seatLayout = findViewById(R.id.seat_layout);
 
         leaveRoom = findViewById(R.id._leave);
-        userImage = findViewById(R.id._userchatroom);
+     //   userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
         button1 = (ImageView) findViewById(R.id.switch_broadcasting_id);
         ModUserRemove = findViewById(R.id.removeUser);
@@ -484,12 +484,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host", config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+          /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
             } else {
                 Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
-            }
+            }*/
             onlineUserList.clear();
             setOnlineMembers();
             getToken(true);
@@ -499,23 +499,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
             } else {
                 Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
-            }
+            }*/
 
             getToken(false);
 
         }
+        CheckModeratorGame(currentUser.getUid());
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goProfile();
-            }
-        });
 
         sencmnt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1588,7 +1583,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onResume() {
         super.onResume();
         if (StaticConfig.user != null) {
-            Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
+        //    Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
         }
     }
 
@@ -1655,10 +1650,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void gameListener() {
-        if (!newlyjoined) {
-            FirebaseDatabase.getInstance().getReference().child("LastCard").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot currsnap) {
+
+        FirebaseDatabase.getInstance().getReference().child("LastCard").orderByKey().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot currsnap) {
+                if (!newlyjoined) {
+
                     String p = String.valueOf(currsnap.getValue());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(p);
@@ -1721,64 +1718,72 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
 
 
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // ...
+                else {
+                    newlyjoined=false;
                 }
-            });
+            }
 
 
-        } else {
-            newlyjoined = false;
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
+
     }
 
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
 
         AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
-        FirebaseDatabase.getInstance().getReference("Mods").addValueEventListener(new ValueEventListener() {
+
+        if (isMod)
+        {
+            gameDescription.setTitle("Situational Cards")
+                    .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
+                    .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gamesLayout.setVisibility(View.GONE);
+                            // Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append((int) ((Math.random() * (19)) + 2));
+                            String cardNumber = stringBuilder.toString();
+                            FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
+                            cardImageURL2 = stringBuilder.toString();
+                            stringBuilder.append(".png");
+                            cardImageURL = stringBuilder.toString();
+                            FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
+                            // gameListener();
+
+                        }
+                    })
+                    .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"you need to be a moderator",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public boolean CheckModeratorGame(final String st) {
+        FirebaseDatabase.getInstance().getReference("Mods").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(currentUser.getUid())) {
-                    gameDescription.setTitle("Situational Cards")
-                            .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
-                            .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    gamesLayout.setVisibility(View.GONE);
-                                    Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
-                                    StringBuilder stringBuilder = new StringBuilder();
-                                    stringBuilder.append((int) ((Math.random() * (19)) + 2));
-                                    String cardNumber = stringBuilder.toString();
-                                    FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
-                                    cardImageURL2 = stringBuilder.toString();
-                                    stringBuilder.append(".png");
-                                    cardImageURL = stringBuilder.toString();
-                                    FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
-                                    gameListener();
-
-                                }
-                            })
-                            .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
-                }
-
+                isMod= snapshot.hasChild(st);
             }
 
             @Override
@@ -1786,5 +1791,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             }
         });
+        return isMod;
     }
 }
