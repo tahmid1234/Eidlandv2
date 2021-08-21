@@ -505,9 +505,11 @@
                     android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/comment_box_circle"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_marginTop="3dp"
+                        android:orientation="horizontal"
                         android:background="@drawable/transparentblackcircle" />
 
                     <EditText
@@ -533,7 +535,7 @@
                     android:layout_marginHorizontal="5dp"
                     android:contentDescription="TODO"
                     android:onClick="onSwitchSpeakerClicked"
-                    android:src="@drawable/ic_send_message_button" />
+                    android:src="@drawable/ic_send_message_button_white" />
 
                 <ImageView
                     android:id="@id/switch_speaker_id"

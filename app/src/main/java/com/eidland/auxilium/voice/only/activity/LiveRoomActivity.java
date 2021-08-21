@@ -117,6 +117,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
+    LinearLayout commentBoxCircle;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
     TextView ModUserRemove;
@@ -203,12 +204,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                 if (lastVisibleDecorViewHeight != 0) {
                     if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
-                        inputArea.setBackgroundColor(Color.WHITE);
-                        commentBox.setHintTextColor(Color.GRAY);
+                        inputArea.setBackgroundColor(Color.rgb(238,238,228));
+                        commentBox.setHintTextColor(Color.LTGRAY);
+                        commentBox.setTextColor(Color.BLACK);
+                        commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
+                        sencmnt.setImageResource(R.drawable.ic_send_message_button);
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
                         inputArea.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setHintTextColor(Color.WHITE);
+                        commentBoxCircle.setBackground(getDrawable(R.drawable.transparentblackcircle));
+                        sencmnt.setImageResource(R.drawable.ic_send_message_button_white);
+
+
                     }
                 }
                 lastVisibleDecorViewHeight = visibleDecorViewHeight;
@@ -269,6 +277,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         roomGift = findViewById(R.id.room_gift);
         commentBox = findViewById(R.id.comment_box);
         sencmnt = findViewById(R.id.sndcmnt);
+        commentBoxCircle = findViewById(R.id.comment_box_circle);
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
 
