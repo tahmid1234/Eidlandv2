@@ -175,7 +175,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String cardImageURL, cardImageURL2;
 
     ImageView inviteButton;
-
+    boolean isMod=false;
     String nameOfRoom;
     String inviteLink;
 
@@ -233,7 +233,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         inputArea = findViewById(R.id.input_box_area);
 
         leaveRoom = findViewById(R.id._leave);
-        userImage = findViewById(R.id._userchatroom);
+     //   userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
         button1 = (ImageView) findViewById(R.id.switch_broadcasting_id);
         ModUserRemove = findViewById(R.id.removeUser);
@@ -419,14 +419,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 try {
                     Rooms room = new Rooms();
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            room.setInviteLink(snapshot.getValue().toString());
-                            Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
                             // not entering the if condition
-                            if (room.getInviteLink() == "init") {
-                                Toast.makeText(getApplicationContext(), room.getInviteLink(), Toast.LENGTH_SHORT).show();
+                            if (snapshot.getValue()== null) {
                                 String link = "https://eidland.page.link/invite/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
                                 FirebaseDynamicLinks.getInstance().createDynamicLink()
                                         .setLink(Uri.parse(link))
@@ -441,6 +438,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             public void onSuccess(ShortDynamicLink shortDynamicLink) {
                                                 try {
                                                     Uri mInvitationUrl = shortDynamicLink.getShortLink();
+                                                    Intent intent = new Intent(String.valueOf(mInvitationUrl));
+                                                    intent.setAction(Intent.ACTION_VIEW);
                                                     assert mInvitationUrl != null;
                                                     room.setInviteLink(mInvitationUrl.toString());
                                                     FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(room.getInviteLink());
@@ -451,10 +450,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                         });
                             }
 
+                            room.setInviteLink(snapshot.getValue().toString());
+
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
-//                    Intent sendIntent = new Intent( "");
                             sendIntent.setAction(Intent.ACTION_SEND);
-                            //works only once on browser. works multiple times on apps.
                             sendIntent.putExtra("UserName", room.name);
                             sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
                             sendIntent.setType("text/plain");
@@ -521,12 +520,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host", config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+          /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
             } else {
                 Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
-            }
+            }*/
             onlineUserList.clear();
             setOnlineMembers();
             getToken(true);
@@ -536,23 +535,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
             } else {
                 Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
-            }
+            }*/
 
             getToken(false);
 
         }
+        CheckModeratorGame(currentUser.getUid());
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
 
         sencmnt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1225,6 +1219,33 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onBackPressed() {
         goBack();
     }
+    private void goProfile() {
+
+
+                if (AgainSeat != null) {
+
+                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
+
+                    AgainSeat = null;
+                    Intent intent = new Intent(LiveRoomActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+
+
+                } else {
+
+                    Intent intent = new Intent(LiveRoomActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+
+
+                }
+
+                try {
+                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
 
     private void goBack() {
 
@@ -1598,7 +1619,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onResume() {
         super.onResume();
         if (StaticConfig.user != null) {
-            Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
+        //    Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
         }
     }
 
@@ -1665,14 +1686,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void gameListener() {
-        if (!newlyjoined) {
-            FirebaseDatabase.getInstance().getReference().child("LastCard").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot currsnap) {
+
+        FirebaseDatabase.getInstance().getReference().child("LastCard").orderByKey().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot currsnap) {
+                if (!newlyjoined) {
+
                     String p = String.valueOf(currsnap.getValue());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(p);
                     stringBuilder.append(".png");
+
 
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("game_decks").child("yellow").child(stringBuilder.toString());
                     final long ONE_MEGABYTE = 1024 * 1024;
@@ -1683,8 +1707,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             minimizedCard.setVisibility(View.INVISIBLE);
                             Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             displayCardImage.setImageBitmap(bmp);
+                            displayCardImage.setVisibility(View.VISIBLE);
+
                             minimizedCard.setImageBitmap(bmp);
-                            Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
 
                             Handler showLoadingPopup = new Handler();
                             showLoadingPopup.postDelayed(new Runnable() {
@@ -1731,64 +1756,71 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
 
 
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // ...
+                else {
+                    newlyjoined=false;
                 }
-            });
+            }
 
 
-        } else {
-            newlyjoined = false;
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
+
     }
 
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
 
         AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
-        FirebaseDatabase.getInstance().getReference("Mods").addValueEventListener(new ValueEventListener() {
+        if (isMod)
+        {
+            gameDescription.setTitle("Situational Cards")
+                    .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
+                    .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gamesLayout.setVisibility(View.GONE);
+                            // Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append((int) ((Math.random() * (19)) + 2));
+                            String cardNumber = stringBuilder.toString();
+                            FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
+                            cardImageURL2 = stringBuilder.toString();
+                            stringBuilder.append(".png");
+                            cardImageURL = stringBuilder.toString();
+                            FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
+                            // gameListener();
+
+                        }
+                    })
+                    .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"you need to be a moderator",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public boolean CheckModeratorGame(final String st) {
+        FirebaseDatabase.getInstance().getReference("Mods").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(currentUser.getUid())) {
-                    gameDescription.setTitle("Situational Cards")
-                            .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
-                            .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    gamesLayout.setVisibility(View.GONE);
-                                    Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
-                                    StringBuilder stringBuilder = new StringBuilder();
-                                    stringBuilder.append((int) ((Math.random() * (19)) + 2));
-                                    String cardNumber = stringBuilder.toString();
-                                    FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
-                                    cardImageURL2 = stringBuilder.toString();
-                                    stringBuilder.append(".png");
-                                    cardImageURL = stringBuilder.toString();
-                                    FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
-                                    gameListener();
-
-                                }
-                            })
-                            .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
-                }
-
+                isMod= snapshot.hasChild(st);
             }
 
             @Override
@@ -1796,5 +1828,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             }
         });
+        return isMod;
     }
 }

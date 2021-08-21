@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
     DatabaseReference referralRef = FirebaseDatabase.getInstance().getReference().child("Referrals");
 
+    private final Executor backgroundExecutor = Executors.newSingleThreadExecutor();
+    private final String prefKey = "checkedInstallReferrer";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,52 +186,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, EnterRoomActivity.class));
     }
 
-    public void referralcheck() {
-        InstallReferrerClient mReferrerClient;
-        mReferrerClient = InstallReferrerClient.newBuilder(this).build();
-        mReferrerClient.startConnection(new InstallReferrerStateListener() {
-            @Override
-            public void onInstallReferrerSetupFinished(int responseCode) {
-                switch (responseCode) {
-                    case InstallReferrerClient.InstallReferrerResponse.OK:
-                        try {
-                            ReferrerDetails response = mReferrerClient.getInstallReferrer();
-
-                            Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                            currentBalance += 50;
-                            StaticConfig.user.setCoins(currentBalance.toString());
-                            userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
-                            Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        mReferrerClient.endConnection();
-                        break;
-                    case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
-                        Toast.makeText(getApplicationContext(), "Feature Not Supported", Toast.LENGTH_LONG).show();
-                        break;
-                    case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
-                        Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onInstallReferrerServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-            }
-        });
-
-    }
-
-    private final Executor backgroundExecutor = Executors.newSingleThreadExecutor();
-    private final String prefKey = "checkedInstallReferrer";
 
     void checkInstallReferrer() {
-        //remove the if condition to check referrer, need to check more on the prefKey usage
+//      remove the if condition to check referrer, need to check more on the prefKey usage
         if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
+            if (StaticConfig.user.getReferrer()== null || StaticConfig.user.getReferrer().equals("utm_source=google-play&utm_medium=organic")){
             return;
+            }
         }
 
         InstallReferrerClient referrerClient = InstallReferrerClient.newBuilder(this).build();
@@ -251,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         final String referrerUrl = response.getInstallReferrer();
 
+
                         // TODO: If you're using GTM, call trackInstallReferrerforGTM instead.
                         trackInstallReferrer(referrerUrl);
 
@@ -262,11 +227,8 @@ public class MainActivity extends AppCompatActivity {
                         currentBalance += 50;
                         StaticConfig.user.setCoins(currentBalance.toString());
                         userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
-                        Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
-
-                        if (StaticConfig.user.getReferralURL() != null ){
-                            referralRef.child(referrerUrl).child(StaticConfig.user.getReferralURL()).setValue("referred");
-                        }
+                        referralRef.child(referrerUrl).child(StaticConfig.user.getReferralURL()).setValue("referred");
+                        userRef.child(currentUser.getUid()).child("referrer").setValue(referrerUrl);
 
                         // End the connection
                         referrerClient.endConnection();

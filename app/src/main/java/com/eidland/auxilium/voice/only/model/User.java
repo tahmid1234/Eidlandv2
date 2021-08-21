@@ -11,20 +11,21 @@ public class User {
     public String imageurl= "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png";
     public String coins = "0";
     public String receivedCoins = "0";
-
+    public String referrer = "null";
     public String referralURL = "null";
 
 
     public User() {
     }
 
-    public User(String name, String email, String imageurl,String coins, String receivedCoins, String referralURL) {
+    public User(String name, String email, String imageurl,String coins, String receivedCoins, String referralURL, String referrer) {
         this.name = name;
         this.email = email;
         this.imageurl = imageurl;
         this.coins = coins;
         this.receivedCoins = receivedCoins;
         this.referralURL = referralURL;
+        this.referrer = referrer;
     }
 
 
@@ -38,6 +39,7 @@ public class User {
         result.put("coins", this.coins);
         result.put("receivedCoins", this.receivedCoins);
         result.put("referralLink", this.referralURL);
+        result.put("referrer", this.referrer);
         return result;
     }
 
@@ -75,4 +77,7 @@ public class User {
 
     public String getReferralURL() { return referralURL; }
     public void setReferralURL(String referralURL) { this.referralURL = referralURL; }
+
+    public String getReferrer() { return referrer; }
+    public void setReferrer(String referrer) { this.referrer = referrer; }
 }

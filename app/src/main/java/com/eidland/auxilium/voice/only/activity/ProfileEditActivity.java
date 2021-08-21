@@ -82,7 +82,7 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     private void AddData(String url) {
         String Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL());
+        User obj = new User(tvname.getText().toString(), tvmail.getText().toString(), url, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL(), StaticConfig.user.getReferrer());
         StaticConfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

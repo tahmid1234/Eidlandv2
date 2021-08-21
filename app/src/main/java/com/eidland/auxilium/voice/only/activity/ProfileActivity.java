@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void finish(View view) {
-        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL());
+        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL(), StaticConfig.user.getReferrer());
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -225,20 +225,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void createInvitationLink(){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
+        userRef.child("referralURL").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                if (user.getReferralURL()=="null")
+                if (dataSnapshot.getValue() == null)
                 {
                     referralCode= generateAlphanumericString(8);
-                    user.setReferralURL(referralCode);
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(user.getReferralURL());
+                    Toast.makeText(getApplicationContext(), referralCode, Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(referralCode);
                 }
-                else {
-                    referralCode = StaticConfig.user.getReferralURL();
-                }
+                referralCode = dataSnapshot.getValue().toString();
 
             }
 
@@ -249,29 +245,13 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
-        inviteRef.addChildEventListener(new ChildEventListener() {
+        inviteRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                    currentBalance += 100;
-                    StaticConfig.user.setCoins(currentBalance.toString());
-                    userRef.child("coins").setValue(currentBalance.toString());
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                currentBalance += 100;
+                StaticConfig.user.setCoins(currentBalance.toString());
+                userRef.child("coins").setValue(currentBalance.toString());
             }
 
             @Override
@@ -279,6 +259,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
         referralLinkText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
