@@ -254,7 +254,6 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
                 currentBalance += 100;
-                Toast.makeText(getApplicationContext(), String.valueOf(currentBalance), Toast.LENGTH_SHORT);
                 StaticConfig.user.setCoins(currentBalance.toString());
                 userRef.child("coins").setValue(currentBalance.toString());
             }

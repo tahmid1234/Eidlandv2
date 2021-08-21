@@ -227,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                         currentBalance += 50;
                         StaticConfig.user.setCoins(currentBalance.toString());
                         userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
-                        Toast.makeText(getApplicationContext(), "Congratulations!! you received 50 coins", Toast.LENGTH_LONG).show();
                         referralRef.child(referrerUrl).child(StaticConfig.user.getReferralURL()).setValue("referred");
                         userRef.child(currentUser.getUid()).child("referrer").setValue(referrerUrl);
 
