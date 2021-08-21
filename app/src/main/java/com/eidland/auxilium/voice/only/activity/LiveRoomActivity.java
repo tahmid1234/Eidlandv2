@@ -4,6 +4,7 @@ import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -73,6 +74,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -144,6 +147,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     Viewer selectedViewer = new Viewer();
     RelativeLayout singleUserBox;
     ImageView button;
+    int height, width;
 
 
     RelativeLayout animatedLayout;
@@ -166,7 +170,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String cardImageURL, cardImageURL2;
 
     ImageView inviteButton;
-
+    boolean isMod=false;
     String nameOfRoom;
     String inviteLink;
 
@@ -182,8 +186,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...");
@@ -192,7 +196,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         seatLayout = findViewById(R.id.seat_layout);
 
         leaveRoom = findViewById(R.id._leave);
-        userImage = findViewById(R.id._userchatroom);
+     //   userImage = findViewById(R.id._userchatroom);
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
         button1 = (ImageView) findViewById(R.id.switch_broadcasting_id);
         ModUserRemove = findViewById(R.id.removeUser);
@@ -287,25 +291,46 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         leaveRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-                dialoge.setTitle("Confirm Leave")
-                        .setMessage("Are you sure you want to leave the room?")
-                        .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                run = "1";
-                                progressDialog.show();
-                                EndMeeting();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setCancelable(false)
-                        .show();
+
+                Dialog dialog = new Dialog(LiveRoomActivity.this);
+                dialog.setContentView(R.layout.layout_custom_dialog);
+                LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+                linearLayout.setMinimumWidth((int) (width* 0.8));
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                dialog.setCancelable(false);
+
+                ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setImageResource(R.drawable.popup_exit);
+
+                TextView msg = dialog.findViewById(R.id.msg);
+                msg.setVisibility(View.VISIBLE);
+                msg.setText("Are you sure you want to leave the room?");
+
+                TextView positive = dialog.findViewById(R.id.positive_btn);
+                positive.setVisibility(View.VISIBLE);
+                positive.setText("Leave");
+                positive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        run = "1";
+                        progressDialog.show();
+                        EndMeeting();
+                    }
+                });
+
+                TextView negative = dialog.findViewById(R.id.negative_btn);
+                negative.setVisibility(View.VISIBLE);
+                negative.setText("Cancel");
+                negative.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+
+
             }
         });
 
@@ -458,12 +483,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, StaticConfig.user.getEmail(), "host", config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(viewer);
             AgainSeat = "seat0";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+          /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
             } else {
                 Glide.with(LiveRoomActivity.this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(userImage);
-            }
+            }*/
             onlineUserList.clear();
             setOnlineMembers();
             getToken(true);
@@ -473,23 +498,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!LiveRoomActivity.this.isDestroyed())
                     Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
             } else {
                 Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
-            }
+            }*/
 
             getToken(false);
 
         }
+        CheckModeratorGame(currentUser.getUid());
 
-        userImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
 
         sencmnt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1162,41 +1182,87 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onBackPressed() {
         goBack();
     }
+    private void goProfile() {
+
+
+                if (AgainSeat != null) {
+
+                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
+
+                    AgainSeat = null;
+                    Intent intent = new Intent(LiveRoomActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+
+
+                } else {
+
+                    Intent intent = new Intent(LiveRoomActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+
+
+                }
+
+                try {
+                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
 
     private void goBack() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-        dialoge.setTitle("Confirm")
-                .setMessage("Are you sure you want to leave current session?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (AgainSeat != null) {
-                            doSwitchToBroadcaster(false);
-                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
-                            AgainSeat = null;
-                            Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                        try {
-                            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .setCancelable(false)
-                .show();
+
+        Dialog dialog = new Dialog(LiveRoomActivity.this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width* 0.8));
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
+
+        ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setImageResource(R.drawable.popup_exit);
+
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setVisibility(View.VISIBLE);
+        msg.setText("Are you sure you want to leave current session?");
+
+        TextView positive = dialog.findViewById(R.id.positive_btn);
+        positive.setVisibility(View.VISIBLE);
+        positive.setText("Yes");
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AgainSeat != null) {
+                    doSwitchToBroadcaster(false);
+                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
+                    AgainSeat = null;
+                    Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                try {
+                    FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        });
+
+        TextView negative = dialog.findViewById(R.id.negative_btn);
+        negative.setVisibility(View.VISIBLE);
+        negative.setText("No");
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 
 
@@ -1475,20 +1541,40 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     public void CallAlert() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(LiveRoomActivity.this);
-        dialoge.setTitle("Welcome to Eidland")
-                .setMessage("Please ensure your microphone and storage permission is given in order to get most of Eidland")
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean checkPermissionResult = checkSelfPermissions();
-                        if (checkPermissionResult) {
-                            dialog.cancel();
-                        } else {
-                            Log.e("no permission", "Not Found");
-                        }
-                    }
-                }).setCancelable(false).show();
+
+        Dialog dialog = new Dialog(LiveRoomActivity.this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width* 0.8));
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
+
+        ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+        imageView.setVisibility(View.VISIBLE);
+
+        TextView title = dialog.findViewById(R.id.dialog_title);
+        title.setVisibility(View.VISIBLE);
+        title.setText("Welcome to Eidland");
+
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setVisibility(View.VISIBLE);
+        msg.setText("Please ensure your microphone and storage permission is given in order to get most out of Eidland");
+
+        TextView positive = dialog.findViewById(R.id.positive_btn);
+        positive.setVisibility(View.VISIBLE);
+        positive.setText("Okay");
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checkPermissionResult = checkSelfPermissions();
+                if (checkPermissionResult) {
+                    dialog.cancel();
+                } else {
+                    Log.e("no permission", "Not Found");
+                }
+            }
+        });
+        dialog.show();
     }
 
 
@@ -1496,7 +1582,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onResume() {
         super.onResume();
         if (StaticConfig.user != null) {
-            Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
+        //    Glide.with(LiveRoomActivity.this).load(StaticConfig.user.getImageurl()).into(userImage);
         }
     }
 
@@ -1563,10 +1649,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void gameListener() {
-        if (!newlyjoined) {
-            FirebaseDatabase.getInstance().getReference().child("LastCard").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot currsnap) {
+
+        FirebaseDatabase.getInstance().getReference().child("LastCard").orderByKey().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot currsnap) {
+                if (!newlyjoined) {
+
                     String p = String.valueOf(currsnap.getValue());
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(p);
@@ -1631,63 +1719,71 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
 
 
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // ...
+                else {
+                    newlyjoined=false;
                 }
-            });
+            }
 
 
-        } else {
-            newlyjoined = false;
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
+
     }
 
     @Override
     public void onGameClick(int position, ImageView gameIcon) {
 
         AlertDialog.Builder gameDescription = new AlertDialog.Builder(LiveRoomActivity.this);
-        FirebaseDatabase.getInstance().getReference("Mods").addValueEventListener(new ValueEventListener() {
+        if (isMod)
+        {
+            gameDescription.setTitle("Situational Cards")
+                    .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
+                    .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            gamesLayout.setVisibility(View.GONE);
+                            // Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append((int) ((Math.random() * (19)) + 2));
+                            String cardNumber = stringBuilder.toString();
+                            FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
+                            cardImageURL2 = stringBuilder.toString();
+                            stringBuilder.append(".png");
+                            cardImageURL = stringBuilder.toString();
+                            FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
+                            // gameListener();
+
+                        }
+                    })
+                    .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"you need to be a moderator",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public boolean CheckModeratorGame(final String st) {
+        FirebaseDatabase.getInstance().getReference("Mods").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(currentUser.getUid())) {
-                    gameDescription.setTitle("Situational Cards")
-                            .setMessage("what would you do if we put you in the shoes of different people? Let's hear what you'd do in certain situations!")
-                            .setPositiveButton("Sure, Shuffle the Cards!", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    gamesLayout.setVisibility(View.GONE);
-                                    Toast.makeText(getApplicationContext(), "Moderator has shuffled cards!", Toast.LENGTH_SHORT).show();
-                                    StringBuilder stringBuilder = new StringBuilder();
-                                    stringBuilder.append((int) ((Math.random() * (29)) + 1));
-                                    String cardNumber = stringBuilder.toString();
-                                    FirebaseDatabase.getInstance().getReference("game_decks").child("yellow").child(cardNumber).child("status").setValue(Math.random());
-                                    cardImageURL2 = stringBuilder.toString();
-                                    stringBuilder.append(".png");
-                                    cardImageURL = stringBuilder.toString();
-                                    FirebaseDatabase.getInstance().getReference().child("LastCard").setValue(cardImageURL2);
-                                }
-                            })
-                            .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You need Moderator privilege to shuffle cards!", Toast.LENGTH_LONG).show();
-//                    gameListener();
-                }
-
+                isMod= snapshot.hasChild(st);
             }
 
             @Override
@@ -1695,5 +1791,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             }
         });
+        return isMod;
     }
 }

@@ -5,8 +5,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chatroom_newbackground"
-    android:scaleType="fitCenter"
+
+    android:background="@drawable/mike"
     android:keepScreenOn="true"
     android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.activity.LiveRoomActivity">
@@ -14,8 +14,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         android:layout_weight="1"
         android:padding="0dp">
+
+
 
         <RelativeLayout
             android:id="@+id/display_card_layout"
@@ -166,20 +169,7 @@
 
                 </ImageView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
 
-                    app:cardCornerRadius="18dp">
-
-                    <ImageView
-                        android:id="@+id/_userchatroom"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="20dp"
-                        android:contentDescription="TODO"
-                        android:scaleType="centerCrop" />
-                </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/_leave"
@@ -187,6 +177,7 @@
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/logout"
                     android:contentDescription="TODO"
                     android:padding="3dp"
@@ -218,22 +209,22 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="center|top"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="left"
+                            android:gravity="left|top"
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="center"
+                                android:layout_gravity="center|top"
                                 android:layout_marginBottom="5dp"
-                                android:gravity="left"
+                                android:gravity="left|top"
                                 android:orientation="horizontal">
 
                                 <ImageView
@@ -274,15 +265,15 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:background="#D68920"
-                            android:padding="20dp"></LinearLayout>
+                            android:padding="20dp"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="center|top"
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"
-                            android:gravity="left"
+                            android:gravity="left|top"
                             android:orientation="vertical">
 
 
@@ -290,7 +281,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="5dp"
-                                android:gravity="left"
+                                android:gravity="left|top"
                                 android:orientation="horizontal">
 
 
@@ -502,8 +493,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_margin="5dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="top"
+
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal"
                 android:paddingTop="5dp">
 
@@ -660,6 +651,7 @@
             android:id="@+id/giftslayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+
             android:layout_alignParentBottom="true"
             android:background="#E6000000"
             android:orientation="vertical"
@@ -708,6 +700,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
                 android:gravity="center">
 
                 <Spinner
@@ -730,6 +724,7 @@
                     android:paddingHorizontal="13dp"
                     android:text="00"
                     android:textColor="#fff"
+                    android:layout_marginBottom="10dp"
                     android:textSize="20dp" />
 
                 <TextView
@@ -737,7 +732,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
                     android:text="@string/Recharge"
@@ -749,6 +744,8 @@
                     android:layout_width="98dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/join_button"
                     android:gravity="center">
 
@@ -926,6 +923,7 @@
             </LinearLayout>
 
         </RelativeLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

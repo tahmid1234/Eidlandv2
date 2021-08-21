@@ -1,14 +1,17 @@
 package com.eidland.auxilium.voice.only.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,11 +50,18 @@ public class VerifyOTPActivity extends AppCompatActivity {
     String otpid, phoneNumber, error, pincode;
     ProgressDialog dialoge;
     ImageView backBTN;
+    int height, width;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
+
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
 
         backBTN = findViewById(R.id.back_to_phn);
         pin = findViewById(R.id.pin);
@@ -89,26 +99,43 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
     public void Callalert() {
-        AlertDialog.Builder dialoge = new AlertDialog.Builder(VerifyOTPActivity.this);
-        dialoge.setTitle("Welcome to Eidland")
-                .setMessage("Please ensure your microphone and storage permission is given in order to get most out of Eidland")
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean checkPermissionResult = checkSelfPermissions();
-                        if (checkPermissionResult) {
-                            try{
-                                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
-                                signInWithPhoneAuthCredential(credential);
-                            }catch (Exception e){
-                                System.out.println(e);
-                            }
-                            dialog.cancel();
-                        } else Log.e("no permission", "Not Found");
+
+        Dialog dialog = new Dialog(VerifyOTPActivity.this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width* 0.8));
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
+
+
+        TextView title = dialog.findViewById(R.id.dialog_title);
+        title.setVisibility(View.VISIBLE);
+        title.setText("Welcome to Eidland");
+
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setVisibility(View.VISIBLE);
+        msg.setText("Please ensure your microphone and storage permission is given in order to get most out of Eidland");
+
+        TextView positive = dialog.findViewById(R.id.positive_btn);
+        positive.setVisibility(View.VISIBLE);
+        positive.setText("Okay");
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checkPermissionResult = checkSelfPermissions();
+                if (checkPermissionResult) {
+                    try{
+                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
+                        signInWithPhoneAuthCredential(credential);
+                    }catch (Exception e){
+                        System.out.println(e);
                     }
-                })
-                .setCancelable(false)
-                .show();
+                    dialog.cancel();
+                } else Log.e("no permission", "Not Found");
+            }
+        });
+        dialog.show();
+
     }
 
     private void progressdialogeshow() {

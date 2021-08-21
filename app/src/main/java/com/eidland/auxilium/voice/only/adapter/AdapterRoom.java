@@ -1,11 +1,14 @@
 package com.eidland.auxilium.voice.only.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +79,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if(startTime<=now && endTime>=now){
+//                if(true){
                     Intent intent = new Intent(holder.roomPhoto.getContext(), LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("User", "Participent");
@@ -86,7 +90,30 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                     context.startActivity(intent);
                 }else{
-                    Toast.makeText(context, room.offTimeMsg, Toast.LENGTH_LONG).show();
+                    Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.layout_custom_dialog);
+                    LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+                    linearLayout.setMinimumWidth((int) (width* 0.8));
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                    dialog.setCancelable(false);
+
+                    ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                    imageView.setVisibility(View.VISIBLE);
+
+                    TextView msg = dialog.findViewById(R.id.msg);
+                    msg.setText(room.offTimeMsg);
+
+                    TextView negative = dialog.findViewById(R.id.positive_btn);
+                    negative.setVisibility(View.VISIBLE);
+                    negative.setText("OKAY");
+                    negative.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+
                 }
             }
         });
