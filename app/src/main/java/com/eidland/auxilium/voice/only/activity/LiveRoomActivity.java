@@ -11,19 +11,24 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -174,16 +179,46 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String nameOfRoom;
     String inviteLink;
 
+    LinearLayout inputArea;
+
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
     boolean hasEnteredRoom = true, newlyjoined = true;
+
+
+
+
+    private void initKeyBoardListener() {
+        final int MIN_KEYBOARD_HEIGHT_PX = 150;
+        final View decorView = getWindow().getDecorView();
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private final Rect windowVisibleDisplayFrame = new Rect();
+            private int lastVisibleDecorViewHeight;
+
+            @Override
+            public void onGlobalLayout() {
+                decorView.getWindowVisibleDisplayFrame(windowVisibleDisplayFrame);
+                final int visibleDecorViewHeight = windowVisibleDisplayFrame.height();
+
+                if (lastVisibleDecorViewHeight != 0) {
+                    if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
+                        inputArea.setBackgroundColor(Color.WHITE);
+                    } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
+                        inputArea.setBackgroundColor(Color.TRANSPARENT);
+                    }
+                }
+                lastVisibleDecorViewHeight = visibleDecorViewHeight;
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_room);
 
+        initKeyBoardListener();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
@@ -194,6 +229,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
         seatLayout = findViewById(R.id.seat_layout);
+
+        inputArea = findViewById(R.id.input_box_area);
 
         leaveRoom = findViewById(R.id._leave);
         userImage = findViewById(R.id._userchatroom);
@@ -295,7 +332,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 Dialog dialog = new Dialog(LiveRoomActivity.this);
                 dialog.setContentView(R.layout.layout_custom_dialog);
                 LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-                linearLayout.setMinimumWidth((int) (width* 0.8));
+                linearLayout.setMinimumWidth((int) (width * 0.8));
                 dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
                 dialog.setCancelable(false);
 
@@ -1194,7 +1231,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         Dialog dialog = new Dialog(LiveRoomActivity.this);
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-        linearLayout.setMinimumWidth((int) (width* 0.8));
+        linearLayout.setMinimumWidth((int) (width * 0.8));
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
         dialog.setCancelable(false);
 
@@ -1524,7 +1561,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         Dialog dialog = new Dialog(LiveRoomActivity.this);
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-        linearLayout.setMinimumWidth((int) (width* 0.8));
+        linearLayout.setMinimumWidth((int) (width * 0.8));
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
         dialog.setCancelable(false);
 
