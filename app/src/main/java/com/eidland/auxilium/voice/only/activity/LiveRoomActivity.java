@@ -204,8 +204,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (lastVisibleDecorViewHeight != 0) {
                     if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
                         inputArea.setBackgroundColor(Color.WHITE);
+                        commentBox.setHintTextColor(Color.GRAY);
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
                         inputArea.setBackgroundColor(Color.TRANSPARENT);
+                        commentBox.setBackgroundColor(Color.TRANSPARENT);
+                        commentBox.setHintTextColor(Color.WHITE);
                     }
                 }
                 lastVisibleDecorViewHeight = visibleDecorViewHeight;
