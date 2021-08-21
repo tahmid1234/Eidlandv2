@@ -225,20 +225,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void createInvitationLink(){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
+        userRef.child("referralURL").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                if (user.getReferralURL()==null)
+                if (dataSnapshot.getValue() == null)
                 {
                     referralCode= generateAlphanumericString(8);
-                    user.setReferralURL(referralCode);
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(user.getReferralURL());
+                    Toast.makeText(getApplicationContext(), referralCode, Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(referralCode);
                 }
-                else {
-                    referralCode = user.getReferralURL();
-                }
+                referralCode = dataSnapshot.getValue().toString();
 
             }
 
