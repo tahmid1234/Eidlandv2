@@ -79,7 +79,7 @@ public class ConstantApp {
 
     public static List<CardDeck> gameList(){
         List<CardDeck> randomDeck = new ArrayList<>();
-        randomDeck.add(new CardDeck("In The Shoes", "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/game_decks%2Fyellow%2F10.png?alt=media&token=5fdc9a30-e5c3-48ca-9b36-f5c1e80478e1"));
+        randomDeck.add(new CardDeck("In The Shoes", "https://auxiliumlivestreaming.000webhostapp.com/card_decks/10.png"));
 
         return randomDeck;
     }
