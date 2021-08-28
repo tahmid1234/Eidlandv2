@@ -213,6 +213,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         inputArea.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setHintTextColor(Color.WHITE);
+                        commentBox.setTextColor(Color.WHITE);
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentblackcircle));
                         sencmnt.setImageResource(R.drawable.ic_send_message_button_white);
 
