@@ -908,10 +908,44 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         boolean checkPermissionResult = checkSelfPermissions();
                         if (checkPermissionResult) {
-                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
-                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).setValue(viewer);
-                            doSwitchToBroadcaster(true);
-                            AgainSeat = seats;
+
+
+                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).runTransaction(new Transaction.Handler() {
+                                @NonNull
+                                @Override
+                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+
+
+                                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
+
+                                    try {
+                                        Viewer user = currentData.getValue(Viewer.class);
+                                        if(user==null){
+                                            currentData.setValue(viewer);
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println(e);
+                                    }
+                                    return Transaction.success(currentData);
+                                }
+
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                                    doSwitchToBroadcaster(true);
+                                    AgainSeat = seats;
+                                }
+                            });
+
+
+//                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
+//                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).setValue(viewer);
+//                            doSwitchToBroadcaster(true);
+//                            AgainSeat = seats;
+
+
+
+
+
                         }
                     }
                 }
@@ -954,46 +988,48 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (isnotfirst) {
                     giftList.clear();
                     leaderGiftList.clear();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Gift gift = dataSnapshot1.getValue(Gift.class);
+                    if(dataSnapshot.exists()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            Gift gift = dataSnapshot1.getValue(Gift.class);
 
-                        assert gift != null;
-                        if (gift.getGift() != null && gift.getSenderName() != null) {
-                            giftList.add(gift);
+                            assert gift != null;
+                            if (gift.getGift() != null && gift.getSenderName() != null) {
+                                giftList.add(gift);
+                            }
+                            if (gift.getGift() != null && gift.getSenderName() != null) {
+                                leaderGiftList.add(gift);
+                            }
                         }
-                        if (gift.getGift() != null && gift.getSenderName() != null) {
-                            leaderGiftList.add(gift);
+
+                        int index = giftList.size() - 1;
+                        giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+
+                        LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
+
+                        RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
+                        topSpeakerRecycler.setHasFixedSize(true);
+                        LinearLayoutManager giftLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                        AdapterLeadUser adapterLeader = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopSpeaker());
+                        topSpeakerRecycler.setLayoutManager(giftLayoutManager);
+                        adapterLeader.notifyDataSetChanged();
+                        topSpeakerRecycler.setAdapter(adapterLeader);
+
+                        RecyclerView topContributorRecycler = findViewById(R.id.top_contributor);
+                        topContributorRecycler.setHasFixedSize(true);
+                        LinearLayoutManager contributorLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                        AdapterLeadUser adapterLeaderContributor = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopContributor());
+                        topContributorRecycler.setLayoutManager(contributorLayoutManager);
+                        adapterLeader.notifyDataSetChanged();
+                        topContributorRecycler.setAdapter(adapterLeaderContributor);
+
+                        if (hasEnteredRoom) {
+                            simpleGift.setImageResource(R.drawable.hello_pana);
+                            backgrundGIF.setImageResource(R.drawable.fireworks_gif);
+                            backgroundGIFLayout.setVisibility(View.VISIBLE);
+                            sendername.setText("Hey " + StaticConfig.user.getName() + "!");
+                            receivername.setText("Welcome to " + nameOfRoom);
+                            hasEnteredRoom = false;
                         }
-                    }
-
-                    int index = giftList.size() - 1;
-                    giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-
-                    LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
-
-                    RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
-                    topSpeakerRecycler.setHasFixedSize(true);
-                    LinearLayoutManager giftLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                    AdapterLeadUser adapterLeader = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopSpeaker());
-                    topSpeakerRecycler.setLayoutManager(giftLayoutManager);
-                    adapterLeader.notifyDataSetChanged();
-                    topSpeakerRecycler.setAdapter(adapterLeader);
-
-                    RecyclerView topContributorRecycler = findViewById(R.id.top_contributor);
-                    topContributorRecycler.setHasFixedSize(true);
-                    LinearLayoutManager contributorLayoutManager = new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                    AdapterLeadUser adapterLeaderContributor = new AdapterLeadUser(LiveRoomActivity.this, leaderBoard.getTopContributor());
-                    topContributorRecycler.setLayoutManager(contributorLayoutManager);
-                    adapterLeader.notifyDataSetChanged();
-                    topContributorRecycler.setAdapter(adapterLeaderContributor);
-
-                    if (hasEnteredRoom) {
-                        simpleGift.setImageResource(R.drawable.hello_pana);
-                        backgrundGIF.setImageResource(R.drawable.fireworks_gif);
-                        backgroundGIFLayout.setVisibility(View.VISIBLE);
-                        sendername.setText("Hey " + StaticConfig.user.getName() + "!");
-                        receivername.setText("Welcome to " + nameOfRoom);
-                        hasEnteredRoom = false;
                     }
 
                 } else
@@ -1283,6 +1319,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
                 if (AgainSeat != null) {
                     doSwitchToBroadcaster(false);
                     FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();

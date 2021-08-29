@@ -26,4 +26,15 @@ public class DateFormater {
         date = date + " " + calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
         return date;
     }
+
+    public static double getHour(String timeInMillis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(timeInMillis));
+        return calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE)/60.00);
+    }
+    public static int getMin(String timeInMillis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(timeInMillis));
+        return calendar.get(Calendar.MINUTE);
+    }
 }
