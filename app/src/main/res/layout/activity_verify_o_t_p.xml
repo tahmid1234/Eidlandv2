@@ -5,148 +5,161 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/chatroom_background"
-    tools:context="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/back_to_phn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_baseline_arrow_back_24"/>
-
-    </LinearLayout>
-
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <!-- Eidland -->
-
-
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="180dp"
-            android:layout_height="58dp"
-
-            android:scaleType="centerCrop"
-            android:layout_marginTop="196dp"
-            android:background="@drawable/ic_el_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            android:contentDescription="TODO" />
-
-
-    </LinearLayout>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
     android:orientation="vertical"
-    android:layout_marginTop="39dp"
-    android:layout_weight="1">
+    tools:context="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginBottom="30dp"
-        android:letterSpacing="0.01"
-        android:autoSizeMaxTextSize="16sp"
-        android:fontFamily="@font/interregular"
-
-        android:text="Please enter the OTP to verify your number"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-    <TextView
-        android:id="@+id/numbertitle"
-        android:layout_width="202dp"
-        android:layout_height="wrap_content"
-
-        android:layout_gravity="center_horizontal|center_vertical"
-
-        android:autoSizeMaxTextSize="16sp"
-        android:fontFamily="@font/interregular"
-        android:gravity="center_horizontal|center_vertical"
-        android:letterSpacing="0.01"
-        android:lines="1"
-        android:text="Your mobile number is"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
-    <TextView
-        android:id="@+id/setphonenumber"
-        android:layout_width="202dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-
-        android:autoSizeMaxTextSize="16sp"
-        android:fontFamily="@font/interregular"
-        android:gravity="center_horizontal|center_vertical"
-        android:letterSpacing="0.01"
-        android:lines="1"
-        android:text="00"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <com.chaos.view.PinView
-            android:id="@+id/pin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/PinWidget.PinView"
-            android:layout_gravity="center"
-            app:lineColor="@color/lightgray"
-            android:layout_marginBottom="20dp"
-            android:inputType="number"
-            app:itemCount="6"
-            app:itemWidth="40dp"
-            app:itemHeight="40dp"
-            android:itemBackground="@color/white"
-            app:itemRadius="5dp"
-            />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    <RelativeLayout
+                <ImageView
+                    android:id="@+id/back_to_phn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="20dp"
+                    android:src="@drawable/ic_baseline_arrow_back_24" />
 
-        android:id="@+id/verifyotp"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+            </LinearLayout>
 
-        android:background="@drawable/join_button">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/open_sans_bold"
-            android:gravity="center"
-            android:text="Next"
-            android:textColor="@color/white">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        </TextView>
-    </RelativeLayout>
-</LinearLayout>
+                <!-- Eidland -->
+
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="180dp"
+                    android:layout_height="58dp"
+
+                    android:layout_marginTop="125dp"
+                    android:background="@drawable/ic_el_logo"
+                    android:contentDescription="TODO"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="39dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginBottom="30dp"
+                    android:autoSizeMaxTextSize="16sp"
+                    android:fontFamily="@font/interregular"
+                    android:letterSpacing="0.01"
+
+                    android:text="Please enter the OTP to verify your number"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/numbertitle"
+                    android:layout_width="202dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center_horizontal|center_vertical"
+
+                    android:autoSizeMaxTextSize="16sp"
+                    android:fontFamily="@font/interregular"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:letterSpacing="0.01"
+                    android:lines="1"
+                    android:text="Your mobile number is"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/setphonenumber"
+                    android:layout_width="202dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginBottom="50dp"
+
+                    android:autoSizeMaxTextSize="16sp"
+                    android:fontFamily="@font/interregular"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:letterSpacing="0.01"
+                    android:lines="1"
+                    android:text="00"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+
+                <com.chaos.view.PinView
+                    android:id="@+id/pin"
+                    style="@style/PinWidget.PinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="number"
+                    android:itemBackground="@color/white"
+                    app:itemCount="6"
+                    app:itemHeight="40dp"
+                    app:itemRadius="5dp"
+                    app:itemWidth="40dp"
+                    app:lineColor="@color/lightgray" />
+
+                <RelativeLayout
+
+                    android:id="@+id/verifyotp"
+                    android:layout_width="130dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+
+                    android:background="@drawable/join_button">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center"
+                        android:text="Next"
+                        android:textColor="@color/white">
+
+                    </TextView>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
 
 
 </LinearLayout>

@@ -35,6 +35,9 @@ import java.util.List;
 
 import io.agora.rtc.Constants;
 
+import static com.eidland.auxilium.voice.only.helper.DateFormater.getHour;
+import static com.eidland.auxilium.voice.only.helper.DateFormater.getMin;
+
 public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
     List<Rooms> rooms;
     Context context;
@@ -51,9 +54,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
 
         Rooms room = rooms.get(position);
 
-        long startTime = Long.parseLong(room.startTime);
-        long endTime = Long.parseLong(room.endTime);
-        long now = Calendar.getInstance().getTimeInMillis();
+        String now = String.valueOf(Calendar.getInstance().getTimeInMillis());
 
         holder.roomName.setText(rooms.get(position).getName());
 //        holder.roomCard.setMinimumWidth(width/2);
@@ -78,7 +79,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(startTime<=now && endTime>=now){
+                if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
 //                if(true){
                     Intent intent = new Intent(holder.roomPhoto.getContext(), LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

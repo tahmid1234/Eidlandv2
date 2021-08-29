@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class LeaderBoard {
-    static long time = 60 * 60000;
+    static long time = 15 * 60000;
     List<String> uniqueContributor = new ArrayList<String>();
     List<Leader> contributors = new ArrayList<Leader>();
     List<String> uniqueWinner = new ArrayList<String>();
