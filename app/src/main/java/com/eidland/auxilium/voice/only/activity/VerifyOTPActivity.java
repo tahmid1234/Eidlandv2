@@ -114,7 +114,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
         TextView msg = dialog.findViewById(R.id.msg);
         msg.setVisibility(View.VISIBLE);
-        msg.setText("Please ensure your microphone and storage permission is given in order to get most out of Eidland");
+        msg.setText("Please ensure your microphone and storage permission are given in order to get most out of Eidland");
 
         TextView positive = dialog.findViewById(R.id.positive_btn);
         positive.setVisibility(View.VISIBLE);
