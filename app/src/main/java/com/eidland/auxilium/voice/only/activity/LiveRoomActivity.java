@@ -915,7 +915,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 @Override
                                 public Transaction.Result doTransaction(@NonNull MutableData currentData) {
 
-
                                     Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
 
                                     try {
@@ -931,21 +930,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                                    doSwitchToBroadcaster(true);
-                                    AgainSeat = seats;
+
+                                    try {
+                                        Viewer user = currentData.getValue(Viewer.class);
+                                        if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(user.id)){
+                                            doSwitchToBroadcaster(true);
+                                            AgainSeat = seats;
+                                        }else {
+                                            doSwitchToBroadcaster(false);
+                                            AgainSeat = null;
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println(e);
+                                    }
                                 }
                             });
-
-
-//                            Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
-//                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).setValue(viewer);
-//                            doSwitchToBroadcaster(true);
-//                            AgainSeat = seats;
-
-
-
-
-
                         }
                     }
                 }
