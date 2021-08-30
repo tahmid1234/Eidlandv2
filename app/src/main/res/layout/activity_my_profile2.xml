@@ -394,25 +394,35 @@
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:onClick="finish"
+        android:layout_marginTop="5dp">
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
         android:background="@drawable/ic_fi_rr_pencil_1"
         android:contentDescription="TODO"
         android:onClick="editprofile" />
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="10dp"
+    android:gravity="center"
 
+    android:onClick="finish"
+    android:layout_marginTop="5dp">
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/ic_fi_rr_arrow_left_1"
         android:contentDescription="TODO"
         android:onClick="finish" />
-
+</RelativeLayout>
 </RelativeLayout>
