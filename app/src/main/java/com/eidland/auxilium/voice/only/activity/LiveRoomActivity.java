@@ -154,6 +154,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     RelativeLayout singleUserBox;
     ImageView button;
     int height, width;
+    boolean inactiveClick = false;
 
 
     RelativeLayout animatedLayout;
@@ -734,8 +735,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onSeatClick(int position) {
-        CheckSeats("seat" + position);
-        Clickedseat = "seat" + position;
+        if(!inactiveClick){
+            CheckSeats("seat" + position);
+            Clickedseat = "seat" + position;
+        }
     }
 
     @Override
@@ -910,6 +913,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         if (checkPermissionResult) {
 
 
+                            inactiveClick = true;
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).runTransaction(new Transaction.Handler() {
                                 @NonNull
                                 @Override
@@ -940,6 +944,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             doSwitchToBroadcaster(false);
                                             AgainSeat = null;
                                         }
+                                        inactiveClick = false;
                                     } catch (Exception e) {
                                         System.out.println(e);
                                     }
