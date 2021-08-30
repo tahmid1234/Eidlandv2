@@ -168,49 +168,9 @@
                         android:textSize="18sp" />
 
                 </LinearLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:letterSpacing="0.01"
-                        android:lineHeight="20sp"
-                        android:padding="10dp"
-                        android:text="share the link below to invite friends!"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-                </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/referrallink"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true">
 
-                    <TextView
-                        android:id="@+id/referrallinktext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/join_button"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:gravity="center"
-                        android:text="Invite A Friend"
-                        android:textColor="@color/white"></TextView>
-                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -334,7 +294,36 @@
                         android:textSize="18sp" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="40dp"
+                    android:onClick="editprofile"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_refer"
+                        android:contentDescription="TODO"
+                        android:gravity="center"
+                        android:padding="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:id="@+id/referrallinktext"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center|left"
+                        android:lineHeight="24dp"
+                        android:text="Refer a Friend"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
