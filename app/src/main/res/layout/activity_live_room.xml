@@ -477,14 +477,14 @@
                         android:id="@+id/invite_icon"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:src="@drawable/invitation" />
+                        android:background="@drawable/share" />
 
                     <ImageView
                         android:id="@+id/game_button_icon"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_marginHorizontal="12dp"
-                        android:src="@drawable/game_image" />
+                        android:background="@drawable/game_image" />
                 </LinearLayout>
 
 
@@ -507,7 +507,7 @@
                     <LinearLayout
                         android:id="@+id/comment_box_circle"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="40dp"
                         android:layout_centerInParent="true"
                         android:orientation="horizontal"
                         android:background="@drawable/transparentblackcircle" />
@@ -515,13 +515,12 @@
                     <EditText
                         android:id="@+id/comment_box"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="65dp"
                         android:background="@android:color/transparent"
                         android:hint="Type here"
                         android:inputType="textMultiLine|textCapSentences"
                         android:paddingStart="8dp"
                         android:lines="2"
-
                         android:paddingTop="4dp"
                         android:paddingBottom="8dp"
                         android:paddingEnd="6dp"
@@ -537,7 +536,7 @@
                     android:layout_height="45dp"
                     android:layout_marginStart="5dp"
                     android:onClick="onSwitchSpeakerClicked"
-                    android:src="@drawable/ic_send_message_button_white" />
+                    android:background="@drawable/ic_send_message_button_white" />
 
                 <ImageView
                     android:id="@id/switch_speaker_id"
@@ -575,7 +574,7 @@
                     android:layout_height="45dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="TODO"
-                    android:src="@drawable/ic_gift_button" />
+                    android:background="@drawable/ic_gift_button" />
 
 
             </LinearLayout>
