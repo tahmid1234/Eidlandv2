@@ -431,13 +431,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 try {
-                    Rooms room = new Rooms();
-                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").addValueEventListener(new ValueEventListener() {
+
+                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Rooms room = snapshot.getValue(Rooms.class);
+//                            Toast.makeText(getApplicationContext(), String.valueOf(snapshot.getValue()), Toast.LENGTH_LONG).show();
                             // not entering the if condition
-                            if (snapshot.getValue()== null) {
-                                String link = "https://eidland.page.link/invite/?roomname=" + "760232943A3qP5qyS34aGkFxQa3caaXxmHGl2";
+                            assert room != null;
+                            if (room.getInviteLink() == null)  {
+                                String link = "https://eidland.page.link/invite/?roomname=" + room.getRoomname();
                                 FirebaseDynamicLinks.getInstance().createDynamicLink()
                                         .setLink(Uri.parse(link))
                                         .setDomainUriPrefix("https://eidland.page.link")
@@ -455,7 +458,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                                     intent.setAction(Intent.ACTION_VIEW);
                                                     assert mInvitationUrl != null;
                                                     room.setInviteLink(mInvitationUrl.toString());
-                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child("760232943A3qP5qyS34aGkFxQa3caaXxmHGl2").child("inviteLink").setValue(room.getInviteLink());
+                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").child(room.getRoomname()).child("inviteLink").setValue(room.getInviteLink());
+                                                    FirebaseDatabase.getInstance().getReference().child("RoomInvites").child(room.getInviteLink()).setValue(room.getRoomname());
                                                 } catch (Exception e) {
                                                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                                                 }
@@ -463,7 +467,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                         });
                             }
 
-                            room.setInviteLink(snapshot.getValue().toString());
+//                            room.setInviteLink(snapshot.getValue().toString());
+//                            Toast.makeText(getApplicationContext(), String.valueOf(snapshot.getValue()), Toast.LENGTH_LONG).show();
 
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);

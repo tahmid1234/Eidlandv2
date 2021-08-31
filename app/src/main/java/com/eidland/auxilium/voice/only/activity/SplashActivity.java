@@ -1,5 +1,6 @@
 package com.eidland.auxilium.voice.only.activity;
 
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -9,8 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +51,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
+import static com.eidland.auxilium.voice.only.helper.DateFormater.getHour;
 
 public class SplashActivity extends AppCompatActivity {
     DatabaseReference myRef;
@@ -163,47 +170,64 @@ public class SplashActivity extends AppCompatActivity {
                             Intent appLinkIntent = getIntent();
                             String appLinkAction = appLinkIntent.getAction();
                             Uri appLinkData = appLinkIntent.getData();
+//                            List<String> pathSegments = appLinkData.getPathSegments();
                             myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.getValue() != null) {
                                         if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
                                             try {
-                                                StaticConfig.user = dataSnapshot.getValue(User.class);
                                                 if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null) {
-                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").orderByKey().addValueEventListener(new ValueEventListener() {
+                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").addValueEventListener(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                                            Toast.makeText(getApplicationContext(), snapshot.toString(), Toast.LENGTH_LONG).show();
-                                                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                                                                Rooms room = dataSnapshot1.getValue(Rooms.class);
-//                                                                Toast.makeText(getApplicationContext(), room.getInviteLink().toString(), Toast.LENGTH_LONG).show();
-                                                                assert room != null;
-                                                                if (room.getInviteLink().equals(appLinkData.toString())) {
-                                                                    long startTime = Long.parseLong(room.startTime);
-                                                                    long endTime = Long.parseLong(room.endTime);
-                                                                    long now = Calendar.getInstance().getTimeInMillis();
-                                                                    if (startTime <= now && endTime >= now) {
-                                                                        Intent intent = new Intent(SplashActivity.this, LiveRoomActivity.class);
-                                                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                                        intent.putExtra("User", "Participent");
-                                                                        intent.putExtra("userid", room.hostuid);
-                                                                        intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, room.roomname);
-                                                                        intent.putExtra("UserName", room.name);
-                                                                        intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                                                                        intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                                                                        break;
-                                                                    } else {
-//                                                                        StaticConfig.user = dataSnapshot.getValue(User.class);
-                                                                        intent = new Intent(SplashActivity.this, MainActivity.class);
-                                                                        startActivity(intent);
-                                                                        finish();
-                                                                        Toast.makeText(getApplicationContext(), room.offTimeMsg, Toast.LENGTH_LONG).show();
-                                                                        break;
-                                                                    }
-                                                                }
+                                                            if (snapshot.exists()){
+                                                                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                                                    Rooms room = dataSnapshot1.getValue(Rooms.class);
+                                                                    if (appLinkData.toString().contains(room.getRoomname())){
+                                                                        String now = String.valueOf(Calendar.getInstance().getTimeInMillis());
+                                                                        if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
+                                                                            Intent intent = new Intent(getApplicationContext(), LiveRoomActivity.class);
+                                                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                            intent.putExtra("User", "Participent");
+                                                                            intent.putExtra("userid", room.hostuid);
+                                                                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, room.roomname);
+                                                                            intent.putExtra("UserName", room.name);
+                                                                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+                                                                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                                                                            startActivity(intent);
+                                                                        }else{
+                                                                            DisplayMetrics displayMetrics = new DisplayMetrics();
+                                                                            int width = displayMetrics.widthPixels;
+                                                                            Dialog dialog = new Dialog(getApplicationContext());
+                                                                            dialog.setContentView(R.layout.layout_custom_dialog);
+                                                                            LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+                                                                            linearLayout.setMinimumWidth((int) (width* 0.8));
+                                                                            dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                                                                            dialog.setCancelable(false);
+                                                                            ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                                                                            imageView.setVisibility(View.VISIBLE);
 
+                                                                            TextView msg = dialog.findViewById(R.id.msg);
+                                                                            msg.setText(room.offTimeMsg);
+
+                                                                            TextView negative = dialog.findViewById(R.id.positive_btn);
+                                                                            negative.setVisibility(View.VISIBLE);
+                                                                            negative.setText("OKAY");
+                                                                            negative.setOnClickListener(new View.OnClickListener() {
+                                                                                @Override
+                                                                                public void onClick(View view) {
+                                                                                    dialog.dismiss();
+                                                                                }
+                                                                            });
+                                                                            dialog.show();
+
+                                                                        }
+                                                                    }
+
+                                                                }
                                                             }
+
                                                         }
 
                                                         @Override
@@ -211,19 +235,12 @@ public class SplashActivity extends AppCompatActivity {
 
                                                         }
                                                     });
-//                                                    StaticConfig.user = dataSnapshot.getValue(User.class);
-                                                    Toast.makeText(getApplicationContext(), dataSnapshot.getChildren().toString(), Toast.LENGTH_LONG).show();
-                                                    intent = new Intent(SplashActivity.this, MainActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                    Toast.makeText(getApplicationContext(), "Room not Found", Toast.LENGTH_LONG).show();
                                                 }
                                             } catch (Exception e) {
                                                 System.out.println(e);
                                                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
                                             }
-
-//                                            StaticConfig.user = dataSnapshot.getValue(User.class);
+                                            StaticConfig.user = dataSnapshot.getValue(User.class);
                                             intent = new Intent(SplashActivity.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
