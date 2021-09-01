@@ -162,106 +162,111 @@ public class SplashActivity extends AppCompatActivity {
                 new Runnable() {
                     @Override
                     public void run() {
-                        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        try {
+                            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-                            User user = new User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0", "null", "null");
-                            StaticConfig.user = user;
-                            myRef = FirebaseDatabase.getInstance().getReference();
-                            Intent appLinkIntent = getIntent();
-                            String appLinkAction = appLinkIntent.getAction();
-                            Uri appLinkData = appLinkIntent.getData();
+                                User user = new User("user", "user@gmail.com", "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png", "0", "0", "null", "null");
+                                StaticConfig.user = user;
+                                myRef = FirebaseDatabase.getInstance().getReference();
+                                Intent appLinkIntent = getIntent();
+                                String appLinkAction = appLinkIntent.getAction();
+                                Uri appLinkData = appLinkIntent.getData();
 //                            List<String> pathSegments = appLinkData.getPathSegments();
-                            myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.getValue() != null) {
-                                        if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
-                                            try {
-                                                if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null) {
-                                                    FirebaseDatabase.getInstance().getReference().child("AllRooms").addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                            if (snapshot.exists()){
-                                                                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                                                                    Rooms room = dataSnapshot1.getValue(Rooms.class);
-                                                                    if (appLinkData.toString().contains(room.getRoomname())){
-                                                                        String now = String.valueOf(Calendar.getInstance().getTimeInMillis());
-                                                                        if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
-                                                                            Intent intent = new Intent(getApplicationContext(), LiveRoomActivity.class);
-                                                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                                            intent.putExtra("User", "Participent");
-                                                                            intent.putExtra("userid", room.hostuid);
-                                                                            intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, room.roomname);
-                                                                            intent.putExtra("UserName", room.name);
-                                                                            intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
-                                                                            intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                                                                            startActivity(intent);
-                                                                        }else{
-                                                                            DisplayMetrics displayMetrics = new DisplayMetrics();
-                                                                            int width = displayMetrics.widthPixels;
-                                                                            Dialog dialog = new Dialog(getApplicationContext());
-                                                                            dialog.setContentView(R.layout.layout_custom_dialog);
-                                                                            LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-                                                                            linearLayout.setMinimumWidth((int) (width* 0.8));
-                                                                            dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
-                                                                            dialog.setCancelable(false);
-                                                                            ImageView imageView = dialog.findViewById(R.id.dialog_icon);
-                                                                            imageView.setVisibility(View.VISIBLE);
+                                myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getValue() != null) {
+                                            if (dataSnapshot.hasChild("name") && dataSnapshot.hasChild("coins") && dataSnapshot.hasChild("imageurl") && dataSnapshot.hasChild("email")) {
+                                                try {
+                                                    if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null) {
+                                                        FirebaseDatabase.getInstance().getReference().child("AllRooms").addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                if (snapshot.exists()) {
+                                                                    for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                                                        Rooms room = dataSnapshot1.getValue(Rooms.class);
+                                                                        if (appLinkData.toString().contains(room.getRoomname())) {
+                                                                            String now = String.valueOf(Calendar.getInstance().getTimeInMillis());
+                                                                            if (getHour(room.startTime) <= getHour(now) && getHour(room.endTime) >= getHour(now)) {
+                                                                                Intent intent = new Intent(getApplicationContext(), LiveRoomActivity.class);
+                                                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                                intent.putExtra("User", "Participent");
+                                                                                intent.putExtra("userid", room.hostuid);
+                                                                                intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, room.roomname);
+                                                                                intent.putExtra("UserName", room.name);
+                                                                                intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
+                                                                                intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                                                                                startActivity(intent);
+                                                                            } else {
+                                                                                DisplayMetrics displayMetrics = new DisplayMetrics();
+                                                                                int width = displayMetrics.widthPixels;
+                                                                                Dialog dialog = new Dialog(getApplicationContext());
+                                                                                dialog.setContentView(R.layout.layout_custom_dialog);
+                                                                                LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+                                                                                linearLayout.setMinimumWidth((int) (width * 0.8));
+                                                                                dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                                                                                dialog.setCancelable(false);
+                                                                                ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                                                                                imageView.setVisibility(View.VISIBLE);
 
-                                                                            TextView msg = dialog.findViewById(R.id.msg);
-                                                                            msg.setText(room.offTimeMsg);
+                                                                                TextView msg = dialog.findViewById(R.id.msg);
+                                                                                msg.setText(room.offTimeMsg);
 
-                                                                            TextView negative = dialog.findViewById(R.id.positive_btn);
-                                                                            negative.setVisibility(View.VISIBLE);
-                                                                            negative.setText("OKAY");
-                                                                            negative.setOnClickListener(new View.OnClickListener() {
-                                                                                @Override
-                                                                                public void onClick(View view) {
-                                                                                    dialog.dismiss();
-                                                                                }
-                                                                            });
-                                                                            dialog.show();
+                                                                                TextView negative = dialog.findViewById(R.id.positive_btn);
+                                                                                negative.setVisibility(View.VISIBLE);
+                                                                                negative.setText("OKAY");
+                                                                                negative.setOnClickListener(new View.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(View view) {
+                                                                                        dialog.dismiss();
+                                                                                    }
+                                                                                });
+                                                                                dialog.show();
 
+                                                                            }
                                                                         }
-                                                                    }
 
+                                                                    }
                                                                 }
+
                                                             }
 
-                                                        }
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                                        }
-                                                    });
+                                                            }
+                                                        });
+                                                    }
+                                                } catch (Exception e) {
+                                                    System.out.println(e);
+                                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
                                                 }
-                                            } catch (Exception e) {
-                                                System.out.println(e);
-                                                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
-                                            }
-                                            StaticConfig.user = dataSnapshot.getValue(User.class);
-                                            intent = new Intent(SplashActivity.this, MainActivity.class);
-                                            startActivity(intent);
+                                                StaticConfig.user = dataSnapshot.getValue(User.class);
+                                                intent = new Intent(SplashActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else
+                                                startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
                                             finish();
-                                        } else
+                                        } else {
                                             startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
-                                        finish();
-                                    } else {
-                                        startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
-                                        finish();
+                                            finish();
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                                }
-                            });
-                        } else {
-                            startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
-                            finish();
+                                    }
+                                });
+                            } else {
+                                startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                                finish();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 }, 1000);
     }
