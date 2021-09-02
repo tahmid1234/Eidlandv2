@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //reward logic
                         Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                        currentBalance += 50;
+                        currentBalance += 25;
                         StaticConfig.user.setCoins(currentBalance.toString());
                         userRef.child(currentUser.getUid()).child("coins").setValue(currentBalance.toString());
                         referralRef.child(referrerUrl).child(StaticConfig.user.getReferralURL()).setValue("referred");

@@ -249,7 +249,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                currentBalance += 100;
+                currentBalance += 25;
                 StaticConfig.user.setCoins(currentBalance.toString());
                 userRef.child("coins").setValue(currentBalance.toString());
             }
