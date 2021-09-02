@@ -34,7 +34,7 @@ public class ViewDialog {
         textView.setText(instruction);
 
         Glide.with(this.activity)
-                .load(R.drawable.giphyloop)
+                .load(R.drawable.flying)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
                 .into(new DrawableImageViewTarget(gifImageView));
 
@@ -50,7 +50,7 @@ public class ViewDialog {
 
         ImageView gifImageView = dialog.findViewById(R.id.custom_loading_imageView);
         Glide.with(this.activity)
-                .load(R.drawable.giphyloop)
+                .load(R.drawable.flying)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
                 .into(new DrawableImageViewTarget(gifImageView));
 
