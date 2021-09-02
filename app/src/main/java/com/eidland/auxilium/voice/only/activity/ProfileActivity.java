@@ -244,8 +244,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference().child("Referrals").child(referralCode);
-        inviteRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference("Referrals").child(referralCode);
+        inviteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
