@@ -10,11 +10,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_gravity="top"
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -31,7 +34,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:letterSpacing="0.01"
                         android:lineHeight="21sp"
@@ -84,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:letterSpacing="0.01"
+                    android:layout_marginTop="20dp"
                     android:lineHeight="20sp"
                     android:padding="10dp"
                     android:text="Or choose one of the images below"
@@ -92,9 +95,11 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_gravity="center"
+
                     android:gravity="center"
+                    android:layout_marginBottom="20dp"
                     android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -122,7 +127,9 @@
 
                 <EditText
                     android:id="@+id/email"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="260dp"
                     android:layout_height="41dp"
                     android:layout_gravity="center"
@@ -130,7 +137,7 @@
                     android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
                     android:hint="Your Email Address"
                     android:padding="6dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/lightgray"
                     android:textColorHint="@color/lightgray"
                     android:textSize="18sp" />
 

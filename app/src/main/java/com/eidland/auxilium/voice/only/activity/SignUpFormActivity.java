@@ -64,7 +64,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
     String stringUri, _username, _email;
     CircleImageView imageView;
     AuthCredential credential;
-    Uri filePath = Uri.parse("https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959");
+    Uri filePath = Uri.parse("https://auxiliumlivestreaming.000webhostapp.com/avatar/monster8.jpg");
     String imgpath;
     Intent intent;
     ProgressDialog progressDialog;
@@ -78,16 +78,15 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
     AdapterAvatar adapterAvatar;
     String referralURL = "";
     public String[] imageList = {
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit1.jpg?alt=media&token=c420dce9-7ace-42f1-9fa2-9b9450230959",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit2.jpg?alt=media&token=4a1187ae-a0f0-4aa0-8c3e-edce32310f8e",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit3.jpg?alt=media&token=41366058-a93f-4090-ac95-b030a004b5cc",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit4.jpg?alt=media&token=16232610-aa99-47bb-becc-ca7bcc0d9556",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit5.jpg?alt=media&token=4096819b-491e-4652-af3a-856e08c1522b",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit6.jpg?alt=media&token=fbf7832e-357d-45a0-b90b-7d383e1af84c",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit7.jpg?alt=media&token=b018a286-d008-42f1-af0a-cb84126a306f",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit8.jpg?alt=media&token=05280825-3eed-4405-9fc2-1c9d8a916206",
-            "https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/avatars%2Ffruit9.jpg?alt=media&token=befccdcf-ef37-4d72-b433-45ab57d20708"
-    };
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster2.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster3.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster1.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster4.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster5.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster6.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster7.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster8.jpg"
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +121,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
             email.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
         RecyclerView recyclerView = findViewById(R.id.avatarImages);
-        int numberOfColumns = 5;
+        int numberOfColumns = 4;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         adapterAvatar = new AdapterAvatar(this, imageList);
         adapterAvatar.setClickListener(this);
