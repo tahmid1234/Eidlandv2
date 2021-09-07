@@ -240,6 +240,7 @@
 
                     android:layout_marginStart="40dp"
                     android:onClick="onClickJoin"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <ImageView

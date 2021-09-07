@@ -35,31 +35,31 @@ public class ConstantApp {
 
     public static List<GiftItem> giftList(){
         List<GiftItem> giftItems = new ArrayList<>();
-        giftItems.add(new GiftItem("smilereact",3, R.drawable.ic_gift___heart_1));
-        giftItems.add(new GiftItem("hearts",30, R.drawable.ic_gift___heart_3));
-        giftItems.add(new GiftItem("heartcomment",15, R.drawable.ic_gift___heart_2));
+        giftItems.add(new GiftItem("smilereact",1, R.drawable.ic_gift___heart_1));
+        giftItems.add(new GiftItem("hearts",1, R.drawable.ic_gift___heart_3));
+        giftItems.add(new GiftItem("heartcomment",1, R.drawable.ic_gift___heart_2));
         giftItems.add(new GiftItem("like1",1, R.drawable.ic_gift___like_1));
-        giftItems.add(new GiftItem("like2",5, R.drawable.ic_gift___like_2));
-        giftItems.add(new GiftItem("clap",10, R.drawable.ic_gift___clapping));
-        giftItems.add(new GiftItem("star",50, R.drawable.ic_gift___star));
-        giftItems.add(new GiftItem("medal",20, R.drawable.ic_gift___medal));
-        giftItems.add(new GiftItem("fire",75, R.drawable.ic_gift___fire));
-        giftItems.add(new GiftItem("debate",25, R.drawable.ic_gift___debate));
+        giftItems.add(new GiftItem("like2",1, R.drawable.ic_gift___like_2));
+        giftItems.add(new GiftItem("clap",1, R.drawable.ic_gift___clapping));
+        giftItems.add(new GiftItem("star",1, R.drawable.ic_gift___star));
+        giftItems.add(new GiftItem("medal",1, R.drawable.ic_gift___medal));
+        giftItems.add(new GiftItem("fire",1, R.drawable.ic_gift___fire));
+        giftItems.add(new GiftItem("debate",1, R.drawable.ic_gift___debate));
         giftItems.add(new GiftItem("championbelt",100, R.drawable.ic_gift___champion_belt));
-        giftItems.add(new GiftItem("carousel",69, R.drawable.ic_gift___carousel));
-        giftItems.add(new GiftItem("crown",1000, R.drawable.ic_gift___crown2));
-        giftItems.add(new GiftItem("castle",999, R.drawable.ic_gift___sand_castle));
-        giftItems.add(new GiftItem("pigions",99, R.drawable.ic_gift___pigeon2));
-        giftItems.add(new GiftItem("oscar",500, R.drawable.ic_gift___oscar2));
+        giftItems.add(new GiftItem("carousel",1, R.drawable.ic_gift___carousel));
+        giftItems.add(new GiftItem("crown",1, R.drawable.ic_gift___crown2));
+        giftItems.add(new GiftItem("castle",1, R.drawable.ic_gift___sand_castle));
+        giftItems.add(new GiftItem("pigions",1, R.drawable.ic_gift___pigeon2));
+        giftItems.add(new GiftItem("oscar",1, R.drawable.ic_gift___oscar2));
         return giftItems;
     }
 
     public static List<AnimationItem> animationItems(){
         List<AnimationItem> animationItemList = new ArrayList<>();
 
-        animationItemList.add(new AnimationItem("hearts", R.drawable.ic_heart, R.drawable.heart_fill_gif));
-        animationItemList.add(new AnimationItem("like1", R.drawable.ic_like_1, R.drawable.like_many_gif));
-        animationItemList.add(new AnimationItem("smilereact", R.drawable.ic_heart_1_, R.drawable.heart_burst));
+        animationItemList.add(new AnimationItem("hearts", R.drawable.ic_heart, R.drawable.sweets));
+        animationItemList.add(new AnimationItem("like1", R.drawable.ic_like_1, R.drawable.neck));
+        animationItemList.add(new AnimationItem("smilereact", R.drawable.ic_heart_1_, R.drawable.cookies));
         animationItemList.add(new AnimationItem("pigions", R.drawable.ic_pigeon, R.drawable.heart_fill_gif));
         animationItemList.add(new AnimationItem("oscar", R.drawable.ic_oscar, R.drawable.heart_fill_gif));
         animationItemList.add(new AnimationItem("heartcomment", R.drawable.ic_heartcomment, R.drawable.heart_fill_gif));

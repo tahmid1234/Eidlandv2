@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,9 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                double current= getHour(now);
+                double roomstart=   getHour(room.startTime);
+                double roomend= getHour(room.endTime);
                 if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
 //                if(true){
                     Intent intent = new Intent(holder.roomPhoto.getContext(), LiveRoomActivity.class);
@@ -99,15 +103,17 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     dialog.setCancelable(false);
 
                     ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                    imageView.setImageResource(R.drawable.sleep);
                     imageView.setVisibility(View.VISIBLE);
 
                     TextView msg = dialog.findViewById(R.id.msg);
                     msg.setText(room.offTimeMsg);
 
                     TextView negative = dialog.findViewById(R.id.positive_btn);
+                    RelativeLayout areatop=dialog.findViewById(R.id.topdialogbutton);
                     negative.setVisibility(View.VISIBLE);
                     negative.setText("OKAY");
-                    negative.setOnClickListener(new View.OnClickListener() {
+                    areatop.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();

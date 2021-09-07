@@ -48,6 +48,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -357,11 +358,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 TextView msg = dialog.findViewById(R.id.msg);
                 msg.setVisibility(View.VISIBLE);
                 msg.setText("Are you sure you want to leave the room?");
-
+                RelativeLayout areatop=dialog.findViewById(R.id.topdialogbutton);
                 TextView positive = dialog.findViewById(R.id.positive_btn);
                 positive.setVisibility(View.VISIBLE);
                 positive.setText("Leave");
-                positive.setOnClickListener(new View.OnClickListener() {
+                areatop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         run = "1";
@@ -369,11 +370,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         EndMeeting();
                     }
                 });
-
+                RelativeLayout areabottom=dialog.findViewById(R.id.bottomdialogbutton);
                 TextView negative = dialog.findViewById(R.id.negative_btn);
                 negative.setVisibility(View.VISIBLE);
                 negative.setText("Cancel");
-                negative.setOnClickListener(new View.OnClickListener() {
+                areabottom.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.cancel();
@@ -1033,7 +1034,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         if (hasEnteredRoom) {
                             simpleGift.setImageResource(R.drawable.hello_pana);
-                            backgrundGIF.setImageResource(R.drawable.fireworks_gif);
+                           backgrundGIF.setImageResource(R.drawable.fireworks_gif);
                             backgroundGIFLayout.setVisibility(View.VISIBLE);
                             sendername.setText("Hey " + StaticConfig.user.getName() + "!");
                             receivername.setText("Welcome to " + nameOfRoom);
@@ -1059,6 +1060,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             if (animationItem.name.equals(id)) {
                 simpleGift.setImageResource(animationItem.giftIconId);
                 backgrundGIF.setImageResource(animationItem.gifIconId);
+
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
             }
         }
