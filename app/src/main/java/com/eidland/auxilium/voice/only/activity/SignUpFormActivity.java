@@ -95,7 +95,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         setContentView(R.layout.sign_up_get_data);
         initialViews();
 
-        mStorage = FirebaseStorage.getInstance().getReference().child("avatars");
+
         filePath = Uri.parse(imageList[(int)(Math.random()*5)]);
         Glide.with(SignUpFormActivity.this).load(filePath).into(profileimageView);
         intent = getIntent();
@@ -120,12 +120,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
             email.setTextColor(Color.GRAY);
             email.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
-        RecyclerView recyclerView = findViewById(R.id.avatarImages);
-        int numberOfColumns = 4;
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        adapterAvatar = new AdapterAvatar(this, imageList);
-        adapterAvatar.setClickListener(this);
-        recyclerView.setAdapter(adapterAvatar);
+
 
         singupactive.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +178,12 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
 
         profileimageView = findViewById(R.id.imageViewprofile);
         singupactive = findViewById(R.id.singupactive);
+        RecyclerView recyclerView = findViewById(R.id.avatarImages);
+        int numberOfColumns = 4;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        adapterAvatar = new AdapterAvatar(this, imageList);
+        adapterAvatar.setClickListener(this);
+        recyclerView.setAdapter(adapterAvatar);
     }
 
     // validate functions
