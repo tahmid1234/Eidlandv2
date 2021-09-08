@@ -17,7 +17,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_gravity="top"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -36,11 +36,11 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_bold"
                         android:letterSpacing="0.01"
-                        android:lineHeight="21sp"
+                        android:lineHeight="18sp"
                         android:padding="10dp"
                         android:text="Set Your Avatar"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -52,8 +52,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewprofile"
-                    android:layout_width="126dp"
-                    android:layout_height="126dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_default_image_1"
                     />
@@ -86,20 +86,20 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:letterSpacing="0.01"
-                    android:layout_marginTop="20dp"
-                    android:lineHeight="20sp"
+                    android:layout_marginTop="15dp"
+                    android:lineHeight="18sp"
                     android:padding="10dp"
                     android:text="Or choose one of the images below"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
 
                     android:gravity="center"
-                    android:layout_marginBottom="20dp"
+                    android:layout_margin="5dp"
                     android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -123,7 +123,9 @@
                     android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:inputType="textCapSentences"
-                    android:padding="6dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="5dp"
+                    android:gravity="center|start"
                     android:textColor="@color/white"
                     android:textColorHint="@color/lightgray"
                     android:textSize="18sp" />
@@ -133,6 +135,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
+                    android:paddingEnd="5dp"
                     android:layout_width="260dp"
                     android:layout_height="41dp"
                     android:imeOptions="actionDone"
@@ -140,7 +143,8 @@
                     android:background="@drawable/ic_background"
                     android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
                     android:hint="Your Email Address"
-                    android:padding="6dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
                     android:textColor="@color/lightgray"
                     android:textColorHint="@color/lightgray"
                     android:textSize="18sp" />
@@ -152,8 +156,8 @@
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/join_button">
 
                     <TextView

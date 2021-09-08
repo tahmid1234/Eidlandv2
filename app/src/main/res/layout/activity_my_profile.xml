@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginTop="50dp"
         >
         <de.hdodenhof.circleimageview.CircleImageView
@@ -66,25 +67,24 @@
             android:layout_height="41dp"
 
             android:layout_marginHorizontal="2dp"
-            android:layout_marginStart="60dp"
             android:layout_marginTop="30dp"
-            android:padding="6dp"
+            android:paddingStart="10dp"
             android:background="@drawable/ic_background"
             android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
             android:text="Your Name"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
 
 
     <EditText
         android:id="@+id/userEmail"
         android:layout_width="260dp"
         android:layout_height="41dp"
-
+        android:paddingStart="10dp"
         android:layout_marginHorizontal="2dp"
-        android:layout_marginStart="60dp"
         android:layout_marginTop="30dp"
-        android:padding="6dp"
+
         android:background="@drawable/ic_background"
 
         android:text="Your Email address"
@@ -93,7 +93,7 @@
         android:textColor="@color/white"
         
         android:textSize="18sp"
-        />
+        tools:ignore="RtlSymmetry" />
 
 
         <RelativeLayout
