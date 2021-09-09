@@ -300,14 +300,19 @@
 
         </RelativeLayout>
     </ScrollView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/backtoprofile"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
 
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/wallet_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_fi_rr_arrow_left_1" />
-
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+      android:layout_margin="15dp"
+        android:src="@drawable/ic_baseline_arrow_back_24" />
+    </RelativeLayout>
 </RelativeLayout>

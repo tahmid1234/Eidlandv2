@@ -385,24 +385,26 @@
         </RelativeLayout>
     </ScrollView>
     <RelativeLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:layout_alignParentEnd="true"
-        android:onClick="finish"
-        android:layout_marginTop="5dp">
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:onClick="editprofile"
+        android:layout_alignParentEnd="true"
 
+        >
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_margin="15dp"
         android:background="@drawable/ic_fi_rr_pencil_1"
         android:contentDescription="TODO"
-        android:onClick="editprofile" />
+        />
     </RelativeLayout>
 <RelativeLayout
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:gravity="center"
 
@@ -410,10 +412,11 @@
     android:layout_marginTop="5dp">
 
     <ImageView
-        android:layout_width="6dp"
-        android:layout_height="7dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="15dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
         android:contentDescription="TODO"
-        android:onClick="finish" />
+        />
 </RelativeLayout>
 </RelativeLayout>
