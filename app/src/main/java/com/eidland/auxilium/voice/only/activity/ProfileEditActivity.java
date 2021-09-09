@@ -1,5 +1,6 @@
 package com.eidland.auxilium.voice.only.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,14 +11,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.adapter.AdapterAvatar;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,20 +47,36 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfileEditActivity extends AppCompatActivity {
+public class ProfileEditActivity extends Activity implements AdapterAvatar.ItemClickListener{
     TextView tvname, tvmail;
     ImageView imageViewuphoto;
     String userid, ImageUrl, imgpath;
     Uri filePath;
     ViewDialog viewDialog;
-    LinearLayout back;
-
+    RelativeLayout back;
+    boolean Imagechanged=false;
+    AdapterAvatar adapterAvatar;
+    public String[] imageList = {
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster2.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster3.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster1.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster4.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster5.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster6.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster7.jpg",
+            "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster8.jpg"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
         viewDialog = new ViewDialog(this);
-
+        RecyclerView recyclerView = findViewById(R.id.avatarImagesedit);
+        int numberOfColumns = 4;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        adapterAvatar = new AdapterAvatar(this, imageList);
+      adapterAvatar.setClickListener(this);
+        recyclerView.setAdapter(adapterAvatar);
         tvname = findViewById(R.id.username);
         tvmail = findViewById(R.id.userEmail);
         imageViewuphoto = findViewById(R.id.userimage);
@@ -81,7 +102,9 @@ public class ProfileEditActivity extends AppCompatActivity {
         if (filePath == null) {
             AddData(ImageUrl);
         } else {
-            uplnamephoto();
+            if (Imagechanged)uplnamephoto();
+            else
+                AddData(String.valueOf(filePath));
         }
 
     }
@@ -173,6 +196,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                     imageViewuphoto.setImageBitmap(bitmap);
                     imgpath = encodeTobase64(bitmap);
+                    Imagechanged=true;
 
 
                 } catch (IOException e) {
@@ -196,5 +220,12 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         Log.e("LOOK", imageEncoded);
         return imageEncoded;
+    }
+
+
+    @Override
+    public void onItemClick(View view, int position) {
+        filePath= Uri.parse(imageList[position]);
+        Glide.with(ProfileEditActivity.this).load(imageList[position]).into(imageViewuphoto);
     }
 }
