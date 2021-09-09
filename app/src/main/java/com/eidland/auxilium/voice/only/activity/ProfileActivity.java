@@ -248,10 +248,14 @@ public class ProfileActivity extends AppCompatActivity {
         inviteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
-                currentBalance += 25;
-                StaticConfig.user.setCoins(currentBalance.toString());
-                userRef.child("coins").setValue(currentBalance.toString());
+                if (!snapshot.hasChild("utm_source=google-play&utm_medium=organic"))
+                {
+                    Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
+                    currentBalance += 25;
+                    StaticConfig.user.setCoins(currentBalance.toString());
+                    userRef.child("coins").setValue(currentBalance.toString());
+                }
+
             }
 
             @Override

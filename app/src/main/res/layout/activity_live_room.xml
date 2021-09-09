@@ -388,7 +388,7 @@
                 android:layout_marginBottom="-55dp"
                 android:translationZ="1.0dp"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"

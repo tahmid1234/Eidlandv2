@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     String userid, ImageUrl, imgpath;
     Uri filePath;
     ViewDialog viewDialog;
+    LinearLayout back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +65,15 @@ public class ProfileEditActivity extends AppCompatActivity {
         tvmail.setText(StaticConfig.user.getEmail());
         ImageUrl = StaticConfig.user.getImageurl();
         Glide.with(ProfileEditActivity.this).load(StaticConfig.user.getImageurl()).into(imageViewuphoto);
+        back=findViewById(R.id.backtoprofile);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
-    public void SignOut(View view) {
-
-    }
 
     public void update(View view) {
 
