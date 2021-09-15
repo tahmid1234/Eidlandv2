@@ -353,7 +353,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                 ImageView imageView = dialog.findViewById(R.id.dialog_icon);
                 imageView.setVisibility(View.VISIBLE);
-                imageView.setImageResource(R.drawable.popup_exit);
+                imageView.setImageResource(R.drawable.ic_exit);
 
                 TextView msg = dialog.findViewById(R.id.msg);
                 msg.setVisibility(View.VISIBLE);
@@ -1318,7 +1318,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         ImageView imageView = dialog.findViewById(R.id.dialog_icon);
         imageView.setVisibility(View.VISIBLE);
-        imageView.setImageResource(R.drawable.popup_exit);
+        imageView.setImageResource(R.drawable.ic_exit_1popup_exit);
 
         TextView msg = dialog.findViewById(R.id.msg);
         msg.setVisibility(View.VISIBLE);

@@ -384,24 +384,7 @@
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:onClick="editprofile"
-        android:layout_alignParentEnd="true"
 
-        >
-    <ImageView
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:layout_margin="15dp"
-        android:background="@drawable/ic_fi_rr_pencil_1"
-        android:contentDescription="TODO"
-        />
-    </RelativeLayout>
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
