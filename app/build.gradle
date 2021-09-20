@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation "com.android.installreferrer:installreferrer:2.2"
 
+    def lottieVersion = "4.1.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation('com.github.tony19:logback-android-classic:1.1.1-4') {
         // workaround issue #73

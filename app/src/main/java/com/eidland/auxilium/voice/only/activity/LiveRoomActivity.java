@@ -20,9 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -49,6 +47,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieComposition;
+import com.airbnb.lottie.LottieOnCompositionLoadedListener;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -80,8 +80,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -160,7 +158,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout;
-    GifImageView backgrundGIF;
+    LottieAnimationView backgrundGIF;
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
@@ -168,10 +166,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView gameButton;
     LinearLayout gamesLayout;
     RelativeLayout cardLoadingAnimationLayout;
-    GifImageView cardLoadingAnimationGIF;
+    LottieAnimationView cardLoadingAnimationGIF;
     ImageView closeGameDrawer;
     RelativeLayout displayCardLayout;
-    GifImageView selectedCardGIF;
+    LottieAnimationView selectedCardGIF;
     ImageView displayCardImage;
     ImageView closeCard;
     ImageView minimizedCard;
@@ -199,6 +197,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             private final Rect windowVisibleDisplayFrame = new Rect();
             private int lastVisibleDecorViewHeight;
 
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onGlobalLayout() {
                 decorView.getWindowVisibleDisplayFrame(windowVisibleDisplayFrame);
@@ -1034,7 +1033,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         if (hasEnteredRoom) {
                             simpleGift.setImageResource(R.drawable.hello_pana);
-                           backgrundGIF.setImageResource(R.drawable.fireworks_gif);
+                            backgrundGIF.setImageResource(R.drawable.fireworks_gif);
+//                            backgrundGIF.setImageAssetsFolder("res/raw/");
+//                            backgrundGIF.setAnimation("loading_card.json");
                             backgroundGIFLayout.setVisibility(View.VISIBLE);
                             sendername.setText("Hey " + StaticConfig.user.getName() + "!");
                             receivername.setText("Welcome to " + nameOfRoom);
