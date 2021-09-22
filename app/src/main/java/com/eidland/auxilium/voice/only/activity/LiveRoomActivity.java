@@ -1033,7 +1033,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         if (hasEnteredRoom) {
                             simpleGift.setImageResource(R.drawable.hello_pana);
-                            backgrundGIF.setImageResource(R.drawable.fireworks_gif);
+//                            backgrundGIF.setImageResource(R.drawable.fireworks_gif);
                             backgrundGIF.setImageAssetsFolder("res/raw/");
                             backgrundGIF.setAnimation("loading_card.json");
                             backgroundGIFLayout.setVisibility(View.VISIBLE);

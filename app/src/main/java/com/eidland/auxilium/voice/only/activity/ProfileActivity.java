@@ -145,8 +145,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void finish(View view) {
         StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL(), StaticConfig.user.getReferrer());
-        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+//        startActivity(intent);
         finish();
     }
 

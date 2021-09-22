@@ -56,6 +56,15 @@ dependencies {
 
     def lottieVersion = "4.1.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    configurations {
+        all*.exclude module: 'okhttp'
+        all*.exclude module: 'okio'
+    }
 
     implementation('com.github.tony19:logback-android-classic:1.1.1-4') {
         // workaround issue #73
