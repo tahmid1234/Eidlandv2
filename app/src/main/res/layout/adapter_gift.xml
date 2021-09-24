@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gift_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="90dp"
     android:gravity="center"
-    android:layout_gravity="center">
+    android:orientation="vertical"
+    android:background="@drawable/rectangle"
+    android:layout_gravity="left">
+
+    <RelativeLayout
+
+        android:id="@+id/gift_check_1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_check_1_gift_select"
+        android:visibility="gone"
+        android:gravity="left">
+
+    </RelativeLayout>
 
     <ImageView
-        android:id="@+id/gift_icon"
+            android:id="@+id/gift_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="TODO"
+            android:scaleType="centerCrop" />
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="40dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="TODO" />
+        android:id="@+id/gift_identifier_holder"
+        android:layout_below="@id/gift_icon"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/gifttag"
+        android:visibility="gone"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/gift_identifier"
+            android:layout_width="wrap_content"
 
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Humor"
+            android:textSize="9sp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:textColor="#003A7E" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

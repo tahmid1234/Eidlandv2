@@ -121,6 +121,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout commentBoxCircle;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
+    int lastPos=0;
+    RelativeLayout lastselec;
     TextView ModUserRemove;
     Boolean muteClicked = false;
     ImageView button2, imgbroad;
@@ -578,7 +580,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 }
             }
         });
-        selectuseruid = hostuid;
+       selectuseruid = hostuid;
 
         singlegift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -668,71 +670,81 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
 
                 if (selectuseruid == null)
-                    selectuseruid = hostuid;
-                if (!selectuseruid.equals(currentUser.getUid())) {
-                    if (selectedGiftAmount > 0) {
-                        Long curnt = Long.parseLong(StaticConfig.user.getCoins());
-                        if (curnt > selectedGiftAmount) {
-                            crystal.setVisibility(View.GONE);
-                            gameButton.setVisibility(View.VISIBLE);
-                            commentBox.setVisibility(View.VISIBLE);
-                            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
-                                @NonNull
-                                @Override
-                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                    Toast.makeText(getApplicationContext(), "Please select a speaker first", Toast.LENGTH_SHORT).show();
 
-                                    try {
-                                        User user = currentData.getValue(User.class);
-                                        user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
-                                        currentData.setValue(user);
-                                    } catch (Exception e) {
-                                        System.out.println(e);
+                if (!selectuseruid.equals(currentUser.getUid()))
+                {
+                    if (selectuseruid.equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3"))
+                        Toast.makeText(getApplicationContext(), "Please select a speaker first", Toast.LENGTH_SHORT).show();
+                    else {
+                        if (selectedGiftAmount > 0) {
+                            Long curnt = Long.parseLong(StaticConfig.user.getCoins());
+                            if (curnt > selectedGiftAmount) {
+                                crystal.setVisibility(View.GONE);
+                                gameButton.setVisibility(View.VISIBLE);
+                                commentBox.setVisibility(View.VISIBLE);
+                                FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
+                                    @NonNull
+                                    @Override
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+
+                                        try {
+                                            User user = currentData.getValue(User.class);
+                                            user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
+                                            user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
+                                            currentData.setValue(user);
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                        return Transaction.success(currentData);
                                     }
-                                    return Transaction.success(currentData);
-                                }
 
-                                @Override
-                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
 
-                                    try {
-                                        User user = currentData.getValue(User.class);
-                                        StaticConfig.user = user;
-                                        userAvailableCoin.setText(getFormattedText(user.coins));
-                                    } catch (Exception e) {
-                                        System.out.println(e);
+                                        try {
+                                            User user = currentData.getValue(User.class);
+                                            StaticConfig.user = user;
+                                            userAvailableCoin.setText(getFormattedText(user.coins));
+
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
                                     }
-                                }
-                            });
-                            FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
-                                @NonNull
-                                @Override
-                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                                    try {
-                                        User user = currentData.getValue(User.class);
-                                        assert user != null;
-                                        user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
-                                        currentData.setValue(user);
-                                    } catch (Exception e) {
-                                        System.out.println(e);
+                                });
+                                FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
+                                    @NonNull
+                                    @Override
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                                        try {
+                                            User user = currentData.getValue(User.class);
+                                            assert user != null;
+                                            user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
+                                            currentData.setValue(user);
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                        return Transaction.success(currentData);
                                     }
-                                    return Transaction.success(currentData);
-                                }
 
-                                @Override
-                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                                    System.out.println(error);
-                                }
-                            });
-                            sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
-                        } else {
-                            if (selectedGiftAmount == 0) {
-                                Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
-                            } else
-                                Toast.makeText(getApplicationContext(), "Low Balance Please Purchase Coins", Toast.LENGTH_SHORT).show();
-                        }
-                    } else
-                        Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
-                } else {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                                        System.out.println(error);
+                                    }
+                                });
+                                sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+                            } else {
+                                if (selectedGiftAmount == 0) {
+                                    Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(getApplicationContext(), "Low Balance Please Purchase Coins", Toast.LENGTH_SHORT).show();
+                            }
+                        } else
+                            Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
+                    }
+            }
+
+                else {
                     Toast.makeText(getApplicationContext(), "You can not send gift to yourself", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -748,15 +760,27 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     @Override
-    public void onGiftClick(int position, ImageView icon) {
+    public void onGiftClick(int position, ImageView icon, RelativeLayout selec) {
+      if (position!=lastPos ){
+          if (lastselec!=null)
+          {
+              lastselec.setVisibility(View.GONE);
+          }
+        }
+
         GiftItem giftItem = ConstantApp.giftList().get(position);
         try {
             if (lastImg != null) lastImg.setImageResource(0);
             lastImg = icon;
+            selec.setVisibility(View.VISIBLE);
+
+            lastPos=position;
+            lastselec=selec;
         } catch (Exception e) {
             System.out.println(e);
         }
-        icon.setImageResource(R.drawable.ic_check_1_gift_select);
+
+      //  icon.setImageResource(R.drawable.ic_check_1_gift_select);
         selectedGiftName = giftItem.name;
         selectedGiftAmount = giftItem.amount;
     }
