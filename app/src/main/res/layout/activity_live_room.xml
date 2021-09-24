@@ -673,7 +673,7 @@
             android:layout_alignParentBottom="true"
             android:background="#00306D"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -740,7 +740,7 @@
                         android:text="Each gift costs "
                         android:textColor="#fff"
 
-                        android:textSize="10dp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/gift_value"
                         android:layout_width="wrap_content"
@@ -755,7 +755,7 @@ android:drawablePadding="2dp"
                         android:text="1. "
                         android:textColor="#fff"
 
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                     <TextView
 
                         android:layout_width="wrap_content"
@@ -767,7 +767,7 @@ android:drawablePadding="2dp"
                         android:text="Giving a gift earns you "
                         android:textColor="#fff"
 
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/ed_value"
                         android:layout_width="wrap_content"
@@ -781,7 +781,7 @@ android:drawablePadding="2dp"
                         android:text="1."
                         android:textColor="#fff"
 
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
