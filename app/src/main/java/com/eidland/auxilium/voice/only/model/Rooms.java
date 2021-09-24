@@ -12,12 +12,13 @@ public class Rooms {
     public String endTime;
     public String offTimeMsg;
     public String welcomemsg;
+    public String type;
 
 
     public Rooms() {
     }
 
-    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg, String inviteLink, String welcomemsg) {
+    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg, String inviteLink, String welcomemsg, String type) {
         this.name = name;
         this.imageurl = imageurl;
         this.hostuid = hostuid;
@@ -29,6 +30,7 @@ public class Rooms {
         this.offTimeMsg = offTimeMsg;
         this.inviteLink = inviteLink;
         this.welcomemsg = welcomemsg;
+        this.type = type;
 
     }
 
@@ -100,4 +102,7 @@ public class Rooms {
 
     public String getWelcomemsg() { return welcomemsg; }
     public void setWelcomemsg(String welcomemsg) { this.welcomemsg = welcomemsg; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 }
