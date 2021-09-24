@@ -103,7 +103,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     dialog.setCancelable(false);
 
                     ImageView imageView = dialog.findViewById(R.id.dialog_icon);
-                    imageView.setImageResource(R.drawable.sleep);
+                    imageView.setImageResource(R.drawable.ic_exit);
                     imageView.setVisibility(View.VISIBLE);
 
                     TextView msg = dialog.findViewById(R.id.msg);

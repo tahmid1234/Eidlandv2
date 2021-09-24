@@ -53,7 +53,7 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return countryInfoArrayList.size();
     }
 
-    public static class PlacesViewHolder extends RecyclerView.ViewHolder {
+    public static class PlacesViewHolder extends RecyclerView.ViewHolder implements com.eidland.auxilium.voice.only.adapter.PlacesViewHolder, View.OnClickListener {
 
         View view;
         ImageView ivFamousPlace;
@@ -66,7 +66,16 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             UName = view.findViewById(R.id.usernamelist);
         }
 
+        @Override
+        public void onClick(View view) {
+            ViewerListAdapter.onViewerClickListener.onViewerClick(getAdapterPosition());
+        }
     }
 
+    public interface onViewerClickListener{
+        static void onViewerClick(int adapterPosition) {
+        }
 
+        void onViewerClick();
+    }
 }

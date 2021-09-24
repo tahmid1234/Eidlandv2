@@ -106,8 +106,7 @@
                 android:id="@+id/backgrundGIF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
-                />
+                android:scaleType="fitCenter"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -526,15 +525,14 @@
                         android:id="@+id/comment_box"
                         android:layout_width="match_parent"
                         android:layout_height="65dp"
+                        android:layout_alignParentBottom="true"
                         android:background="@android:color/transparent"
                         android:hint="Type here"
                         android:inputType="textMultiLine|textCapSentences"
-                        android:paddingStart="8dp"
                         android:lines="2"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="8dp"
+                        android:paddingStart="8dp"
                         android:paddingEnd="6dp"
-                        android:layout_alignParentBottom="true"
+                        android:paddingBottom="8dp"
                         android:textColor="#fff"
                         android:textColorHint="#fff" />
                 </RelativeLayout>
@@ -806,8 +804,7 @@
             android:layout_width="match_parent"
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/popupback"
+            android:background="@drawable/popup_bg"
             android:visibility="gone">
 
             <TextView
@@ -845,33 +842,34 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
 
 
                     <RelativeLayout
                         android:id="@+id/lrnt"
-
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center">
-
+                        android:layout_gravity="center">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/userimgpopup"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_alignParentLeft="true"
+                            android:paddingLeft="15dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_default_image_1" />
 
+                            android:src="@drawable/ic_default_image_1" />
                     </RelativeLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/lrnname"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_below="@id/lrnt"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="33dp"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center">
 
                         <TextView
@@ -886,6 +884,181 @@
                             android:textStyle="bold" />
 
 
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/eidlandpointslayout"
+                        android:layout_width="130dp"
+                        android:layout_height="60dp"
+                        android:layout_below="@id/lrnt"
+                        android:layout_marginLeft="55dp"
+                        android:layout_marginTop="23dp"
+                        android:background="@drawable/eidcoin_bg"
+                        android:gravity="center|right">
+
+                        <ImageView
+                            android:id="@+id/eidpoint_icon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="3dp"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/eidcoin" />
+
+                        <LinearLayout
+                            android:id="@+id/eidpoint_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="7dp">
+
+                            <TextView
+                                android:id="@+id/pointcount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/open_sans_semibold"
+                                android:text="1000"
+                                android:textColor="#000"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/pointtext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/open_sans_semibold"
+                                android:text="Eid Points"
+                                android:textColor="#000"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/useractions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|fill"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/mutelayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lrnt"
+                        android:padding="13dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/mute_icon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/microphone_mute" />
+
+                            <TextView
+                                android:id="@+id/mute_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/open_sans"
+                                android:text="Mute\nParticipant"
+                                android:textColor="#fff"
+                                android:textSize="15dp"
+                                android:textAlignment="center"
+                                android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/micreqlayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lrnt"
+                        android:padding="13dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/mic_req"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/microphone" />
+
+                        <TextView
+                            android:id="@+id/micreq_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Request to\nTake Mic"
+                            android:textColor="#fff"
+                            android:textSize="15dp"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/blocklayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lrnt"
+                        android:padding="13dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/block"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/user_delete" />
+
+                        <TextView
+                            android:id="@+id/block_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Block\nParticipant"
+                            android:textColor="#fff"
+                            android:textSize="15dp"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profilelayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lrnt"
+                        android:padding="13dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/profile"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/user_follow" />
+
+                        <TextView
+                            android:id="@+id/profile_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="View\nProfile"
+                            android:textColor="#fff"
+                            android:textSize="15dp"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -895,7 +1068,7 @@
                     android:layout_height="42dp"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginTop="7dp"
                     android:background="@drawable/join_button"
 
                     android:gravity="center">
@@ -907,9 +1080,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
                         android:text="Send Gift"
