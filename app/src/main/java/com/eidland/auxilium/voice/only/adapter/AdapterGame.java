@@ -51,7 +51,6 @@ public class AdapterGame extends RecyclerView.Adapter<AdapterGame.ViewHolder> {
         ImageView gameIcon;
         LinearLayout gameLayout;
         TextView gameName;
-
         OnGameClickListener onGameClickListener;
 
         public ViewHolder(@NonNull View itemView, OnGameClickListener onGameClickListener) {

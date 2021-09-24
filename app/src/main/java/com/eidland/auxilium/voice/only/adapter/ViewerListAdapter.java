@@ -22,16 +22,19 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     PlacesViewHolder placesViewHolder = null;
     Context context;
     ArrayList<Viewer> countryInfoArrayList;
+    private OnViewerClickListener onViewerClickListener;
 
-    public ViewerListAdapter(Context context, ArrayList<Viewer> cameraobject1s) {
+
+    public ViewerListAdapter(Context context, ArrayList<Viewer> cameraobject1s, OnViewerClickListener onViewerClickListener) {
         this.context = context;
         countryInfoArrayList = cameraobject1s;
+        this.onViewerClickListener = onViewerClickListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singleuser, parent, false);
-        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view);
+        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view, onViewerClickListener);
         return placesViewHolder;
     }
 
@@ -53,29 +56,27 @@ public class ViewerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return countryInfoArrayList.size();
     }
 
-    public static class PlacesViewHolder extends RecyclerView.ViewHolder implements com.eidland.auxilium.voice.only.adapter.PlacesViewHolder, View.OnClickListener {
+    public class PlacesViewHolder extends RecyclerView.ViewHolder implements com.eidland.auxilium.voice.only.adapter.PlacesViewHolder, View.OnClickListener {
 
         View view;
         ImageView ivFamousPlace;
         TextView UName;
+        OnViewerClickListener onViewerClickListener;
 
-        public PlacesViewHolder(View itemView) {
+        public PlacesViewHolder(View itemView, OnViewerClickListener onViewerClickListener) {
             super(itemView);
             view = itemView;
             ivFamousPlace = view.findViewById(R.id.userimglist);
+            this.onViewerClickListener = onViewerClickListener;
             UName = view.findViewById(R.id.usernamelist);
         }
-
         @Override
         public void onClick(View view) {
-            ViewerListAdapter.onViewerClickListener.onViewerClick(getAdapterPosition());
+            onViewerClickListener.onViewerClick(getAdapterPosition());
         }
     }
 
-    public interface onViewerClickListener{
-        static void onViewerClick(int adapterPosition) {
-        }
-
-        void onViewerClick();
+    public interface OnViewerClickListener{
+        void onViewerClick(int adapterPosition);
     }
 }

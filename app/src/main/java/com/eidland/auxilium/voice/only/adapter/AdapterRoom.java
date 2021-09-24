@@ -1,9 +1,10 @@
 package com.eidland.auxilium.voice.only.adapter;
 
+import static com.eidland.auxilium.voice.only.helper.DateFormater.getHour;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.bumptech.glide.Glide;
-import com.eidland.auxilium.voice.only.model.Rooms;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-
 import com.eidland.auxilium.voice.only.R;
-
 import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.Rooms;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,9 +32,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import io.agora.rtc.Constants;
-
-import static com.eidland.auxilium.voice.only.helper.DateFormater.getHour;
-import static com.eidland.auxilium.voice.only.helper.DateFormater.getMin;
 
 public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
     List<Rooms> rooms;
@@ -89,6 +83,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("User", "Participent");
                     intent.putExtra("userid", room.hostuid);
+                    intent.putExtra("welcomemsg", room.getWelcomemsg());
                     intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, room.roomname);
                     intent.putExtra("UserName", room.name);
                     intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");

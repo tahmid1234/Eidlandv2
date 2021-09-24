@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.Viewer;
 
@@ -61,15 +62,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             view = itemView;
             ivFamousPlace = view.findViewById(R.id.img);
         }
-
-//        @Override
-//        public void onClick(View view) {
-//            onViewerClickListener.onViewerClick(getAdapterPosition());
-//        }
     }
 
-//    public interface onViewerClickListener{
-//        static void onViewerClick(int adapterPosition) {
-//        }
-//    }
+
 }

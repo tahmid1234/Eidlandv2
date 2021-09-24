@@ -31,7 +31,7 @@ public class ViewDialogUser {
         this.height = height;
     }
 
-    public void showDialog(ArrayList<Viewer> instruction) {
+    public void showDialog(ArrayList<Viewer> instruction, ViewerListAdapter.OnViewerClickListener onViewerClickListener) {
 
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -51,7 +51,9 @@ public class ViewDialogUser {
         this.viewerArrayList = instruction;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        viewerListAdapter = new ViewerListAdapter(activity, viewerArrayList);
+        viewerListAdapter = new ViewerListAdapter(activity, viewerArrayList, onViewerClickListener);
+        recyclerView.setAdapter(viewerListAdapter);
+        viewerListAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(viewerListAdapter);
         dialog.show();
     }

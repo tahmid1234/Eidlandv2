@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -114,7 +115,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerListAdapter.onViewerClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerListAdapter.OnViewerClickListener {
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -187,6 +188,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     boolean isMod = false;
     String nameOfRoom;
     String inviteLink;
+    String welcomeMsg;
 
     LinearLayout inputArea;
 
@@ -306,13 +308,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         inviteButton = findViewById(R.id.invite_icon);
 
-        onlineUserCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
-                viewDialoguser.showDialog(onlineUserList);
-            }
-        });
+        try {
+            onlineUserCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
+                    viewDialoguser.showDialog(onlineUserList, LiveRoomActivity.this);
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+
         closeGiftBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -511,27 +518,33 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         commentRecyclerView.hasFixedSize();
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentRecyclerView.setAdapter(commentAdapter);
-
+        welcomeMsg = getIntent().getStringExtra("welcomemsg");
         nameOfRoom = getIntent().getStringExtra("UserName");
         final Comment comment = new Comment();
+        comment.setComment(welcomeMsg);
+        comment.setName("Eidland Staff \uD83E\uDD73");
+        imgUrl = getIntent().getStringExtra("profile");
+        comment.setUserphoto(imgUrl);
+        comments.add(comment);
 
-        if (nameOfRoom.contentEquals("Board Gamers")) {
-            comment.setComment("Fellow gamers! Welcome to the world of board games! ");
-            comment.setName("Admin - Board Gamers");
-            comments.add(comment);
-        }
-        if (nameOfRoom.contentEquals("Cat Lovers")) {
-            comment.setComment("Meow \uD83D\uDC31 ");
-            comment.setName("Admin - Cat Lovers");
-            comments.add(comment);
-        }
-        if (nameOfRoom.contentEquals("Eidland Battle Royale")) {
-            comment.setComment("Welcome to Eidland! We are glad to have you here! Please tap on a seat to start speaking");
-            comment.setName("Eidland Staff \uD83E\uDD73");
-            imgUrl = getIntent().getStringExtra("profile");
-            comment.setUserphoto(imgUrl);
-            comments.add(comment);
-        }
+//        if (nameOfRoom.contentEquals("Board Gamers")) {
+//            comment.setComment("Fellow gamers! Welcome to the world of board games! ");
+//            comment.setName("Admin - Board Gamers");
+//            comments.add(comment);
+//        }
+//        if (nameOfRoom.contentEquals("Cat Lovers")) {
+//            comment.setComment("Meow \uD83D\uDC31 ");
+//            comment.setName("Admin - Cat Lovers");
+//            comments.add(comment);
+//        }
+//        if (nameOfRoom.contentEquals("Eidland Welcome Center")) {
+//            Comment welcome = new Comment();
+//            welcome.setComment(welcomeMsg);
+//            welcome.setName("Eidland Staff \uD83E\uDD73");
+//            imgUrl = getIntent().getStringExtra("profile");
+//            welcome.setUserphoto(imgUrl);
+//            comments.add(welcome);
+//        }
 
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -561,7 +574,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         } else {
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = getIntent().getStringExtra("userid");
-
             Viewer comment1 = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), config().mUid);
             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(comment1);
            /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -603,21 +615,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         mutelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
             }
         });
 
         micreqlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
             }
         });
 
         blocklayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -863,7 +875,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
                     if (isHost) {
-                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", "init", inviteLink);
+                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", "init", inviteLink, welcomeMsg);
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
                         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom, config().mUid);
@@ -1930,7 +1942,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     @Override
-    public void onViewerClick() {
+    public void onViewerClick(int adapterPosition) {
         Toast.makeText(getApplicationContext(), "reached", Toast.LENGTH_SHORT).show();
         singleUserBox.setVisibility(View.VISIBLE);
         online_layout.setVisibility(View.GONE);

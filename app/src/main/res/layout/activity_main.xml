@@ -125,16 +125,34 @@
                     android:layout_below="@+id/home_image"
                     android:fontFamily="@font/open_sans"
                     android:padding="5dp"
-                    android:text="Eidland Rooms"
+                    android:text="Casual Hangout"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvrooms"
-                    android:layout_below="@+id/roomsTitle"
+                    android:id="@+id/rvrooms1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/roomsTitle" />
+
+                <TextView
+                    android:id="@+id/roomsTitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rvrooms1"
+                    android:fontFamily="@font/open_sans"
+                    android:padding="5dp"
+                    android:text="Make Me Smarter"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvrooms2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/roomsTitle2" />
 
 
 <!--                <TextView-->
@@ -158,9 +176,13 @@
 <!--                    android:layout_height="wrap_content"/>-->
 
                     <View
-                        android:layout_below="@+id/rvrooms"
+                        android:layout_below="@+id/rvrooms1"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"/>
+                <View
+                    android:layout_below="@+id/rvrooms2"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"/>
 
 
 

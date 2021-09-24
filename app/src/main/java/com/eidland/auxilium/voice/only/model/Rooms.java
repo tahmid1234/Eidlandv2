@@ -11,12 +11,13 @@ public class Rooms {
     public String startTime;
     public String endTime;
     public String offTimeMsg;
+    public String welcomemsg;
 
 
     public Rooms() {
     }
 
-    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg, String inviteLink) {
+    public Rooms(String name, String imageurl, String hostuid, String token, String viewers, String roomname, String startTime, String endTime, String offTimeMsg, String inviteLink, String welcomemsg) {
         this.name = name;
         this.imageurl = imageurl;
         this.hostuid = hostuid;
@@ -27,6 +28,7 @@ public class Rooms {
         this.endTime = endTime;
         this.offTimeMsg = offTimeMsg;
         this.inviteLink = inviteLink;
+        this.welcomemsg = welcomemsg;
 
     }
 
@@ -75,7 +77,6 @@ public class Rooms {
     public String getStartTime() {
         return startTime;
     }
-
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
@@ -83,7 +84,6 @@ public class Rooms {
     public String getEndTime() {
         return endTime;
     }
-
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
@@ -91,11 +91,13 @@ public class Rooms {
     public String getOffTimeMsg() {
         return offTimeMsg;
     }
-
     public void setOffTimeMsg(String offTimeMsg) {
         this.offTimeMsg = offTimeMsg;
     }
 
     public String getInviteLink() { return inviteLink; }
     public void setInviteLink(String inviteLink) { this.inviteLink = inviteLink; }
+
+    public String getWelcomemsg() { return welcomemsg; }
+    public void setWelcomemsg(String welcomemsg) { this.welcomemsg = welcomemsg; }
 }

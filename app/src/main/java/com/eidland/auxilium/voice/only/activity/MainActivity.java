@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,18 +23,12 @@ import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.eidland.auxilium.voice.only.adapter.AdapterUpcomingSession;
-import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
-import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.Rooms;
 import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.model.UpcomingSession;
-import com.eidland.auxilium.voice.only.model.User;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.analytics.CampaignTrackingReceiver;
-import com.google.android.gms.tagmanager.InstallReferrerReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,9 +49,10 @@ public class MainActivity extends AppCompatActivity {
     TextView UserName;
     ImageView UserPhoto, homeImage;
     String userid, username, imageurl;
-    RecyclerView roomRecycler, upcomingSessionRV;
+    RecyclerView roomRecycler, roomRecycler2, upcomingSessionRV;
     ProgressBar progressbar;
     List<Rooms> roomsList = new ArrayList<Rooms>();
+    List<Rooms> roomsList2 = new ArrayList<Rooms>();
     List<UpcomingSession> upcomingSessionList = new ArrayList<>();
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -84,21 +77,36 @@ public class MainActivity extends AppCompatActivity {
         UserPhoto = findViewById(R.id.userimage);
         homeImage = findViewById(R.id.home_image);
 
-        roomRecycler = findViewById(R.id.rvrooms);
+        roomRecycler = findViewById(R.id.rvrooms1);
+        roomRecycler2 = findViewById(R.id.rvrooms2);
 //        upcomingSessionRV = findViewById(R.id.upcomingSessionsRV);
         FirebaseDatabase.getInstance().getReference("AllRooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 roomsList.clear();
+                roomsList2.clear();
                 if(snapshot.exists()){
                     for (DataSnapshot child : snapshot.getChildren()) {
-                        roomsList.add(child.getValue(Rooms.class));
+                        Rooms room = child.getValue(Rooms.class);
+                        if (room.getName().equals("Crypto Night")){
+                            roomsList2.add(child.getValue(Rooms.class));
+                        }
+                        else {
+                            roomsList.add(child.getValue(Rooms.class));
+                        }
                     }
-                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
+
+                    GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
                     AdapterRoom adapterRoom = new AdapterRoom(roomsList, MainActivity.this, width);
                     roomRecycler.setLayoutManager(seatLayoutManager);
                     adapterRoom.notifyDataSetChanged();
                     roomRecycler.setAdapter(adapterRoom);
+
+                    GridLayoutManager seatLayoutManager2 = new GridLayoutManager(MainActivity.this, 2, GridLayoutManager.HORIZONTAL, false);
+                    AdapterRoom adapterRoom2 = new AdapterRoom(roomsList2, MainActivity.this, width);
+                    roomRecycler2.setLayoutManager(seatLayoutManager2);
+                    adapterRoom2.notifyDataSetChanged();
+                    roomRecycler2.setAdapter(adapterRoom2);
                 }
             }
 
