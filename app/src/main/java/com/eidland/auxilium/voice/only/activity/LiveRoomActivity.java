@@ -624,7 +624,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getApplicationContext(), ModUserRemove.getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -698,7 +698,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         giftRecycler.setAdapter(adapterGift);
 
         RecyclerView gameRecycler = findViewById(R.id.game_recycler);
-        giftRecycler.setHasFixedSize(true);
+        gameRecycler.setHasFixedSize(true);
         GridLayoutManager gameLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
         AdapterGame adapterGame = new AdapterGame(LiveRoomActivity.this, this, width);
         gameRecycler.setLayoutManager(gameLayoutManager);
@@ -1165,9 +1165,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 RecyclerView viewers = findViewById(R.id.viewersrecyler);
                 viewers.hasFixedSize();
                 viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList, LiveRoomActivity.this::onViewerClick);
-                viewers.setAdapter(viewerAdapter);
+                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList, LiveRoomActivity.this);
                 viewerAdapter.notifyDataSetChanged();
+                viewers.setAdapter(viewerAdapter);
                 onlineUserCount.setText(onlineUserList.size() + " Online");
 
             }

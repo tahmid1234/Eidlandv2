@@ -54,7 +54,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return countryInfoArrayList.size();
     }
 
-    public class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         View view;
         ImageView ivFamousPlace;
