@@ -20,16 +20,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -49,7 +46,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -67,7 +63,6 @@ import com.eidland.auxilium.voice.only.adapter.AdapterGift;
 import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
-import com.eidland.auxilium.voice.only.adapter.ViewerListAdapter;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.helper.LeaderBoard;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
@@ -82,8 +77,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -115,7 +108,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerListAdapter.OnViewerClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewerClickListener{
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -123,7 +116,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout commentBoxCircle;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
-    TextView ModUserRemove;
+    TextView ModUserRemove, ModMute;
     Boolean muteClicked = false;
     ImageView button2, imgbroad;
     ImageView button1;
@@ -257,6 +250,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         button2 = (ImageView) findViewById(R.id.mute_local_speaker_id);
         button1 = (ImageView) findViewById(R.id.switch_broadcasting_id);
         ModUserRemove = findViewById(R.id.block_text);
+        ModMute = findViewById(R.id.mute_text);
         bottom_action_end_call = (ImageView) findViewById(R.id.bottom_action_end_call);
         onlineUserCount = findViewById(R.id.online_user_count);
         online_layout = findViewById(R.id.online_layout);
@@ -313,7 +307,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 @Override
                 public void onClick(View v) {
                     ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
-                    viewDialoguser.showDialog(onlineUserList, LiveRoomActivity.this);
+                    viewDialoguser.showDialog(onlineUserList);
                 }
             });
         } catch (Exception e) {
@@ -629,7 +623,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         blocklayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), ModUserRemove.getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -817,16 +812,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(st)) {
                     ModUserRemove.setText("Remove\nParticipant");
+                    ModMute.setText("Mute\nParticipant");
                     blocklayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seat).removeValue();
                             Toast.makeText(LiveRoomActivity.this, "user removed", Toast.LENGTH_LONG).show();
-                            singleUserBox.setVisibility(View.INVISIBLE);
+                            singleUserBox.setVisibility(View.GONE);
                         }
                     });
-                } else {
-                    ModUserRemove.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -1171,7 +1165,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 RecyclerView viewers = findViewById(R.id.viewersrecyler);
                 viewers.hasFixedSize();
                 viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
+                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList, LiveRoomActivity.this::onViewerClick);
                 viewers.setAdapter(viewerAdapter);
                 viewerAdapter.notifyDataSetChanged();
                 onlineUserCount.setText(onlineUserList.size() + " Online");

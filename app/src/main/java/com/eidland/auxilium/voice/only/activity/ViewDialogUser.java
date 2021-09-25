@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.adapter.ViewerListAdapter;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewDialogUser {
+public class ViewDialogUser{
 
     Activity activity;
     Dialog dialog;
@@ -31,7 +32,7 @@ public class ViewDialogUser {
         this.height = height;
     }
 
-    public void showDialog(ArrayList<Viewer> instruction, ViewerListAdapter.OnViewerClickListener onViewerClickListener) {
+    public void showDialog(ArrayList<Viewer> instruction) {
 
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -51,7 +52,7 @@ public class ViewDialogUser {
         this.viewerArrayList = instruction;
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        viewerListAdapter = new ViewerListAdapter(activity, viewerArrayList, onViewerClickListener);
+        viewerListAdapter = new ViewerListAdapter(activity, viewerArrayList);
         recyclerView.setAdapter(viewerListAdapter);
         viewerListAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(viewerListAdapter);

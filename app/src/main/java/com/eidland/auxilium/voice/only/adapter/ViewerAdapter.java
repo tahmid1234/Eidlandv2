@@ -22,17 +22,19 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     PlacesViewHolder placesViewHolder = null;
     Context context;
     ArrayList<Viewer> countryInfoArrayList;
+    private OnViewerClickListener onViewerClickListener;
 
-    public ViewerAdapter(Context context, ArrayList<Viewer> cameraobject1s) {
+    public ViewerAdapter(Context context, ArrayList<Viewer> cameraobject1s, OnViewerClickListener onViewerClickListener) {
         this.context = context;
         countryInfoArrayList = cameraobject1s;
+        this.onViewerClickListener = onViewerClickListener;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singalsmalluser, parent, false);
-        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view);
+        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view, onViewerClickListener);
         return placesViewHolder;
     }
 
@@ -52,17 +54,29 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return countryInfoArrayList.size();
     }
 
-    public static class PlacesViewHolder extends RecyclerView.ViewHolder{
+    public class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         View view;
         ImageView ivFamousPlace;
+        OnViewerClickListener onViewerClickListener;
 
-        public PlacesViewHolder(View itemView) {
+        public PlacesViewHolder(View itemView, OnViewerClickListener onViewerClickListener) {
             super(itemView);
             view = itemView;
             ivFamousPlace = view.findViewById(R.id.img);
+            this.onViewerClickListener = onViewerClickListener;
+
         }
+
+        @Override
+        public void onClick(View view) {
+            onViewerClickListener.onViewerClick(getAdapterPosition());
+        }
+
     }
 
+    public interface OnViewerClickListener{
+        void onViewerClick(int adapterPosition);
+    }
 
 }
