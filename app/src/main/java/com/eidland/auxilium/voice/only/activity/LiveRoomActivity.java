@@ -691,10 +691,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView viewers = findViewById(R.id.viewersrecyler);
         viewers.hasFixedSize();
         viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-         viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this,onlineUserList);
+        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this,onlineUserList);
         viewers.setAdapter(viewerAdapter);
         viewerAdapter.notifyDataSetChanged();
-        onlineUserCount.setText(onlineUserList.size() + " Online");
+
+//        onlineUserCount.setText(onlineUserList.size() + " Online");
 
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
@@ -836,8 +837,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             singleUserBox.setVisibility(View.INVISIBLE);
                         }
                     });
-                } else {
-                    ModUserRemove.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -1179,6 +1178,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     }
                 }
                 viewerAdapter.notifyDataSetChanged();
+                onlineUserCount.setText(onlineUserList.size() + " Online");
              /*   RecyclerView viewers = findViewById(R.id.viewersrecyler);
                 viewers.hasFixedSize();
                 viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
@@ -1956,9 +1956,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     @Override
-    public void onViewersClick(int position, String uid) {
-        Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_SHORT).show();
-     //   singleUserBox.setVisibility(View.VISIBLE);
-     //   online_layout.setVisibility(View.GONE);
+    public void onViewersClick(int position, String name, String photo) {
+        popup_uname.setText(name);
+        Glide.with(getApplicationContext()).load(photo).into(popup_user);
+        singleUserBox.setVisibility(View.VISIBLE);
     }
 }
