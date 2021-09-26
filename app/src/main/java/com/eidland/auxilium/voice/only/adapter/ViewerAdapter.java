@@ -20,20 +20,21 @@ import com.eidland.auxilium.voice.only.model.Viewer;
 public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     PlacesViewHolder placesViewHolder = null;
-    Context context;
+    private Context context;
+    private OnViwersClickListener onViwersClickListener;
     ArrayList<Viewer> countryInfoArrayList;
 
-    public ViewerAdapter(Context context, ArrayList<Viewer> cameraobject1s) {
+    public ViewerAdapter(Context context,OnViwersClickListener onViwersClickListener1, ArrayList<Viewer> cameraobject1s) {
         this.context = context;
+        this.onViwersClickListener=onViwersClickListener1;
         countryInfoArrayList = cameraobject1s;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singalsmalluser, parent, false);
-        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view);
-        return placesViewHolder;
+        return new PlacesViewHolder (LayoutInflater.from(context).inflate(R.layout.singalsmalluser, parent, false), onViwersClickListener);
+
     }
 
     @Override
@@ -45,6 +46,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         placesViewHolder = (PlacesViewHolder) holder;
         Glide.with(context).load(countryInfoArrayList.get(position).getPhotoUrl()).into(placesViewHolder.ivFamousPlace);
+
     }
 
     @Override
@@ -52,17 +54,28 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return countryInfoArrayList.size();
     }
 
-    public static class PlacesViewHolder extends RecyclerView.ViewHolder{
+     class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         View view;
         ImageView ivFamousPlace;
+        OnViwersClickListener onViwersClickListener;
 
-        public PlacesViewHolder(View itemView) {
+        public PlacesViewHolder(View itemView, OnViwersClickListener onViwersClickListener2) {
             super(itemView);
             view = itemView;
             ivFamousPlace = view.findViewById(R.id.img);
+            this.onViwersClickListener=onViwersClickListener2;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+           int pos=this.getLayoutPosition();
+            onViwersClickListener.onViewersClick(getAdapterPosition(),countryInfoArrayList.get(pos).id);
         }
     }
-
+    public interface OnViwersClickListener {
+        void onViewersClick(int position, String uid);
+    }
 
 }

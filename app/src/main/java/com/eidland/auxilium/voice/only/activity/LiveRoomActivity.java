@@ -115,7 +115,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerListAdapter.OnViewerClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViwersClickListener {
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -128,6 +128,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView button2, imgbroad;
     ImageView button1;
     ImageView leaveRoom;
+    ViewerAdapter viewerAdapter;
     ArrayList<Viewer> onlineUserList = new ArrayList<>();
     LinearLayout online_layout;
     String hostuid, roomName;
@@ -313,7 +314,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 @Override
                 public void onClick(View v) {
                     ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
-                    viewDialoguser.showDialog(onlineUserList, LiveRoomActivity.this);
+                  //  viewDialoguser.showDialog(onlineUserList, (ViewerListAdapter.OnViewerClickListener) LiveRoomActivity.this);
+                  //  ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
+                    viewDialoguser.showDialog(onlineUserList);
                 }
             });
         } catch (Exception e) {
@@ -663,6 +666,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 System.out.println(error);
             }
         });
+        setOnlineMembers();
         setNameAllSeats();
 
         giftsListner();
@@ -684,6 +688,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             }
         });
+        RecyclerView viewers = findViewById(R.id.viewersrecyler);
+        viewers.hasFixedSize();
+        viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
+         viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this,onlineUserList);
+        viewers.setAdapter(viewerAdapter);
+        viewerAdapter.notifyDataSetChanged();
+        onlineUserCount.setText(onlineUserList.size() + " Online");
 
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
@@ -711,7 +722,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         gameRecycler.setAdapter(adapterGame);
 
 
-        setOnlineMembers();
+
 
         sendGiftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1167,15 +1178,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         }
                     }
                 }
-
-                RecyclerView viewers = findViewById(R.id.viewersrecyler);
+                viewerAdapter.notifyDataSetChanged();
+             /*   RecyclerView viewers = findViewById(R.id.viewersrecyler);
                 viewers.hasFixedSize();
                 viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, onlineUserList);
+                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this,onlineUserList);
                 viewers.setAdapter(viewerAdapter);
                 viewerAdapter.notifyDataSetChanged();
                 onlineUserCount.setText(onlineUserList.size() + " Online");
-
+*/
             }
 
             @Override
@@ -1941,10 +1952,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         return isMod;
     }
 
+
+
+
     @Override
-    public void onViewerClick(int adapterPosition) {
-        Toast.makeText(getApplicationContext(), "reached", Toast.LENGTH_SHORT).show();
-        singleUserBox.setVisibility(View.VISIBLE);
-        online_layout.setVisibility(View.GONE);
+    public void onViewersClick(int position, String uid) {
+        Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_SHORT).show();
+     //   singleUserBox.setVisibility(View.VISIBLE);
+     //   online_layout.setVisibility(View.GONE);
     }
 }

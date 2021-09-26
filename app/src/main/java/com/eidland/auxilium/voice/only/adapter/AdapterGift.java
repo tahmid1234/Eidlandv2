@@ -43,7 +43,7 @@ public class AdapterGift extends RecyclerView.Adapter<AdapterGift.ViewHolder> {
         return ConstantApp.giftList().size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
         ImageView giftIcon;
         LinearLayout giftLayout;
 
