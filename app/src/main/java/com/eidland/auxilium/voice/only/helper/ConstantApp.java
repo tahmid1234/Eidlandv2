@@ -36,17 +36,17 @@ public class ConstantApp {
 
     public static List<GiftItem> giftList(){
         List<GiftItem> giftItems = new ArrayList<>();
-        giftItems.add(new GiftItem("smilereact",1, R.drawable.diamond,"Knowledge"));
-        giftItems.add(new GiftItem("hearts",1, R.drawable.ruby,""));
-        giftItems.add(new GiftItem("heartcomment",1, R.drawable.green_gem_sage,""));
-        giftItems.add(new GiftItem("like1",1, R.drawable.pink_gem,""));
-        giftItems.add(new GiftItem("like2",1, R.drawable.purple_gem,""));
-        giftItems.add(new GiftItem("clap",1, R.drawable.sapphire,"Wisdom"));
-        giftItems.add(new GiftItem("star",1, R.drawable.daco,"Humour"));
-        giftItems.add(new GiftItem("medal",1, R.drawable.emerald,""));
-        giftItems.add(new GiftItem("fire",1, R.drawable.cyan_gem,"Brave"));
-        giftItems.add(new GiftItem("debate",1, R.drawable.light_red_gem,""));
-        giftItems.add(new GiftItem("championbelt",1, R.drawable.mixed_gem,"Love"));
+        giftItems.add(new GiftItem("hearts",1, R.drawable.diamond,"Knowledge"));
+        giftItems.add(new GiftItem("like1",1, R.drawable.ruby,""));
+        giftItems.add(new GiftItem("smilereact",1, R.drawable.green_gem_sage,""));
+        giftItems.add(new GiftItem("pigions",1, R.drawable.pink_gem,""));
+        giftItems.add(new GiftItem("oscar",1, R.drawable.purple_gem,""));
+        giftItems.add(new GiftItem("heartcomment",1, R.drawable.sapphire,"Wisdom"));
+        giftItems.add(new GiftItem("like2",1, R.drawable.daco,"Humour"));
+        giftItems.add(new GiftItem("star",1, R.drawable.emerald,""));
+        giftItems.add(new GiftItem("medal",1, R.drawable.cyan_gem,"Brave"));
+        giftItems.add(new GiftItem("fire",1, R.drawable.light_red_gem,""));
+        giftItems.add(new GiftItem("debate",1, R.drawable.mixed_gem,"Love"));
 //        giftItems.add(new GiftItem("carousel",1, R.drawable.ic_gift___carousel,""));
 //        giftItems.add(new GiftItem("crown",1, R.drawable.ic_gift___crown2,""));
 //        giftItems.add(new GiftItem("castle",1, R.drawable.ic_gift___sand_castle,""));
@@ -57,17 +57,17 @@ public class ConstantApp {
     public static List<AnimationItem> animationItems(){
         List<AnimationItem> animationItemList = new ArrayList<>();
 
-        animationItemList.add(new AnimationItem("hearts", R.drawable.diamond, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("like1", R.drawable.ruby, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("smilereact", R.drawable.green_gem_sage, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("pigions", R.drawable.pink_gem, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("oscar", R.drawable.purple_gem, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("heartcomment", R.drawable.sapphire, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("like2", R.drawable.daco, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("star", R.drawable.emerald, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("medal", R.drawable.cyan_gem, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("fire", R.drawable.light_red_gem, R.drawable.red_gem));
-        animationItemList.add(new AnimationItem("debate", R.drawable.mixed_gem, R.drawable.red_gem));
+        animationItemList.add(new AnimationItem("hearts", R.drawable.diamond, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("like1", R.drawable.ruby, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("smilereact", R.drawable.green_gem_sage, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("pigions", R.drawable.pink_gem, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("oscar", R.drawable.purple_gem, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("heartcomment", R.drawable.sapphire, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("like2", R.drawable.daco, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("star", R.drawable.emerald, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("medal", R.drawable.cyan_gem, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("fire", R.drawable.light_red_gem, R.drawable.red_gem_longer));
+        animationItemList.add(new AnimationItem("debate", R.drawable.mixed_gem, R.drawable.red_gem_longer));
 //        animationItemList.add(new AnimationItem("castle", R.drawable.ic_sand_castle, R.drawable.castle_gif));
 //        animationItemList.add(new AnimationItem("crown", R.drawable.ic_crown, R.drawable.crown_gif));
 //        animationItemList.add(new AnimationItem("carousel", R.drawable.ic_carousel, R.drawable.heart_fill_gif));

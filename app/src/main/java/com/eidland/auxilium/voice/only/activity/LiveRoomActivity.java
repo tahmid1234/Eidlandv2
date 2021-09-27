@@ -152,7 +152,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     AdapterComment commentAdapter;
     ImageView roomGift, closeGiftBox, singleUserClose;
     LinearLayout crystal;
-    TextView txtsinglename, txtsinglegiftsend, sendername, receivername;
+    TextView txtsinglename, txtsinglegiftsend, sendername, receivername, rewarded;
     RelativeLayout singlegift;
     LinearLayout mutelayout;
     LinearLayout micreqlayout;
@@ -273,6 +273,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         singleUserClose = findViewById(R.id.close);
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);
+        rewarded = findViewById(R.id.sendername2);
 
         receivername = findViewById(R.id.receivername);
         popup_uname = findViewById(R.id.txtnamepopup);
@@ -1117,6 +1118,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         topContributorRecycler.setAdapter(adapterLeaderContributor);
 
                         if (hasEnteredRoom) {
+                            rewarded.setVisibility(View.GONE);
                             simpleGift.setImageResource(R.drawable.hello_pana);
                             backgrundGIF.setImageResource(R.drawable.fireworks_gif);
                             backgroundGIFLayout.setVisibility(View.VISIBLE);
@@ -1144,11 +1146,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             if (animationItem.name.equals(id)) {
                 simpleGift.setImageResource(animationItem.giftIconId);
                 backgrundGIF.setImageResource(animationItem.gifIconId);
-
+                rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
             }
         }
-        sendername.setText(gift.getSenderName() + " Rewarded to ");
+        sendername.setText(gift.getSenderName());
         receivername.setText(receiver);
 
         Handler enterScreen = new Handler();

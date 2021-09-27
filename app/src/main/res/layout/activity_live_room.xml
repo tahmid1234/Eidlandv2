@@ -387,7 +387,7 @@
                 android:layout_marginBottom="-55dp"
                 android:translationZ="1.0dp"
                 android:orientation="vertical"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -396,7 +396,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/ic_top_member"
-                    android:gravity="center|left"
+                    android:gravity="center_horizontal"
                     android:padding="8dp">
 
                     <LinearLayout
@@ -412,10 +412,21 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:fontFamily="@font/open_sans"
-                            android:gravity="center|left"
                             android:paddingLeft="5dp"
                             android:paddingBottom="0dp"
                             android:text="Sender"
+                            android:textColor="#fff"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/sendername2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/open_sans"
+                            android:paddingLeft="5dp"
+                            android:paddingBottom="0dp"
+                            android:text="Rewarded to"
                             android:textColor="#fff"
                             android:textSize="12sp" />
 
@@ -865,7 +876,7 @@
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/popup_bg"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <!--            <TextView-->
             <!--                android:id="@+id/removeUser"-->
