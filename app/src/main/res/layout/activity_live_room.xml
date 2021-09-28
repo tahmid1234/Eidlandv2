@@ -102,10 +102,12 @@
             android:translationZ="1.0dp"
             android:visibility="invisible">
 
-            <pl.droidsonroids.gif.GifImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/backgrundGIF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:translationZ="1.0dp"
                 android:scaleType="fitCenter"/>
         </RelativeLayout>
 
@@ -387,7 +389,7 @@
                 android:layout_marginBottom="-55dp"
                 android:translationZ="1.0dp"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"

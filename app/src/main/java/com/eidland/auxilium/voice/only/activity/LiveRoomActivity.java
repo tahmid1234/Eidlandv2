@@ -170,7 +170,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout;
-    GifImageView backgrundGIF;
+    LottieAnimationView backgrundGIF;
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
@@ -1145,7 +1145,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 ConstantApp.animationItems()) {
             if (animationItem.name.equals(id)) {
                 simpleGift.setImageResource(animationItem.giftIconId);
-                backgrundGIF.setImageResource(animationItem.gifIconId);
+                backgrundGIF.setAnimation(animationItem.gifIconId);
+                backgrundGIF.playAnimation();
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
             }

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 
 import java.net.URI;
@@ -60,80 +62,87 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 placesViewHolder.gift.setVisibility(View.VISIBLE);
                 placesViewHolder.txtcount.setVisibility(View.VISIBLE);
                 placesViewHolder.txtcount.setText("");
-                switch (countryInfoArrayList.get(position).getImgid()){
 
-                    case "hearts":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_heart);
-                        //   Constants.user.setDimond(Constants.user.getDimond()-500);
-                        break;
-                    case "like1":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_like_1);
-
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "smilereact":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_heart_1_);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "pigions":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_pigeon);
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "oscar":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_oscar);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "heartcomment":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_heartcomment);
-
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-
-                    case "like2":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_like);
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "star":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_star);
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "medal":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_medal);
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "fire":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_fire);
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "debate":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_debate);
-                        // talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-
-                    case "castle":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_sand_castle);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "crown":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_crown);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-
-                    case "carousel":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_carousel);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "championbelt":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_champion_belt);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-                    case "clap":
-                        placesViewHolder.gift.setImageResource(R.drawable.ic_clapping);
-                        //  talntcoins.setText(Constants.user.getDimond()+"");
-                        break;
-
-
+                for (AnimationItem animationItem :
+                        ConstantApp.animationItems()) {
+                    if (animationItem.name.equals(countryInfoArrayList.get(position).getImgid())) {
+                        placesViewHolder.gift.setImageResource(animationItem.giftIconId);
+                    }
                 }
+//                switch (){
+//
+//                    case "hearts":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_heart);
+//                        //   Constants.user.setDimond(Constants.user.getDimond()-500);
+//                        break;
+//                    case "like1":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_like_1);
+//
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "smilereact":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_heart_1_);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "pigions":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_pigeon);
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "oscar":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_oscar);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "heartcomment":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_heartcomment);
+//
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//
+//                    case "like2":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_like);
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "star":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_star);
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "medal":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_medal);
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "fire":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_fire);
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "debate":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_debate);
+//                        // talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//
+//                    case "castle":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_sand_castle);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "crown":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_crown);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//
+//                    case "carousel":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_carousel);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "championbelt":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_champion_belt);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//                    case "clap":
+//                        placesViewHolder.gift.setImageResource(R.drawable.ic_clapping);
+//                        //  talntcoins.setText(Constants.user.getDimond()+"");
+//                        break;
+//
+//
+//                }
             }
             else {
 
