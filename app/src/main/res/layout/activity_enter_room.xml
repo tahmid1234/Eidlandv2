@@ -39,7 +39,6 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:onClick="chooseAvatar"
                 app:cardCornerRadius="15dp"
                 >
                 <ImageView

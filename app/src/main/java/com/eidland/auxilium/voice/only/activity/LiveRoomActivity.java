@@ -910,7 +910,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
                     if (isHost) {
-                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", "init", inviteLink, welcomeMsg, type);
+                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", "init", inviteLink, "Welcome! tap a seat to start speaking", "general");
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
                         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom, config().mUid);
