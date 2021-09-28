@@ -340,7 +340,6 @@
                     android:layout_weight="1" />
 
                 <LinearLayout
-                    android:id="@+id/showonlineusers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -472,7 +471,6 @@
                     android:layout_weight="1" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/game_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-150dp"
@@ -708,7 +706,6 @@
                     android:layout_marginTop="-24dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/user_available_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -718,7 +715,7 @@
                         android:text="Balance:"
                         android:textColor="#fff"
                         android:layout_marginBottom="8dp"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
                 <TextView
                     android:id="@+id/user_available_coin"
                     android:layout_width="wrap_content"
@@ -732,7 +729,7 @@
                     android:text="00"
                     android:textColor="#fff"
                     android:layout_marginBottom="8dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
 <!--                <TextView-->
 <!--                    android:id="@+id/coinrecharge"-->
@@ -762,9 +759,8 @@
                         android:text="Each gift costs "
                         android:textColor="#fff"
 
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                     <TextView
-                        android:id="@+id/gift_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_fi_rr_coin_small"
@@ -774,7 +770,7 @@
                         android:gravity="left|center_vertical"
                         android:text="1. "
                         android:textColor="#fff"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -782,10 +778,9 @@
                         android:gravity="left"
                         android:text="Giving a gift earns you "
                         android:textColor="#fff"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                     <TextView
-                        android:id="@+id/ed_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_edcoin"
@@ -793,7 +788,7 @@
                         android:gravity="left"
                         android:text="1."
                         android:textColor="#fff"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -916,10 +911,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
+                    android:weightSum="2"
                     android:orientation="horizontal">
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
 
-                    <RelativeLayout
+
+                <RelativeLayout
                         android:id="@+id/lrnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -958,19 +959,27 @@
 
 
                     </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+
+                        android:gravity="center|end"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_height="wrap_content">
+
 
                     <LinearLayout
-                        android:id="@+id/eidlandpointslayout"
                         android:layout_width="130dp"
                         android:layout_height="60dp"
                         android:layout_below="@id/lrnt"
-                        android:layout_marginLeft="55dp"
-                        android:layout_marginTop="23dp"
+                      android:layout_gravity="center"
+
                         android:background="@drawable/eidcoin_bg"
-                        android:gravity="center|right">
+                        android:gravity="center">
 
                         <ImageView
-                            android:id="@+id/eidpoint_icon"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_margin="3dp"
@@ -978,7 +987,6 @@
                             android:src="@drawable/eidcoin" />
 
                         <LinearLayout
-                            android:id="@+id/eidpoint_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -986,7 +994,6 @@
                             android:padding="7dp">
 
                             <TextView
-                                android:id="@+id/pointcount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_semibold"
@@ -996,7 +1003,6 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/pointtext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_semibold"
@@ -1009,18 +1015,20 @@
                         </LinearLayout>
 
                     </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/useractions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:weightSum="4"
                     android:layout_gravity="center_horizontal"
                     android:padding="10dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/mutelayout"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lrnt"
@@ -1029,20 +1037,18 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/mute_icon"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:contentDescription="TODO"
                             android:src="@drawable/microphone_mute" />
 
                         <TextView
-                            android:id="@+id/mute_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="Request to\nMute"
                             android:textColor="#fff"
-                            android:textSize="15dp"
+                            android:textSize="15sp"
                             android:textAlignment="center"
                             android:textStyle="bold" />
 
@@ -1050,28 +1056,27 @@
 
                     <LinearLayout
                         android:id="@+id/micreqlayout"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/lrnt"
+
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/mic_req"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:contentDescription="TODO"
                             android:src="@drawable/microphone" />
 
                         <TextView
-                            android:id="@+id/micreq_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="Request to\nTake Mic"
                             android:textColor="#fff"
-                            android:textSize="15dp"
+                            android:textSize="15sp"
                             android:textAlignment="center"
                             android:textStyle="bold" />
 
@@ -1079,6 +1084,7 @@
 
                     <LinearLayout
                         android:id="@+id/blocklayout"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lrnt"
@@ -1087,7 +1093,6 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/block"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:contentDescription="TODO"
@@ -1100,7 +1105,7 @@
                             android:fontFamily="@font/open_sans"
                             android:text="Block\nParticipant"
                             android:textColor="#fff"
-                            android:textSize="15dp"
+                            android:textSize="15sp"
                             android:textAlignment="center"
                             android:textStyle="bold" />
 
@@ -1108,6 +1113,7 @@
 
                     <LinearLayout
                         android:id="@+id/profilelayout"
+                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lrnt"
@@ -1116,20 +1122,18 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/profile"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:contentDescription="TODO"
                             android:src="@drawable/user_follow" />
 
                         <TextView
-                            android:id="@+id/profile_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="View\nProfile"
                             android:textColor="#fff"
-                            android:textSize="15dp"
+                            android:textSize="15sp"
                             android:textAlignment="center"
                             android:textStyle="bold" />
 

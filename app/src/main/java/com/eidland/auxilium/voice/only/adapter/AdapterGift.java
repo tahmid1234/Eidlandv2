@@ -45,8 +45,8 @@ public class AdapterGift extends RecyclerView.Adapter<AdapterGift.ViewHolder> {
             holder.giftIdentifier.setText(ConstantApp.giftList().get(position).tag);
         }
         else {
-            holder.gifttagholder.setVisibility(View.GONE);
-            holder.giftIdentifier.setVisibility(View.GONE);
+            holder.gifttagholder.setVisibility(View.INVISIBLE);
+            holder.giftIdentifier.setVisibility(View.INVISIBLE);
         }
     }
 

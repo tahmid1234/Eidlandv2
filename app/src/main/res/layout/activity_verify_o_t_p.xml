@@ -42,7 +42,6 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView3"
                     android:layout_width="180dp"
                     android:layout_height="58dp"
 
@@ -81,7 +80,6 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/numbertitle"
                     android:layout_width="202dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
