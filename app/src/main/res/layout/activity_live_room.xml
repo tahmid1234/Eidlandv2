@@ -530,7 +530,6 @@
                     android:id="@+id/comment_box_circle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                        android:id="@+id/comment_box_circle"
                     android:layout_weight="1"
                     android:minHeight="50dp"
                     android:layout_marginLeft="5dp"
