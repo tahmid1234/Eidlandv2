@@ -457,7 +457,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginEnd="105dp"
-
                 android:layout_weight="1">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -473,7 +472,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-150dp"
+                android:layout_marginTop="-250dp"
+                android:layout_marginBottom="-30dp"
+                android:paddingBottom="20dp"
                 android:gravity="right"
                 android:orientation="vertical">
 
@@ -515,52 +516,149 @@
                 </LinearLayout>
             </LinearLayout>
 
+<!--            <LinearLayout-->
+<!--                android:id="@+id/input_box_area"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingTop="10dp"-->
+<!--                android:paddingBottom="10dp"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginBottom="18dp"-->
+<!--                android:visibility="visible">-->
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/comment_box_circle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:minHeight="50dp"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:background="@drawable/transparentblackcircle"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:paddingLeft="12dp"-->
+<!--                    android:paddingRight="25dp">-->
+
+<!--                    <EditText-->
+<!--                        android:id="@+id/comment_box"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="bottom"-->
+<!--                        android:hint="Type here"-->
+<!--                        android:maxLines="5"-->
+<!--                        android:inputType="textMultiLine|textCapSentences"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:textColor="#fff"-->
+<!--                        android:textColorHint="#fff" />-->
+
+<!--                </LinearLayout>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/sndcmnt"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:background="@drawable/ic_send_message_button_white"-->
+<!--                    android:onClick="onSwitchSpeakerClicked"/>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@id/switch_speaker_id"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:contentDescription="TODO"-->
+<!--                    android:onClick="onSwitchSpeakerClicked"-->
+<!--                    android:src="@drawable/btn_speaker"-->
+<!--                    android:visibility="gone" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@id/mute_local_speaker_id"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:contentDescription="TODO"-->
+<!--                    android:src="@drawable/ic_mic_on"-->
+<!--                    android:visibility="gone" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/bottom_action_end_call"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:contentDescription="TODO"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:onClick="onEndCallClicked"-->
+<!--                    android:padding="4dp"-->
+<!--                    android:src="@drawable/ic_leave_mic"-->
+<!--                    android:visibility="gone" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/room_gift"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_gravity="bottom"-->
+<!--                    android:layout_marginEnd="5dp"-->
+<!--                    android:background="@drawable/ic_gift_button"-->
+<!--                    android:contentDescription="TODO"-->
+<!--                    android:paddingLeft="10dp" />-->
+
+<!--            </LinearLayout>-->
+
+
             <LinearLayout
                 android:id="@+id/input_box_area"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
+                android:padding="5dp"
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="18dp"
-                android:visibility="visible">
+                android:paddingTop="5dp"
+                app:autoSizeTextType="uniform"
+                android:paddingVertical="15dp">
 
-                <LinearLayout
-                    android:id="@+id/comment_box_circle"
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:minHeight="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/transparentblackcircle"
-                    android:orientation="horizontal"
-                    android:layout_gravity="bottom"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="25dp">
+                    android:layout_marginLeft="10dp"
+                    android:gravity="bottom">
+
+                    <LinearLayout
+                        android:id="@+id/comment_box_circle"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal"
+                        android:background="@drawable/transparentblackcircle" />
 
                     <EditText
                         android:id="@+id/comment_box"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
+                        android:gravity="bottom"
+                        android:background="@android:color/transparent"
                         android:hint="Type here"
-                        android:maxLines="5"
                         android:inputType="textMultiLine|textCapSentences"
-                        android:textSize="18sp"
+                        android:lines="5"
+                        android:minLines="5"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="15dp"
                         android:textColor="#fff"
                         android:textColorHint="#fff" />
+                </RelativeLayout>
 
-                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/sndcmnt"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_gravity="bottom"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/ic_send_message_button_white"
-                    android:onClick="onSwitchSpeakerClicked"/>
+                    android:onClick="onSwitchSpeakerClicked" />
 
                 <ImageView
                     android:id="@id/switch_speaker_id"
@@ -596,106 +694,12 @@
                     android:id="@+id/room_gift"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_gravity="bottom"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/ic_gift_button"
                     android:contentDescription="TODO"
-                    android:paddingLeft="10dp" />
+                    android:background="@drawable/ic_gift_button" />
+
 
             </LinearLayout>
-
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/input_box_area"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="65dp"-->
-<!--                android:padding="5dp"-->
-<!--                android:gravity="center_horizontal|center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingTop="5dp"-->
-<!--                app:autoSizeTextType="uniform"-->
-<!--                android:paddingVertical="15dp">-->
-
-<!--                <RelativeLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:background="@drawable/transparentblackcircle">-->
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/comment_box_circle"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:layout_alignParentTop="true"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:background="@drawable/transparentblackcircle" />-->
-
-<!--                    <EditText-->
-<!--                        android:id="@+id/comment_box"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentBottom="true"-->
-<!--                        android:background="@android:color/transparent"-->
-<!--                        android:hint="Type here"-->
-<!--                        android:inputType="textMultiLine|textCapSentences"-->
-<!--                        android:lines="5"-->
-<!--                        android:minLines="5"-->
-<!--                        android:paddingStart="8dp"-->
-<!--                        android:paddingEnd="8dp"-->
-<!--                        android:paddingBottom="15dp"-->
-<!--                        android:textColor="#fff"-->
-<!--                        android:textColorHint="#fff" />-->
-<!--                </RelativeLayout>-->
-
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/sndcmnt"-->
-<!--                    android:layout_width="45dp"-->
-<!--                    android:layout_height="45dp"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:background="@drawable/ic_send_message_button_white"-->
-<!--                    android:onClick="onSwitchSpeakerClicked" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@id/switch_speaker_id"-->
-<!--                    android:layout_width="45dp"-->
-<!--                    android:layout_height="45dp"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:contentDescription="TODO"-->
-<!--                    android:onClick="onSwitchSpeakerClicked"-->
-<!--                    android:src="@drawable/btn_speaker"-->
-<!--                    android:visibility="gone" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@id/mute_local_speaker_id"-->
-<!--                    android:layout_width="45dp"-->
-<!--                    android:layout_height="45dp"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:contentDescription="TODO"-->
-<!--                    android:src="@drawable/ic_mic_on"-->
-<!--                    android:visibility="gone" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/bottom_action_end_call"-->
-<!--                    android:layout_width="45dp"-->
-<!--                    android:layout_height="45dp"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:contentDescription="TODO"-->
-<!--                    android:onClick="onEndCallClicked"-->
-<!--                    android:padding="4dp"-->
-<!--                    android:src="@drawable/ic_leave_mic"-->
-<!--                    android:visibility="gone" />-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/room_gift"-->
-<!--                    android:layout_width="45dp"-->
-<!--                    android:layout_height="45dp"-->
-<!--                    android:layout_marginEnd="5dp"-->
-<!--                    android:contentDescription="TODO"-->
-<!--                    android:background="@drawable/ic_gift_button" />-->
-
-
-<!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
