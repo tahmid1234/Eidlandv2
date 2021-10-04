@@ -5,16 +5,18 @@ public class Viewer {
     public String photo;
     public String type;
     public String name;
+    public String recievedCoins;
     public int uid;
     public Viewer(){
 
     }
-    public Viewer(String id, String photo, String type, String n, int uid){
+    public Viewer(String id, String photo, String type, String n, String recievedCoins, int uid){
         this.id = id;
         this.photo = photo;
         this.type=type;
         this.name=n;
         this.uid=uid;
+        this.recievedCoins=recievedCoins;
     }
 
     public String getName() {
@@ -48,6 +50,10 @@ public class Viewer {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getRecievedCoins() { return recievedCoins; }
+
+    public void setRecievedCoins(String recievedCoins) { this.recievedCoins = recievedCoins; }
 
     public String getId() {
         return id;
