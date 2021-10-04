@@ -140,7 +140,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String Clickedseat = null;
     private final static Logger log = LoggerFactory.getLogger(LiveRoomActivity.class);
     CircleImageView popup_user;
-    TextView popup_uname;
+    TextView popup_uname, eidlandpointcount;
     private volatile boolean mAudioMuted = false;
     ImageView userImage;
     private volatile int mAudioRouting = -1; // Default
@@ -270,6 +270,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         blocklayout = findViewById(R.id.blocklayout);
         profilelayout = findViewById(R.id.profilelayout);
         txtsinglename = findViewById(R.id.txtnamepopup);
+        eidlandpointcount = findViewById(R.id.eidland_point_count);
         singleUserClose = findViewById(R.id.close);
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);
@@ -1985,6 +1986,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     @Override
     public void onViewersClick(int position, String name, String photo) {
         popup_uname.setText(name);
+//        eidlandpointcount.setText(recievedCoin);
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         singleUserBox.setVisibility(View.VISIBLE);
     }
