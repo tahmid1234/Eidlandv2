@@ -967,7 +967,7 @@
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/popup_bg"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <!--            <TextView-->
             <!--                android:id="@+id/removeUser"-->
