@@ -70,11 +70,11 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @Override
         public void onClick(View v) {
            int pos=this.getLayoutPosition();
-           onViewersClickListener.onViewersClick(getAdapterPosition(), countryInfoArrayList.get(pos).id, countryInfoArrayList.get(pos).name,countryInfoArrayList.get(pos).photo);
+           onViewersClickListener.onViewersClick(getAdapterPosition(), countryInfoArrayList.get(pos).id, countryInfoArrayList.get(pos).name,countryInfoArrayList.get(pos).photo, countryInfoArrayList.get(pos).recievedCoins);
         }
     }
     public interface OnViewersClickListener {
-        void onViewersClick(int position, String uid, String name, String photo);
+        void onViewersClick(int position, String uid, String name, String photo, String recievedCoins);
     }
 
 }
