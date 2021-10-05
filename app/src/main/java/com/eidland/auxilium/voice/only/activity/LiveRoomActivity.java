@@ -162,6 +162,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     int height, width;
     boolean inactiveClick = false;
     String clickedOnlineUserUID;
+    boolean isModerator = false;
 
 
     RelativeLayout animatedLayout;
@@ -384,6 +385,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 areatop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        dialog.dismiss();
                         run = "1";
                         progressDialog.show();
                         EndMeeting();
@@ -396,7 +398,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 areabottom.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
@@ -584,6 +586,22 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
         selectuseruid = hostuid;
 
+        FirebaseDatabase.getInstance().getReference("Mods").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(currentUser.getUid())) {
+                    isModerator = true;
+                }else{
+                    isModerator = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         singlegift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -605,7 +623,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         micreqlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (type.equals("Host")) {
+                if (isModerator) {
                     if (clickedOnlineUserUID == null) {
                         Toast.makeText(getApplicationContext(), "Select user from online user list!", Toast.LENGTH_SHORT).show();
                         return;
@@ -621,10 +639,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             }
                         }
                         FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).onDisconnect().removeValue();
-                        FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).setValue(StaticConfig.user.getName() + " invited you to take the seat!");
+                        String modName = "Moderator";
+                        try{
+                            modName = StaticConfig.user.getName();
+                        }catch (Exception e){}
+                        FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).setValue(modName + " invited you to take the seat!");
                     }
+                }else {
+                    Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1006,6 +1029,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (snapshot.exists()) {
                     String msge = snapshot.getValue(String.class);
                     Dialog dialog = new Dialog(LiveRoomActivity.this);
+
                     dialog.setContentView(R.layout.layout_custom_dialog);
                     LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
                     linearLayout.setMinimumWidth((int) (width * 0.8));
@@ -1023,25 +1047,33 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     TextView positive = dialog.findViewById(R.id.positive_btn);
                     positive.setVisibility(View.VISIBLE);
                     positive.setText("Accept");
+
+                    Dialog finalDialog = dialog;
                     positive.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            dialog.dismiss();
+                            finalDialog.dismiss();
                             FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+
                         }
                     });
 
                     TextView negative = dialog.findViewById(R.id.negative_btn);
                     negative.setVisibility(View.VISIBLE);
                     negative.setText("Reject");
+                    Dialog finalDialog1 = dialog;
                     negative.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            dialog.cancel();
+                            finalDialog1.dismiss();
                             FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+
                         }
                     });
-                    dialog.show();
+
+                    if(!isFinishing()) {
+                        dialog.show();
+                    }
                 }
             }
 
@@ -1507,7 +1539,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         negative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
         dialog.show();
@@ -1816,7 +1848,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 boolean checkPermissionResult = checkSelfPermissions();
                 if (checkPermissionResult) {
-                    dialog.cancel();
+                    dialog.dismiss();
                 } else {
                     Log.e("no permission", "Not Found");
                 }
@@ -2014,7 +2046,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     .setNegativeButton("I think I'll pass for now", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
+                            dialog.dismiss();
                         }
                     })
                     .setCancelable(false)
