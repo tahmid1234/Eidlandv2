@@ -35,40 +35,35 @@ public class ConstantApp {
         giftItems.add(new GiftItem("pigions",1, R.drawable.gift_pink,""));
         giftItems.add(new GiftItem("oscar",1, R.drawable.gift_purple,""));
         giftItems.add(new GiftItem("heartcomment",1, R.drawable.gift_yellow,"Wisdom"));
-//        giftItems.add(new GiftItem("like2",1, R.drawable.gift_daco,"Humour"));
-//        giftItems.add(new GiftItem("star",1, R.drawable.gift_green,""));
         giftItems.add(new GiftItem("medal",1, R.drawable.gift_cyan,"Brave"));
-//        giftItems.add(new GiftItem("fire",1, R.drawable.gift_light_red,""));
         giftItems.add(new GiftItem("debate",1, R.drawable.gift_stone,"Love"));
+        giftItems.add(new GiftItem("cake2",1, R.drawable.gift_cake_2,""));
+        giftItems.add(new GiftItem("donut",1, R.drawable.gifts_donut,""));
+        giftItems.add(new GiftItem("crown3",1, R.drawable.gift_crown_3,""));
+        giftItems.add(new GiftItem("necklace2",1, R.drawable.gift_necklace_2,""));
+        giftItems.add(new GiftItem("sweets2",1, R.drawable.gift_sweets_2,""));
+        giftItems.add(new GiftItem("trophy",1, R.drawable.gift_trophy,""));
 
 
-//        giftItems.add(new GiftItem("carousel",1, R.drawable.ic_gift___carousel,""));
-//        giftItems.add(new GiftItem("crown",1, R.drawable.ic_gift___crown2,""));
-//        giftItems.add(new GiftItem("castle",1, R.drawable.ic_gift___sand_castle,""));
-//        giftItems.add(new GiftItem("pigions",1, R.drawable.ic_gift___pigeon2,""));
-//        giftItems.add(new GiftItem("oscar",1, R.drawable.ic_gift___oscar2,""));
+
         return giftItems;
     }
     public static List<AnimationItem> animationItems(){
         List<AnimationItem> animationItemList = new ArrayList<>();
 
-//        animationItemList.add(new AnimationItem("hearts", R.drawable.gift_diamond, "gift_stone.json", R.drawable.gift_diamond_svg));
         animationItemList.add(new AnimationItem("like1", R.drawable.gift_red, "gift_red.json", R.drawable.gift_red_svg));
         animationItemList.add(new AnimationItem("smilereact", R.drawable.gift_turquoise, "gift_turquoise.json", R.drawable.gift_turquoise_svg));
         animationItemList.add(new AnimationItem("pigions", R.drawable.gift_pink, "gift_pink.json", R.drawable.gift_pink_svg));
         animationItemList.add(new AnimationItem("oscar", R.drawable.gift_purple, "gift_purple.json", R.drawable.gift_purple_svg));
         animationItemList.add(new AnimationItem("heartcomment", R.drawable.gift_yellow, "gift_yellow.json", R.drawable.gift_yellow_svg));
-//        animationItemList.add(new AnimationItem("like2", R.drawable.gift_daco, "gift_cyan.json", R.drawable.gift_daco_svg));
-//        animationItemList.add(new AnimationItem("star", R.drawable.gift_green, "gift_green.json", R.drawable.gift_stone_svg));
         animationItemList.add(new AnimationItem("medal", R.drawable.gift_cyan, "gift_cyan.json", R.drawable.gift_cyan_svg));
-//        animationItemList.add(new AnimationItem("fire", R.drawable.gift_light_red_svg, "gift_red.json", R.drawable.gift_light_red_svg));
         animationItemList.add(new AnimationItem("debate", R.drawable.gift_stone, "gift_stone.json", R.drawable.gift_stone_svg));
-
-//        animationItemList.add(new AnimationItem("castle", R.drawable.ic_sand_castle, R.drawable.castle_gif));
-//        animationItemList.add(new AnimationItem("crown", R.drawable.ic_crown, R.drawable.crown_gif));
-//        animationItemList.add(new AnimationItem("carousel", R.drawable.ic_carousel, R.drawable.heart_fill_gif));
-//        animationItemList.add(new AnimationItem("championbelt", R.drawable.ic_champion_belt, R.drawable.heart_fill_gif));
-//        animationItemList.add(new AnimationItem("clap", R.drawable.ic_clapping, R.drawable.clap_gif));
+        animationItemList.add(new AnimationItem("cake2", R.drawable.gift_cake_2, "gift_cake_2.json", R.drawable.gift_cake_2_svg));
+        animationItemList.add(new AnimationItem("donut", R.drawable.gifts_donut, "gift_donut.json", R.drawable.gifts_donut_svg));
+        animationItemList.add(new AnimationItem("crown3", R.drawable.gift_crown_3, "gift_crown_3.json", R.drawable.gift_crown_3_svg));
+        animationItemList.add(new AnimationItem("necklace3", R.drawable.gift_necklace_2, "gift_necklace_2.json", R.drawable.gift_necklace_2_svg));
+        animationItemList.add(new AnimationItem("sweets2", R.drawable.gift_sweets_2, "gift_sweets_2.json", R.drawable.gift_sweets_2_svg));
+        animationItemList.add(new AnimationItem("trophy", R.drawable.gift_trophy, "gift_trophy.json", R.drawable.gift_trophy_svg));
 
         return animationItemList;
     }
