@@ -1986,9 +1986,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     @Override
-    public void onViewersClick(int position, String name, String photo) {
+    public void onViewersClick(int position, String name, String photo, String recievedCoin) {
         popup_uname.setText(name);
-//        eidlandpointcount.setText(recievedCoin);
+        eidlandpointcount.setText(recievedCoin);
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         singleUserBox.setVisibility(View.VISIBLE);
     }
