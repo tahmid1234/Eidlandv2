@@ -109,7 +109,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViwersClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener {
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -117,7 +117,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout commentBoxCircle;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
-    int lastPos=0;
+    int lastPos = 0;
     RelativeLayout lastselec;
     TextView ModUserRemove;
     Boolean muteClicked = false;
@@ -126,6 +126,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView leaveRoom;
     ViewerAdapter viewerAdapter;
     ArrayList<Viewer> onlineUserList = new ArrayList<>();
+    ArrayList<Viewer> seatUsers = new ArrayList<>();
     LinearLayout online_layout;
     String hostuid, roomName;
     Spinner spinner;
@@ -160,6 +161,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView button;
     int height, width;
     boolean inactiveClick = false;
+    String clickedOnlineUserUID;
 
 
     RelativeLayout animatedLayout;
@@ -306,13 +308,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         inviteButton = findViewById(R.id.invite_icon);
 
+
         try {
             onlineUserCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
-                  //  viewDialoguser.showDialog(onlineUserList, (ViewerListAdapter.OnViewerClickListener) LiveRoomActivity.this);
-                  //  ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
+                    //  viewDialoguser.showDialog(onlineUserList, (ViewerListAdapter.OnViewerClickListener) LiveRoomActivity.this);
+                    //  ViewDialogUser viewDialoguser = new ViewDialogUser(LiveRoomActivity.this, width, height);
                     viewDialoguser.showDialog(onlineUserList);
                 }
             });
@@ -579,7 +582,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 }
             }
         });
-       selectuseruid = hostuid;
+        selectuseruid = hostuid;
 
         singlegift.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -602,13 +605,30 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         micreqlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(type.equals("Host")){
-                    FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(Clickedseat).onDisconnect().removeValue();
-                    FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(Clickedseat).setValue( StaticConfig.user.getName()+" invited you to take mic!");
+                if (type.equals("Host")) {
+                    if (clickedOnlineUserUID == null) {
+                        Toast.makeText(getApplicationContext(), "Select user from online user list!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (seatUsers.size() >= 10) {
+                        Toast.makeText(getApplicationContext(), "No available seat!", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        for (Viewer viewer : seatUsers) {
+                            if (viewer.id.equals(clickedOnlineUserUID)) {
+                                Toast.makeText(getApplicationContext(), "User Already on seat!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).onDisconnect().removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).setValue(StaticConfig.user.getName() + " invited you to take the seat!");
+                    }
                 }
                 Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        requestListener();
 
         blocklayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -628,28 +648,32 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).onDisconnect().removeValue();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    User user = snapshot.getValue(User.class);
-                    StaticConfig.user = user;
-                    userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
-                } catch (Exception e) {
+        userRef.child(user.getUid()).
 
-                }
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        try {
+                            User user = snapshot.getValue(User.class);
+                            StaticConfig.user = user;
+                            userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
+                        } catch (Exception e) {
 
-            }
+                        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println(error);
-            }
-        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        System.out.println(error);
+                    }
+                });
+
         setOnlineMembers();
+
         setNameAllSeats();
 
-        giftsListner();
+        giftsListener();
 
         gameListener();
 
@@ -671,11 +695,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         RecyclerView viewers = findViewById(R.id.viewersrecyler);
         viewers.hasFixedSize();
         viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this,onlineUserList);
+        viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this, onlineUserList);
         viewers.setAdapter(viewerAdapter);
         viewerAdapter.notifyDataSetChanged();
-
-//        onlineUserCount.setText(onlineUserList.size() + " Online");
 
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
@@ -703,8 +725,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         gameRecycler.setAdapter(adapterGame);
 
 
-
-
         sendGiftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -712,8 +732,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (selectuseruid == null)
                     Toast.makeText(getApplicationContext(), "Please select a speaker first", Toast.LENGTH_SHORT).show();
 
-                if (!selectuseruid.equals(currentUser.getUid()))
-                {
+                if (!selectuseruid.equals(currentUser.getUid())) {
                     if (selectuseruid.equals("cJupIaBOKXN8QqWzAQMQYFwHzVC3"))
                         Toast.makeText(getApplicationContext(), "Please select a speaker first", Toast.LENGTH_SHORT).show();
                     else {
@@ -782,17 +801,42 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         } else
                             Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
                     }
-            }
-
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "You can not send gift to yourself", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                seatUsers.clear();
+                if (snapshot.exists()) {
+                    try {
+                        for (DataSnapshot snap : snapshot.getChildren()) {
+                            Viewer viewer = snap.getValue(Viewer.class);
+                            seatUsers.add(viewer);
+                        }
+
+                    } catch (Exception e) {
+
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
 
     @Override
     public void onSeatClick(int position) {
+        clickedOnlineUserUID = null;
         if (!inactiveClick) {
             CheckSeats("seat" + position);
             Clickedseat = "seat" + position;
@@ -801,11 +845,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onGiftClick(int position, ImageView icon, RelativeLayout selec) {
-      if (position!=lastPos ){
-          if (lastselec!=null)
-          {
-              lastselec.setVisibility(View.GONE);
-          }
+        if (position != lastPos) {
+            if (lastselec != null) {
+                lastselec.setVisibility(View.GONE);
+            }
         }
 
         GiftItem giftItem = ConstantApp.giftList().get(position);
@@ -814,13 +857,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             lastImg = icon;
             selec.setVisibility(View.VISIBLE);
 
-            lastPos=position;
-            lastselec=selec;
+            lastPos = position;
+            lastselec = selec;
         } catch (Exception e) {
             System.out.println(e);
         }
 
-      //  icon.setImageResource(R.drawable.ic_check_1_gift_select);
+        //  icon.setImageResource(R.drawable.ic_check_1_gift_select);
         selectedGiftName = giftItem.name;
         selectedGiftAmount = giftItem.amount;
     }
@@ -956,6 +999,59 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
     }
 
+    void requestListener() {
+        FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String msge = snapshot.getValue(String.class);
+                    Dialog dialog = new Dialog(LiveRoomActivity.this);
+                    dialog.setContentView(R.layout.layout_custom_dialog);
+                    LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+                    linearLayout.setMinimumWidth((int) (width * 0.8));
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                    dialog.setCancelable(false);
+
+                    ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView.setImageResource(R.drawable.microphone);
+
+                    TextView msg = dialog.findViewById(R.id.msg);
+                    msg.setVisibility(View.VISIBLE);
+                    msg.setText(msge);
+
+                    TextView positive = dialog.findViewById(R.id.positive_btn);
+                    positive.setVisibility(View.VISIBLE);
+                    positive.setText("Accept");
+                    positive.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+                        }
+                    });
+
+                    TextView negative = dialog.findViewById(R.id.negative_btn);
+                    negative.setVisibility(View.VISIBLE);
+                    negative.setText("Reject");
+                    negative.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.cancel();
+                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void CheckSeats(final String seats) {
         if (AgainSeat == null) {
             Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
@@ -1005,68 +1101,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                                     try {
                                         Viewer user = currentData.getValue(Viewer.class);
-
                                         FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).onDisconnect().removeValue();
-
-                                        FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(seats).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if(snapshot.exists()){
-                                                    String msge = snapshot.getValue(String.class);
-                                                    System.out.println(msge);
-
-                                                    Dialog dialog = new Dialog(LiveRoomActivity.this);
-                                                    dialog.setContentView(R.layout.layout_custom_dialog);
-                                                    LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-                                                    linearLayout.setMinimumWidth((int) (width * 0.8));
-                                                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
-                                                    dialog.setCancelable(false);
-
-                                                    ImageView imageView = dialog.findViewById(R.id.dialog_icon);
-                                                    imageView.setVisibility(View.VISIBLE);
-                                                    imageView.setImageResource(R.drawable.microphone);
-
-                                                    TextView msg = dialog.findViewById(R.id.msg);
-                                                    msg.setVisibility(View.VISIBLE);
-                                                    msg.setText(msge);
-
-                                                    TextView positive = dialog.findViewById(R.id.positive_btn);
-                                                    positive.setVisibility(View.VISIBLE);
-                                                    positive.setText("Accept");
-                                                    positive.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            dialog.dismiss();
-                                                            if (AgainSeat != null) {
-
-
-                                                                doSwitchToBroadcaster(false);
-                                                                FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
-
-                                                            }
-                                                        }
-                                                    });
-
-                                                    TextView negative = dialog.findViewById(R.id.negative_btn);
-                                                    negative.setVisibility(View.VISIBLE);
-                                                    negative.setText("Reject");
-                                                    negative.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            dialog.cancel();
-                                                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(AgainSeat).removeValue();
-                                                        }
-                                                    });
-                                                    dialog.show();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-
                                         if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(user.id)) {
                                             doSwitchToBroadcaster(true);
                                             AgainSeat = seats;
@@ -1075,7 +1110,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             AgainSeat = null;
                                         }
                                         inactiveClick = false;
-
                                     } catch (Exception e) {
                                         System.out.println(e);
                                     }
@@ -1116,7 +1150,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
     }
 
-    public void giftsListner() {
+    public void giftsListener() {
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -1246,14 +1280,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 }
                 viewerAdapter.notifyDataSetChanged();
                 onlineUserCount.setText(onlineUserList.size() + " Online");
-             /*   RecyclerView viewers = findViewById(R.id.viewersrecyler);
+                RecyclerView viewers = findViewById(R.id.viewersrecyler);
                 viewers.hasFixedSize();
                 viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, this,onlineUserList);
+                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, LiveRoomActivity.this,onlineUserList);
                 viewers.setAdapter(viewerAdapter);
                 viewerAdapter.notifyDataSetChanged();
-                onlineUserCount.setText(onlineUserList.size() + " Online");
-*/
             }
 
             @Override
@@ -1358,25 +1390,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     private void optional() {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EndMeeting();
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        EndMeeting();
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EndMeeting();
     }
 
 
@@ -2028,11 +2041,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
 
-
-
     @Override
-    public void onViewersClick(int position, String name, String photo) {
+    public void onViewersClick(int position, String uid, String name, String photo) {
         popup_uname.setText(name);
+        clickedOnlineUserUID = uid;
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         singleUserBox.setVisibility(View.VISIBLE);
     }

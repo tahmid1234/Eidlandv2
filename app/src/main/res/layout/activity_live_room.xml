@@ -549,6 +549,7 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="6dp"
                         android:paddingBottom="8dp"
+                        android:paddingTop="6dp"
                         android:textColor="#fff"
                         android:textColorHint="#fff" />
                 </RelativeLayout>

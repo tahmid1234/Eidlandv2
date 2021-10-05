@@ -77,8 +77,8 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                 double current= getHour(now);
                 double roomstart=   getHour(room.startTime);
                 double roomend= getHour(room.endTime);
-                if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
-//                if(true){
+//                if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
+                if(true){
                     Intent intent = new Intent(holder.roomPhoto.getContext(), LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("User", "Participent");
