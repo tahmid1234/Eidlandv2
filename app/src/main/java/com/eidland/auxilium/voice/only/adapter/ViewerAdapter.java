@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.Viewer;
 
@@ -21,19 +20,19 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     PlacesViewHolder placesViewHolder = null;
     private Context context;
-    private OnViwersClickListener onViwersClickListener;
+    private OnViewersClickListener onViewersClickListener;
     ArrayList<Viewer> countryInfoArrayList;
 
-    public ViewerAdapter(Context context,OnViwersClickListener onViwersClickListener1, ArrayList<Viewer> cameraobject1s) {
+    public ViewerAdapter(Context context, OnViewersClickListener onViewersClickListener1, ArrayList<Viewer> cameraobject1s) {
         this.context = context;
-        this.onViwersClickListener=onViwersClickListener1;
+        this.onViewersClickListener = onViewersClickListener1;
         countryInfoArrayList = cameraobject1s;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PlacesViewHolder (LayoutInflater.from(context).inflate(R.layout.singalsmalluser, parent, false), onViwersClickListener);
+        return new PlacesViewHolder (LayoutInflater.from(context).inflate(R.layout.singalsmalluser, parent, false), onViewersClickListener);
 
     }
 
@@ -58,24 +57,24 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         View view;
         ImageView ivFamousPlace;
-        OnViwersClickListener onViwersClickListener;
+        OnViewersClickListener onViewersClickListener;
 
-        public PlacesViewHolder(View itemView, OnViwersClickListener onViwersClickListener2) {
+        public PlacesViewHolder(View itemView, OnViewersClickListener onViewersClickListener2) {
             super(itemView);
             view = itemView;
             ivFamousPlace = view.findViewById(R.id.img);
-            this.onViwersClickListener=onViwersClickListener2;
+            this.onViewersClickListener = onViewersClickListener2;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
            int pos=this.getLayoutPosition();
-           onViwersClickListener.onViewersClick(getAdapterPosition(),countryInfoArrayList.get(pos).name,countryInfoArrayList.get(pos).photo, countryInfoArrayList.get(pos).recievedCoins);
+           onViewersClickListener.onViewersClick(getAdapterPosition(), countryInfoArrayList.get(pos).id, countryInfoArrayList.get(pos).name,countryInfoArrayList.get(pos).photo);
         }
     }
-    public interface OnViwersClickListener {
-        void onViewersClick(int position, String name, String photo, String recievedCoin);
+    public interface OnViewersClickListener {
+        void onViewersClick(int position, String uid, String name, String photo);
     }
 
 }
