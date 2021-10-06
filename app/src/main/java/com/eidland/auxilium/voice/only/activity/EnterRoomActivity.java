@@ -85,7 +85,7 @@ public class EnterRoomActivity extends AppCompatActivity {
                         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
-                        intent.putExtra("profile", StaticConfig.user.getImageurl());
+                        intent.putExtra("profile", R.drawable.appicon);
                         intent.putExtra("welcomemsg", welcomeMessage.getText().toString());
                         intent.putExtra("offtimemsg", offTimeMsg.getText().toString());
                         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -115,7 +115,9 @@ public class EnterRoomActivity extends AppCompatActivity {
                         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
-                        intent.putExtra("profile", url);
+                        intent.putExtra("profile", R.drawable.appicon);
+                        intent.putExtra("welcomemsg", welcomeMessage.getText().toString());
+                        intent.putExtra("offtimemsg", offTimeMsg.getText().toString());
                         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                         finish();
@@ -124,14 +126,12 @@ public class EnterRoomActivity extends AppCompatActivity {
                     } else {
 
                         Toast.makeText(EnterRoomActivity.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
-
                         progressDialog.dismiss();
                     }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
                     Toast.makeText(EnterRoomActivity.this, "Json", Toast.LENGTH_SHORT).show();
-
                     progressDialog.dismiss();
                 }
 

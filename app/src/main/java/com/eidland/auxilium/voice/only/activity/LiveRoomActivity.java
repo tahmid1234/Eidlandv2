@@ -526,6 +526,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         commentRecyclerView.setAdapter(commentAdapter);
         welcomeMsg = getIntent().getStringExtra("welcomemsg");
         offTimeMsg = getIntent().getStringExtra("offtimemsg");
+        Toast.makeText(getApplicationContext(), welcomeMsg + "\n" + offTimeMsg, Toast.LENGTH_SHORT).show();
         nameOfRoom = getIntent().getStringExtra("UserName");
         final Comment comment = new Comment();
         comment.setComment(welcomeMsg);
@@ -955,7 +956,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
                     if (isHost) {
-                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", offTimeMsg, inviteLink, welcomeMsg, "general");
+                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "1633534200000", "1633541400000", offTimeMsg, inviteLink, welcomeMsg, "general");
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
                         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom, StaticConfig.user.getReceivedCoins(), config().mUid);
