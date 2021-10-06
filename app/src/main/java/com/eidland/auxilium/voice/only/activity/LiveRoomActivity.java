@@ -111,7 +111,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener{
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener, Adapterspinner.OnItemClickListener {
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -314,18 +314,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         inviteButton = findViewById(R.id.invite_icon);
 
          adapterspinner=new Adapterspinner(getApplicationContext(),
-                R.layout.spinner_speaker,seatUsers);
+                R.layout.spinner_speaker,seatUsers, this);
         spinner.setAdapter(adapterspinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String item = ((TextView)view.findViewById(R.id.spinnertextid)).getText().toString();
-               kantesi.setText(item);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+//            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//                String item = ((TextView)view.findViewById(R.id.spinnertextid)).getText().toString();
+//               kantesi.setText(item);
+//               Toast.makeText(getApplicationContext(), "inside spinner", Toast.LENGTH_SHORT);
+//            }
+//
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
 
@@ -2103,5 +2104,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         eidlandpointcount.setText(recievedCoins);
         singleUserBox.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        String item = ((TextView)view.findViewById(R.id.spinnertextid)).getText().toString();
+        kantesi.setText(item);
+        Toast.makeText(getApplicationContext(), "parent", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
