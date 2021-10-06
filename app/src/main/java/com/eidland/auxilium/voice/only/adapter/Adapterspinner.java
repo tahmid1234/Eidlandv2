@@ -1,7 +1,6 @@
 package com.eidland.auxilium.voice.only.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.Viewer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.LayoutRes;
@@ -26,15 +24,15 @@ public class Adapterspinner extends ArrayAdapter<String>{
     private Context mContext;
     private List<Viewer> items;
     private int mResource;
-    private OnItemClickListener onItemClickListener;
+    private OnSpinnerClickListener onSpinnerClickListener;
 
-    public Adapterspinner(@NonNull Context context, @LayoutRes int resource, @NonNull List objects, OnItemClickListener onItemClickListener) {
+    public Adapterspinner(@NonNull Context context, @LayoutRes int resource, @NonNull List objects, OnSpinnerClickListener onSpinnerClickListener) {
         super(context, resource,0, objects);
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mResource = resource;
         items = objects;
-        this.onItemClickListener = onItemClickListener;
+        this.onSpinnerClickListener = onSpinnerClickListener;
     }
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -54,15 +52,15 @@ public class Adapterspinner extends ArrayAdapter<String>{
         offTypeTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "onclick", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, convertView.toString(), Toast.LENGTH_SHORT).show();
+                onSpinnerClickListener.onItemSelected(parent, view, position);
             }
         });
         return view;
     }
 
-    public interface OnItemClickListener {
-        void onItemSelected(AdapterView<?> parent, View view, int pos, long id);
-        void onNothingSelected(AdapterView<?> parent);
+    public interface OnSpinnerClickListener {
+        void onItemSelected(ViewGroup parent, View view, int pos);
 
     }
 }

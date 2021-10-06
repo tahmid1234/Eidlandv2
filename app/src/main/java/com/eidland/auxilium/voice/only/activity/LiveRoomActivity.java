@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -111,7 +112,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener, Adapterspinner.OnItemClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener, Adapterspinner.OnSpinnerClickListener {
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -254,7 +255,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         seatLayout = findViewById(R.id.seat_layout);
 
         inputArea = findViewById(R.id.input_box_area);
-        kantesi=findViewById(R.id.ajaira);
+        kantesi = findViewById(R.id.ajaira);
         leaveRoom = findViewById(R.id._leave);
         //   userImage = findViewById(R.id._userchatroom);
         micBtn = (ImageView) findViewById(R.id.mute_local_speaker_id);
@@ -313,8 +314,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         inviteButton = findViewById(R.id.invite_icon);
 
-         adapterspinner=new Adapterspinner(getApplicationContext(),
-                R.layout.spinner_speaker,seatUsers, this);
+        adapterspinner = new Adapterspinner(getApplicationContext(),
+                R.layout.spinner_speaker, seatUsers, this);
         spinner.setAdapter(adapterspinner);
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 //            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -327,7 +328,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //
 //            }
 //        });
-
 
 
         try {
@@ -611,7 +611,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(currentUser.getUid())) {
                     isModerator = true;
-                }else{
+                } else {
                     isModerator = false;
                 }
             }
@@ -660,12 +660,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         }
                         FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).onDisconnect().removeValue();
                         String modName = "Moderator";
-                        try{
+                        try {
                             modName = StaticConfig.user.getName();
-                        }catch (Exception e){}
+                        } catch (Exception e) {
+                        }
                         FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).setValue(modName + " invited you to take the seat!");
                     }
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -1093,7 +1094,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         }
                     });
 
-                    if(!isFinishing()) {
+                    if (!isFinishing()) {
                         dialog.show();
                     }
                 }
@@ -1339,7 +1340,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 RecyclerView viewers = findViewById(R.id.viewersrecyler);
                 viewers.hasFixedSize();
                 viewers.setLayoutManager(new LinearLayoutManager(LiveRoomActivity.this, LinearLayoutManager.HORIZONTAL, true));
-                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, LiveRoomActivity.this,onlineUserList);
+                ViewerAdapter viewerAdapter = new ViewerAdapter(LiveRoomActivity.this, LiveRoomActivity.this, onlineUserList);
                 viewers.setAdapter(viewerAdapter);
                 viewerAdapter.notifyDataSetChanged();
             }
@@ -2107,14 +2108,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        String item = ((TextView)view.findViewById(R.id.spinnertextid)).getText().toString();
-        kantesi.setText(item);
-        Toast.makeText(getApplicationContext(), "parent", Toast.LENGTH_SHORT);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onItemSelected(ViewGroup parent, View view, int pos) {
+        try {
+            String item = ((TextView) view.findViewById(R.id.spinnertextid)).getText().toString();
+            kantesi.setText(item);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
+        }
 
     }
 }
