@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +64,7 @@ import com.eidland.auxilium.voice.only.adapter.AdapterGame;
 import com.eidland.auxilium.voice.only.adapter.AdapterGift;
 import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
+import com.eidland.auxilium.voice.only.adapter.Adapterspinner;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
 import com.eidland.auxilium.voice.only.helper.LeaderBoard;
@@ -109,7 +111,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener {
+public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener{
     String type, SeatsName, AgainSeat, run;
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
@@ -130,6 +132,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout online_layout;
     String hostuid, roomName;
     Spinner spinner;
+    Adapterspinner adapterspinner;
     String selectuseruid;
     EditText commentBox;
     String Clickedseat = null;
@@ -171,7 +174,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
-
+    TextView kantesi;
     ImageView gameButton;
     LinearLayout gamesLayout;
     RelativeLayout cardLoadingAnimationLayout;
@@ -251,7 +254,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         seatLayout = findViewById(R.id.seat_layout);
 
         inputArea = findViewById(R.id.input_box_area);
-
+        kantesi=findViewById(R.id.ajaira);
         leaveRoom = findViewById(R.id._leave);
         //   userImage = findViewById(R.id._userchatroom);
         micBtn = (ImageView) findViewById(R.id.mute_local_speaker_id);
@@ -309,6 +312,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         minimizedCard = findViewById(R.id.card_minimized);
 
         inviteButton = findViewById(R.id.invite_icon);
+
+         adapterspinner=new Adapterspinner(getApplicationContext(),
+                R.layout.spinner_speaker,seatUsers);
+        spinner.setAdapter(adapterspinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                String item = ((TextView)view.findViewById(R.id.spinnertextid)).getText().toString();
+               kantesi.setText(item);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
 
         try {
@@ -855,7 +873,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
+        adapterspinner.notifyDataSetChanged();
     }
 
     @Override

@@ -682,7 +682,7 @@
             android:layout_alignParentBottom="true"
             android:background="#00306D"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -815,26 +815,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:weightSum="3"
                 android:layout_marginBottom="10dp"
-                android:layout_gravity="right"
-                android:gravity="right">
+               >
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_weight="2"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
                     android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+
                     android:background="#fff"
-                    android:entries="@array/entries"
-                    android:visibility="gone" />
+                    android:layout_weight="1.2"
 
+                    android:visibility="visible" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/ajaira"
+                    android:textColor="@color/white"
+                    android:layout_weight="1.1"
+                    android:text="Hello"
+                    android:layout_height="match_parent">
 
+                </TextView>
 
                 <RelativeLayout
-                    android:layout_width="98dp"
+                    android:layout_width="0dp"
+
                     android:layout_height="32dp"
                     android:layout_gravity="right"
-
+                    android:layout_weight=".7"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/join_button"
