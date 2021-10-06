@@ -188,7 +188,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     boolean isMod = false;
     String nameOfRoom;
     String inviteLink;
-    String welcomeMsg;
+    String welcomeMsg, offTimeMsg;
 
     LinearLayout inputArea;
 
@@ -525,6 +525,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentRecyclerView.setAdapter(commentAdapter);
         welcomeMsg = getIntent().getStringExtra("welcomemsg");
+        offTimeMsg = getIntent().getStringExtra("offtimemsg");
         nameOfRoom = getIntent().getStringExtra("UserName");
         final Comment comment = new Comment();
         comment.setComment(welcomeMsg);
@@ -954,7 +955,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     JSONObject jsonObject = new JSONObject(response);
                     String token = jsonObject.getString("token");
                     if (isHost) {
-                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", "init", inviteLink, "Welcome! tap a seat to start speaking", "general");
+                        Rooms room = new Rooms(nameOfRoom, imgUrl, hostuid, token, "0", roomName, "0", "0", offTimeMsg, inviteLink, welcomeMsg, "general");
                         FirebaseDatabase.getInstance().getReference().child("AllRooms").child(roomName).setValue(room);
                         SeatsName = "seat1";
                         Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), imgUrl, FirebaseAuth.getInstance().getCurrentUser().getEmail(), nameOfRoom, StaticConfig.user.getReceivedCoins(), config().mUid);

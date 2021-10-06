@@ -45,7 +45,7 @@ import io.agora.rtc.Constants;
 
 public class EnterRoomActivity extends AppCompatActivity {
     ImageView userimg;
-    EditText txttitle;
+    EditText txttitle, welcomeMessage, offTimeMsg;
     Button btncreate;
     String imgpath;
     Uri filePath;
@@ -62,16 +62,22 @@ public class EnterRoomActivity extends AppCompatActivity {
 
         btncreate = findViewById(R.id.btncreate);
         txttitle = findViewById(R.id.txttitle);
+        welcomeMessage = findViewById(R.id.welcomeMessage);
+        offTimeMsg = findViewById(R.id.offTimeMsg);
         userimg = findViewById(R.id.userimage);
         if (StaticConfig.user != null) {
-            Glide.with(this).load(StaticConfig.user.imageurl).error(R.drawable.appicon).into(userimg);
+            Glide.with(this).load(R.drawable.appicon).error(R.drawable.appicon).into(userimg);
         }
         btncreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (txttitle.getText().toString().trim().length() <= 0) {
                     Toast.makeText(EnterRoomActivity.this, "Enter Title Please", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (welcomeMessage.getText().toString().trim().length() <= 0) {
+                    Toast.makeText(EnterRoomActivity.this, "Enter Welcome Message Please", Toast.LENGTH_SHORT).show();
+                }else if (offTimeMsg.getText().toString().trim().length() <= 0) {
+                    Toast.makeText(EnterRoomActivity.this, "Enter Off-time Message Please", Toast.LENGTH_SHORT).show();
+                }else {
                     if (imgpath != null) {
                         uplnamephoto();
                     } else {
@@ -80,6 +86,8 @@ public class EnterRoomActivity extends AppCompatActivity {
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
                         intent.putExtra("profile", StaticConfig.user.getImageurl());
+                        intent.putExtra("welcomemsg", welcomeMessage.getText().toString());
+                        intent.putExtra("offtimemsg", offTimeMsg.getText().toString());
                         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                     }
