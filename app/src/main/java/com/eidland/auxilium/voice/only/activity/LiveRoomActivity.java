@@ -699,9 +699,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).onDisconnect().removeValue();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userRef.child(user.getUid()).
-
-                addValueEventListener(new ValueEventListener() {
+        userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         try {
@@ -822,6 +820,35 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                         }
                                     }
                                 });
+                                FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
+                                    @NonNull
+                                    @Override
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentDatas) {
+//self
+                                        try {
+                                            Viewer ownviewer = currentDatas.getValue(Viewer.class);
+
+                                            ownviewer.recievedCoins = String.valueOf(Long.parseLong(ownviewer.recievedCoins) + selectedGiftAmount);
+                                            currentDatas.setValue(ownviewer);
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                        return Transaction.success(currentDatas);
+                                    }
+
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentDatas) {
+
+                                        try {
+                                            Viewer ownviewer  = currentDatas.getValue(Viewer.class);
+                                            String coin=ownviewer.getRecievedCoins();
+                                            //   userAvailableCoin.setText(getFormattedText(user.coins));
+
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                    }
+                                });
                                 FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(selectuseruid).runTransaction(new Transaction.Handler() {
                                     @NonNull
                                     @Override
@@ -829,7 +856,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //self
                                         try {
                                             Viewer viewerval = currentDatas.getValue(Viewer.class);
-
+                                            selectedViewer=viewerval;
                                             viewerval.recievedCoins = String.valueOf(Long.parseLong(viewerval.recievedCoins) + selectedGiftAmount);
                                             selectedViewer=viewerval;
                                             currentDatas.setValue(viewerval);
@@ -870,7 +897,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     @Override
                                     public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData2) {
                                         System.out.println(error);
+
                                         sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+
                                     }
                                 });
 
@@ -890,7 +919,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
 
 
-        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addValueEventListener(new ValueEventListener() { //initial when
+            //initial speakers getting added
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 seatUsers.clear();
@@ -1058,7 +1088,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                System.out.println("hello");
             }
 
             @Override
@@ -1154,6 +1184,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
+
                         try {
                             Viewer viewer = snapshot.getValue(Viewer.class);
                             selectuseruid = viewer.getId();
@@ -1163,7 +1194,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             txtsinglename.setText(viewer.getName());
                             eidlandpointcount.setText(viewer.getRecievedCoins());
                             singleUserBox.setVisibility(View.VISIBLE);
-                            eidlandpointcount.setText(viewer.getRecievedCoins());
+
                         } catch (Exception e) {
                             System.out.println(e);
                         }
