@@ -22,6 +22,17 @@
         <item name="android:shadowDy">3</item>
         <item name="android:shadowRadius">5</item>
     </style>
+    <style name="spinner_style" >
+        <item name="android:background">@drawable/spinner_bg</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+
+    </style>
+
     <style name="go_far_with">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#FFFFFF</item>

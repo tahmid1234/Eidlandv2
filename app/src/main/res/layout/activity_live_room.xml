@@ -814,31 +814,61 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:weightSum="3"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="0dp"
                >
 
-                <Spinner
-                    android:id="@+id/spinner"
+
+
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="35dp"
+                    android:layout_weight="1.1"
+
                     android:layout_marginStart="20dp"
+                    android:layout_height="match_parent">
 
-                    android:background="#fff"
-                    android:layout_weight="1.2"
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="match_parent"
 
-                    android:visibility="visible" />
+                        android:layout_height="match_parent"
+
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        style="@style/spinner_style"
+                        android:popupBackground="#fff"
+
+
+                        android:visibility="visible" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:id="@+id/selecteduser"
+                        android:textColor="@color/black"
+
+                        android:text="Select Speaker"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="12sp"
+                        android:gravity="left|center"
+                        android:layout_height="match_parent">
+
+                    </TextView>
+                </RelativeLayout>
                 <TextView
                     android:layout_width="0dp"
                     android:id="@+id/ajaira"
                     android:textColor="@color/white"
-                    android:layout_weight="1.1"
-                    android:text="Hello"
+                    android:gravity="center"
+                    android:layout_weight="1.2"
+                    android:text="Select User :"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
                     android:layout_height="match_parent">
 
                 </TextView>
-
                 <RelativeLayout
                     android:layout_width="0dp"
 

@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -123,6 +122,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     int lastPos = 0;
     RelativeLayout lastselec;
     TextView ModUserRemove;
+    TextView Selectedspeaker;
     Boolean muteClicked = false;
     ImageView micBtn, imgbroad;
     ImageView button1;
@@ -132,7 +132,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ArrayList<Viewer> seatUsers = new ArrayList<>();
     LinearLayout online_layout;
     String hostuid, roomName;
-    Spinner spinner;
+    public static  Spinner spinner;
+    ArrayList<String> speakernames=new ArrayList<String>();
     Adapterspinner adapterspinner;
     String selectuseruid;
     EditText commentBox;
@@ -195,7 +196,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String welcomeMsg;
 
     LinearLayout inputArea;
-
+    boolean Speakerselected=false;
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
@@ -253,7 +254,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
         seatLayout = findViewById(R.id.seat_layout);
-
+        Selectedspeaker=findViewById(R.id.selecteduser);
         inputArea = findViewById(R.id.input_box_area);
         kantesi = findViewById(R.id.ajaira);
         leaveRoom = findViewById(R.id._leave);
@@ -313,9 +314,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         minimizedCard = findViewById(R.id.card_minimized);
 
         inviteButton = findViewById(R.id.invite_icon);
-
+ for (int i=0;i<seatUsers.size();i++)
+ {
+     speakernames.add(seatUsers.get(i).getName());
+ }
         adapterspinner = new Adapterspinner(getApplicationContext(),
-                R.layout.spinner_speaker, seatUsers, this);
+                R.layout.spinner_speaker, seatUsers,speakernames, this);
         spinner.setAdapter(adapterspinner);
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 //            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -352,15 +356,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 commentBox.setVisibility(View.VISIBLE);
             }
         });
-
+        if(!Speakerselected)Selectedspeaker.setText("Select Speaker");
         roomGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
-                selectedViewer.name = nameOfRoom;
-                selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
-                selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+                //selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+               // selectedViewer.name = nameOfRoom;
+               // selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
+               // selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 txtsinglename.setText(nameOfRoom);
+                spinner.setVisibility(View.VISIBLE);
+                Selectedspeaker.setVisibility(View.VISIBLE);
                 crystal.setVisibility(View.VISIBLE);
                 gameButton.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
@@ -626,8 +632,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 singleUserBox.setVisibility(View.GONE);
-
+                Selectedspeaker.setVisibility(View.GONE);
                 crystal.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.GONE);
                 gamesLayout.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
             }
@@ -790,7 +797,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     @NonNull
                                     @Override
                                     public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-
+//self
                                         try {
                                             User user = currentData.getValue(User.class);
                                             user.coins = String.valueOf(Long.parseLong(user.coins) - selectedGiftAmount);
@@ -815,27 +822,58 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                         }
                                     }
                                 });
-                                FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
+                                FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(selectuseruid).runTransaction(new Transaction.Handler() {
                                     @NonNull
                                     @Override
-                                    public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentDatas) {
+//self
                                         try {
-                                            User user = currentData.getValue(User.class);
-                                            assert user != null;
-                                            user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
-                                            currentData.setValue(user);
+                                            Viewer viewerval = currentDatas.getValue(Viewer.class);
+
+                                            viewerval.recievedCoins = String.valueOf(Long.parseLong(viewerval.recievedCoins) + selectedGiftAmount);
+                                            selectedViewer=viewerval;
+                                            currentDatas.setValue(viewerval);
                                         } catch (Exception e) {
                                             System.out.println(e);
                                         }
-                                        return Transaction.success(currentData);
+                                        return Transaction.success(currentDatas);
                                     }
 
                                     @Override
-                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                                        System.out.println(error);
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentDatas) {
+
+                                        try {
+                                            Viewer viewerval = currentDatas.getValue(Viewer.class);
+                                     String coin=viewerval.getRecievedCoins();
+                                         //   userAvailableCoin.setText(getFormattedText(user.coins));
+
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
                                     }
                                 });
-                                sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+                                FirebaseDatabase.getInstance().getReference().child("Users").child(selectuseruid).runTransaction(new Transaction.Handler() {
+                                    @NonNull
+                                    @Override
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentData2) {
+                                        try {
+                                            User user = currentData2.getValue(User.class);
+                                            assert user != null;
+                                            user.receivedCoins = String.valueOf(Long.parseLong(user.receivedCoins) + selectedGiftAmount);
+                                            currentData2.setValue(user);
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                        return Transaction.success(currentData2);
+                                    }
+
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData2) {
+                                        System.out.println(error);
+                                        sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
+                                    }
+                                });
+
                             } else {
                                 if (selectedGiftAmount == 0) {
                                     Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
@@ -856,11 +894,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 seatUsers.clear();
+                speakernames.clear();
                 if (snapshot.exists()) {
                     try {
                         for (DataSnapshot snap : snapshot.getChildren()) {
                             Viewer viewer = snap.getValue(Viewer.class);
                             seatUsers.add(viewer);
+                            speakernames.add(viewer.getName());
                         }
 
                     } catch (Exception e) {
@@ -1316,7 +1356,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     private void sendGift(Gift gift) {
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
-        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + txtsinglename.getText().toString() + "\n", FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
+        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + selectedViewer.getName() + "\n", FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
     }
 
@@ -2111,7 +2151,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onItemSelected(ViewGroup parent, View view, int pos) {
         try {
             String item = ((TextView) view.findViewById(R.id.spinnertextid)).getText().toString();
-            kantesi.setText(item);
+            Speakerselected=true;
+            selectuseruid=seatUsers.get(pos).getId();
+            Toast.makeText(getApplicationContext(),selectuseruid,Toast.LENGTH_SHORT).show();
+            if(Speakerselected)Selectedspeaker.setText(item);
+
+
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
         }
