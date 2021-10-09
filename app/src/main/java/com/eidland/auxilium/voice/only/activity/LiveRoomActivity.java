@@ -991,14 +991,24 @@ RelativeLayout sendgiftholder;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(st)) {
                     ModUserRemove.setText("Remove\nParticipant");
+                    singlegift.setVisibility(View.VISIBLE);
+                    txtsinglegiftsend.setVisibility(View.VISIBLE);
                     blocklayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seat).removeValue();
                             Toast.makeText(LiveRoomActivity.this, "user removed", Toast.LENGTH_LONG).show();
                             singleUserBox.setVisibility(View.INVISIBLE);
+
+
+
                         }
                     });
+                }
+                else
+                {
+                    singlegift.setVisibility(View.VISIBLE);
+                    txtsinglegiftsend.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -1180,6 +1190,7 @@ RelativeLayout sendgiftholder;
 
     private void CheckSeats(final String seats) {
         if (AgainSeat == null) {
+
             Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -1206,6 +1217,7 @@ RelativeLayout sendgiftholder;
                             });
                             selectuseruid = audiance.getId();
                             selectedViewer = audiance;
+
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
                             Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
                             txtsinglename.setText(audiance.getName());
@@ -1364,6 +1376,7 @@ RelativeLayout sendgiftholder;
             if (animationItem.name.equals(id)) {
                 simpleGift.setImageResource(animationItem.giftIconId);
                 backgrundGIF.setAnimation(animationItem.gifIconId);
+                backgrundGIF.setProgress(0);
                 backgrundGIF.playAnimation();
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
@@ -2208,7 +2221,7 @@ RelativeLayout sendgiftholder;
             String item = ((TextView) view.findViewById(R.id.spinnertextid)).getText().toString();
             Speakerselected=true;
             selectuseruid=seatUsers.get(pos).getId();
-            Toast.makeText(getApplicationContext(),selectuseruid,Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getApplicationContext(),selectuseruid,Toast.LENGTH_SHORT).show();
             if(Speakerselected)Selectedspeaker.setText(item);
 
 
