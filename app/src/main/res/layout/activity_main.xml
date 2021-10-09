@@ -8,11 +8,11 @@
     android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.activity.MainActivity">
 
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/ic_rectangle_18" />-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/ic_rectangle_18" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                         android:gravity="center|left"
                         android:text="test"
                         android:textColor="#000"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/userEmail"
@@ -93,7 +93,7 @@
                         android:layout_weight="1"
                         android:gravity="top"
                         android:text="Welcome on Auxilium"
-                        android:textSize="10dp"/>
+                        android:textSize="10dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -173,35 +173,34 @@
                     android:layout_below="@+id/roomsTitle3" />
 
 
-<!--                <TextView-->
-<!--                    android:id="@+id/upcomingTitle"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/rvrooms"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="20dp"-->
-<!--                    android:fontFamily="@font/open_sans"-->
-<!--                    android:padding="5dp"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:text="Upcoming Sessions"/>-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/upcomingTitle"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/rvrooms"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    android:textSize="20dp"-->
+                <!--                    android:fontFamily="@font/open_sans"-->
+                <!--                    android:padding="5dp"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    android:text="Upcoming Sessions"/>-->
 
 
+                <!--                <androidx.recyclerview.widget.RecyclerView-->
+                <!--                    android:id="@+id/upcomingSessionsRV"-->
+                <!--                    android:layout_below="@+id/upcomingTitle"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"/>-->
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/upcomingSessionsRV"-->
-<!--                    android:layout_below="@+id/upcomingTitle"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"/>-->
+                <View
+                    android:layout_below="@+id/rvrooms1"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
 
-                    <View
-                        android:layout_below="@+id/rvrooms1"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"/>
                 <View
                     android:layout_below="@+id/rvrooms2"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"/>
-
+                    android:layout_height="300dp" />
 
 
             </RelativeLayout>
@@ -214,7 +213,7 @@
             android:id="@+id/progressbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"

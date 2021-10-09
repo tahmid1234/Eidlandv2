@@ -1,6 +1,4 @@
- package com.eidland.auxilium.voice.only.activity;
-
-import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
+package com.eidland.auxilium.voice.only.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -37,15 +35,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
@@ -105,11 +94,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import pl.droidsonroids.gif.GifImageView;
+
+import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
 public class LiveRoomActivity extends BaseActivity implements AGEventHandler, AdapterSeat.OnSeatClickListener, AdapterGift.OnGiftClickListener, AdapterGame.OnGameClickListener, ViewerAdapter.OnViewersClickListener, Adapterspinner.OnSpinnerClickListener {
     String type, SeatsName, AgainSeat, run;
@@ -132,8 +131,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ArrayList<Viewer> seatUsers = new ArrayList<>();
     LinearLayout online_layout;
     String hostuid, roomName;
-    public static  Spinner spinner;
-    ArrayList<String> speakernames=new ArrayList<String>();
+    public static Spinner spinner;
+    ArrayList<String> speakernames = new ArrayList<String>();
     Adapterspinner adapterspinner;
     String selectuseruid;
     EditText commentBox;
@@ -194,9 +193,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String nameOfRoom;
     String inviteLink;
     String welcomeMsg;
-RelativeLayout sendgiftholder;
+    RelativeLayout sendgiftholder;
     LinearLayout inputArea;
-    boolean Speakerselected=false;
+    boolean Speakerselected = false;
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
@@ -254,7 +253,7 @@ RelativeLayout sendgiftholder;
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
         seatLayout = findViewById(R.id.seat_layout);
-        Selectedspeaker=findViewById(R.id.selecteduser);
+        Selectedspeaker = findViewById(R.id.selecteduser);
         inputArea = findViewById(R.id.input_box_area);
         kantesi = findViewById(R.id.ajaira);
         leaveRoom = findViewById(R.id._leave);
@@ -291,7 +290,7 @@ RelativeLayout sendgiftholder;
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         sendGiftBtn = findViewById(R.id.send_gift);
-        sendgiftholder=findViewById(R.id.sendgiftbuttonholder);
+        sendgiftholder = findViewById(R.id.sendgiftbuttonholder);
         userAvailableCoin = findViewById(R.id.user_available_coin);
         spinner = findViewById(R.id.spinner);
         crystal = findViewById(R.id.giftslayout);
@@ -315,12 +314,11 @@ RelativeLayout sendgiftholder;
         minimizedCard = findViewById(R.id.card_minimized);
 
         inviteButton = findViewById(R.id.invite_icon);
-        for (int i=0;i<seatUsers.size();i++)
-        {
+        for (int i = 0; i < seatUsers.size(); i++) {
             speakernames.add(seatUsers.get(i).getName());
         }
         adapterspinner = new Adapterspinner(getApplicationContext(),
-                R.layout.spinner_speaker, seatUsers,speakernames, this);
+                R.layout.spinner_speaker, seatUsers, speakernames, this);
         spinner.setAdapter(adapterspinner);
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 //            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -357,7 +355,7 @@ RelativeLayout sendgiftholder;
                 commentBox.setVisibility(View.VISIBLE);
             }
         });
-        if(!Speakerselected)Selectedspeaker.setText("Select Speaker");
+        if (!Speakerselected) Selectedspeaker.setText("Select Speaker");
         roomGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -841,8 +839,8 @@ RelativeLayout sendgiftholder;
                                     public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentDatas) {
 
                                         try {
-                                            Viewer ownviewer  = currentDatas.getValue(Viewer.class);
-                                            String coin=ownviewer.getRecievedCoins();
+                                            Viewer ownviewer = currentDatas.getValue(Viewer.class);
+                                            String coin = ownviewer.getRecievedCoins();
                                             //   userAvailableCoin.setText(getFormattedText(user.coins));
 
                                         } catch (Exception e) {
@@ -857,9 +855,9 @@ RelativeLayout sendgiftholder;
 //self
                                         try {
                                             Viewer viewerval = currentDatas.getValue(Viewer.class);
-                                            selectedViewer=viewerval;
+                                            selectedViewer = viewerval;
                                             viewerval.recievedCoins = String.valueOf(Long.parseLong(viewerval.recievedCoins) + selectedGiftAmount);
-                                            selectedViewer=viewerval;
+                                            selectedViewer = viewerval;
                                             currentDatas.setValue(viewerval);
                                         } catch (Exception e) {
                                             System.out.println(e);
@@ -872,7 +870,7 @@ RelativeLayout sendgiftholder;
 
                                         try {
                                             Viewer viewerval = currentDatas.getValue(Viewer.class);
-                                            String coin=viewerval.getRecievedCoins();
+                                            String coin = viewerval.getRecievedCoins();
                                             //   userAvailableCoin.setText(getFormattedText(user.coins));
 
                                         } catch (Exception e) {
@@ -991,8 +989,7 @@ RelativeLayout sendgiftholder;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(st)) {
                     ModUserRemove.setText("Remove\nParticipant");
-                    singlegift.setVisibility(View.VISIBLE);
-                    txtsinglegiftsend.setVisibility(View.VISIBLE);
+
                     blocklayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -1001,14 +998,8 @@ RelativeLayout sendgiftholder;
                             singleUserBox.setVisibility(View.INVISIBLE);
 
 
-
                         }
                     });
-                }
-                else
-                {
-                    singlegift.setVisibility(View.VISIBLE);
-                    txtsinglegiftsend.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -1217,7 +1208,15 @@ RelativeLayout sendgiftholder;
                             });
                             selectuseruid = audiance.getId();
                             selectedViewer = audiance;
-
+                            if(selectuseruid.equals(currentUser.getUid()))
+                            {
+                                singlegift.setVisibility(View.GONE);
+                                txtsinglegiftsend.setVisibility(View.GONE);
+                            }
+                            else {
+                                singlegift.setVisibility(View.VISIBLE);
+                                txtsinglegiftsend.setVisibility(View.VISIBLE);
+                            }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
                             Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
                             txtsinglename.setText(audiance.getName());
@@ -1286,13 +1285,39 @@ RelativeLayout sendgiftholder;
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
-                        Viewer viewer = snapshot.getValue(Viewer.class);
-                        selectuseruid = viewer.getId();
 
-                        selectedViewer = viewer;
+                        Viewer audiance = snapshot.getValue(Viewer.class);
+                        Toast.makeText(getApplicationContext(), audiance.getId(), Toast.LENGTH_SHORT);
+                        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(audiance.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Viewer viewer = snapshot.getValue(Viewer.class);
+                                assert viewer != null;
+//                                    Toast.makeText(getApplicationContext(), viewer.getId(), Toast.LENGTH_SHORT);
+                                audiance.setRecievedCoins(viewer.getRecievedCoins());
+                                eidlandpointcount.setText(audiance.getRecievedCoins());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        selectuseruid = audiance.getId();
+
+                        selectedViewer = audiance;
+                        if(selectuseruid.equals(currentUser.getUid()))
+                        {
+                            singlegift.setVisibility(View.GONE);
+                            txtsinglegiftsend.setVisibility(View.GONE);
+                        }
+                        else {
+                            singlegift.setVisibility(View.VISIBLE);
+                            txtsinglegiftsend.setVisibility(View.VISIBLE);
+                        }
                         CheckModerator(currentUser.getUid(), selectuseruid, seats);
-                        Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
-                        txtsinglename.setText(viewer.getName());
+                        Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
+                        txtsinglename.setText(audiance.getName());
                         singleUserBox.setVisibility(View.VISIBLE);
 
                     }
@@ -2202,14 +2227,10 @@ RelativeLayout sendgiftholder;
     public void onViewersClick(int position, String uid, String name, String photo, String recievedCoins) {
         popup_uname.setText(name);
         clickedOnlineUserUID = uid;
-        if (clickedOnlineUserUID.equals(currentUser.getUid())){
+
             singlegift.setVisibility(View.GONE);
             txtsinglegiftsend.setVisibility(View.GONE);
-        }
-        else {
-            singlegift.setVisibility(View.VISIBLE);
-            txtsinglegiftsend.setVisibility(View.VISIBLE);
-        }
+
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         eidlandpointcount.setText(recievedCoins);
         singleUserBox.setVisibility(View.VISIBLE);
@@ -2219,10 +2240,10 @@ RelativeLayout sendgiftholder;
     public void onItemSelected(ViewGroup parent, View view, int pos) {
         try {
             String item = ((TextView) view.findViewById(R.id.spinnertextid)).getText().toString();
-            Speakerselected=true;
-            selectuseruid=seatUsers.get(pos).getId();
-          //  Toast.makeText(getApplicationContext(),selectuseruid,Toast.LENGTH_SHORT).show();
-            if(Speakerselected)Selectedspeaker.setText(item);
+            Speakerselected = true;
+            selectuseruid = seatUsers.get(pos).getId();
+            //  Toast.makeText(getApplicationContext(),selectuseruid,Toast.LENGTH_SHORT).show();
+            if (Speakerselected) Selectedspeaker.setText(item);
 
 
         } catch (Exception e) {

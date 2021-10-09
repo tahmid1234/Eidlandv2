@@ -1,7 +1,7 @@
 package com.eidland.auxilium.voice.only.model;
 
 public class Rooms {
-   public String name;
+    public String name;
     public String imageurl;
     public String hostuid;
     public String token;
@@ -37,6 +37,7 @@ public class Rooms {
     public String getRoomname() {
         return roomname;
     }
+
     public void setRoomname(String roomname) {
         this.roomname = roomname;
     }
@@ -44,6 +45,7 @@ public class Rooms {
     public String getViewers() {
         return viewers;
     }
+
     public void setViewers(String viewers) {
         this.viewers = viewers;
     }
@@ -51,6 +53,7 @@ public class Rooms {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -58,6 +61,7 @@ public class Rooms {
     public String getImageurl() {
         return imageurl;
     }
+
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
@@ -65,6 +69,7 @@ public class Rooms {
     public String getHostuid() {
         return hostuid;
     }
+
     public void setHostuid(String hostuid) {
         this.hostuid = hostuid;
     }
@@ -72,6 +77,7 @@ public class Rooms {
     public String getToken() {
         return token;
     }
+
     public void setToken(String token) {
         this.token = token;
     }
@@ -79,6 +85,7 @@ public class Rooms {
     public String getStartTime() {
         return startTime;
     }
+
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
@@ -86,6 +93,7 @@ public class Rooms {
     public String getEndTime() {
         return endTime;
     }
+
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
@@ -93,16 +101,32 @@ public class Rooms {
     public String getOffTimeMsg() {
         return offTimeMsg;
     }
+
     public void setOffTimeMsg(String offTimeMsg) {
         this.offTimeMsg = offTimeMsg;
     }
 
-    public String getInviteLink() { return inviteLink; }
-    public void setInviteLink(String inviteLink) { this.inviteLink = inviteLink; }
+    public String getInviteLink() {
+        return inviteLink;
+    }
 
-    public String getWelcomemsg() { return welcomemsg; }
-    public void setWelcomemsg(String welcomemsg) { this.welcomemsg = welcomemsg; }
+    public void setInviteLink(String inviteLink) {
+        this.inviteLink = inviteLink;
+    }
 
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
+    public String getWelcomemsg() {
+        return welcomemsg;
+    }
+
+    public void setWelcomemsg(String welcomemsg) {
+        this.welcomemsg = welcomemsg;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

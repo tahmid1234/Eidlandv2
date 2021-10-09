@@ -7,16 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.Leader;
 
 import java.util.List;
 
-public class AdapterLeadUser extends RecyclerView.Adapter<AdapterLeadUser.ViewHolder>{
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class AdapterLeadUser extends RecyclerView.Adapter<AdapterLeadUser.ViewHolder> {
     private Context context;
     private List<Leader> leaders;
 
@@ -45,6 +45,7 @@ public class AdapterLeadUser extends RecyclerView.Adapter<AdapterLeadUser.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView userIcon;
         TextView points;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userIcon = itemView.findViewById(R.id.user_icon);

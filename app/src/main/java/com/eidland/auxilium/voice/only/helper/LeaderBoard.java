@@ -2,8 +2,6 @@ package com.eidland.auxilium.voice.only.helper;
 
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
-
 import com.eidland.auxilium.voice.only.model.Gift;
 import com.eidland.auxilium.voice.only.model.Leader;
 
@@ -11,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import androidx.annotation.RequiresApi;
 
 public class LeaderBoard {
     static long time = 15 * 60000;
@@ -40,7 +40,7 @@ public class LeaderBoard {
                         }
                     }
                 }
-                if(!gift.receiverUID.equals(roomId)) {
+                if (!gift.receiverUID.equals(roomId)) {
                     if (!uniqueWinner.contains(gift.receiverUID)) {
                         uniqueWinner.add(gift.receiverUID);
                         winners.add(new Leader(gift.receiverName, gift.giftValue, gift.receiverImg, gift.receiverUID));

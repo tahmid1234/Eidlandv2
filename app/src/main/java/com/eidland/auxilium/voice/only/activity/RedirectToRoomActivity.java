@@ -1,12 +1,10 @@
 package com.eidland.auxilium.voice.only.activity;
 
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,19 +12,20 @@ import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RedirectToRoomActivity extends AppCompatActivity {
 
     Uri mInvitationUrl;
     Context mContext;
-    public RedirectToRoomActivity(Context mContext){
+
+    public RedirectToRoomActivity(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void createRoomLink(String roomID){
+    public void createRoomLink(String roomID) {
         Toast.makeText(getApplicationContext(), "Entered activity", Toast.LENGTH_SHORT).show();
-        try{
+        try {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String uid = user.getUid();
             String link = "https://room.eidland.com/?roomname=" + roomID;
@@ -53,12 +52,12 @@ public class RedirectToRoomActivity extends AppCompatActivity {
                                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                                 startActivity(shareIntent);
                                 Toast.makeText(RedirectToRoomActivity.this, mInvitationUrl.toString(), Toast.LENGTH_LONG).show();
-                            } catch (Exception e){
+                            } catch (Exception e) {
                                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(RedirectToRoomActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 

@@ -1,12 +1,7 @@
 package com.eidland.auxilium.voice.only.activity;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,31 +9,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.installreferrer.api.InstallReferrerClient;
-import com.android.installreferrer.api.InstallReferrerStateListener;
-import com.android.installreferrer.api.ReferrerDetails;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.helper.Helper;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
-import com.eidland.auxilium.voice.only.model.User;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +36,9 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageView userimg;
@@ -224,14 +211,13 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(new Intent(ProfileActivity.this, EnterRoomActivity.class));
     }
 
-    public void createInvitationLink(){
+    public void createInvitationLink() {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
         userRef.child("referralURL").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null)
-                {
-                    referralCode= generateAlphanumericString(8);
+                if (dataSnapshot.getValue() == null) {
+                    referralCode = generateAlphanumericString(8);
                     Toast.makeText(getApplicationContext(), referralCode, Toast.LENGTH_SHORT).show();
                     FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).child("referralURL").setValue(referralCode);
                 }
@@ -249,8 +235,7 @@ public class ProfileActivity extends AppCompatActivity {
         inviteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.hasChild("utm_source=google-play&utm_medium=organic"))
-                {
+                if (!snapshot.hasChild("utm_source=google-play&utm_medium=organic")) {
                     Long currentBalance = Long.parseLong(StaticConfig.user.getCoins());
                     currentBalance += 25;
                     StaticConfig.user.setCoins(currentBalance.toString());
@@ -270,7 +255,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, use my link to join Eidland:\n" + referralURL +referralCode);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, use my link to join Eidland:\n" + referralURL + referralCode);
                 sendIntent.setType("text/plain");
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
@@ -278,11 +263,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    public String generateAlphanumericString(int n){
+    public String generateAlphanumericString(int n) {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
-            int index = (int)(AlphaNumericString.length() * Math.random());
+            int index = (int) (AlphaNumericString.length() * Math.random());
             referralCode += AlphaNumericString.charAt(index);
             sb.append(AlphaNumericString.charAt(index));
         }

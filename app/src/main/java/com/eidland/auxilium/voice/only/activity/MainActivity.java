@@ -13,20 +13,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
-import com.eidland.auxilium.voice.only.model.Rooms;
+import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
-import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.model.Rooms;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.UpcomingSession;
 import com.google.android.gms.analytics.CampaignTrackingReceiver;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,14 +31,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.eidland.auxilium.voice.only.R;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -88,16 +87,14 @@ public class MainActivity extends AppCompatActivity {
                 roomsList.clear();
                 roomsList2.clear();
                 roomsList3.clear();
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         Rooms room = child.getValue(Rooms.class);
-                        if (room.getType().equals("casual")){
+                        if (room.getType().equals("casual")) {
                             roomsList2.add(child.getValue(Rooms.class));
-                        }
-                        else if (room.getType().equals("learner")){
+                        } else if (room.getType().equals("learner")) {
                             roomsList3.add(child.getValue(Rooms.class));
-                        }
-                        else {
+                        } else {
                             roomsList.add(child.getValue(Rooms.class));
                         }
                     }
@@ -130,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     String url = snapshot.getValue().toString();
                     Glide.with(MainActivity.this).load(url).apply(RequestOptions.bitmapTransform(new RoundedCorners(15))).into(homeImage);
                 }
@@ -141,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 //        FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {
@@ -210,8 +206,8 @@ public class MainActivity extends AppCompatActivity {
     void checkInstallReferrer() {
 //      remove the if condition to check referrer, need to check more on the prefKey usage
         if (getPreferences(MODE_PRIVATE).getBoolean(prefKey, false)) {
-            if (StaticConfig.user.getReferrer()== null || StaticConfig.user.getReferrer().equals("utm_source=google-play&utm_medium=organic")){
-            return;
+            if (StaticConfig.user.getReferrer() == null || StaticConfig.user.getReferrer().equals("utm_source=google-play&utm_medium=organic")) {
+                return;
             }
         }
 

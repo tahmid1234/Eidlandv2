@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_gravity="center"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/seat"
         android:layout_margin="5dp"
@@ -29,10 +29,12 @@
                 android:paddingVertical="3dp"
                 android:text="Seat No"
                 android:textColor="#fff"
-                android:textSize="12sp"  />
+                android:textSize="12sp" />
+
             <RelativeLayout
                 android:layout_width="60dp"
                 android:layout_height="60dp">
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -40,7 +42,8 @@
                     android:visibility="gone"
                     android:layout_centerInParent="true"
                     app:cardCornerRadius="25dp"
-                    app:cardBackgroundColor="#FCC529"/>
+                    app:cardBackgroundColor="#FCC529" />
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -49,24 +52,25 @@
                     android:layout_centerInParent="true"
                     android:visibility="gone"
                     app:cardCornerRadius="25dp"
-                    app:cardBackgroundColor="#FCC529"/>
-            <androidx.cardview.widget.CardView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                    app:cardBackgroundColor="#FCC529" />
 
-                android:layout_centerInParent="true"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="25dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
 
-                <ImageView
-                    android:id="@+id/host_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="TODO"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_mic" />
+                    android:layout_centerInParent="true"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="25dp">
 
-            </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/host_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="TODO"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_mic" />
+
+                </androidx.cardview.widget.CardView>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

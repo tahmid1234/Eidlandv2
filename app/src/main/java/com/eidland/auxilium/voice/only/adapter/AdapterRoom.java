@@ -1,7 +1,5 @@
 package com.eidland.auxilium.voice.only.adapter;
 
-import static com.eidland.auxilium.voice.only.helper.DateFormater.getHour;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
@@ -31,12 +24,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import io.agora.rtc.Constants;
+
+import static com.eidland.auxilium.voice.only.helper.DateFormater.getHour;
 
 public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
     List<Rooms> rooms;
     Context context;
-    int width=0;
+    int width = 0;
 
     public AdapterRoom(List<Rooms> rooms, Context context, int width) {
         this.rooms = rooms;
@@ -56,9 +54,9 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
         FirebaseDatabase.getInstance().getReference("Viewers").child(room.roomname).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    holder.memberNumber.setText(snapshot.getChildrenCount()+" Online");
-                }else {
+                if (snapshot.exists()) {
+                    holder.memberNumber.setText(snapshot.getChildrenCount() + " Online");
+                } else {
                     holder.memberNumber.setText("0 Online");
                 }
             }
@@ -74,10 +72,10 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double current= getHour(now);
-                double roomstart=   getHour(room.startTime);
-                double roomend= getHour(room.endTime);
-                if(getHour(room.startTime)<=getHour(now) && getHour(room.endTime)>=getHour(now)){
+                double current = getHour(now);
+                double roomstart = getHour(room.startTime);
+                double roomend = getHour(room.endTime);
+                if (getHour(room.startTime) <= getHour(now) && getHour(room.endTime) >= getHour(now)) {
 //                if(true){
                     Intent intent = new Intent(holder.roomPhoto.getContext(), LiveRoomActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -89,11 +87,11 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     intent.putExtra("profile", "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png");
                     intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                     context.startActivity(intent);
-                }else{
+                } else {
                     Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.layout_custom_dialog);
                     LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-                    linearLayout.setMinimumWidth((int) (width* 0.8));
+                    linearLayout.setMinimumWidth((int) (width * 0.8));
                     dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
                     dialog.setCancelable(false);
 
@@ -105,7 +103,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     msg.setText(room.offTimeMsg);
 
                     TextView negative = dialog.findViewById(R.id.positive_btn);
-                    RelativeLayout areatop=dialog.findViewById(R.id.topdialogbutton);
+                    RelativeLayout areatop = dialog.findViewById(R.id.topdialogbutton);
                     negative.setVisibility(View.VISIBLE);
                     negative.setText("OKAY");
                     areatop.setOnClickListener(new View.OnClickListener() {

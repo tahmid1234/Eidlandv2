@@ -1,21 +1,9 @@
 package com.eidland.auxilium.voice.only;
 
-import android.app.Activity;
 import android.app.Application;
-import android.util.Log;
 
 import com.eidland.auxilium.voice.only.model.CurrentUserSettings;
 import com.eidland.auxilium.voice.only.model.WorkerThread;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
-
-import static android.content.ContentValues.TAG;
 
 public class AGApplication extends Application {
 

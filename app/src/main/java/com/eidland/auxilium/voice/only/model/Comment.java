@@ -1,7 +1,5 @@
 package com.eidland.auxilium.voice.only.model;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 
 public class Comment implements Serializable {
@@ -25,12 +23,13 @@ public class Comment implements Serializable {
     public Comment() {
 
     }
-    public Comment (String hostname,String welcomecomment)
-    {
-        this.name=hostname;
-        this.comment=welcomecomment;
+
+    public Comment(String hostname, String welcomecomment) {
+        this.name = hostname;
+        this.comment = welcomecomment;
     }
-    public Comment(String name, String comment, String firebaseuid,  boolean hasimg, String imgid, String giftcount, String uphoto) {
+
+    public Comment(String name, String comment, String firebaseuid, boolean hasimg, String imgid, String giftcount, String uphoto) {
         this.name = name;
         this.comment = comment;
         this.firebaseuid = firebaseuid;
@@ -38,7 +37,7 @@ public class Comment implements Serializable {
         this.hasimg = hasimg;
         this.imgid = imgid;
         this.giftcount = giftcount;
-        this.userphoto=uphoto;
+        this.userphoto = uphoto;
     }
 
 

@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.activity.LiveRoomActivity;
@@ -21,7 +19,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Adapterspinner extends ArrayAdapter<String>{
+public class Adapterspinner extends ArrayAdapter<String> {
 
     private final LayoutInflater mInflater;
     private Context mContext;
@@ -30,24 +28,27 @@ public class Adapterspinner extends ArrayAdapter<String>{
     private int mResource;
     private OnSpinnerClickListener onSpinnerClickListener;
 
-    public Adapterspinner(@NonNull Context context, @LayoutRes int resource, @NonNull List objects,List onlyname, OnSpinnerClickListener onSpinnerClickListener) {
-        super(context, resource,0, onlyname);
+    public Adapterspinner(@NonNull Context context, @LayoutRes int resource, @NonNull List objects, List onlyname, OnSpinnerClickListener onSpinnerClickListener) {
+        super(context, resource, 0, onlyname);
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mResource = resource;
         items = objects;
-        names=onlyname;
+        names = onlyname;
         this.onSpinnerClickListener = onSpinnerClickListener;
     }
+
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         return createItemView(position, convertView, parent);
     }
 
     @Override
-    public @NonNull View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public @NonNull
+    View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         return createItemView(position, convertView, parent);
     }
+
     public static void hideSpinnerDropDown(Spinner spinner) {
         try {
             Method method = Spinner.class.getDeclaredMethod("onDetachedFromWindow");
@@ -57,10 +58,11 @@ public class Adapterspinner extends ArrayAdapter<String>{
             e.printStackTrace();
         }
     }
-    private View createItemView  (int position, View convertView, ViewGroup parent){
+
+    private View createItemView(int position, View convertView, ViewGroup parent) {
         final View view = mInflater.inflate(mResource, parent, false);
         TextView offTypeTv = (TextView) view.findViewById(R.id.spinnertextid);
-     //   Viewer offerData = items.get(position);
+        //   Viewer offerData = items.get(position);
         offTypeTv.setText(names.get(position));
         offTypeTv.setOnClickListener(new View.OnClickListener() {
             @Override

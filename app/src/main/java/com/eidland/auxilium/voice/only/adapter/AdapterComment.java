@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.Interface.ItemClickListener1;
 import com.eidland.auxilium.voice.only.R;
@@ -16,32 +14,34 @@ import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pl.droidsonroids.gif.GifImageView;
 
 
 public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ItemClickListener1 itemClickListener1;
-    PlacesViewHolder placesViewHolder=null;
+    PlacesViewHolder placesViewHolder = null;
     Context context;
     ArrayList<Comment> countryInfoArrayList;
     URI phURI;
+
     public AdapterComment(Context context, ArrayList<Comment> cameraobject1s, ItemClickListener1 itemClickListener1) {
         this.context = context;
         countryInfoArrayList = cameraobject1s;
-        this.itemClickListener1=itemClickListener1;
+        this.itemClickListener1 = itemClickListener1;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
-            View view;
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlecmnt, parent, false);
-            PlacesViewHolder placesViewHolder = new PlacesViewHolder(view,itemClickListener1);
-            return placesViewHolder;
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlecmnt, parent, false);
+        PlacesViewHolder placesViewHolder = new PlacesViewHolder(view, itemClickListener1);
+        return placesViewHolder;
 
     }
 
@@ -53,23 +53,23 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-            placesViewHolder = (PlacesViewHolder) holder;
-            placesViewHolder.txtuser.setText( countryInfoArrayList.get(position).getName());
-            placesViewHolder.txtcmnt.setText( countryInfoArrayList.get(position).getComment());
+        placesViewHolder = (PlacesViewHolder) holder;
+        placesViewHolder.txtuser.setText(countryInfoArrayList.get(position).getName());
+        placesViewHolder.txtcmnt.setText(countryInfoArrayList.get(position).getComment());
 
         Glide.with(this.context).load(countryInfoArrayList.get(position).getUserphoto()).into(placesViewHolder.userImg);
-            if(countryInfoArrayList.get(position).isHasimg()) {
-                placesViewHolder.gift.setVisibility(View.VISIBLE);
-                placesViewHolder.txtcount.setVisibility(View.VISIBLE);
-                placesViewHolder.txtcount.setText("");
+        if (countryInfoArrayList.get(position).isHasimg()) {
+            placesViewHolder.gift.setVisibility(View.VISIBLE);
+            placesViewHolder.txtcount.setVisibility(View.VISIBLE);
+            placesViewHolder.txtcount.setText("");
 
-                for (AnimationItem animationItem :
-                        ConstantApp.animationItems()) {
-                    if (animationItem.name.equals(countryInfoArrayList.get(position).getImgid())) {
-                        placesViewHolder.gift.setImageResource(animationItem.svgIconId);
+            for (AnimationItem animationItem :
+                    ConstantApp.animationItems()) {
+                if (animationItem.name.equals(countryInfoArrayList.get(position).getImgid())) {
+                    placesViewHolder.gift.setImageResource(animationItem.svgIconId);
 //                        placesViewHolder.gift.setImageURI();
-                    }
                 }
+            }
 //                switch (){
 //
 //                    case "hearts":
@@ -144,17 +144,11 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //
 //
 //                }
-            }
-            else {
+        } else {
 
-                placesViewHolder.gift.setVisibility(View.GONE);
-                placesViewHolder.txtcount.setVisibility(View.GONE);
-            }
-
-
-
-
-
+            placesViewHolder.gift.setVisibility(View.GONE);
+            placesViewHolder.txtcount.setVisibility(View.GONE);
+        }
 
 
 //            @Override
@@ -174,19 +168,20 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         View view;
         TextView txtcmnt;
-        TextView txtuser,txtcount;
+        TextView txtuser, txtcount;
         CircleImageView userImg;
         GifImageView gift;
 
         ItemClickListener1 itemClickListener1;
+
         public PlacesViewHolder(View itemView, ItemClickListener1 listener1) {
             super(itemView);
             view = itemView;
-            itemClickListener1=listener1;
+            itemClickListener1 = listener1;
 
             txtcount = view.findViewById(R.id.txtcount);
             gift = view.findViewById(R.id.imggift);
-            userImg=view.findViewById(R.id.userimgcomment);
+            userImg = view.findViewById(R.id.userimgcomment);
             txtcmnt = view.findViewById(R.id.cmnt);
             txtuser = view.findViewById(R.id.user);
             view.setOnClickListener(this);
@@ -195,10 +190,9 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @Override
         public void onClick(View view) {
-            itemClickListener1.onPositionClicked(view,getAdapterPosition());
+            itemClickListener1.onPositionClicked(view, getAdapterPosition());
         }
     }
-
 
 
 }

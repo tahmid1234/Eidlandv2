@@ -18,7 +18,6 @@
         android:padding="0dp">
 
 
-
         <RelativeLayout
             android:id="@+id/display_card_layout"
             android:translationZ="1.0dp"
@@ -34,9 +33,10 @@
                 android:paddingBottom="80dp"
                 android:translationZ="1.0dp"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"                android:scaleType="fitCenter"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter"
                 android:visibility="visible"
-                android:background="@drawable/card_confetti"/>
+                android:background="@drawable/card_confetti" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                     android:layout_width="350dp"
                     android:layout_height="500dp"
                     android:scaleType="fitXY"
-                    android:background="@drawable/flag_japan"/>
+                    android:background="@drawable/flag_japan" />
 
                 <ImageView
                     android:id="@+id/closecard"
@@ -61,7 +61,6 @@
                     android:contentDescription="TODO"
                     android:src="@drawable/cancel" />
             </RelativeLayout>
-
 
 
         </RelativeLayout>
@@ -80,7 +79,8 @@
                 android:layout_height="300dp"
                 android:layout_centerInParent="true"
                 android:scaleType="fitCenter"
-                android:background="@drawable/card_loading"/>
+                android:background="@drawable/card_loading" />
+
             <TextView
                 android:id="@+id/game_name"
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:layout_height="match_parent"
                 android:visibility="visible"
                 android:translationZ="1.0dp"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter" />
         </RelativeLayout>
 
         <LinearLayout
@@ -150,6 +150,7 @@
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
                 <ImageView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
@@ -168,7 +169,6 @@
                     android:visibility="gone">
 
                 </ImageView>
-
 
 
                 <ImageView
@@ -265,7 +265,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:background="#D68920"
-                            android:padding="20dp"/>
+                            android:padding="20dp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -468,6 +468,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -499,12 +500,14 @@
                         android:layout_marginHorizontal="12dp"
                         android:background="@drawable/game_image" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginHorizontal="12dp"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:id="@+id/invite_icon"
                         android:layout_width="36dp"
@@ -624,6 +627,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/gameslayout"
             android:layout_width="match_parent"
@@ -705,6 +709,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-24dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -716,39 +721,42 @@
                         android:textColor="#fff"
                         android:layout_marginBottom="8dp"
                         android:textSize="20sp" />
-                <TextView
-                    android:id="@+id/user_available_coin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
 
-                    android:drawableStart="@drawable/ic_fi_rr_coin_5"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:gravity="left"
+                    <TextView
+                        android:id="@+id/user_available_coin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-                    android:text="00"
-                    android:textColor="#fff"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="20sp" />
+                        android:drawableStart="@drawable/ic_fi_rr_coin_5"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="left"
 
-<!--                <TextView-->
-<!--                    android:id="@+id/coinrecharge"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="match_parent"-->
+                        android:text="00"
+                        android:textColor="#fff"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="20sp" />
 
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    android:fontFamily="@font/open_sans"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:text="@string/Recharge"-->
-<!--                    android:textColor="#fff"-->
-<!--                    android:textSize="12dp"-->
-<!--                    android:visibility="gone" />-->
+                    <!--                <TextView-->
+                    <!--                    android:id="@+id/coinrecharge"-->
+                    <!--                    android:layout_width="wrap_content"-->
+                    <!--                    android:layout_height="match_parent"-->
+
+                    <!--                    android:layout_marginBottom="8dp"-->
+                    <!--                    android:fontFamily="@font/open_sans"-->
+                    <!--                    android:gravity="center_vertical"-->
+                    <!--                    android:text="@string/Recharge"-->
+                    <!--                    android:textColor="#fff"-->
+                    <!--                    android:textSize="12dp"-->
+                    <!--                    android:visibility="gone" />-->
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
+
                     <TextView
 
                         android:layout_width="wrap_content"
@@ -760,6 +768,7 @@
                         android:textColor="#fff"
 
                         android:textSize="13sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -771,6 +780,7 @@
                         android:text="1. "
                         android:textColor="#fff"
                         android:textSize="13sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -791,7 +801,6 @@
                         android:textSize="13sp" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -816,9 +825,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:weightSum="3"
-                android:layout_marginBottom="0dp"
-               >
-
+                android:layout_marginBottom="0dp">
 
 
                 <RelativeLayout
@@ -841,6 +848,7 @@
 
 
                         android:visibility="visible" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:id="@+id/selecteduser"
@@ -855,6 +863,7 @@
 
                     </TextView>
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="0dp"
                     android:id="@+id/ajaira"
@@ -869,6 +878,7 @@
                     android:layout_height="match_parent">
 
                 </TextView>
+
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:id="@+id/sendgiftbuttonholder"
@@ -999,6 +1009,7 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="130dp"
                         android:layout_weight="1"
@@ -1008,51 +1019,51 @@
                         android:layout_height="wrap_content">
 
 
-                    <LinearLayout
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center|left"
-                        android:background="@drawable/eidcoin_bg"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="3dp"
-                            android:contentDescription="TODO"
-                            android:src="@drawable/eidcoin" />
-
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left"
-                            android:orientation="vertical"
-                            android:padding="7dp">
+                            android:layout_width="150dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center|left"
+                            android:background="@drawable/eidcoin_bg"
+                            android:gravity="center">
 
-                            <TextView
-                                android:id="@+id/eidland_point_count"
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_margin="3dp"
+                                android:contentDescription="TODO"
+                                android:src="@drawable/eidcoin" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="1000"
-                                android:textAlignment="textStart"
-                                android:textColor="#000"
-                                android:textSize="15dp"
-                                android:textStyle="bold" />
+                                android:gravity="left"
+                                android:orientation="vertical"
+                                android:padding="7dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="Eidland\nPoints"
-                                android:textColor="#000"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/eidland_point_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:text="1000"
+                                    android:textAlignment="textStart"
+                                    android:textColor="#000"
+                                    android:textSize="15dp"
+                                    android:textStyle="bold" />
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:text="Eidland\nPoints"
+                                    android:textColor="#000"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold" />
+
+
+                            </LinearLayout>
 
                         </LinearLayout>
-
-                    </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -1071,7 +1082,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lrnt"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"                        android:gravity="center"
+                        android:paddingRight="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
@@ -1099,7 +1111,8 @@
                         android:layout_height="wrap_content"
 
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"                        android:gravity="center"
+                        android:paddingRight="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
@@ -1127,7 +1140,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lrnt"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"                        android:gravity="center"
+                        android:paddingRight="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
@@ -1156,7 +1170,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/lrnt"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"                        android:gravity="center"
+                        android:paddingRight="10dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView

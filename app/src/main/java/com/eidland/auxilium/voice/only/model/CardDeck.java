@@ -1,7 +1,5 @@
 package com.eidland.auxilium.voice.only.model;
 
-import android.net.Uri;
-
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -26,12 +24,20 @@ public class CardDeck {
         return result;
     }
 
-    public String getDeckImage() { return deckImage; }
+    public String getDeckImage() {
+        return deckImage;
+    }
 
-    public void setDeckImage(String deckImage) { this.deckImage = deckImage; }
+    public void setDeckImage(String deckImage) {
+        this.deckImage = deckImage;
+    }
 
-    public String getDeckName() { return deckName; }
+    public String getDeckName() {
+        return deckName;
+    }
 
-    public void setDeckName(String deckName) { this.deckName = deckName; }
+    public void setDeckName(String deckName) {
+        this.deckName = deckName;
+    }
 
 }

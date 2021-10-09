@@ -27,19 +27,19 @@ public class ConstantApp {
     }
 
 
-    public static List<GiftItem> giftList(){
+    public static List<GiftItem> giftList() {
         List<GiftItem> giftItems = new ArrayList<>();
 //        giftItems.add(new GiftItem("hearts",1, R.drawable.gift_diamond,"Knowledge"));
-        giftItems.add(new GiftItem("like1",1, R.drawable.gift_red,"Knowledge"));
-        giftItems.add(new GiftItem("smilereact",1, R.drawable.gift_turquoise,""));
-        giftItems.add(new GiftItem("pigions",1, R.drawable.gift_pink,""));
-        giftItems.add(new GiftItem("oscar",1, R.drawable.gift_purple,""));
-        giftItems.add(new GiftItem("heartcomment",1, R.drawable.gift_yellow,"Wisdom"));
+        giftItems.add(new GiftItem("like1", 1, R.drawable.gift_red, "Knowledge"));
+        giftItems.add(new GiftItem("smilereact", 1, R.drawable.gift_turquoise, ""));
+        giftItems.add(new GiftItem("pigions", 1, R.drawable.gift_pink, ""));
+        giftItems.add(new GiftItem("oscar", 1, R.drawable.gift_purple, ""));
+        giftItems.add(new GiftItem("heartcomment", 1, R.drawable.gift_yellow, "Wisdom"));
 //        giftItems.add(new GiftItem("like2",1, R.drawable.gift_daco,"Humour"));
 //        giftItems.add(new GiftItem("star",1, R.drawable.gift_green,""));
-        giftItems.add(new GiftItem("medal",1, R.drawable.gift_cyan,"Brave"));
+        giftItems.add(new GiftItem("medal", 1, R.drawable.gift_cyan, "Brave"));
 //        giftItems.add(new GiftItem("fire",1, R.drawable.gift_light_red,""));
-        giftItems.add(new GiftItem("debate",1, R.drawable.gift_stone,"Love"));
+        giftItems.add(new GiftItem("debate", 1, R.drawable.gift_stone, "Love"));
 
 
 //        giftItems.add(new GiftItem("carousel",1, R.drawable.ic_gift___carousel,""));
@@ -49,7 +49,8 @@ public class ConstantApp {
 //        giftItems.add(new GiftItem("oscar",1, R.drawable.ic_gift___oscar2,""));
         return giftItems;
     }
-    public static List<AnimationItem> animationItems(){
+
+    public static List<AnimationItem> animationItems() {
         List<AnimationItem> animationItemList = new ArrayList<>();
 
 //        animationItemList.add(new AnimationItem("hearts", R.drawable.gift_diamond, "gift_stone.json", R.drawable.gift_diamond_svg));
@@ -72,7 +73,8 @@ public class ConstantApp {
 
         return animationItemList;
     }
-    public static List<CardDeck> gameList(){
+
+    public static List<CardDeck> gameList() {
         List<CardDeck> randomDeck = new ArrayList<>();
         randomDeck.add(new CardDeck("In The Shoes", "https://auxiliumlivestreaming.000webhostapp.com/card_decks/10.png"));
 

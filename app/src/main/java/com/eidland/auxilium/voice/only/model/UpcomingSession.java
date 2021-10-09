@@ -10,7 +10,7 @@ public class UpcomingSession {
     public String title;
     public String description;
     public String iconUrl;
-    public String  startTime;
+    public String startTime;
 
     public UpcomingSession() {
     }
