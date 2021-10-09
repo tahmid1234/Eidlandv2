@@ -871,7 +871,7 @@
                 </TextView>
                 <RelativeLayout
                     android:layout_width="0dp"
-
+                    android:id="@+id/sendgiftbuttonholder"
                     android:layout_height="32dp"
                     android:layout_gravity="right"
                     android:layout_weight=".7"

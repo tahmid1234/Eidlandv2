@@ -1,4 +1,4 @@
-package com.eidland.auxilium.voice.only.activity;
+ package com.eidland.auxilium.voice.only.activity;
 
 import static com.eidland.auxilium.voice.only.helper.Helper.getFormattedText;
 
@@ -194,7 +194,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String nameOfRoom;
     String inviteLink;
     String welcomeMsg;
-
+RelativeLayout sendgiftholder;
     LinearLayout inputArea;
     boolean Speakerselected=false;
     ImageView lastImg;
@@ -291,6 +291,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         sendGiftBtn = findViewById(R.id.send_gift);
+        sendgiftholder=findViewById(R.id.sendgiftbuttonholder);
         userAvailableCoin = findViewById(R.id.user_available_coin);
         spinner = findViewById(R.id.spinner);
         crystal = findViewById(R.id.giftslayout);
@@ -314,10 +315,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         minimizedCard = findViewById(R.id.card_minimized);
 
         inviteButton = findViewById(R.id.invite_icon);
- for (int i=0;i<seatUsers.size();i++)
- {
-     speakernames.add(seatUsers.get(i).getName());
- }
+        for (int i=0;i<seatUsers.size();i++)
+        {
+            speakernames.add(seatUsers.get(i).getName());
+        }
         adapterspinner = new Adapterspinner(getApplicationContext(),
                 R.layout.spinner_speaker, seatUsers,speakernames, this);
         spinner.setAdapter(adapterspinner);
@@ -361,9 +362,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 //selectedViewer.id = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
-               // selectedViewer.name = nameOfRoom;
-               // selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
-               // selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
+                // selectedViewer.name = nameOfRoom;
+                // selectedViewer.photo = "https://auxiliumlivestreaming.000webhostapp.com/images/Eidlandhall.png";
+                // selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 txtsinglename.setText(nameOfRoom);
                 spinner.setVisibility(View.VISIBLE);
                 Selectedspeaker.setVisibility(View.VISIBLE);
@@ -700,23 +701,23 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         userRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            User user = snapshot.getValue(User.class);
-                            StaticConfig.user = user;
-                            userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
-                        } catch (Exception e) {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    User user = snapshot.getValue(User.class);
+                    StaticConfig.user = user;
+                    userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
+                } catch (Exception e) {
 
-                        }
+                }
 
-                    }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        System.out.println(error);
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println(error);
+            }
+        });
 
         setOnlineMembers();
 
@@ -871,8 +872,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                                         try {
                                             Viewer viewerval = currentDatas.getValue(Viewer.class);
-                                     String coin=viewerval.getRecievedCoins();
-                                         //   userAvailableCoin.setText(getFormattedText(user.coins));
+                                            String coin=viewerval.getRecievedCoins();
+                                            //   userAvailableCoin.setText(getFormattedText(user.coins));
 
                                         } catch (Exception e) {
                                             System.out.println(e);
@@ -1186,13 +1187,28 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     if (snapshot.getValue() != null) {
 
                         try {
-                            Viewer viewer = snapshot.getValue(Viewer.class);
-                            selectuseruid = viewer.getId();
-                            selectedViewer = viewer;
+                            Viewer audiance = snapshot.getValue(Viewer.class);
+                            Toast.makeText(getApplicationContext(), audiance.getId(), Toast.LENGTH_SHORT);
+                            FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(audiance.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Viewer viewer = snapshot.getValue(Viewer.class);
+                                    assert viewer != null;
+//                                    Toast.makeText(getApplicationContext(), viewer.getId(), Toast.LENGTH_SHORT);
+                                    audiance.setRecievedCoins(viewer.getRecievedCoins());
+                                    eidlandpointcount.setText(audiance.getRecievedCoins());
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            selectuseruid = audiance.getId();
+                            selectedViewer = audiance;
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
-                            Glide.with(getApplicationContext()).load(viewer.getPhotoUrl()).into(popup_user);
-                            txtsinglename.setText(viewer.getName());
-                            eidlandpointcount.setText(viewer.getRecievedCoins());
+                            Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
+                            txtsinglename.setText(audiance.getName());
                             singleUserBox.setVisibility(View.VISIBLE);
 
                         } catch (Exception e) {
@@ -2173,6 +2189,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onViewersClick(int position, String uid, String name, String photo, String recievedCoins) {
         popup_uname.setText(name);
         clickedOnlineUserUID = uid;
+        if (clickedOnlineUserUID.equals(currentUser.getUid())){
+            singlegift.setVisibility(View.GONE);
+            txtsinglegiftsend.setVisibility(View.GONE);
+        }
+        else {
+            singlegift.setVisibility(View.VISIBLE);
+            txtsinglegiftsend.setVisibility(View.VISIBLE);
+        }
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         eidlandpointcount.setText(recievedCoins);
         singleUserBox.setVisibility(View.VISIBLE);
