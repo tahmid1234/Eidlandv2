@@ -16,15 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.chaos.view.PinView;
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,10 +34,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
 
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class VerifyOTPActivity extends AppCompatActivity {
     TextView setphonenumber;
@@ -103,7 +103,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(VerifyOTPActivity.this);
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-        linearLayout.setMinimumWidth((int) (width* 0.8));
+        linearLayout.setMinimumWidth((int) (width * 0.8));
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
         dialog.setCancelable(false);
 
@@ -124,10 +124,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean checkPermissionResult = checkSelfPermissions();
                 if (checkPermissionResult) {
-                    try{
+                    try {
                         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
                         signInWithPhoneAuthCredential(credential);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
                     dialog.cancel();
@@ -234,9 +234,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if(user!=null){
+                    if (user != null) {
                         accessGranted(user);
-                    }else{
+                    } else {
                         Toast.makeText(VerifyOTPActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 } else {
@@ -262,7 +262,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void accessGranted(FirebaseUser user){
+    public void accessGranted(FirebaseUser user) {
         String userid = user.getUid();
         FirebaseDatabase.getInstance().getReference("Users").child(userid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -8,12 +8,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class AdapterGame extends RecyclerView.Adapter<AdapterGame.ViewHolder> {
 

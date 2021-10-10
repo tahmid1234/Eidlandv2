@@ -8,10 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.UidPositions;
@@ -24,6 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
 
     private Context context;
@@ -35,17 +35,19 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
         this.context = context;
         this.onSeatClickListener = onSeatClickListener;
         this.roomName = roomName;
-        uidPositions=new ArrayList<>(10);
+        uidPositions = new ArrayList<>(10);
         initVacancies();
 
     }
+
     private void initVacancies() {
 
         for (int i = 0; i < 10; i++) {
 
-            uidPositions.add(new UidPositions(0,i));
+            uidPositions.add(new UidPositions(0, i));
         }
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,34 +60,34 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
         uidPositions.get(position).initAnimator(context,
                 holder.itemView.findViewById(R.id.cardback),
                 holder.itemView.findViewById(R.id.cardback1));
-        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child("seat"+position).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child("seat" + position).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    try{
+                    try {
                         Viewer viewer = snapshot.getValue(Viewer.class);
                         holder.seatName.setText(viewer.name);
                         holder.cardback.setVisibility(View.VISIBLE);
                         holder.cardback1.setVisibility(View.VISIBLE);
                         Glide.with(context).load(viewer.getPhotoUrl()).placeholder(R.drawable.ic_mic).into(holder.seatImage);
                         uidPositions.get(position).setIsfill(true);
-                        uidPositions.get(position).uid=viewer.uid;
+                        uidPositions.get(position).uid = viewer.uid;
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                         holder.seatName.setText("Seat #" + (position + 1));
                         holder.seatImage.setImageResource(R.drawable.ic_mic);
                         uidPositions.get(position).setIsfill(false);
-                        uidPositions.get(position).uid=0;
+                        uidPositions.get(position).uid = 0;
 
                         holder.cardback.setVisibility(View.GONE);
                         holder.cardback1.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
                     holder.seatName.setText("Seat #" + (position + 1));
                     holder.seatImage.setImageResource(R.drawable.ic_mic);
                     uidPositions.get(position).setIsfill(false);
-                    uidPositions.get(position).uid=0;
+                    uidPositions.get(position).uid = 0;
 
                     holder.cardback.setVisibility(View.GONE);
                     holder.cardback1.setVisibility(View.GONE);
@@ -98,6 +100,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return 10;
@@ -105,18 +108,19 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
 
     public void indicateSpeaking(List<Integer> uidList) {
 
-        for(int k=0;k<uidPositions.size();k++){
-            if(uidPositions.get(k).isfill)
-            if(uidList.contains(uidPositions.get(k).uid)){
+        for (int k = 0; k < uidPositions.size(); k++) {
+            if (uidPositions.get(k).isfill)
+                if (uidList.contains(uidPositions.get(k).uid)) {
 
-               uidPositions.get(k).startAnimation();
-            }
+                    uidPositions.get(k).startAnimation();
+                }
 
+        }
     }
-    }
+
     public void stopIndicateSpeaking() {
         for (int i = 0; i < 10; i++) {
-          uidPositions.get(i).stopAnimation();
+            uidPositions.get(i).stopAnimation();
         }
     }
 
@@ -124,7 +128,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
         TextView seatName;
         ImageView seatImage;
         LinearLayout seat;
-        CardView cardback1,cardback;
+        CardView cardback1, cardback;
         OnSeatClickListener onSeatClickListener;
 
         public ViewHolder(@NonNull View itemView, OnSeatClickListener onSeatClickListener) {

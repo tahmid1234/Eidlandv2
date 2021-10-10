@@ -1,10 +1,9 @@
 package com.eidland.auxilium.voice.only.activity;
 
 
+import com.eidland.auxilium.voice.only.R;
 import com.robotium.solo.Condition;
 import com.robotium.solo.Solo;
-
-import com.eidland.auxilium.voice.only.R;
 
 public class BasicTests {
 

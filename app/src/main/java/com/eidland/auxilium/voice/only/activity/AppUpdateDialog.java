@@ -15,9 +15,8 @@ import android.widget.TextView;
 
 import com.eidland.auxilium.voice.only.R;
 
-public class AppUpdateDialog extends Dialog
-{
-    private TextView tvTitle,tvDescription,tvUpdate;
+public class AppUpdateDialog extends Dialog {
+    private TextView tvTitle, tvDescription, tvUpdate;
     ImageView ivClose;
 
     private Context context;
@@ -42,11 +41,11 @@ public class AppUpdateDialog extends Dialog
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_update);
 
-        tvTitle=findViewById(R.id.tvTitle);
-        tvDescription=findViewById(R.id.tvMessage);
-        tvUpdate=findViewById(R.id.tvUpdateNow);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvDescription = findViewById(R.id.tvMessage);
+        tvUpdate = findViewById(R.id.tvUpdateNow);
 
-        ivClose=findViewById(R.id.ivClose);
+        ivClose = findViewById(R.id.ivClose);
 
         if (isCancelable)
             ivClose.setVisibility(View.VISIBLE);
@@ -62,13 +61,13 @@ public class AppUpdateDialog extends Dialog
         });
 
 
-        if(!TextUtils.isEmpty(title))
+        if (!TextUtils.isEmpty(title))
             tvTitle.setText(title);
         else
             tvTitle.setVisibility(View.GONE);
 
 
-        if(!TextUtils.isEmpty(description))
+        if (!TextUtils.isEmpty(description))
             tvDescription.setText(String.format(description));
         else
             tvDescription.setVisibility(View.GONE);
@@ -89,7 +88,6 @@ public class AppUpdateDialog extends Dialog
         });
 
     }
-
 
 
 }

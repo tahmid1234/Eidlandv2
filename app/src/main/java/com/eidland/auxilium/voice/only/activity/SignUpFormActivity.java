@@ -17,30 +17,24 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.adapter.AdapterAvatar;
-import com.eidland.auxilium.voice.only.model.User;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.adapter.AdapterAvatar;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -52,9 +46,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import de.hdodenhof.circleimageview.CircleImageView;
 
-import com.eidland.auxilium.voice.only.activity.ViewDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SignUpFormActivity<mStorage> extends Activity implements AdapterAvatar.ItemClickListener {
     TextView imgerror;
@@ -86,7 +83,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster6.jpg",
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster7.jpg",
             "https://auxiliumlivestreaming.000webhostapp.com/avatar/monster8.jpg"
-            };
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,14 +93,14 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         initialViews();
 
 
-        filePath = Uri.parse(imageList[(int)(Math.random()*5)]);
+        filePath = Uri.parse(imageList[(int) (Math.random() * 5)]);
         Glide.with(SignUpFormActivity.this).load(filePath).into(profileimageView);
         intent = getIntent();
         viewDialog = new ViewDialog(this);
         // get ids from layout
 
-        if(mAuth.getCurrentUser().getEmail()!= null){
-            if(mAuth.getCurrentUser().getEmail().length()>0){
+        if (mAuth.getCurrentUser().getEmail() != null) {
+            if (mAuth.getCurrentUser().getEmail().length() > 0) {
                 email.setText(mAuth.getCurrentUser().getEmail().toString());
                 email.setInputType(InputType.TYPE_NULL);
                 email.setCompoundDrawables(null, null, null, null);
@@ -132,7 +129,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
                 } else {
                     viewDialog.showDialog();
 
-                    if(ImageUploaded) uplnamephoto();
+                    if (ImageUploaded) uplnamephoto();
                     else AddData(String.valueOf(filePath));
                 }
             }
@@ -146,7 +143,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 8; i++) {
-            int index = (int)(AlphaNumericString.length() * Math.random());
+            int index = (int) (AlphaNumericString.length() * Math.random());
             sb.append(AlphaNumericString.charAt(index));
         }
         referralURL = sb.toString();
@@ -329,7 +326,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
 
     @Override
     public void onItemClick(View view, int position) {
-        filePath= Uri.parse(imageList[position]);
+        filePath = Uri.parse(imageList[position]);
         Glide.with(SignUpFormActivity.this).load(imageList[position]).into(profileimageView);
     }
 }

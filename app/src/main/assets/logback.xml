@@ -1,18 +1,10 @@
 <configuration>
     <!-- config THESE PROPERTIES in code for more flexibility -->
-    <property
-        name="LOG_DIR"
-        value="/sdcard/com.eidland.auxilium.voice.only/log" />
-    <property
-        name="FILE_PREFIX"
-        value="app" />
-    <property
-        name="FILE_POSTFIX"
-        value=".log" />
+    <property name="LOG_DIR" value="/sdcard/com.eidland.auxilium.voice.only/log" />
+    <property name="FILE_PREFIX" value="app" />
+    <property name="FILE_POSTFIX" value=".log" />
 
-    <appender
-        name="ROLLING"
-        class="ch.qos.logback.core.rolling.RollingFileAppender" >
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>
             ${LOG_DIR}/${FILE_PREFIX}${FILE_POSTFIX}
         </file>
@@ -42,7 +34,7 @@
     </appender>
 
     <!-- Write TRACE (and higher-level, from TRACE to ERROR) messages to the log file -->
-    <root level="TRACE" >
+    <root level="TRACE">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="ROLLING" />
     </root>

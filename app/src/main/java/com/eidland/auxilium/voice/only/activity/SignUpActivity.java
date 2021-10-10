@@ -15,9 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.User;
@@ -38,6 +35,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;

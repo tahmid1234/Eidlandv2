@@ -14,12 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -41,6 +38,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import io.agora.rtc.Constants;
 
 public class EnterRoomActivity extends AppCompatActivity {

@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.model.Viewer;
 
 import java.util.ArrayList;
 
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.model.Viewer;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -32,7 +31,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PlacesViewHolder (LayoutInflater.from(context).inflate(R.layout.singalsmalluser, parent, false), onViewersClickListener);
+        return new PlacesViewHolder(LayoutInflater.from(context).inflate(R.layout.singalsmalluser, parent, false), onViewersClickListener);
 
     }
 
@@ -53,7 +52,7 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return countryInfoArrayList.size();
     }
 
-     class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         View view;
         ImageView ivFamousPlace;
@@ -69,10 +68,11 @@ public class ViewerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @Override
         public void onClick(View v) {
-           int pos=this.getLayoutPosition();
-           onViewersClickListener.onViewersClick(getAdapterPosition(), countryInfoArrayList.get(pos).id, countryInfoArrayList.get(pos).name,countryInfoArrayList.get(pos).photo, countryInfoArrayList.get(pos).recievedCoins);
+            int pos = this.getLayoutPosition();
+            onViewersClickListener.onViewersClick(getAdapterPosition(), countryInfoArrayList.get(pos).id, countryInfoArrayList.get(pos).name, countryInfoArrayList.get(pos).photo, countryInfoArrayList.get(pos).recievedCoins);
         }
     }
+
     public interface OnViewersClickListener {
         void onViewersClick(int position, String uid, String name, String photo, String recievedCoins);
     }

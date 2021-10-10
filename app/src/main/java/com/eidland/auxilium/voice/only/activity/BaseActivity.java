@@ -14,13 +14,6 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewConfigurationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.eidland.auxilium.voice.only.AGApplication;
 import com.eidland.auxilium.voice.only.BuildConfig;
 import com.eidland.auxilium.voice.only.R;
@@ -36,6 +29,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewConfigurationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import io.agora.rtc.RtcEngine;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -46,6 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
     }
+
     private final ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
@@ -57,9 +57,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(BaseActivity.this);
 
-            if(heightDiff <= contentViewTop){
+            if (heightDiff <= contentViewTop) {
                 onHideKeyboard();
-                
+
                 Intent intent = new Intent("KeyboardWillHide");
                 broadcastManager.sendBroadcast(intent);
             } else {
@@ -76,8 +76,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     private boolean keyboardListenersAttached = false;
     private ViewGroup rootLayout;
 
-    protected void onShowKeyboard(int keyboardHeight) {}
-    protected void onHideKeyboard() {}
+    protected void onShowKeyboard(int keyboardHeight) {
+    }
+
+    protected void onHideKeyboard() {
+    }
 
     protected void attachKeyboardListeners() {
         if (keyboardListenersAttached) {

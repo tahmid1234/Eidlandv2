@@ -5,10 +5,6 @@ import android.content.Context;
 import com.eidland.auxilium.voice.only.Interface.AGEventHandler;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
 
-
-import io.agora.rtc.IRtcEngineEventHandler;
-import io.agora.rtc.RtcEngine;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,11 +12,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
+import io.agora.rtc.IRtcEngineEventHandler;
+import io.agora.rtc.RtcEngine;
+
 public class MyEngineEventHandler {
     public MyEngineEventHandler(Context ctx, EngineConfig config) {
         this.mContext = ctx;
         this.mConfig = config;
     }
+
     private ArrayList<AGEventHandler> mHandler = new ArrayList<>();
     private final EngineConfig mConfig;
 
@@ -307,21 +307,21 @@ public class MyEngineEventHandler {
 
         /**
          *
-             Occurs when the local audio playback route changes.
+         Occurs when the local audio playback route changes.
 
-             This callback returns that the audio route switched to an earpiece, speakerphone, headset, or Bluetooth device.
+         This callback returns that the audio route switched to an earpiece, speakerphone, headset, or Bluetooth device.
 
-             The definition of the routing is listed as follows:
+         The definition of the routing is listed as follows:
 
-             AUDIO_ROUTE_DEFAULT(-1): Default audio route.
-             AUDIO_ROUTE_HEADSET(0): Headset.
-             AUDIO_ROUTE_EARPIECE(1): Earpiece.
-             AUDIO_ROUTE_HEADSETNOMIC(2): Headset with no microphone.
-             AUDIO_ROUTE_SPEAKERPHONE(3): Speakerphone.
-             AUDIO_ROUTE_LOUDSPEAKER(4): Loudspeaker.
-             AUDIO_ROUTE_HEADSETBLUETOOTH(5): Bluetooth headset.
+         AUDIO_ROUTE_DEFAULT(-1): Default audio route.
+         AUDIO_ROUTE_HEADSET(0): Headset.
+         AUDIO_ROUTE_EARPIECE(1): Earpiece.
+         AUDIO_ROUTE_HEADSETNOMIC(2): Headset with no microphone.
+         AUDIO_ROUTE_SPEAKERPHONE(3): Speakerphone.
+         AUDIO_ROUTE_LOUDSPEAKER(4): Loudspeaker.
+         AUDIO_ROUTE_HEADSETBLUETOOTH(5): Bluetooth headset.
 
-        */
+         */
         @Override
         public void onAudioRouteChanged(int routing) {
             log.debug("onAudioRouteChanged " + routing);

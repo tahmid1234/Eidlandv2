@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    public   String name= "User";
+    public String name = "User";
     public String email = "user@gmail.com";
-    public String imageurl= "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png";
+    public String imageurl = "https://auxiliumlivestreaming.000webhostapp.com/avatar/1.png";
     public String coins = "0";
     public String receivedCoins = "0";
     public String referrer = "null";
@@ -18,7 +18,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String imageurl,String coins, String receivedCoins, String referralURL, String referrer) {
+    public User(String name, String email, String imageurl, String coins, String receivedCoins, String referralURL, String referrer) {
         this.name = name;
         this.email = email;
         this.imageurl = imageurl;
@@ -27,7 +27,6 @@ public class User {
         this.referralURL = referralURL;
         this.referrer = referrer;
     }
-
 
 
     @Exclude
@@ -47,6 +46,7 @@ public class User {
     public String getCoins() {
         return coins;
     }
+
     public void setCoins(String coins) {
         this.coins = coins;
     }
@@ -54,6 +54,7 @@ public class User {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -61,6 +62,7 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -68,16 +70,32 @@ public class User {
     public String getImageurl() {
         return imageurl;
     }
+
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
     }
 
-    public String getReceivedCoins() { return receivedCoins; }
-    public void setReceivedCoins(String receivedCoins) { this.receivedCoins = receivedCoins; }
+    public String getReceivedCoins() {
+        return receivedCoins;
+    }
 
-    public String getReferralURL() { return referralURL; }
-    public void setReferralURL(String referralURL) { this.referralURL = referralURL; }
+    public void setReceivedCoins(String receivedCoins) {
+        this.receivedCoins = receivedCoins;
+    }
 
-    public String getReferrer() { return referrer; }
-    public void setReferrer(String referrer) { this.referrer = referrer; }
+    public String getReferralURL() {
+        return referralURL;
+    }
+
+    public void setReferralURL(String referralURL) {
+        this.referralURL = referralURL;
+    }
+
+    public String getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(String referrer) {
+        this.referrer = referrer;
+    }
 }

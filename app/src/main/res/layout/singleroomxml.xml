@@ -7,6 +7,7 @@
     android:layout_marginHorizontal="10dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp">
+
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -14,13 +15,13 @@
         android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/_ivphoto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bgmain">
-            </ImageView>
+        <ImageView
+            android:id="@+id/_ivphoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bgmain"></ImageView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
             android:orientation="vertical"
             android:background="@drawable/titleback"
             android:layout_weight="1">
+
             <TextView
                 android:id="@+id/_tvname"
                 android:text="Group Name"
@@ -39,7 +41,8 @@
 
                 android:gravity="center|left"
                 android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/_tvdes"
                 android:text="0 Online"
@@ -50,9 +53,9 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="#fff"
                 android:textSize="12sp"
-                android:layout_weight="1"/>
-         </LinearLayout>
-     </RelativeLayout>
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </androidx.cardview.widget.CardView>

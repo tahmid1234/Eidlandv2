@@ -16,10 +16,11 @@ public class DateFormater {
         date = date + " " + calendar.get(Calendar.YEAR);
         return date;
     }
+
     public static String getSessionDate(String timeInMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.parseLong(timeInMillis));
-        String date = calendar.get(Calendar.HOUR)+"";
+        String date = calendar.get(Calendar.HOUR) + "";
         date = date + ":" + calendar.get(Calendar.MINUTE);
         date = date + " " + calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH);
         date = date + ", " + calendar.get(Calendar.DAY_OF_MONTH) + "th";
@@ -30,8 +31,9 @@ public class DateFormater {
     public static double getHour(String timeInMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.parseLong(timeInMillis));
-        return calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE)/60.00);
+        return calendar.get(Calendar.HOUR_OF_DAY) + (calendar.get(Calendar.MINUTE) / 60.00);
     }
+
     public static int getMin(String timeInMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.parseLong(timeInMillis));

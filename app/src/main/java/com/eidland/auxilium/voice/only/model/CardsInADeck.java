@@ -1,7 +1,5 @@
 package com.eidland.auxilium.voice.only.model;
 
-import android.net.Uri;
-
 public class CardsInADeck {
     public String name;
     public String image;
@@ -10,8 +8,8 @@ public class CardsInADeck {
         this.name = name;
         this.image = image;
     }
-    public CardsInADeck()
-    {
+
+    public CardsInADeck() {
 
     }
 

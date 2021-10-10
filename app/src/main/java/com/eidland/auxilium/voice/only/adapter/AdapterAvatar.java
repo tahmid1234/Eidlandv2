@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,7 @@ public class AdapterAvatar extends RecyclerView.Adapter<AdapterAvatar.ViewHolder
             imageView = itemView.findViewById(R.id.gridImage);
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());

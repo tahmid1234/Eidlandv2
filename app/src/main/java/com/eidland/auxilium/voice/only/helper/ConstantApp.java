@@ -27,9 +27,8 @@ public class ConstantApp {
     }
 
 
-    public static List<GiftItem> giftList(){
+    public static List<GiftItem> giftList() {
         List<GiftItem> giftItems = new ArrayList<>();
-//        giftItems.add(new GiftItem("hearts",1, R.drawable.gift_diamond,"Knowledge"));
         giftItems.add(new GiftItem("like1",1, R.drawable.gift_red,"Knowledge"));
         giftItems.add(new GiftItem("smilereact",1, R.drawable.gift_turquoise,""));
         giftItems.add(new GiftItem("pigions",1, R.drawable.gift_pink,""));
@@ -45,11 +44,10 @@ public class ConstantApp {
         giftItems.add(new GiftItem("sweets2",1, R.drawable.gift_sweets_2,""));
         giftItems.add(new GiftItem("trophy",1, R.drawable.gift_trophy,""));
 
-
-
         return giftItems;
     }
-    public static List<AnimationItem> animationItems(){
+
+    public static List<AnimationItem> animationItems() {
         List<AnimationItem> animationItemList = new ArrayList<>();
 
         animationItemList.add(new AnimationItem("like1", R.drawable.gift_red, "gift_red.json", R.drawable.gift_red_svg));
@@ -69,7 +67,8 @@ public class ConstantApp {
 
         return animationItemList;
     }
-    public static List<CardDeck> gameList(){
+
+    public static List<CardDeck> gameList() {
         List<CardDeck> randomDeck = new ArrayList<>();
         randomDeck.add(new CardDeck("In The Shoes", "https://auxiliumlivestreaming.000webhostapp.com/card_decks/10.png"));
 

@@ -11,13 +11,13 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
 
 import io.agora.rtc.Constants;
 import io.agora.rtc.RtcEngine;
@@ -60,7 +60,7 @@ public class WorkerThread extends Thread {
                     break;
                 case ACTION_WORKER_JOIN_CHANNEL:
                     String[] data = (String[]) msg.obj;
-                    mWorkerThread.joinChannel(data[0],data[1], msg.arg1);
+                    mWorkerThread.joinChannel(data[0], data[1], msg.arg1);
                     break;
                 case ACTION_WORKER_LEAVE_CHANNEL:
                     String channel = (String) msg.obj;
@@ -106,12 +106,12 @@ public class WorkerThread extends Thread {
 
     private RtcEngine mRtcEngine;
 
-    public final void joinChannel(final String token,final String channel, int uid) {
+    public final void joinChannel(final String token, final String channel, int uid) {
         if (Thread.currentThread() != this) {
             log.warn("joinChannel() - worker thread asynchronously " + channel + " " + uid);
             Message envelop = new Message();
             envelop.what = ACTION_WORKER_JOIN_CHANNEL;
-            envelop.obj = new String[]{token,channel};
+            envelop.obj = new String[]{token, channel};
             envelop.arg1 = uid;
             mWorkerHandler.sendMessage(envelop);
             return;

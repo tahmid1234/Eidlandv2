@@ -6,10 +6,10 @@ public class GiftItem {
     public int image;
     public String tag;
 
-    public GiftItem(String name, int amount, int image,String tags) {
+    public GiftItem(String name, int amount, int image, String tags) {
         this.name = name;
         this.amount = amount;
         this.image = image;
-        this.tag=tags;
+        this.tag = tags;
     }
 }
