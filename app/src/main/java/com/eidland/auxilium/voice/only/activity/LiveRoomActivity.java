@@ -152,6 +152,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView roomGift, closeGiftBox, singleUserClose;
     LinearLayout crystal;
     TextView txtsinglename, txtsinglegiftsend, sendername, receivername, rewarded;
+    LinearLayout user_action;
     RelativeLayout singlegift;
     LinearLayout mutelayout;
     LinearLayout micreqlayout;
@@ -266,6 +267,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         online_layout = findViewById(R.id.online_layout);
         txtsinglegiftsend = findViewById(R.id.singlegiftsend);
         singlegift = findViewById(R.id.singlesendgift);
+        user_action = findViewById(R.id.user_action);
         mutelayout = findViewById(R.id.mutelayout);
         micreqlayout = findViewById(R.id.micreqlayout);
         blocklayout = findViewById(R.id.blocklayout);
@@ -1208,14 +1210,20 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             });
                             selectuseruid = audiance.getId();
                             selectedViewer = audiance;
-                            if(selectuseruid.equals(currentUser.getUid()))
+                            if(audiance.getId().equals(currentUser.getUid()))
                             {
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
+                                micreqlayout.setVisibility(View.GONE);
+                                blocklayout.setVisibility(View.GONE);
+                                user_action.setWeightSum(2);
                             }
                             else {
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
+                                micreqlayout.setVisibility(View.VISIBLE);
+                                blocklayout.setVisibility(View.VISIBLE);
+                                user_action.setWeightSum(4);
                             }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
                             Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
@@ -1310,10 +1318,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         {
                             singlegift.setVisibility(View.GONE);
                             txtsinglegiftsend.setVisibility(View.GONE);
+                            micreqlayout.setVisibility(View.GONE);
+                            blocklayout.setVisibility(View.GONE);
+                            user_action.setWeightSum(2);
                         }
                         else {
                             singlegift.setVisibility(View.VISIBLE);
                             txtsinglegiftsend.setVisibility(View.VISIBLE);
+                            micreqlayout.setVisibility(View.VISIBLE);
+                            blocklayout.setVisibility(View.VISIBLE);
+                            user_action.setWeightSum(4);
                         }
                         CheckModerator(currentUser.getUid(), selectuseruid, seats);
                         Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
@@ -2230,8 +2244,21 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         popup_uname.setText(name);
         clickedOnlineUserUID = uid;
 
-            singlegift.setVisibility(View.GONE);
-            txtsinglegiftsend.setVisibility(View.GONE);
+        if(clickedOnlineUserUID.equals(currentUser.getUid()))
+        {
+            micreqlayout.setVisibility(View.GONE);
+            blocklayout.setVisibility(View.GONE);
+            user_action.setWeightSum(2);
+        }
+        else {
+            micreqlayout.setVisibility(View.VISIBLE);
+            blocklayout.setVisibility(View.VISIBLE);
+            user_action.setWeightSum(4);
+        }
+
+
+        singlegift.setVisibility(View.GONE);
+        txtsinglegiftsend.setVisibility(View.GONE);
 
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         eidlandpointcount.setText(recievedCoins);

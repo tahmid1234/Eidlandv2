@@ -925,7 +925,7 @@
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/popup_bg"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <!--            <TextView-->
             <!--                android:id="@+id/removeUser"-->
@@ -1070,6 +1070,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/user_action"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="4"
