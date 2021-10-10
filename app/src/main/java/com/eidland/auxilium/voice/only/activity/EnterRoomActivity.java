@@ -14,6 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.eidland.auxilium.voice.only.R;
+import com.eidland.auxilium.voice.only.helper.ConstantApp;
+import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,9 +28,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.eidland.auxilium.voice.only.R;
-import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -38,13 +41,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import io.agora.rtc.Constants;
 
 public class EnterRoomActivity extends AppCompatActivity {
     ImageView userimg;
-    EditText txttitle;
+    EditText txttitle, welcomeMessage, offTimeMsg;
     Button btncreate;
     String imgpath;
     Uri filePath;
@@ -61,16 +62,22 @@ public class EnterRoomActivity extends AppCompatActivity {
 
         btncreate = findViewById(R.id.btncreate);
         txttitle = findViewById(R.id.txttitle);
+        welcomeMessage = findViewById(R.id.welcomeMessage);
+        offTimeMsg = findViewById(R.id.offTimeMsg);
         userimg = findViewById(R.id.userimage);
         if (StaticConfig.user != null) {
-            Glide.with(this).load(StaticConfig.user.imageurl).error(R.drawable.appicon).into(userimg);
+            Glide.with(this).load(R.drawable.appicon).error(R.drawable.appicon).into(userimg);
         }
         btncreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (txttitle.getText().toString().trim().length() <= 0) {
                     Toast.makeText(EnterRoomActivity.this, "Enter Title Please", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (welcomeMessage.getText().toString().trim().length() <= 0) {
+                    Toast.makeText(EnterRoomActivity.this, "Enter Welcome Message Please", Toast.LENGTH_SHORT).show();
+                }else if (offTimeMsg.getText().toString().trim().length() <= 0) {
+                    Toast.makeText(EnterRoomActivity.this, "Enter Off-time Message Please", Toast.LENGTH_SHORT).show();
+                }else {
                     if (imgpath != null) {
                         uplnamephoto();
                     } else {
@@ -78,7 +85,9 @@ public class EnterRoomActivity extends AppCompatActivity {
                         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
-                        intent.putExtra("profile", StaticConfig.user.getImageurl());
+                        intent.putExtra("profile", R.drawable.appicon);
+                        intent.putExtra("welcomemsg", welcomeMessage.getText().toString());
+                        intent.putExtra("offtimemsg", offTimeMsg.getText().toString());
                         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                     }
@@ -106,7 +115,9 @@ public class EnterRoomActivity extends AppCompatActivity {
                         intent.putExtra(ConstantApp.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
                         intent.putExtra("User", "Host");
                         intent.putExtra("UserName", txttitle.getText().toString());
-                        intent.putExtra("profile", url);
+                        intent.putExtra("profile", R.drawable.appicon);
+                        intent.putExtra("welcomemsg", welcomeMessage.getText().toString());
+                        intent.putExtra("offtimemsg", offTimeMsg.getText().toString());
                         intent.putExtra(ConstantApp.ACTION_KEY_ROOM_NAME, new Random().nextInt() + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         startActivity(intent);
                         finish();
@@ -115,14 +126,12 @@ public class EnterRoomActivity extends AppCompatActivity {
                     } else {
 
                         Toast.makeText(EnterRoomActivity.this, "Error While Uploading Server Issue", Toast.LENGTH_SHORT).show();
-
                         progressDialog.dismiss();
                     }
 
                 } catch (JSONException e) {
                     //   e.printStackTrace();
                     Toast.makeText(EnterRoomActivity.this, "Json", Toast.LENGTH_SHORT).show();
-
                     progressDialog.dismiss();
                 }
 

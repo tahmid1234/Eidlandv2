@@ -536,6 +536,7 @@
                         android:id="@+id/comment_box_circle"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginTop="-50dp"
                         android:layout_centerInParent="true"
                         android:orientation="horizontal"
                         android:background="@drawable/transparentblackcircle" />
@@ -550,9 +551,9 @@
                         android:inputType="textMultiLine|textCapSentences"
                         android:lines="2"
                         android:paddingStart="8dp"
+                        android:paddingTop="6dp"
                         android:paddingEnd="6dp"
                         android:paddingBottom="8dp"
-                        android:paddingTop="6dp"
                         android:textColor="#fff"
                         android:textColorHint="#fff" />
                 </RelativeLayout>
