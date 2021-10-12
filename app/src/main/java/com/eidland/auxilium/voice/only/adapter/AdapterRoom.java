@@ -72,9 +72,6 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double current = getHour(now);
-                double roomstart = getHour(room.startTime);
-                double roomend = getHour(room.endTime);
                 if (getHour(room.startTime) <= getHour(now) && getHour(room.endTime) >= getHour(now)) {
 //                if(true){
                     Intent intent = new Intent(holder.roomPhoto.getContext(), LiveRoomActivity.class);

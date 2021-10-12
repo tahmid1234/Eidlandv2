@@ -657,7 +657,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         return;
                     }
                     if (seatUsers.size() >= 10) {
-                        Toast.makeText(getApplicationContext(), "No available seat!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "No available seat, Please remove someone first!", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
                         for (Viewer viewer : seatUsers) {
@@ -1150,7 +1150,35 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         @Override
                         public void onClick(View view) {
                             finalDialog.dismiss();
+
                             FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+
+                            ArrayList<String> seatList = new ArrayList<>();
+                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    seatList.clear();
+                                    if(snapshot.exists()){
+                                        for (DataSnapshot snap : snapshot.getChildren()) {
+                                            seatList.add(snap.getKey());
+                                        }
+                                        for(int i=0; i<10; i++){
+                                            if(!seatList.contains("seat"+ i)){
+                                                CheckSeats("seat" + i);
+                                                return;
+                                            }
+                                        }
+                                        Toast.makeText(LiveRoomActivity.this, "Oops! Someone already fill the seat. Ask your moderator to remove someone and try again", Toast.LENGTH_LONG).show();
+                                    }else{
+                                        CheckSeats("seat0");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
 
                         }
                     });
@@ -1683,13 +1711,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     doSwitchToBroadcaster(false);
                     FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(AgainSeat).removeValue();
                     AgainSeat = null;
-                    Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
-                    startActivity(intent);
                     finish();
+                    LiveRoomActivity.super.onBackPressed();
                 } else {
-                    Intent intent = new Intent(LiveRoomActivity.this, MainActivity.class);
-                    startActivity(intent);
                     finish();
+                    LiveRoomActivity.super.onBackPressed();
                 }
                 try {
                     FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
