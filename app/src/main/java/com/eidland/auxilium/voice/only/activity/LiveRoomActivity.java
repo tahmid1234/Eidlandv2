@@ -1416,11 +1416,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         if (hasEnteredRoom) {
                             rewarded.setVisibility(View.GONE);
-                            simpleGift.setImageResource(R.drawable.hello_pana);
-                            backgrundGIF.setAnimation("entry_fireworks.json");
-                            backgrundGIF.setProgress(0);
-                            backgrundGIF.playAnimation();
-                            backgroundGIFLayout.setVisibility(View.VISIBLE);
+                            giftList.clear();
+//                            simpleGift.setBackgroundColor(Color.TRANSPARENT);
+//                            backgrundGIF.setAnimation("entry_fireworks.json");
+//                            backgrundGIF.setProgress(0);
+//                            backgrundGIF.playAnimation();
+                            backgroundGIFLayout.setVisibility(View.GONE);
                             sendername.setText("Hey " + StaticConfig.user.getName() + "!");
                             receivername.setText("Welcome to " + nameOfRoom);
                             hasEnteredRoom = false;
