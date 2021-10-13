@@ -27,8 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
-        android:background="@drawable/border"
+
         android:gravity="center"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -38,8 +39,8 @@
             android:fontFamily="@font/nunitosemibold"
             android:lines="1"
             android:text="Online Users"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/white"
+            android:textSize="21sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
