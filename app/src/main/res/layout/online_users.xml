@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="top|center"
     android:layout_margin="0dp"
-    android:background="@color/white"
+    android:background="#121318"
     android:orientation="vertical">
 
     <LinearLayout
@@ -35,7 +35,7 @@
             android:id="@+id/textViewpopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/nunitosemibold"
             android:lines="1"
             android:text="Online Users"
             android:textColor="@color/black"

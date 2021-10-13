@@ -28,14 +28,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="2010"
             android:textColor="@color/purple"
-
             android:textSize="18sp"
-
             android:id="@+id/usernamelist"
-            android:fontFamily="@font/open_sans_bold" />
+            android:fontFamily="@font/interregular" />
 
     </LinearLayout>
 

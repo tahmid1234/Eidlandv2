@@ -5,4 +5,4 @@
     android:padding="10dp"
     android:id="@+id/spinnertextid"
     android:textColor="@color/black"
-    android:fontFamily="@font/open_sans" />
+    android:fontFamily="@font/interregular" />

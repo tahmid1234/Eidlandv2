@@ -39,6 +39,7 @@
                 android:textColor="#000"
                 android:gravity="center|left"
                 android:textStyle="bold"
+                android:fontFamily="@font/interregular"
                 android:layout_weight="1" />
 
             <TextView
@@ -51,6 +52,7 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="#000"
                 android:textSize="12sp"
+                android:fontFamily="@font/interregular"
                 android:layout_weight="1" />
         </LinearLayout>
     </RelativeLayout>

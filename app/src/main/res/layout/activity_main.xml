@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chatroom_background"
+    android:background="#121318"
     android:orientation="vertical"
     tools:context="com.eidland.auxilium.voice.only.activity.MainActivity">
 
@@ -44,12 +44,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="-225dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/interregular"
+                android:fontFamily="@font/nunitosemibold"
                 android:gravity="left|center"
                 android:text="BETA"
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:textAppearance="@style/eidlandappbar"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="30dp"
@@ -137,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/home_image"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/nunitosemibold"
                     android:padding="5dp"
                     android:text="General Rooms"
                     android:textColor="@color/white"
@@ -155,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rvrooms1"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/nunitosemibold"
                     android:padding="5dp"
                     android:text="Casual Hangout"
                     android:textColor="@color/white"
@@ -173,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rvrooms2"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/nunitosemibold"
                     android:padding="5dp"
                     android:text="Make Me Smarter"
                     android:textColor="@color/white"

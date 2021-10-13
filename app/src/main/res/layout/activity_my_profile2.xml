@@ -42,7 +42,7 @@
                     android:id="@+id/txtname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/nunitosemibold"
                     android:text="Username"
                     android:textColor="#fff"
                     android:textSize="20sp"
@@ -55,58 +55,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@id/lrnname"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:weightSum="1">
 
-                <LinearLayout
-                    android:layout_width="120dp"
-                    android:layout_height="65dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="50dp"
-                    android:background="@drawable/eidcoin_bg"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/eidcoin" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:orientation="vertical"
-                        android:padding="7dp">
-
-                        <TextView
-                            android:id="@+id/txtrcvcoins"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/interregular"
-                            android:text="000"
-                            android:textAlignment="center"
-                            android:textColor="#000"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/interregular"
-                            android:text="Eidland Points"
-                            android:textColor="#000"
-                            android:textSize="11dp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="120dp"
@@ -155,73 +109,53 @@
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-                <!--                -->
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="120dp"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    android:layout_alignParentLeft="true"-->
-                <!--                    android:layout_marginLeft="65dp"-->
-                <!--                    android:background="@drawable/eidcoin_bg"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:orientation="vertical"-->
-                <!--                    android:padding="12dp">-->
 
-                <!--                    <TextView-->
-                <!--                        android:id="@+id/txtcoins"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:drawableEnd="@drawable/ic_fi_rr_coin_5"-->
-                <!--                        android:fontFamily="@font/interregular"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:text="00"-->
-                <!--                        android:textColor="#000"-->
-                <!--                        android:textSize="20dp" />-->
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="65dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="50dp"
+                    android:background="@drawable/eidcoin_bg"
+                    android:gravity="center">
 
-                <!--                    <TextView-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:fontFamily="@font/interregular"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:text="Balance"-->
-                <!--                        android:textColor="#000"-->
-                <!--                        android:textSize="15sp"-->
-                <!--                        android:visibility="visible" />-->
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:contentDescription="TODO"
+                        android:src="@drawable/eidcoin" />
 
-                <!--                </LinearLayout>-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:orientation="vertical"
+                        android:padding="7dp">
 
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="120dp"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    android:layout_alignParentRight="true"-->
-                <!--                    android:layout_marginRight="65dp"-->
-                <!--                    android:background="@drawable/eidcoin_bg"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:orientation="vertical"-->
-                <!--                    android:padding="12dp">-->
+                        <TextView
+                            android:id="@+id/txtrcvcoins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/interregular"
+                            android:text="000"
+                            android:textAlignment="center"
+                            android:textColor="#000"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
-                <!--                    <TextView-->
-                <!--                        android:id="@+id/txtrcvcoins"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:drawableEnd="@drawable/eidcoin_small"-->
-                <!--                        android:fontFamily="@font/interregular"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:text="00"-->
-                <!--                        android:textColor="#000"-->
-                <!--                        android:textSize="20dp" />-->
-
-                <!--                    <TextView-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:fontFamily="@font/interregular"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:text="Balance"-->
-                <!--                        android:textColor="#000"-->
-                <!--                        android:textSize="15sp"-->
-                <!--                        android:visibility="visible" />-->
-
-
-                <!--                </LinearLayout>-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/interregular"
+                            android:text="Eidland Points"
+                            android:textColor="#000"
+                            android:textSize="11dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -267,6 +201,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginStart="40dp"
                     android:onClick="Walllet"
                     android:orientation="horizontal">
@@ -285,7 +220,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/nunitosemibold"
                         android:gravity="center|left"
                         android:lineHeight="24dp"
                         android:text="Buy Coins"
@@ -380,7 +315,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/nunitosemibold"
                         android:gravity="center|left"
                         android:lineHeight="24dp"
                         android:text="Change Photo or Name"
@@ -411,7 +346,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/nunitosemibold"
                         android:gravity="center|left"
                         android:lineHeight="24dp"
                         android:text="Refer a Friend"
@@ -441,7 +376,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/nunitosemibold"
                         android:gravity="center|left"
                         android:lineHeight="24dp"
                         android:text="Logout"
