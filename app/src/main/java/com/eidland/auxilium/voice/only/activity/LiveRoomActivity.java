@@ -1210,15 +1210,116 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     private void CheckSeats(final String seats) {
-        if (AgainSeat == null) {
 
-            Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue() != null) {
+        boolean checkPermissionResult = checkSelfPermissions();
+        if(checkPermissionResult) {
+            checkSelfPermissions();
+            if (AgainSeat == null) {
+                Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
 
-                        try {
+                            try {
+                                Viewer audiance = snapshot.getValue(Viewer.class);
+                                Toast.makeText(getApplicationContext(), audiance.getId(), Toast.LENGTH_SHORT);
+                                FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(audiance.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Viewer viewer = snapshot.getValue(Viewer.class);
+                                        assert viewer != null;
+                                        audiance.setRecievedCoins(viewer.getRecievedCoins());
+                                        eidlandpointcount.setText(audiance.getRecievedCoins());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                                selectuseruid = audiance.getId();
+                                selectedViewer = audiance;
+                                if (audiance.getId().equals(currentUser.getUid())) {
+                                    singlegift.setVisibility(View.GONE);
+                                    txtsinglegiftsend.setVisibility(View.GONE);
+                                    micreqlayout.setVisibility(View.GONE);
+                                    blocklayout.setVisibility(View.GONE);
+                                    user_action.setWeightSum(2);
+                                } else {
+                                    singlegift.setVisibility(View.VISIBLE);
+                                    txtsinglegiftsend.setVisibility(View.VISIBLE);
+                                    micreqlayout.setVisibility(View.VISIBLE);
+                                    blocklayout.setVisibility(View.VISIBLE);
+                                    user_action.setWeightSum(4);
+                                }
+                                CheckModerator(currentUser.getUid(), selectuseruid, seats);
+                                Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
+                                txtsinglename.setText(audiance.getName());
+                                singleUserBox.setVisibility(View.VISIBLE);
+
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+
+                        } else {
+
+                            boolean checkPermissionResult = checkSelfPermissions();
+                            if (checkPermissionResult) {
+                                inactiveClick = true;
+                                FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).runTransaction(new Transaction.Handler() {
+                                    @NonNull
+                                    @Override
+                                    public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+
+                                        Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), StaticConfig.user.getReceivedCoins(), config().mUid);
+
+                                        try {
+                                            Viewer user = currentData.getValue(Viewer.class);
+                                            if (user == null) {
+                                                currentData.setValue(viewer);
+                                            }
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                        return Transaction.success(currentData);
+                                    }
+
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+
+                                        try {
+                                            Viewer user = currentData.getValue(Viewer.class);
+                                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).onDisconnect().removeValue();
+                                            if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(user.id)) {
+                                                doSwitchToBroadcaster(true);
+                                                AgainSeat = seats;
+                                            } else {
+                                                doSwitchToBroadcaster(false);
+                                                AgainSeat = null;
+                                            }
+                                            inactiveClick = false;
+                                        } catch (Exception e) {
+                                            System.out.println(e);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            } else {
+                Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+
                             Viewer audiance = snapshot.getValue(Viewer.class);
                             Toast.makeText(getApplicationContext(), audiance.getId(), Toast.LENGTH_SHORT);
                             FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(audiance.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1237,16 +1338,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 }
                             });
                             selectuseruid = audiance.getId();
+
                             selectedViewer = audiance;
-                            if(audiance.getId().equals(currentUser.getUid()))
-                            {
+                            if (selectuseruid.equals(currentUser.getUid())) {
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
                                 micreqlayout.setVisibility(View.GONE);
                                 blocklayout.setVisibility(View.GONE);
                                 user_action.setWeightSum(2);
-                            }
-                            else {
+                            } else {
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 micreqlayout.setVisibility(View.VISIBLE);
@@ -1254,122 +1354,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 user_action.setWeightSum(4);
                             }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
-                            Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
+                            Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
                             txtsinglename.setText(audiance.getName());
                             singleUserBox.setVisibility(View.VISIBLE);
 
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-
-                    } else {
-
-                        boolean checkPermissionResult = checkSelfPermissions();
-                        if (checkPermissionResult) {
-
-
-                            inactiveClick = true;
-                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).runTransaction(new Transaction.Handler() {
-                                @NonNull
-                                @Override
-                                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-
-                                    Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), StaticConfig.user.getReceivedCoins(), config().mUid);
-
-                                    try {
-                                        Viewer user = currentData.getValue(Viewer.class);
-                                        if (user == null) {
-                                            currentData.setValue(viewer);
-                                        }
-                                    } catch (Exception e) {
-                                        System.out.println(e);
-                                    }
-                                    return Transaction.success(currentData);
-                                }
-
-                                @Override
-                                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-
-                                    try {
-                                        Viewer user = currentData.getValue(Viewer.class);
-                                        FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats).onDisconnect().removeValue();
-                                        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(user.id)) {
-                                            doSwitchToBroadcaster(true);
-                                            AgainSeat = seats;
-                                        } else {
-                                            doSwitchToBroadcaster(false);
-                                            AgainSeat = null;
-                                        }
-                                        inactiveClick = false;
-                                    } catch (Exception e) {
-                                        System.out.println(e);
-                                    }
-                                }
-                            });
                         }
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        } else {
-            Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue() != null) {
-
-                        Viewer audiance = snapshot.getValue(Viewer.class);
-                        Toast.makeText(getApplicationContext(), audiance.getId(), Toast.LENGTH_SHORT);
-                        FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(audiance.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Viewer viewer = snapshot.getValue(Viewer.class);
-                                assert viewer != null;
-//                                    Toast.makeText(getApplicationContext(), viewer.getId(), Toast.LENGTH_SHORT);
-                                audiance.setRecievedCoins(viewer.getRecievedCoins());
-                                eidlandpointcount.setText(audiance.getRecievedCoins());
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                        selectuseruid = audiance.getId();
-
-                        selectedViewer = audiance;
-                        if(selectuseruid.equals(currentUser.getUid()))
-                        {
-                            singlegift.setVisibility(View.GONE);
-                            txtsinglegiftsend.setVisibility(View.GONE);
-                            micreqlayout.setVisibility(View.GONE);
-                            blocklayout.setVisibility(View.GONE);
-                            user_action.setWeightSum(2);
-                        }
-                        else {
-                            singlegift.setVisibility(View.VISIBLE);
-                            txtsinglegiftsend.setVisibility(View.VISIBLE);
-                            micreqlayout.setVisibility(View.VISIBLE);
-                            blocklayout.setVisibility(View.VISIBLE);
-                            user_action.setWeightSum(4);
-                        }
-                        CheckModerator(currentUser.getUid(), selectuseruid, seats);
-                        Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
-                        txtsinglename.setText(audiance.getName());
-                        singleUserBox.setVisibility(View.VISIBLE);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+                });
+            }
         }
     }
 
