@@ -1144,41 +1144,42 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     TextView positive = dialog.findViewById(R.id.positive_btn);
                     positive.setVisibility(View.VISIBLE);
                     positive.setText("Accept");
-
                     Dialog finalDialog = dialog;
                     positive.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             finalDialog.dismiss();
 
-                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
-
-                            ArrayList<String> seatList = new ArrayList<>();
-                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    seatList.clear();
-                                    if(snapshot.exists()){
-                                        for (DataSnapshot snap : snapshot.getChildren()) {
-                                            seatList.add(snap.getKey());
-                                        }
-                                        for(int i=0; i<10; i++){
-                                            if(!seatList.contains("seat"+ i)){
-                                                CheckSeats("seat" + i);
-                                                return;
-                                            }
-                                        }
-                                        Toast.makeText(LiveRoomActivity.this, "Oops! Someone already fill the seat. Ask your moderator to remove someone and try again", Toast.LENGTH_LONG).show();
-                                    }else{
-                                        CheckSeats("seat0");
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+//                            finalDialog.dismiss();
+//
+//                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+//
+//                            ArrayList<String> seatList = new ArrayList<>();
+//                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                    seatList.clear();
+//                                    if(snapshot.exists()){
+//                                        for (DataSnapshot snap : snapshot.getChildren()) {
+//                                            seatList.add(snap.getKey());
+//                                        }
+//                                        for(int i=0; i<10; i++){
+//                                            if(!seatList.contains("seat"+ i)){
+//                                                CheckSeats("seat" + i);
+//                                                return;
+//                                            }
+//                                        }
+//                                        Toast.makeText(LiveRoomActivity.this, "Oops! Someone already fill the seat. Ask your moderator to remove someone and try again", Toast.LENGTH_LONG).show();
+//                                    }else{
+//                                        CheckSeats("seat0");
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                }
+//                            });
 
                         }
                     });

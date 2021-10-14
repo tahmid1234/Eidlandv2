@@ -75,8 +75,8 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 placesViewHolder.gift.setVisibility(View.GONE);
                 placesViewHolder.txtcount.setVisibility(View.GONE);
             }
-            placesViewHolder.gift.setVisibility(View.GONE);
-            placesViewHolder.txtcount.setVisibility(View.GONE);
+//            placesViewHolder.gift.setVisibility(View.GONE);
+//            placesViewHolder.txtcount.setVisibility(View.GONE);
         }
 
 
