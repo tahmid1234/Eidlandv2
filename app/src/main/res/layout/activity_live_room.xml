@@ -458,7 +458,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginEnd="105dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="35dp"
                 android:layout_weight="1">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -527,6 +528,7 @@
                 android:layout_height="55dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal"
+                android:layout_marginBottom="-30dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp">
@@ -551,8 +553,8 @@
                         android:layout_height="65dp"
                         android:layout_alignParentBottom="true"
                         android:background="@android:color/transparent"
-                        android:hint="Type here"
                         android:fontFamily="@font/nunitoregular"
+                        android:hint="Type here"
                         android:inputType="textMultiLine|textCapSentences"
                         android:lines="2"
                         android:paddingStart="8dp"
@@ -690,7 +692,7 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_alignParentBottom="true"
-            android:background="#22242D"
+            android:background="#121318"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -927,7 +929,7 @@
             android:layout_width="match_parent"
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
-            android:background="#22242D"
+            android:background="#121318"
             android:visibility="gone">
 
             <!--            <TextView-->
