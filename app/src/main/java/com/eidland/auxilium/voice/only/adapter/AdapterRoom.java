@@ -89,11 +89,11 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
                     dialog.setContentView(R.layout.layout_custom_dialog);
                     LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
                     linearLayout.setMinimumWidth((int) (width * 0.8));
-                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                    //dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
                     dialog.setCancelable(false);
 
                     ImageView imageView = dialog.findViewById(R.id.dialog_icon);
-                    imageView.setImageResource(R.drawable.ic_exit);
+                    imageView.setImageResource(R.drawable.ic_sleep);
                     imageView.setVisibility(View.VISIBLE);
 
                     TextView msg = dialog.findViewById(R.id.msg);

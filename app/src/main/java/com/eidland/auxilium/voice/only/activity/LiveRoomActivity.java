@@ -177,7 +177,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
     TextView kantesi;
-    ImageView gameButton;
+//    ImageView gameButton;
     LinearLayout gamesLayout;
     RelativeLayout cardLoadingAnimationLayout;
     GifImageView cardLoadingAnimationGIF;
@@ -304,7 +304,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         imgbroad = findViewById(R.id.hostimg);
         broadName = findViewById(R.id.room_name);
 
-        gameButton = findViewById(R.id.game_button_icon);
+//        gameButton = findViewById(R.id.game_button_icon);
         gamesLayout = findViewById(R.id.gameslayout);
         cardLoadingAnimationLayout = findViewById(R.id.card_loading_animation_layout);
         cardLoadingAnimationGIF = findViewById(R.id.card_loading_animation_GIF);
@@ -353,7 +353,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 crystal.setVisibility(View.GONE);
-                gameButton.setVisibility(View.VISIBLE);
+//                gameButton.setVisibility(View.VISIBLE);
                 commentBox.setVisibility(View.VISIBLE);
             }
         });
@@ -369,7 +369,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 spinner.setVisibility(View.VISIBLE);
                 Selectedspeaker.setVisibility(View.VISIBLE);
                 crystal.setVisibility(View.VISIBLE);
-                gameButton.setVisibility(View.GONE);
+//                gameButton.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
             }
         });
@@ -395,7 +395,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 dialog.setContentView(R.layout.layout_custom_dialog);
                 LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
                 linearLayout.setMinimumWidth((int) (width * 0.8));
-                dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+              //  dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
                 dialog.setCancelable(false);
 
                 ImageView imageView = dialog.findViewById(R.id.dialog_icon);
@@ -434,13 +434,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         });
 
-        gameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gamesLayout.setVisibility(View.VISIBLE);
-                minimizedCard.setVisibility(View.INVISIBLE);
-            }
-        });
+//        gameButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                gamesLayout.setVisibility(View.VISIBLE);
+//                minimizedCard.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
         closeGameDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,7 +460,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 seatLayout.setVisibility(View.VISIBLE);
                 commentBox.setVisibility(View.VISIBLE);
                 roomGift.setVisibility(View.VISIBLE);
-                gameButton.setVisibility(View.VISIBLE);
+//                gameButton.setVisibility(View.VISIBLE);
 
             }
         });
@@ -472,7 +472,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 displayCardLayout.setVisibility(View.VISIBLE);
                 commentBox.setVisibility(View.GONE);
                 roomGift.setVisibility(View.GONE);
-                gameButton.setVisibility(View.GONE);
+//                gameButton.setVisibility(View.GONE);
                 seatLayout.setVisibility(View.GONE);
             }
         });
@@ -790,7 +790,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Long curnt = Long.parseLong(StaticConfig.user.getCoins());
                             if (curnt > selectedGiftAmount) {
                                 crystal.setVisibility(View.GONE);
-                                gameButton.setVisibility(View.VISIBLE);
+//                                gameButton.setVisibility(View.VISIBLE);
                                 commentBox.setVisibility(View.VISIBLE);
                                 FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                     @NonNull
@@ -1130,7 +1130,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     dialog.setContentView(R.layout.layout_custom_dialog);
                     LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
                     linearLayout.setMinimumWidth((int) (width * 0.8));
-                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+                    //dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
                     dialog.setCancelable(false);
 
                     ImageView imageView = dialog.findViewById(R.id.dialog_icon);
@@ -1413,11 +1413,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         if (hasEnteredRoom) {
                             rewarded.setVisibility(View.GONE);
-                            simpleGift.setImageResource(R.drawable.hello_pana);
-                            backgrundGIF.setAnimation("entry_fireworks.json");
-                            backgrundGIF.setProgress(0);
-                            backgrundGIF.playAnimation();
-                            backgroundGIFLayout.setVisibility(View.VISIBLE);
+                            giftList.clear();
+//                            simpleGift.setBackgroundColor(Color.TRANSPARENT);
+//                            backgrundGIF.setAnimation("entry_fireworks.json");
+//                            backgrundGIF.setProgress(0);
+//                            backgrundGIF.playAnimation();
+                            backgroundGIFLayout.setVisibility(View.GONE);
                             sendername.setText("Hey " + StaticConfig.user.getName() + "!");
                             receivername.setText("Welcome to " + nameOfRoom);
                             hasEnteredRoom = false;
@@ -1686,7 +1687,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
         linearLayout.setMinimumWidth((int) (width * 0.8));
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+      //  dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
         dialog.setCancelable(false);
 
         ImageView imageView = dialog.findViewById(R.id.dialog_icon);
@@ -2015,7 +2016,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
         linearLayout.setMinimumWidth((int) (width * 0.8));
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+      //  dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
         dialog.setCancelable(false);
 
         ImageView imageView = dialog.findViewById(R.id.dialog_icon);
@@ -2166,7 +2167,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                             displayCardLayout.setVisibility(View.VISIBLE);
                                             minimizedCard.setVisibility(View.VISIBLE);
 
-                                            gameButton.setVisibility(View.GONE);
+//                                            gameButton.setVisibility(View.GONE);
                                             seatLayout.setVisibility(View.GONE);
                                             commentBox.setVisibility(View.GONE);
                                             roomGift.setVisibility(View.GONE);

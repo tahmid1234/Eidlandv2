@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_rectangle_18"
+    android:background="#121318"
     tools:context="com.eidland.auxilium.voice.only.activity.ProfileEditActivity">
 
     <RelativeLayout
@@ -70,6 +70,7 @@
             android:layout_marginTop="30dp"
             android:paddingStart="10dp"
             android:background="@drawable/ic_background"
+            android:fontFamily="@font/interregular"
             android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
             android:text="Your Name"
             android:textColor="@color/white"
@@ -82,13 +83,11 @@
             android:layout_width="260dp"
             android:layout_height="41dp"
             android:paddingStart="10dp"
+            android:fontFamily="@font/interregular"
             android:layout_marginHorizontal="2dp"
             android:layout_marginTop="30dp"
-
             android:background="@drawable/ic_background"
-
             android:text="Your Email address"
-
             android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
             android:textColor="@color/white"
             android:visibility="gone"
@@ -98,7 +97,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/nunitosemibold"
             android:letterSpacing="0.01"
             android:layout_marginTop="15dp"
             android:lineHeight="18sp"
@@ -144,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/nunitosemibold"
                 android:gravity="center"
                 android:text="Update"
                 android:textColor="@color/white">

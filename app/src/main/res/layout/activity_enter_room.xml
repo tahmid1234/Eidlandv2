@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/ic_rectangle_18"
+    android:background="#121318"
     android:orientation="vertical"
     android:layout_height="match_parent"
 
@@ -20,11 +20,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:text="Create Room"
             android:gravity="center"
+            android:fontFamily="@font/nunitosemibold"
+            android:text="Create Room"
             android:textColor="#fff"
-            android:textStyle="bold"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            android:textStyle="bold" />
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -74,12 +75,12 @@
             android:id="@+id/txttitle"
             android:layout_width="260dp"
             android:layout_height="41dp"
-
             android:layout_marginHorizontal="2dp"
             android:layout_marginTop="30dp"
             android:paddingStart="10dp"
             android:background="@drawable/ic_background"
             android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
+            android:fontFamily="@font/nunitosemibold"
             android:hint="Add Title to party"
             android:textColorHint="#808080"
             android:textColor="@color/white"
@@ -94,6 +95,7 @@
             android:layout_marginHorizontal="2dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/ic_background"
+            android:fontFamily="@font/nunitosemibold"
             android:hint="Add a welcome message"
             android:textColorHint="#808080"
             android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
@@ -110,6 +112,7 @@
             android:layout_marginHorizontal="2dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/ic_background"
+            android:fontFamily="@font/nunitosemibold"
             android:hint="Message for closed room"
             android:textColorHint="#808080"
             android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
@@ -124,6 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/buttonstyel"
+        android:fontFamily="@font/nunitosemibold"
         android:text="Create Room"
         android:layout_gravity="center"
         android:textColor="#fff"

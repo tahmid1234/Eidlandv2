@@ -25,6 +25,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:fontFamily="@font/nunitosemibold"
         android:text="Please wait while we prepare your account.."
         android:textColor="@color/black"
 
