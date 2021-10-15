@@ -3,7 +3,7 @@
     android:id="@+id/alert_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#30323C"
+    android:background="#29333E"
     android:gravity="center"
     android:orientation="vertical">
 
