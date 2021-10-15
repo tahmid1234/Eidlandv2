@@ -1242,17 +1242,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 selectuseruid = audiance.getId();
                                 selectedViewer = audiance;
                                 if (audiance.getId().equals(currentUser.getUid())) {
-                                    singlegift.setVisibility(View.GONE);
-                                    txtsinglegiftsend.setVisibility(View.GONE);
-                                    micreqlayout.setVisibility(View.GONE);
-                                    blocklayout.setVisibility(View.GONE);
-                                    user_action.setWeightSum(2);
+                                    user_action.setVisibility(View.GONE);
                                 } else {
-                                    singlegift.setVisibility(View.VISIBLE);
-                                    txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                    micreqlayout.setVisibility(View.VISIBLE);
-                                    blocklayout.setVisibility(View.VISIBLE);
-                                    user_action.setWeightSum(4);
+                                    user_action.setVisibility(View.VISIBLE);
                                 }
                                 CheckModerator(currentUser.getUid(), selectuseruid, seats);
                                 Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
@@ -2271,14 +2263,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         if(clickedOnlineUserUID.equals(currentUser.getUid()))
         {
-            micreqlayout.setVisibility(View.GONE);
-            blocklayout.setVisibility(View.GONE);
-            user_action.setWeightSum(2);
+            user_action.setVisibility(View.GONE);
         }
         else {
-            micreqlayout.setVisibility(View.VISIBLE);
-            blocklayout.setVisibility(View.VISIBLE);
-            user_action.setWeightSum(4);
+            user_action.setVisibility(View.VISIBLE);
         }
 
 

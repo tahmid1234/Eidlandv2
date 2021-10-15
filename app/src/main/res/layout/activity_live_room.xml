@@ -930,7 +930,7 @@
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
             android:background="#121318"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <!--            <TextView-->
             <!--                android:id="@+id/removeUser"-->
