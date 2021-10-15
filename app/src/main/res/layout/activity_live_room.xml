@@ -692,7 +692,7 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_alignParentBottom="true"
-            android:background="#121318"
+            android:background="#29333E"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -894,7 +894,7 @@
                     android:layout_weight=".7"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/join_button"
+                    android:background="@drawable/button_bg_gift"
                     android:gravity="center">
 
                     <TextView
@@ -929,8 +929,8 @@
             android:layout_width="match_parent"
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
-            android:background="#121318"
-            android:visibility="visible">
+            android:background="#29333E"
+            android:visibility="gone">
 
             <!--            <TextView-->
             <!--                android:id="@+id/removeUser"-->
@@ -1199,11 +1199,11 @@
 
                 <RelativeLayout
                     android:id="@+id/singlesendgift"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="42dp"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
-                    android:background="@drawable/join_button"
+                    android:background="@drawable/button_bg_gift"
                     android:gravity="center">
 
 
