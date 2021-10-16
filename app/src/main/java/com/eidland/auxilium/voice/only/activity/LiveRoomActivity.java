@@ -1242,9 +1242,28 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 selectuseruid = audiance.getId();
                                 selectedViewer = audiance;
                                 if (audiance.getId().equals(currentUser.getUid())) {
-                                    user_action.setVisibility(View.GONE);
-                                } else {
-                                    user_action.setVisibility(View.VISIBLE);
+                                    singlegift.setVisibility(View.GONE);
+                                    txtsinglegiftsend.setVisibility(View.GONE);
+                                    micreqlayout.setVisibility(View.GONE);
+                                    mutelayout.setVisibility(View.GONE);
+                                    blocklayout.setVisibility(View.GONE);
+                                    profilelayout.setVisibility(View.VISIBLE);
+                                    user_action.setWeightSum(1);
+                                }
+                                else if (isMod){
+                                    micreqlayout.setVisibility(View.VISIBLE);
+                                    mutelayout.setVisibility(View.VISIBLE);
+                                    blocklayout.setVisibility(View.VISIBLE);
+                                    profilelayout.setVisibility(View.GONE);
+                                    user_action.setWeightSum(3);
+                                }else {
+                                    singlegift.setVisibility(View.VISIBLE);
+                                    txtsinglegiftsend.setVisibility(View.VISIBLE);
+                                    micreqlayout.setVisibility(View.GONE);
+                                    mutelayout.setVisibility(View.GONE);
+                                    blocklayout.setVisibility(View.GONE);
+                                    profilelayout.setVisibility(View.GONE);
+                                    user_action.setWeightSum(1);
                                 }
                                 CheckModerator(currentUser.getUid(), selectuseruid, seats);
                                 Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
@@ -1337,14 +1356,25 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
                                 micreqlayout.setVisibility(View.GONE);
+                                mutelayout.setVisibility(View.GONE);
                                 blocklayout.setVisibility(View.GONE);
-                                user_action.setWeightSum(2);
-                            } else {
+                                profilelayout.setVisibility(View.VISIBLE);
+                                user_action.setWeightSum(1);
+                            }
+                            else if (isMod){
+                                micreqlayout.setVisibility(View.VISIBLE);
+                                mutelayout.setVisibility(View.VISIBLE);
+                                blocklayout.setVisibility(View.VISIBLE);
+                                profilelayout.setVisibility(View.GONE);
+                                user_action.setWeightSum(3);
+                            }else {
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                micreqlayout.setVisibility(View.VISIBLE);
-                                blocklayout.setVisibility(View.VISIBLE);
-                                user_action.setWeightSum(4);
+                                micreqlayout.setVisibility(View.GONE);
+                                mutelayout.setVisibility(View.GONE);
+                                blocklayout.setVisibility(View.GONE);
+                                profilelayout.setVisibility(View.GONE);
+                                user_action.setWeightSum(1);
                             }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
                             Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
@@ -2263,12 +2293,28 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         if(clickedOnlineUserUID.equals(currentUser.getUid()))
         {
-            user_action.setVisibility(View.GONE);
+            singlegift.setVisibility(View.GONE);
+            txtsinglegiftsend.setVisibility(View.GONE);
+            micreqlayout.setVisibility(View.GONE);
+            mutelayout.setVisibility(View.GONE);
+            blocklayout.setVisibility(View.GONE);
+            profilelayout.setVisibility(View.VISIBLE);
+            user_action.setWeightSum(1);
         }
-        else {
-            user_action.setVisibility(View.VISIBLE);
+        else if (isMod){
+            micreqlayout.setVisibility(View.VISIBLE);
+            mutelayout.setVisibility(View.VISIBLE);
+            blocklayout.setVisibility(View.VISIBLE);
+            profilelayout.setVisibility(View.GONE);
+            user_action.setWeightSum(3);
         }
-
+ else {
+            micreqlayout.setVisibility(View.GONE);
+            mutelayout.setVisibility(View.GONE);
+            blocklayout.setVisibility(View.GONE);
+            profilelayout.setVisibility(View.GONE);
+            user_action.setWeightSum(3);
+        }
 
         singlegift.setVisibility(View.GONE);
         txtsinglegiftsend.setVisibility(View.GONE);

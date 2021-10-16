@@ -25,23 +25,23 @@
 
         android:gravity="top|center">
 
+        <TextView
 
-        <ImageView
-            android:layout_width="180dp"
-            android:layout_height="58dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pacifico"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="58sp"
+            android:text="Eidland " />
 
-
-            android:layout_alignParentTop="true"
-            android:background="@drawable/ic_el_logo"
-            android:gravity="center_horizontal|center_vertical"
-            android:scaleType="centerCrop"
-            android:contentDescription="TODO" />
 
         <TextView
             style="@style/go_far_with"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+
             android:fontFamily="@font/nunitosemibold"
             android:layout_gravity="center"
             android:gravity="center_horizontal|center_vertical"

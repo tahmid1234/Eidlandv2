@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121318"
+
     android:orientation="vertical"
     android:weightSum="2"
     tools:context="com.eidland.auxilium.voice.only.activity.SignUpActivity">
@@ -17,6 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_height="match_parent">
 
 
@@ -26,22 +29,23 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="180dp"
-                    android:layout_height="58dp"
-                    android:layout_marginTop="196dp"
-                    android:background="@drawable/ic_el_logo"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.497"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-            </LinearLayout>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/pacifico"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="58sp"
+                    android:text="Eidland " />
+
+                      </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="50dp"
+
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -50,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginBottom="50dp"
-                    android:fontFamily="@font/interregular"
+                    android:fontFamily="@font/nunitoregular"
                     android:gravity="center"
                     android:letterSpacing="0.01"
                     android:lines="2"
@@ -89,7 +93,7 @@
                         android:layout_height="44dp"
                         android:layout_marginStart="6dp"
                         android:layout_weight="2"
-                        android:fontFamily="@font/interregular"
+                        android:fontFamily="@font/nunitoregular"
                         android:hint="@string/phn_no_hint"
                         android:imeOptions="actionGo"
                         android:inputType="number"
