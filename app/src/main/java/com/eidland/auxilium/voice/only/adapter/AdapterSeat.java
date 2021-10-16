@@ -141,7 +141,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
             cardback = itemView.findViewById(R.id.cardback);
             cardback1 = itemView.findViewById(R.id.cardback1);
             seat = itemView.findViewById(R.id.seat);
-            seatImage.setBackgroundColor(Color.GREEN);
+
             this.onSeatClickListener = onSeatClickListener;
             itemView.setOnClickListener(this);
 

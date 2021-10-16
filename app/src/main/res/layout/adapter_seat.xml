@@ -70,7 +70,7 @@
                         android:contentDescription="TODO"
                         android:scaleType="centerCrop"
 
-                        android:src="@drawable/ic_mic" />
+                       />
 
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
