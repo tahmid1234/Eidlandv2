@@ -104,7 +104,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
         linearLayout.setMinimumWidth((int) (width * 0.8));
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+      //  dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
         dialog.setCancelable(false);
 
 

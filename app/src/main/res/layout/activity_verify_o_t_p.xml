@@ -71,7 +71,7 @@
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginBottom="30dp"
                     android:autoSizeMaxTextSize="16sp"
-                    android:fontFamily="@font/nunitoregular"
+                    android:fontFamily="@font/interregular"
                     android:letterSpacing="0.01"
 
                     android:text="Please enter the OTP to verify your number"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:autoSizeMaxTextSize="16sp"
-                    android:fontFamily="@font/nunitoregular"
+                    android:fontFamily="@font/interregular"
                     android:gravity="center_horizontal|center_vertical"
                     android:letterSpacing="0.01"
                     android:lines="1"
@@ -101,7 +101,7 @@
                     android:layout_marginBottom="50dp"
 
                     android:autoSizeMaxTextSize="16sp"
-                    android:fontFamily="@font/nunitoregular"
+                    android:fontFamily="@font/interregular"
                     android:gravity="center_horizontal|center_vertical"
                     android:letterSpacing="0.01"
                     android:lines="1"

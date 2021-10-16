@@ -1353,6 +1353,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                             selectedViewer = audiance;
                             if (selectuseruid.equals(currentUser.getUid())) {
+                                crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
                                 micreqlayout.setVisibility(View.GONE);
@@ -1362,12 +1363,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 user_action.setWeightSum(1);
                             }
                             else if (isMod){
+                                crystal.setVisibility(View.GONE);
                                 micreqlayout.setVisibility(View.VISIBLE);
                                 mutelayout.setVisibility(View.VISIBLE);
                                 blocklayout.setVisibility(View.VISIBLE);
                                 profilelayout.setVisibility(View.GONE);
                                 user_action.setWeightSum(3);
                             }else {
+                                crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 micreqlayout.setVisibility(View.GONE);
@@ -2293,6 +2296,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         if(clickedOnlineUserUID.equals(currentUser.getUid()))
         {
+            crystal.setVisibility(View.GONE);
             singlegift.setVisibility(View.GONE);
             txtsinglegiftsend.setVisibility(View.GONE);
             micreqlayout.setVisibility(View.GONE);
@@ -2302,6 +2306,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             user_action.setWeightSum(1);
         }
         else if (isMod){
+            crystal.setVisibility(View.GONE);
             micreqlayout.setVisibility(View.VISIBLE);
             mutelayout.setVisibility(View.VISIBLE);
             blocklayout.setVisibility(View.VISIBLE);
@@ -2309,6 +2314,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             user_action.setWeightSum(3);
         }
  else {
+            crystal.setVisibility(View.GONE);
             micreqlayout.setVisibility(View.GONE);
             mutelayout.setVisibility(View.GONE);
             blocklayout.setVisibility(View.GONE);
