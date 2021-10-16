@@ -69,6 +69,7 @@
                         android:layout_height="match_parent"
                         android:contentDescription="TODO"
                         android:scaleType="centerCrop"
+
                         android:src="@drawable/ic_mic" />
 
                 </androidx.cardview.widget.CardView>

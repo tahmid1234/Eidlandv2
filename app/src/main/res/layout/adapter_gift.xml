@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/gift_identifier"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/interregular"
+            android:fontFamily="@font/nunitoregular"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Humor"

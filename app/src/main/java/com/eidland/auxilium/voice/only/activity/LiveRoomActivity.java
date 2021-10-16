@@ -1251,6 +1251,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     user_action.setWeightSum(1);
                                 }
                                 else if (isMod){
+                                    singlegift.setVisibility(View.VISIBLE);
+                                    txtsinglegiftsend.setVisibility(View.VISIBLE);
                                     micreqlayout.setVisibility(View.VISIBLE);
                                     mutelayout.setVisibility(View.VISIBLE);
                                     blocklayout.setVisibility(View.VISIBLE);
@@ -1363,6 +1365,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 user_action.setWeightSum(1);
                             }
                             else if (isMod){
+                                singlegift.setVisibility(View.VISIBLE);
+                                txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 crystal.setVisibility(View.GONE);
                                 micreqlayout.setVisibility(View.VISIBLE);
                                 mutelayout.setVisibility(View.VISIBLE);
