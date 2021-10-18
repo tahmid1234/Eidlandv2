@@ -41,7 +41,7 @@
             style="@style/go_far_with"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="-15dp"
             android:fontFamily="@font/nunitosemibold"
             android:layout_gravity="center"
             android:gravity="center_horizontal|center_vertical"

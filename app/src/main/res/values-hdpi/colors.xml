@@ -15,7 +15,7 @@
     <color name="white">#FFFFFFFF</color>
     // my colors
     <color name="transparent1">#70171917</color>
-
+    <color name="fillercolor">#29333E</color>
     <color name="bright_pink">#FD5D8F</color>
     <color name="red">#FFDD55</color>
     <color name="orange">#FF0000</color>

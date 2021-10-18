@@ -11,7 +11,7 @@
     <color name="lightgray">#c1c1c1</color>
 
     <color name="black">#FF000000</color>
-
+    <color name="fillercolor">#29333E</color>
     <color name="white">#FFFFFFFF</color>
     // my colors
     <color name="transparent1">#70171917</color>
