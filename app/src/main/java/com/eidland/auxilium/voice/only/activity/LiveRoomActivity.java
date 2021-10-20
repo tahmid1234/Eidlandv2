@@ -119,6 +119,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
     int lastPos = 0;
+    boolean gifbeingsent=false;
     RelativeLayout lastselec;
     TextView ModUserRemove;
     TextView Selectedspeaker;
