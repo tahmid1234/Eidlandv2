@@ -42,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="17dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="-225dp"
+                android:layout_marginLeft="-215dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/nunitosemibold"
                 android:gravity="left|center"
