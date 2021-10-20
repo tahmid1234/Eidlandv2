@@ -95,7 +95,7 @@
                             android:fontFamily="@font/interregular"
                             android:text="000"
                             android:textAlignment="textStart"
-                            android:textColor="#fff"
+                            android:textColor="#000"
                             android:textSize="17dp"
                             android:textStyle="bold" />
 
@@ -142,7 +142,7 @@
                             android:fontFamily="@font/interregular"
                             android:text="000"
                             android:textAlignment="center"
-                            android:textColor="#fff"
+                            android:textColor="#000"
                             android:textSize="17dp"
                             android:textStyle="bold" />
 

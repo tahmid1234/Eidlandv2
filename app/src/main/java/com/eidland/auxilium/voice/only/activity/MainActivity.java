@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         UserName = findViewById(R.id.username);
         UserPhoto = findViewById(R.id.userimage);
-        homeImage = findViewById(R.id.home_image);
+//        homeImage = findViewById(R.id.home_image);
 
         roomRecycler = findViewById(R.id.rvrooms1);
         roomRecycler2 = findViewById(R.id.rvrooms2);
@@ -124,20 +124,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String url = snapshot.getValue().toString();
-                    Glide.with(MainActivity.this).load(url).apply(RequestOptions.bitmapTransform(new RoundedCorners(15))).into(homeImage);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    String url = snapshot.getValue().toString();
+//                    Glide.with(MainActivity.this).load(url).apply(RequestOptions.bitmapTransform(new RoundedCorners(15))).into(homeImage);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
 //        FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {
