@@ -126,12 +126,15 @@
                 android:layout_weight="1"
                 android:padding="10dp">
 
-                <ImageView
+                <TextView
                     android:id="@+id/home_image"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunitosemibold"
                     android:padding="5dp"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:text="Welcome to Eidland! We’re thrilled you came by.\n\nIf you’re new, drop into the room called Eidland Reception Desk to learn what we’re about.\n\nOtherwise, jump into any room that interests you. Feel free to speak up or simply listen in."
+                    android:textColor="#fff" />
 
                 <TextView
                     android:id="@+id/roomsTitle"
@@ -140,7 +143,8 @@
                     android:layout_below="@+id/home_image"
                     android:fontFamily="@font/nunitosemibold"
                     android:padding="5dp"
-                    android:text="General Rooms"
+                    android:layout_marginTop="15dp"
+                    android:text="New to Eidland"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -151,41 +155,41 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/roomsTitle" />
 
-                <TextView
-                    android:id="@+id/roomsTitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rvrooms1"
-                    android:fontFamily="@font/nunitosemibold"
-                    android:padding="5dp"
-                    android:text="Casual Hangout"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/roomsTitle2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/rvrooms1"-->
+<!--                    android:fontFamily="@font/nunitosemibold"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:text="Casual Hangout"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textStyle="bold" />-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvrooms2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/roomsTitle2" />
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rvrooms2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/roomsTitle2" />-->
 
-                <TextView
-                    android:id="@+id/roomsTitle3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rvrooms2"
-                    android:fontFamily="@font/nunitosemibold"
-                    android:padding="5dp"
-                    android:text="Make Me Smarter"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/roomsTitle3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/rvrooms2"-->
+<!--                    android:fontFamily="@font/nunitosemibold"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:text="Make Me Smarter"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textStyle="bold" />-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvrooms3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/roomsTitle3" />
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rvrooms3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/roomsTitle3" />-->
 
 
                 <!--                <TextView-->
@@ -208,14 +212,14 @@
                 <!--                    android:layout_height="wrap_content"/>-->
 
                 <View
-                    android:layout_below="@+id/rvrooms1"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="300dp"
+                    android:layout_below="@+id/rvrooms1" />
 
-                <View
-                    android:layout_below="@+id/rvrooms2"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+<!--                <View-->
+<!--                    android:layout_below="@+id/rvrooms2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="300dp" />-->
 
 
             </RelativeLayout>
