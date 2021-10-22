@@ -118,6 +118,8 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     android:inputType="number"
+                    app:lineColor="@color/black"
+                    android:textColor="#FFFBFA64"
                     android:itemBackground="@color/fillercolor"
                     app:itemCount="6"
                     app:itemHeight="45dp"
