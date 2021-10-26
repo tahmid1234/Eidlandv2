@@ -148,7 +148,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         }
         referralURL = sb.toString();
 
-        User obj = new User(_username, _email, urlimg, "100", "0", referralURL, "utm_source=google-play&utm_medium=organic");
+        User obj = new User(_username, _email, urlimg, "25", "0", referralURL, "utm_source=google-play&utm_medium=organic");
         StaticConfig.user = obj;
         FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

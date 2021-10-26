@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
+import com.shobhitpuri.custombuttons.GoogleSignInButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
-    ImageView signInButton;
+    GoogleSignInButton signInButton;
     FirebaseUser user;
     String status;
     EditText phonenumber1;
@@ -151,7 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ((Activity) getApplicationContext()).finish();
+        this.finish();
     }
 
     public void accessGranted(FirebaseUser user) {

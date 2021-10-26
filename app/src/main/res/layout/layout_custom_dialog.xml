@@ -19,14 +19,14 @@
         android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:visibility="gone"
         android:text="title"
         android:layout_margin="10dp"
         android:fontFamily="@font/nunitosemibold"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:textColor="#ffffff"
-        android:layout_gravity="left" />
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/msg"

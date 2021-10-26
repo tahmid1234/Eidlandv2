@@ -75,28 +75,28 @@ public class MainActivity extends AppCompatActivity {
 
         UserName = findViewById(R.id.username);
         UserPhoto = findViewById(R.id.userimage);
-        homeImage = findViewById(R.id.home_image);
+//        homeImage = findViewById(R.id.home_image);
 
         roomRecycler = findViewById(R.id.rvrooms1);
-        roomRecycler2 = findViewById(R.id.rvrooms2);
-        roomRecycler3 = findViewById(R.id.rvrooms3);
+//        roomRecycler2 = findViewById(R.id.rvrooms2);
+//        roomRecycler3 = findViewById(R.id.rvrooms3);
 //        upcomingSessionRV = findViewById(R.id.upcomingSessionsRV);
         FirebaseDatabase.getInstance().getReference("AllRooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 roomsList.clear();
-                roomsList2.clear();
-                roomsList3.clear();
+//                roomsList2.clear();
+//                roomsList3.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         Rooms room = child.getValue(Rooms.class);
-                        if (room.getType().equals("casual")) {
-                            roomsList2.add(child.getValue(Rooms.class));
-                        } else if (room.getType().equals("learner")) {
-                            roomsList3.add(child.getValue(Rooms.class));
-                        } else {
+//                        if (room.getType().equals("casual")) {
+//                            roomsList2.add(child.getValue(Rooms.class));
+//                        } else if (room.getType().equals("learner")) {
+//                            roomsList3.add(child.getValue(Rooms.class));
+//                        } else {
                             roomsList.add(child.getValue(Rooms.class));
-                        }
+//                        }
                     }
 
                     GridLayoutManager seatLayoutManager = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
@@ -105,17 +105,17 @@ public class MainActivity extends AppCompatActivity {
                     adapterRoom.notifyDataSetChanged();
                     roomRecycler.setAdapter(adapterRoom);
 
-                    GridLayoutManager seatLayoutManager2 = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
-                    AdapterRoom adapterRoom2 = new AdapterRoom(roomsList2, MainActivity.this, width);
-                    roomRecycler2.setLayoutManager(seatLayoutManager2);
-                    adapterRoom2.notifyDataSetChanged();
-                    roomRecycler2.setAdapter(adapterRoom2);
-
-                    GridLayoutManager seatLayoutManager3 = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
-                    AdapterRoom adapterRoom3 = new AdapterRoom(roomsList3, MainActivity.this, width);
-                    roomRecycler3.setLayoutManager(seatLayoutManager3);
-                    adapterRoom2.notifyDataSetChanged();
-                    roomRecycler3.setAdapter(adapterRoom3);
+//                    GridLayoutManager seatLayoutManager2 = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
+//                    AdapterRoom adapterRoom2 = new AdapterRoom(roomsList2, MainActivity.this, width);
+//                    roomRecycler2.setLayoutManager(seatLayoutManager2);
+//                    adapterRoom2.notifyDataSetChanged();
+//                    roomRecycler2.setAdapter(adapterRoom2);
+//
+//                    GridLayoutManager seatLayoutManager3 = new GridLayoutManager(MainActivity.this, 1, GridLayoutManager.HORIZONTAL, false);
+//                    AdapterRoom adapterRoom3 = new AdapterRoom(roomsList3, MainActivity.this, width);
+//                    roomRecycler3.setLayoutManager(seatLayoutManager3);
+//                    adapterRoom2.notifyDataSetChanged();
+//                    roomRecycler3.setAdapter(adapterRoom3);
                 }
             }
 
@@ -124,20 +124,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String url = snapshot.getValue().toString();
-                    Glide.with(MainActivity.this).load(url).apply(RequestOptions.bitmapTransform(new RoundedCorners(15))).into(homeImage);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        FirebaseDatabase.getInstance().getReference("HomeImage").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    String url = snapshot.getValue().toString();
+//                    Glide.with(MainActivity.this).load(url).apply(RequestOptions.bitmapTransform(new RoundedCorners(15))).into(homeImage);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
 //        FirebaseDatabase.getInstance().getReference("UpcomingSessions").addValueEventListener(new ValueEventListener() {

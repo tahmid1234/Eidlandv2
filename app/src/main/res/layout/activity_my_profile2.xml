@@ -72,8 +72,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="38dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="35dp"
                         android:layout_marginStart="3dp"
                         android:layout_marginTop="3dp"
                         android:layout_marginEnd="3dp"
@@ -99,14 +99,14 @@
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunitoregular"
-                            android:text="Balance"
-                            android:textColor="#fff"
-                            android:textSize="12dp"
-                            android:textStyle="bold" />
+                        <!--                        <TextView-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:fontFamily="@font/nunitoregular"-->
+                        <!--                            android:text="Balance"-->
+                        <!--                            android:textColor="#fff"-->
+                        <!--                            android:textSize="12dp"-->
+                        <!--                            android:textStyle="bold" />-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -120,8 +120,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="3dp"
@@ -146,14 +146,14 @@
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunitoregular"
-                            android:text="Eidland Points"
-                            android:textColor="#fff"
-                            android:textSize="11dp"
-                            android:textStyle="bold" />
+                        <!--                        <TextView-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:fontFamily="@font/nunitoregular"-->
+                        <!--                            android:text="Eidland Points"-->
+                        <!--                            android:textColor="#fff"-->
+                        <!--                            android:textSize="11dp"-->
+                        <!--                            android:textStyle="bold" />-->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -207,10 +207,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_fi_rr_box_alt_1"
+                        android:background="@drawable/moneybag"
                         android:contentDescription="TODO"
                         android:gravity="center"
                         android:padding="12dp" />
@@ -274,6 +274,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center"
                         android:background="@drawable/ic_fi_rr_user_add_1"
                         android:contentDescription="TODO"
@@ -302,10 +303,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_fi_rr_edit_1"
+                        android:background="@drawable/starstruck"
                         android:contentDescription="TODO"
                         android:gravity="center"
                         android:padding="12dp" />
@@ -332,13 +333,13 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ic_refer"
+                        android:background="@drawable/handshake"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:padding="12dp" />
+                        android:padding="10dp" />
 
                     <TextView
                         android:id="@+id/referrallinktext"
@@ -365,6 +366,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center"
                         android:background="@drawable/ic_fi_rr_sign_out_1"
                         android:contentDescription="TODO"

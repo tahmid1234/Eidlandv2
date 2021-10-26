@@ -82,7 +82,7 @@
                         android:gravity="center_vertical"
                         android:saveEnabled="false"
                         app:ccp_autoDetectCountry="true"
-                        app:ccp_contentColor="#263238"
+                        app:ccp_contentColor="#fff"
                         app:ccp_showFlag="true"
                         app:ccp_showNameCode="false" />
 
@@ -96,6 +96,8 @@
                         android:fontFamily="@font/nunitoregular"
                         android:hint="@string/phn_no_hint"
                         android:imeOptions="actionGo"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/lightgray"
                         android:inputType="number"
                         android:lines="1"
                         android:textAlignment="textStart"
@@ -124,7 +126,7 @@
                             android:text="@string/next"
                             android:textColor="@color/white"></TextView>
                     </RelativeLayout>
-                </LinearLayout>
+                </LinearLayout>wrap_content
             </LinearLayout>
 
             <LinearLayout
@@ -139,17 +141,25 @@
                     android:layout_gravity="center"
                     android:text="or"
                     android:padding="15dp"
+                    android:fontFamily="@font/nunitoregular"
                     android:textColor="@color/browser_actions_bg_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <RelativeLayout
 
-                <ImageButton
-                    android:id="@+id/sign_in_button"
-                    android:layout_width="260dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent1"
-                    android:src="@drawable/ic_google_sso" />
+                    android:layout_width="wrap_content"
+                    tools:ignore="MissingClass">
+                    <com.shobhitpuri.custombuttons.GoogleSignInButton
+                        android:layout_width="260dp"
+                        android:id="@+id/sign_in_button"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/google_sign_in"
+                        app:isDarkTheme="true" />
 
+                </RelativeLayout>
 
             </LinearLayout>
         </LinearLayout>

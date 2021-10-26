@@ -24,7 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class WalletActivity extends AppCompatActivity implements View.OnClickListener, BillingProcessor.IBillingHandler {
     TextView txtcurrent;
-    LinearLayout buy100, buy1000, buy5000, buy12000, buy36500;
+    LinearLayout buy50, buy1000, buy350;
     BillingProcessor billingProcessor;
     String coincomma, Userid;
     ViewDialog viewDialog;
@@ -34,11 +34,10 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        buy100 = findViewById(R.id.buy100);
-        buy1000 = findViewById(R.id.buy1000);
-        buy5000 = findViewById(R.id.buy5000);
-        buy12000 = findViewById(R.id.buy12000);
-        buy36500 = findViewById(R.id.buy36500);
+        buy50 = findViewById(R.id.buy50);
+        buy1000 = findViewById(R.id.buy1000n);
+        buy350 = findViewById(R.id.buy350);
+
         viewDialog = new ViewDialog(this);
         back = findViewById(R.id.wallet_back);
 
@@ -53,11 +52,10 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        buy100.setOnClickListener(this);
+        buy50.setOnClickListener(this);
         buy1000.setOnClickListener(this);
-        buy5000.setOnClickListener(this);
-        buy12000.setOnClickListener(this);
-        buy36500.setOnClickListener(this);
+        buy350.setOnClickListener(this);
+
         initpur();
     }
 
@@ -140,26 +138,19 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.buy100:
-                selectedkey = "250";
+            case R.id.buy50:
+                selectedkey = "50";
                 purchasecoins();
                 break;
-            case R.id.buy1000:
+            case R.id.buy350:
+                selectedkey = "350";
+                purchasecoins();
+                break;
+            case R.id.buy1000n:
                 selectedkey = "1000";
                 purchasecoins();
                 break;
-            case R.id.buy5000:
-                selectedkey = "5000";
-                purchasecoins();
-                break;
-            case R.id.buy12000:
-                selectedkey = "12000";
-                purchasecoins();
-                break;
-            case R.id.buy36500:
-                selectedkey = "36500";
-                purchasecoins();
-                break;
+
 
         }
     }
