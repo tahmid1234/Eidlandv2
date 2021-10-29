@@ -223,6 +223,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         commentBox.setTextColor(Color.BLACK);
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
                         sencmnt.setImageResource(R.drawable.ic_send_message_button);
+                        roomGift.setVisibility(View.GONE);
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
                         inputArea.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setBackgroundColor(Color.TRANSPARENT);
@@ -230,8 +231,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         commentBox.setTextColor(Color.WHITE);
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentblackcircle));
                         sencmnt.setImageResource(R.drawable.ic_send_message_button_white);
-
-
+                        roomGift.setVisibility(View.VISIBLE);
                     }
                 }
                 lastVisibleDecorViewHeight = visibleDecorViewHeight;
