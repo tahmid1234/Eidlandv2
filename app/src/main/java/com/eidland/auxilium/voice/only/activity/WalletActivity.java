@@ -1,11 +1,15 @@
 package com.eidland.auxilium.voice.only.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +33,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     String coincomma, Userid;
     ViewDialog viewDialog;
     ImageView back;
-
+   int width=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +41,9 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         buy50 = findViewById(R.id.buy50);
         buy1000 = findViewById(R.id.buy1000n);
         buy350 = findViewById(R.id.buy350);
-
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+         width = displayMetrics.widthPixels;
         viewDialog = new ViewDialog(this);
         back = findViewById(R.id.wallet_back);
 
@@ -88,6 +94,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onProductPurchased(String productId, TransactionDetails details) {
+        Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String currentCoins = StaticConfig.user.getCoins();
         long coininnumber = Long.parseLong(currentCoins);
@@ -140,19 +147,48 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.buy50:
                 selectedkey = "50";
-                purchasecoins();
+
                 break;
             case R.id.buy350:
                 selectedkey = "350";
-                purchasecoins();
+
                 break;
             case R.id.buy1000n:
                 selectedkey = "1000";
-                purchasecoins();
+
                 break;
 
 
         }
-    }
+        calldialog();
 
+    }
+void calldialog ()
+{
+    Dialog dialog = new Dialog(this);
+    dialog.setContentView(R.layout.layout_custom_dialog);
+    LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+    linearLayout.setMinimumWidth((int) (width * 0.8));
+    //dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+    dialog.setCancelable(false);
+
+    ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+    imageView.setImageResource(R.drawable.ic_sleep);
+    imageView.setVisibility(View.GONE);
+
+    TextView msg = dialog.findViewById(R.id.msg);
+    msg.setText("Coin purchases are coming very soon");
+
+    TextView negative = dialog.findViewById(R.id.positive_btn);
+    RelativeLayout areatop = dialog.findViewById(R.id.topdialogbutton);
+    negative.setVisibility(View.VISIBLE);
+    negative.setText("OKAY");
+    areatop.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dialog.dismiss();
+        }
+    });
+    dialog.show();
+}
 }
