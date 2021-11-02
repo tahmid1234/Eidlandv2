@@ -1,13 +1,16 @@
 package com.eidland.auxilium.voice.only.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
@@ -20,10 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
 
@@ -56,9 +55,9 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_seat, parent, false), onSeatClickListener);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         uidPositions.get(position).initAnimator(context,
                 holder.itemView.findViewById(R.id.cardback),
                 holder.itemView.findViewById(R.id.cardback1));
@@ -77,8 +76,8 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
 
                     } catch (Exception e) {
                         System.out.println(e);
-                        holder.seatName.setText("Seat #" + (position + 1));
-                        holder.seatImage.setImageResource(R.drawable.ic_mic);
+                        holder.seatName.setText((position + 1));
+                        holder.seatImage.setImageResource(R.drawable.seat_mic);
                         uidPositions.get(position).setIsfill(false);
                         uidPositions.get(position).uid = 0;
 
@@ -86,7 +85,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                         holder.cardback1.setVisibility(View.GONE);
                     }
                 } else {
-                    holder.seatName.setText("Seat #" + (position + 1));
+                    holder.seatName.setText((position + 1));
                     holder.seatImage.setImageResource(R.drawable.ic_mic);
                     holder.seatImage.setBackgroundColor(seats[position]);
                     uidPositions.get(position).setIsfill(false);

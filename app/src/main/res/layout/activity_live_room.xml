@@ -559,7 +559,7 @@
                         android:lines="10"
                         android:scrollbars="vertical"
                         android:maxLines="10"
-                        android:paddingStart="8dp"
+                        android:paddingStart="9dp"
                         android:paddingTop="4dp"
                         android:paddingEnd="6dp"
                         android:paddingBottom="8dp"
