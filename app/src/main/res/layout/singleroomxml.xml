@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/room_card"
     android:layout_width="200dp"
     android:layout_height="190dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginHorizontal="10dp"
     android:layout_margin="10dp"
+    android:layout_marginHorizontal="10dp"
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_height="match_parent">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/_ivphoto"
@@ -25,56 +25,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:background="@drawable/titleback"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/_tvname"
-                android:text="Group Name"
-                android:paddingTop="5dp"
-                android:textSize="12sp"
-                android:paddingLeft="10dp"
                 android:layout_width="match_parent"
-
-                android:textColor="#000"
-                android:gravity="center|left"
-
-
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/interregular"
-                android:textStyle="bold"
-               android:layout_height="wrap_content"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:orientation="horizontal">
-    <ImageView
-        android:id="@+id/speakericon"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_playing_icon" />
-    <TextView
-        android:id="@+id/_tvdes"
-        android:text="0 Online"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:layout_gravity="center"
-        android:paddingLeft="5dp"
-        android:layout_marginLeft="5dp"
-        android:textColor="#000"
-        android:textSize="10sp"
-        android:fontFamily="@font/nunitoregular"
-        android:layout_weight="1" />
-</LinearLayout>
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="Group Name"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/speakericon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_playing_icon" />
+
+                <TextView
+                    android:id="@+id/_tvdes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunitoregular"
+                    android:paddingLeft="4dp"
+                    android:text="0 Online"
+                    android:textColor="#000"
+                    android:textSize="10sp" />
+            </LinearLayout>
 
         </LinearLayout>
     </RelativeLayout>
-
-
 </androidx.cardview.widget.CardView>
