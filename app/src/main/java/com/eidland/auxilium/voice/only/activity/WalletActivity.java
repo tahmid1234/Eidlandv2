@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.PurchaseInfo;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.helper.Helper;
@@ -24,16 +25,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WalletActivity extends AppCompatActivity implements View.OnClickListener, BillingProcessor.IBillingHandler {
+public abstract class WalletActivity extends AppCompatActivity implements View.OnClickListener {
     TextView txtcurrent;
     LinearLayout buy50, buy1000, buy350;
-    BillingProcessor billingProcessor;
+    //  BillingProcessor billingProcessor;
     String coincomma, Userid;
     ViewDialog viewDialog;
     ImageView back;
-   int width=0;
+    int width = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         buy350 = findViewById(R.id.buy350);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-         width = displayMetrics.widthPixels;
+        width = displayMetrics.widthPixels;
         viewDialog = new ViewDialog(this);
         back = findViewById(R.id.wallet_back);
 
@@ -62,14 +65,14 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         buy1000.setOnClickListener(this);
         buy350.setOnClickListener(this);
 
-        initpur();
+        //  initpur();
     }
-
+}
+/*
     void purchasecoins() {
         billingProcessor.purchase(this, selectedkey);
     }
 
-    public void initpur() {
         boolean isAvailable = BillingProcessor.isIabServiceAvailable(this);
         if (isAvailable) {
             billingProcessor = new BillingProcessor(this, getResources().getString(R.string.Playid), this);
@@ -81,19 +84,19 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onDestroy() {
         if (billingProcessor != null) {
-            billingProcessor.release();
+         //   billingProcessor.release();
         }
         super.onDestroy();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!billingProcessor.handleActivityResult(requestCode, resultCode, data))
+      //  if (!billingProcessor.handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-    public void onProductPurchased(String productId, TransactionDetails details) {
+   /* public void onProductPurchased(String productId, TransactionDetails details) {
         Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String currentCoins = StaticConfig.user.getCoins();
@@ -102,7 +105,8 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         StaticConfig.user.setCoins(finalcoin + "");
 
         verifypurchase();
-    }
+    }/
+
 
     @Override
     public void onPurchaseHistoryRestored() {
@@ -192,3 +196,4 @@ void calldialog ()
     dialog.show();
 }
 }
+*/

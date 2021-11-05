@@ -86,7 +86,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                         holder.cardback1.setVisibility(View.GONE);
                     }
                 } else {
-                    holder.seatName.setText("Seat #" + (position + 1));
+                    holder.seatName.setText(String.format("Seat #%d", position + 1));
                     holder.seatImage.setImageResource(R.drawable.ic_mic);
                     holder.seatImage.setBackgroundColor(seats[position]);
                     uidPositions.get(position).setIsfill(false);
