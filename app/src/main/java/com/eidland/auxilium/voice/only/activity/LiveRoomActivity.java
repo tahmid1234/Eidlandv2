@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -89,6 +90,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -520,7 +523,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 //                            room.setInviteLink(snapshot.getValue().toString());
 //                            Toast.makeText(getApplicationContext(), String.valueOf(snapshot.getValue()), Toast.LENGTH_LONG).show();
-
+                            
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);
                             sendIntent.putExtra("UserName", room.name);
@@ -915,7 +918,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Toast.makeText(getApplicationContext(), "No Gift is selected", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "You can not send gift to yourself", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "You can not send a gift to yourself", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -1245,10 +1248,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 if (audiance.getId().equals(currentUser.getUid())) {
                                     singlegift.setVisibility(View.GONE);
                                     txtsinglegiftsend.setVisibility(View.GONE);
-                                    micreqlayout.setVisibility(View.GONE);
-                                    mutelayout.setVisibility(View.GONE);
-                                    blocklayout.setVisibility(View.GONE);
-                                    profilelayout.setVisibility(View.VISIBLE);
+                                    user_action.setVisibility(View.GONE);
                                     user_action.setWeightSum(1);
                                 }
                                 else if (isMod){
@@ -1262,10 +1262,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 }else {
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                    micreqlayout.setVisibility(View.GONE);
-                                    mutelayout.setVisibility(View.GONE);
-                                    blocklayout.setVisibility(View.GONE);
-                                    profilelayout.setVisibility(View.GONE);
+                                    user_action.setVisibility(View.GONE);
                                     user_action.setWeightSum(1);
                                 }
                                 CheckModerator(currentUser.getUid(), selectuseruid, seats);
@@ -1359,10 +1356,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
-                                micreqlayout.setVisibility(View.GONE);
-                                mutelayout.setVisibility(View.GONE);
-                                blocklayout.setVisibility(View.GONE);
-                                profilelayout.setVisibility(View.VISIBLE);
+                                user_action.setVisibility(View.GONE);
                                 user_action.setWeightSum(1);
                             }
                             else if (isMod){
@@ -1378,10 +1372,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                micreqlayout.setVisibility(View.GONE);
-                                mutelayout.setVisibility(View.GONE);
-                                blocklayout.setVisibility(View.GONE);
-                                profilelayout.setVisibility(View.GONE);
+                                user_action.setVisibility(View.GONE);
                                 user_action.setWeightSum(1);
                             }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
@@ -2304,10 +2295,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             crystal.setVisibility(View.GONE);
             singlegift.setVisibility(View.GONE);
             txtsinglegiftsend.setVisibility(View.GONE);
-            micreqlayout.setVisibility(View.GONE);
-            mutelayout.setVisibility(View.GONE);
-            blocklayout.setVisibility(View.GONE);
-            profilelayout.setVisibility(View.VISIBLE);
+            user_action.setVisibility(View.GONE);
             user_action.setWeightSum(1);
         }
         else if (isMod){
@@ -2320,10 +2308,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
  else {
             crystal.setVisibility(View.GONE);
-            micreqlayout.setVisibility(View.GONE);
-            mutelayout.setVisibility(View.GONE);
-            blocklayout.setVisibility(View.GONE);
-            profilelayout.setVisibility(View.GONE);
+            user_action.setVisibility(View.GONE);
             user_action.setWeightSum(3);
         }
 

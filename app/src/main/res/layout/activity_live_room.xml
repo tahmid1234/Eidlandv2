@@ -414,7 +414,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:fontFamily="@font/nunitoregular"
-                            android:paddingLeft="5dp"
+                            android:paddingLeft="6dp"
                             android:paddingBottom="0dp"
                             android:text="Sender"
                             android:textColor="#fff"
@@ -426,7 +426,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:fontFamily="@font/nunitoregular"
-                            android:paddingLeft="5dp"
+                            android:paddingLeft="6dp"
                             android:paddingBottom="0dp"
                             android:text="Rewarded to"
                             android:textColor="#fff"
@@ -437,11 +437,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center|left"
-                            android:paddingLeft="5dp"
+                            android:paddingLeft="6dp"
                             android:paddingRight="5dp"
                             android:fontFamily="@font/nunitoregular"
                             android:text="contributed"
-                            android:textColor="#C551F6"
+                            android:textColor="#FFFBFA64"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -516,8 +516,8 @@
 
                     <ImageView
                         android:id="@+id/invite_icon"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:background="@drawable/share" />
                 </LinearLayout>
             </LinearLayout>
@@ -558,12 +558,12 @@
                         android:inputType="textMultiLine|textCapSentences"
                         android:lines="2"
 
-                        android:paddingStart="8dp"
+                        android:paddingStart="9dp"
                         android:paddingTop="4dp"
                         android:paddingEnd="6dp"
                         android:paddingBottom="8dp"
                         android:textColor="#fff"
-                        android:textColorHint="#fff" />
+                        android:textColorHint="#FFF" />
                 </RelativeLayout>
 
 
@@ -729,7 +729,7 @@
                         android:text="Balance:"
                         android:textColor="#fff"
                         android:layout_marginBottom="8dp"
-                        android:textSize="20sp" />
+                        android:textSize="19sp" />
 
                     <TextView
                         android:id="@+id/user_available_coin"
@@ -743,7 +743,7 @@
                         android:text="00"
                         android:textColor="#fff"
                         android:layout_marginBottom="8dp"
-                        android:textSize="20sp" />
+                        android:textSize="19sp" />
 
                     <!--                <TextView-->
                     <!--                    android:id="@+id/coinrecharge"-->
@@ -888,13 +888,13 @@
                 </TextView>
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:layout_width="10dp"
                     android:id="@+id/sendgiftbuttonholder"
-                    android:layout_height="32dp"
+                    android:layout_height="34dp"
                     android:layout_gravity="right"
                     android:layout_weight=".7"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/button_bg_gift"
                     android:gravity="center">
 
@@ -905,6 +905,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="Send Gift"
+                        android:fontFamily="@font/nunitosemibold"
                         android:textAlignment="center"
                         android:textColor="#fff" />
                 </RelativeLayout>
