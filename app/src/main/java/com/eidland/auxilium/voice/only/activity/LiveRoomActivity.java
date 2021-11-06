@@ -523,7 +523,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 //                            room.setInviteLink(snapshot.getValue().toString());
 //                            Toast.makeText(getApplicationContext(), String.valueOf(snapshot.getValue()), Toast.LENGTH_LONG).show();
-                            
+
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);
                             sendIntent.putExtra("UserName", room.name);

@@ -78,7 +78,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                     } catch (Exception e) {
                         System.out.println(e);
                         holder.seatName.setText((position + 1));
-                        holder.seatImage.setImageResource(R.drawable.ic_mic_seat);
+                        holder.seatImage.setImageResource(R.drawable.ic_mic);
                         uidPositions.get(position).setIsfill(false);
                         uidPositions.get(position).uid = 0;
 
@@ -87,7 +87,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                     }
                 } else {
                     holder.seatName.setText(String.format("%d", position + 1));
-                    holder.seatImage.setImageResource(R.drawable.seat_mic);
+                    holder.seatImage.setImageResource(R.drawable.ic_mic);
                     holder.seatImage.setBackgroundColor(seats[position]);
                     uidPositions.get(position).setIsfill(false);
                     uidPositions.get(position).uid = 0;
