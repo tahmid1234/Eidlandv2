@@ -1262,7 +1262,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 }else {
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                    user_action.setVisibility(View.GONE);
+                                    user_action.setVisibility(View.VISIBLE);
                                     user_action.setWeightSum(1);
                                 }
                                 CheckModerator(currentUser.getUid(), selectuseruid, seats);
@@ -1372,7 +1372,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                user_action.setVisibility(View.GONE);
+                                user_action.setVisibility(View.VISIBLE);
                                 user_action.setWeightSum(1);
                             }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
@@ -2308,7 +2308,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
  else {
             crystal.setVisibility(View.GONE);
-            user_action.setVisibility(View.GONE);
+            user_action.setVisibility(View.VISIBLE);
             user_action.setWeightSum(3);
         }
 
