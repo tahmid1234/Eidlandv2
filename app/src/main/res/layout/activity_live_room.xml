@@ -404,6 +404,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:padding="5dp"
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -839,22 +840,17 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1.1"
-
                     android:layout_marginStart="20dp"
                     android:layout_height="match_parent">
 
                     <Spinner
                         android:id="@+id/spinner"
                         android:layout_width="match_parent"
-
                         android:layout_height="match_parent"
-
                         android:layout_marginEnd="10dp"
                         android:layout_gravity="center_vertical|center_horizontal"
                         style="@style/spinner_style"
                         android:popupBackground="#2F323F"
-
-
                         android:visibility="visible" />
 
                     <TextView

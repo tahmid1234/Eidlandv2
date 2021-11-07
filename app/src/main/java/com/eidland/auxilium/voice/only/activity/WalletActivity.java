@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.PurchaseInfo;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.helper.Helper;
@@ -25,18 +24,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class WalletActivity extends AppCompatActivity implements View.OnClickListener {
+public class WalletActivity extends AppCompatActivity implements View.OnClickListener, BillingProcessor.IBillingHandler {
     TextView txtcurrent;
     LinearLayout buy50, buy1000, buy350;
-    //  BillingProcessor billingProcessor;
+    BillingProcessor billingProcessor;
     String coincomma, Userid;
     ViewDialog viewDialog;
     ImageView back;
-    int width = 0;
-
+    int width=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +62,14 @@ public abstract class WalletActivity extends AppCompatActivity implements View.O
         buy1000.setOnClickListener(this);
         buy350.setOnClickListener(this);
 
-        //  initpur();
+        initpur();
     }
-}
-/*
+
     void purchasecoins() {
         billingProcessor.purchase(this, selectedkey);
     }
 
+    public void initpur() {
         boolean isAvailable = BillingProcessor.isIabServiceAvailable(this);
         if (isAvailable) {
             billingProcessor = new BillingProcessor(this, getResources().getString(R.string.Playid), this);
@@ -84,19 +81,19 @@ public abstract class WalletActivity extends AppCompatActivity implements View.O
     @Override
     public void onDestroy() {
         if (billingProcessor != null) {
-         //   billingProcessor.release();
+            billingProcessor.release();
         }
         super.onDestroy();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-      //  if (!billingProcessor.handleActivityResult(requestCode, resultCode, data))
+        if (!billingProcessor.handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-   /* public void onProductPurchased(String productId, TransactionDetails details) {
+    public void onProductPurchased(String productId, TransactionDetails details) {
         Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String currentCoins = StaticConfig.user.getCoins();
@@ -105,8 +102,7 @@ public abstract class WalletActivity extends AppCompatActivity implements View.O
         StaticConfig.user.setCoins(finalcoin + "");
 
         verifypurchase();
-    }/
-
+    }
 
     @Override
     public void onPurchaseHistoryRestored() {
@@ -167,33 +163,32 @@ public abstract class WalletActivity extends AppCompatActivity implements View.O
         calldialog();
 
     }
-void calldialog ()
-{
-    Dialog dialog = new Dialog(this);
-    dialog.setContentView(R.layout.layout_custom_dialog);
-    LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
-    linearLayout.setMinimumWidth((int) (width * 0.8));
-    //dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
-    dialog.setCancelable(false);
+    void calldialog ()
+    {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width * 0.8));
+        //dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
 
-    ImageView imageView = dialog.findViewById(R.id.dialog_icon);
-    imageView.setImageResource(R.drawable.ic_sleep);
-    imageView.setVisibility(View.GONE);
+        ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+        imageView.setImageResource(R.drawable.ic_sleep);
+        imageView.setVisibility(View.GONE);
 
-    TextView msg = dialog.findViewById(R.id.msg);
-    msg.setText("Coin purchases are coming very soon");
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setText("Coin purchases are coming very soon");
 
-    TextView negative = dialog.findViewById(R.id.positive_btn);
-    RelativeLayout areatop = dialog.findViewById(R.id.topdialogbutton);
-    negative.setVisibility(View.VISIBLE);
-    negative.setText("OKAY");
-    areatop.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            dialog.dismiss();
-        }
-    });
-    dialog.show();
+        TextView negative = dialog.findViewById(R.id.positive_btn);
+        RelativeLayout areatop = dialog.findViewById(R.id.topdialogbutton);
+        negative.setVisibility(View.VISIBLE);
+        negative.setText("OKAY");
+        areatop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }
-}
-*/

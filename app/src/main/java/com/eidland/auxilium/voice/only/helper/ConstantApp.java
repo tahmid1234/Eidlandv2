@@ -38,6 +38,7 @@ public class ConstantApp {
         giftItems.add(new GiftItem("debate",1, R.drawable.gift_stone,"Love"));
         giftItems.add(new GiftItem("cake2",1, R.drawable.gift_cake_2,""));
         giftItems.add(new GiftItem("donut",1, R.drawable.gifts_donut,""));
+//        giftItems.add(new GiftItem("crown2",1, R.drawable.gift_crown_2,""));
         giftItems.add(new GiftItem("crown3",1, R.drawable.gift_crown_3,""));
         giftItems.add(new GiftItem("necklace2",1, R.drawable.gift_necklace_2,""));
         giftItems.add(new GiftItem("cookie",1, R.drawable.gift_cookie,""));
@@ -59,6 +60,7 @@ public class ConstantApp {
         animationItemList.add(new AnimationItem("debate", R.drawable.gift_stone, "gift_stone.json", R.drawable.gift_stone_svg));
         animationItemList.add(new AnimationItem("cake2", R.drawable.gift_cake_2, "gift_cake_2.json", R.drawable.gift_cake_2_svg));
         animationItemList.add(new AnimationItem("donut", R.drawable.gifts_donut, "gift_donut.json", R.drawable.gifts_donut_svg));
+//        animationItemList.add(new AnimationItem("crown3", R.drawable.gift_crown_2, "gift_crown_2.json", R.drawable.gift_crown_2_svg));
         animationItemList.add(new AnimationItem("crown3", R.drawable.gift_crown_3, "gift_crown_3.json", R.drawable.gift_crown_3_svg));
         animationItemList.add(new AnimationItem("necklace2", R.drawable.gift_necklace_2, "gift_necklace_2.json", R.drawable.gift_necklace_2_svg));
         animationItemList.add(new AnimationItem("cookie", R.drawable.gift_cookie, "gift_cookie.json", R.drawable.gift_sweets_2_svg));
