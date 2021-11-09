@@ -79,7 +79,7 @@
                         android:layout_marginEnd="3dp"
                         android:layout_marginBottom="3dp"
                         android:contentDescription="TODO"
-                        android:src="@drawable/ic_fi_rr_coin_5" />
+                        android:src="@drawable/balance_coin_foreground" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -274,8 +274,8 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/ic_fi_rr_user_add_1"
                         android:contentDescription="TODO"
                         android:gravity="center"
@@ -366,8 +366,8 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/ic_fi_rr_sign_out_1"
                         android:contentDescription="TODO"
                         android:gravity="center"
