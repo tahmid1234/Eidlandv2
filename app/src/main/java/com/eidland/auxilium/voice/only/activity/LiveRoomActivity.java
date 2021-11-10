@@ -99,6 +99,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -1006,7 +1007,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seat).removeValue();
                             Toast.makeText(LiveRoomActivity.this, "user removed", Toast.LENGTH_LONG).show();
-                            singleUserBox.setVisibility(View.INVISIBLE);
+                            singleUserBox.setVisibility(View.GONE);
 
 
                         }
@@ -1220,7 +1221,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     private void CheckSeats(final String seats) {
-
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) singleUserBox.getLayoutParams();
+        params.height = 1100;
         boolean checkPermissionResult = checkSelfPermissions();
         if(checkPermissionResult) {
             checkSelfPermissions();
@@ -1251,20 +1253,29 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 selectuseruid = audiance.getId();
                                 selectedViewer = audiance;
                                 if (audiance.getId().equals(currentUser.getUid())) {
+                                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                                            /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                                            /*height*/ 800
+                                    );
+                                    param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                    singleUserBox.setLayoutParams(param);
+                                    singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.GONE);
                                     txtsinglegiftsend.setVisibility(View.GONE);
                                     user_action.setVisibility(View.GONE);
                                     user_action.setWeightSum(1);
                                 }
                                 else if (isMod){
+                                    singleUserBox.setLayoutParams(params);
+                                    singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
-                                    micreqlayout.setVisibility(View.VISIBLE);
-                                    mutelayout.setVisibility(View.VISIBLE);
-                                    blocklayout.setVisibility(View.VISIBLE);
+                                    user_action.setVisibility(View.VISIBLE);
                                     profilelayout.setVisibility(View.GONE);
                                     user_action.setWeightSum(3);
                                 }else {
+                                    singleUserBox.setLayoutParams(params);
+                                    singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
                                     user_action.setVisibility(View.VISIBLE);
@@ -1333,6 +1344,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             } else {
                 Query query = FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seats);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.Q)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue() != null) {
@@ -1355,9 +1367,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 }
                             });
                             selectuseruid = audiance.getId();
-
                             selectedViewer = audiance;
                             if (selectuseruid.equals(currentUser.getUid())) {
+                                RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                                        /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                                        /*height*/ 800
+                                );
+                                param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                singleUserBox.setLayoutParams(param);
+                                singleUserBox.requestLayout();
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
@@ -1365,15 +1383,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 user_action.setWeightSum(1);
                             }
                             else if (isMod){
+                                singleUserBox.setLayoutParams(params);
+                                singleUserBox.requestLayout();
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 crystal.setVisibility(View.GONE);
-                                micreqlayout.setVisibility(View.VISIBLE);
-                                mutelayout.setVisibility(View.VISIBLE);
-                                blocklayout.setVisibility(View.VISIBLE);
+                                user_action.setVisibility(View.VISIBLE);
                                 profilelayout.setVisibility(View.GONE);
                                 user_action.setWeightSum(3);
                             }else {
+                                singleUserBox.setLayoutParams(params);
+                                singleUserBox.requestLayout();
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
@@ -2293,11 +2313,22 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onViewersClick(int position, String uid, String name, String photo, String recievedCoins) {
+
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) singleUserBox.getLayoutParams();
+        params.height = 1100;
+
         popup_uname.setText(name);
         clickedOnlineUserUID = uid;
 
         if(clickedOnlineUserUID.equals(currentUser.getUid()))
         {
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                    /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                    /*height*/ 800
+            );
+            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            singleUserBox.setLayoutParams(param);
+            singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
             singlegift.setVisibility(View.GONE);
             txtsinglegiftsend.setVisibility(View.GONE);
@@ -2305,14 +2336,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             user_action.setWeightSum(1);
         }
         else if (isMod){
+            singleUserBox.setLayoutParams(params);
+            singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
-            micreqlayout.setVisibility(View.VISIBLE);
-            mutelayout.setVisibility(View.VISIBLE);
-            blocklayout.setVisibility(View.VISIBLE);
+            user_action.setVisibility(View.VISIBLE);
             profilelayout.setVisibility(View.GONE);
             user_action.setWeightSum(3);
         }
- else {
+        else {
+            singleUserBox.setLayoutParams(params);
+            singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
             user_action.setVisibility(View.VISIBLE);
             user_action.setWeightSum(3);
