@@ -11,14 +11,14 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.14.1'
 }
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         multiDexEnabled true
         applicationId "com.eidland.auxilium.voice.only"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 19
-        versionName "19"
+        targetSdkVersion 30
+        versionCode 21
+        versionName "21"
     }
 
     compileOptions {
@@ -80,7 +80,7 @@ dependencies {
     // image croper
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 // volley
-    implementation 'com.anjlab.android.iab.v3:library:1.0.45'
+    implementation 'com.anjlab.android.iab.v3:library:2.0.0'
 
     // facebook
     implementation 'com.facebook.android:facebook-core:[8,9)'
