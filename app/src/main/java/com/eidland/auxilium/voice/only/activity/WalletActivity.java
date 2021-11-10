@@ -43,6 +43,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     int width=0;
     boolean productpurchasedcalled=false;
     boolean verifycalled=false;
+    String coinvalue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +161,7 @@ billingProcessor.purchase(this, selectedkey);
     public void manualonProductPurchased(@NonNull String productId, @Nullable PurchaseInfo purchaseInfo) {
         productpurchasedcalled=true;
         Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
+        coinvalue=productId;
         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String currentCoins = StaticConfig.user.getCoins();
         long coininnumber = Long.parseLong(currentCoins);
@@ -218,7 +220,7 @@ billingProcessor.purchase(this, selectedkey);
               //  Toast.makeText(WalletActivity.this, "Saved", Toast.LENGTH_SHORT).show();
                 coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
                 txtcurrent.setText(coincomma);
-                //Toast.makeText(WalletActivity.this, "Purchased Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WalletActivity.this, "Purchase of " +coinvalue + " coins confirmed. Thank you!", Toast.LENGTH_SHORT).show();
                 // lrnmethod.setVisibility(View.GONE);
                 viewDialog.hideDialog();
 
