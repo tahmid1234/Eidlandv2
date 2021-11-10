@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -525,18 +526,22 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //                            room.setInviteLink(snapshot.getValue().toString());
 //                            Toast.makeText(getApplicationContext(), String.valueOf(snapshot.getValue()), Toast.LENGTH_LONG).show();
 
-                            ArrayList<Uri> imageUris = new ArrayList<Uri>();
-                            imageUris.add(Uri.parse("https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/home_image%2Fnobg.png?alt=media&token=1e0c01fc-f1ec-4fe7-9680-d5964cefacef"));
-
+//                            ArrayList<Uri> imageUris = new ArrayList<Uri>();
+//                            imageUris.add(Uri.parse("https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/home_image%2Fnobg.png?alt=media&token=1e0c01fc-f1ec-4fe7-9680-d5964cefacef"));
+//
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);
                             sendIntent.putExtra("UserName", room.name);
-                            sendIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
-//                            sendIntent.setData(Uri.parse("https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/home_image%2Fnobg.png?alt=media&token=1e0c01fc-f1ec-4fe7-9680-d5964cefacef"));
                             sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
-                            sendIntent.setType("image/jpeg");
-                            Intent shareIntent = Intent.createChooser(sendIntent, "Join In!");
+                            sendIntent.setType("text/plain");
+                            Intent shareIntent = Intent.createChooser(sendIntent, null);
                             startActivity(shareIntent);
+
+//                            sendIntent.setAction(Intent.ACTION_SEND);
+//                            sendIntent.setType("image/*");
+//                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
+//                            sendIntent.setClipData(ClipData.newRawUri("", Uri.parse("https://firebasestorage.googleapis.com/v0/b/livestreaming-4f7f3.appspot.com/o/home_image%2Fnobg.png?alt=media&token=1e0c01fc-f1ec-4fe7-9680-d5964cefacef")));
+//                            startActivity(Intent.createChooser(sendIntent, null));
                         }
 
                         @Override
