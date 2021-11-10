@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="com.android.vending.BILLING" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name="com.eidland.auxilium.voice.only.AGApplication"
         android:allowBackup="true"
