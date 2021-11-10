@@ -221,7 +221,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.eidland.auxilium.voice.only.activity.VerifyOTPActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name="com.eidland.auxilium.voice.only.activity.SignUpFormActivity"
             android:screenOrientation="portrait"
@@ -233,7 +234,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.eidland.auxilium.voice.only.activity.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.eidland.auxilium.voice.only.activity.SignUpActivity"
             android:screenOrientation="portrait"></activity>

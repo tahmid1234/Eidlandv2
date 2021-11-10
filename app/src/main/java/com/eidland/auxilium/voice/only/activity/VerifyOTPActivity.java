@@ -275,6 +275,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 } else {
                     StaticConfig.user = snapshot.getValue(User.class);
                     Intent intent = new Intent(VerifyOTPActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                    Intent intent = new Intent(VerifyOTPActivity.this, LiveRoomActivity.class);
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                    intent.putExtra("User", "Participent");
