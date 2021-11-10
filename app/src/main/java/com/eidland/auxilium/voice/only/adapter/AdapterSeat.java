@@ -68,10 +68,11 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                 if (snapshot.exists()) {
                     try {
                         Viewer viewer = snapshot.getValue(Viewer.class);
+                        //assert viewer != null;
                         holder.seatName.setText(viewer.name);
                         holder.cardback.setVisibility(View.VISIBLE);
                         holder.cardback1.setVisibility(View.VISIBLE);
-                        Glide.with(context).load(viewer.getPhotoUrl()).placeholder(R.drawable.ic_mic_on).into(holder.seatImage);
+                        Glide.with(context.getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.ic_mic_on).into(holder.seatImage);
                         uidPositions.get(position).setIsfill(true);
                         uidPositions.get(position).uid = viewer.uid;
 
