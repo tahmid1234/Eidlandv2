@@ -98,6 +98,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -1115,8 +1116,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null) {
                     Viewer seat00 = snapshot.getValue(Viewer.class);
+                    assert seat00 != null;
                     String UserID = seat00.getId();
-                    if (UserID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    if (UserID.equals(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())) {
                         doSwitchToBroadcaster(false);
                         System.out.println("doSwitchToBroadcaster");
                     }
