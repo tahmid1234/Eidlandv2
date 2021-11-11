@@ -114,6 +114,7 @@ billingProcessor.purchase(this, selectedkey);
                     if (!verifycalled)
                     {
                         Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
+                        coinvalue=productId;
                         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String currentCoins = StaticConfig.user.getCoins();
                         long coininnumber = Long.parseLong(currentCoins);
