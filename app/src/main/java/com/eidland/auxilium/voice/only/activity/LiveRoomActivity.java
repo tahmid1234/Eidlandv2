@@ -23,6 +23,7 @@ import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -1226,8 +1227,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     private void CheckSeats(final String seats) {
-        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) singleUserBox.getLayoutParams();
-        params.height = 1100;
         boolean checkPermissionResult = checkSelfPermissions();
         if(checkPermissionResult) {
             checkSelfPermissions();
@@ -1236,6 +1235,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) singleUserBox.getLayoutParams();
+//                        params.height = 800;
                         if (snapshot.getValue() != null) {
 
                             try {
@@ -1260,8 +1261,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 if (audiance.getId().equals(currentUser.getUid())) {
                                     RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                                             /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                                            /*height*/ 800
-                                    );
+                                            /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
+
                                     param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                                     singleUserBox.setLayoutParams(param);
                                     singleUserBox.requestLayout();
@@ -1271,7 +1272,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     user_action.setWeightSum(1);
                                 }
                                 else if (isMod){
-                                    singleUserBox.setLayoutParams(params);
+                                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                                            /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                                            /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+
+                                    param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                    singleUserBox.setLayoutParams(param);
                                     singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
@@ -1279,7 +1285,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     profilelayout.setVisibility(View.GONE);
                                     user_action.setWeightSum(3);
                                 }else {
-                                    singleUserBox.setLayoutParams(params);
+                                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                                            /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                                            /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+
+                                    param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                    singleUserBox.setLayoutParams(param);
                                     singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
@@ -1290,6 +1301,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
                                 txtsinglename.setText(audiance.getName());
                                 singleUserBox.setVisibility(View.VISIBLE);
+//                                singleUserBox.setLayoutParams(params);
+//                                singleUserBox.requestLayout();
 
                             } catch (Exception e) {
                                 System.out.println(e);
@@ -1352,6 +1365,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     @RequiresApi(api = Build.VERSION_CODES.Q)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                         if (snapshot.getValue() != null) {
 
                             Viewer audiance = snapshot.getValue(Viewer.class);
@@ -1376,8 +1390,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             if (selectuseruid.equals(currentUser.getUid())) {
                                 RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                                         /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                                        /*height*/ 800
-                                );
+                                        /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
+
                                 param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                                 singleUserBox.setLayoutParams(param);
                                 singleUserBox.requestLayout();
@@ -1388,7 +1402,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 user_action.setWeightSum(1);
                             }
                             else if (isMod){
-                                singleUserBox.setLayoutParams(params);
+                                RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                                        /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                                        /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+
+                                param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                singleUserBox.setLayoutParams(param);
                                 singleUserBox.requestLayout();
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
@@ -1397,19 +1416,23 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 profilelayout.setVisibility(View.GONE);
                                 user_action.setWeightSum(3);
                             }else {
-                                singleUserBox.setLayoutParams(params);
+                                RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                                        /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                                        /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+
+                                param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                singleUserBox.setLayoutParams(param);
                                 singleUserBox.requestLayout();
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 user_action.setVisibility(View.VISIBLE);
-                                user_action.setWeightSum(1);
+                                user_action.setWeightSum(4);
                             }
                             CheckModerator(currentUser.getUid(), selectuseruid, seats);
                             Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).placeholder(R.drawable.appicon).error(R.drawable.appicon).into(popup_user);
                             txtsinglename.setText(audiance.getName());
                             singleUserBox.setVisibility(View.VISIBLE);
-
                         }
                     }
 
@@ -2320,7 +2343,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onViewersClick(int position, String uid, String name, String photo, String recievedCoins) {
 
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) singleUserBox.getLayoutParams();
-        params.height = 1100;
+        params.height = 800;
 
         popup_uname.setText(name);
         clickedOnlineUserUID = uid;
@@ -2329,8 +2352,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         {
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                     /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                    /*height*/ 800
-            );
+                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
+
             param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             singleUserBox.setLayoutParams(param);
             singleUserBox.requestLayout();
@@ -2341,7 +2364,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             user_action.setWeightSum(1);
         }
         else if (isMod){
-            singleUserBox.setLayoutParams(params);
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                    /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+
+            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            singleUserBox.setLayoutParams(param);
             singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
             user_action.setVisibility(View.VISIBLE);
@@ -2349,11 +2377,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             user_action.setWeightSum(3);
         }
         else {
-            singleUserBox.setLayoutParams(params);
+            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+                    /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
+                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+
+            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            singleUserBox.setLayoutParams(param);
             singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
             user_action.setVisibility(View.VISIBLE);
-            user_action.setWeightSum(3);
+            user_action.setWeightSum(4);
         }
 
         singlegift.setVisibility(View.GONE);
