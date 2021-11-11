@@ -64,7 +64,7 @@ public class ConstantApp {
         animationItemList.add(new AnimationItem("crown2", R.drawable.gift_crown_2, "gift_crown_2.json", R.drawable.gift_crown_3_svg));
         animationItemList.add(new AnimationItem("crown3", R.drawable.gift_crown_3, "gift_crown_3.json", R.drawable.gift_crown_3_svg));
         animationItemList.add(new AnimationItem("necklace2", R.drawable.gift_necklace_2, "gift_necklace_2.json", R.drawable.gift_necklace_2_svg));
-//        animationItemList.add(new AnimationItem("cookie", R.drawable.gift_cookie, "gift_cookie.json", R.drawable.gift_sweets_2_svg));
+     animationItemList.add(new AnimationItem("cookie", R.drawable.gift_cookie, "gift_cookie.json", R.drawable.gift_cookie));
         animationItemList.add(new AnimationItem("sweets2", R.drawable.gift_sweets_2, "gift_sweets_2.json", R.drawable.gift_sweets_2_svg));
         animationItemList.add(new AnimationItem("trophy", R.drawable.gift_trophy, "gift_trophy.json", R.drawable.gift_trophy_svg));
 

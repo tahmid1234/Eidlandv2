@@ -694,7 +694,7 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_alignParentBottom="true"
-            android:background="#29333E"
+            android:background="#22242D"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -927,7 +927,7 @@
             android:layout_width="match_parent"
             android:layout_height="294dp"
             android:layout_alignParentBottom="true"
-            android:background="#29333E"
+            android:background="#22242D"
             android:visibility="gone">
 
             <!--            <TextView-->
@@ -1030,7 +1030,7 @@
                             android:layout_width="150dp"
                             android:layout_height="70dp"
                             android:layout_gravity="center|left"
-                            android:background="@drawable/eidcoin_bg"
+                            android:background="@drawable/coins_bg2"
                             android:gravity="center">
 
                             <ImageView
@@ -1054,7 +1054,7 @@
                                     android:fontFamily="@font/nunitosemibold"
                                     android:text="1000"
                                     android:textAlignment="textStart"
-                                    android:textColor="#000"
+                                    android:textColor="#fff"
                                     android:textSize="15dp"
                                     android:textStyle="bold" />
 
@@ -1063,7 +1063,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/nunitosemibold"
                                     android:text="Eidland\nPoints"
-                                    android:textColor="#000"
+                                    android:textColor="#fff"
                                     android:textSize="12dp"
                                     android:textStyle="bold" />
 
