@@ -150,6 +150,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     private final static Logger log = LoggerFactory.getLogger(LiveRoomActivity.class);
     CircleImageView popup_user;
     TextView popup_uname, eidlandpointcount;
+    TextView eidlandPoint;
     private volatile boolean mAudioMuted = false;
     ImageView userImage;
     private volatile int mAudioRouting = -1; // Default
@@ -311,6 +312,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         rewarded = findViewById(R.id.sendername2);
         inputBoxLayout = findViewById(R.id.input_box_layout);
         inputButton = findViewById(R.id.input_button);
+        eidlandPoint = findViewById(R.id.eidland_point);
 //        inputWrap = findViewById(R.id.input_wrap);
 
         receivername = findViewById(R.id.receivername);
@@ -1296,6 +1298,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                         assert viewer != null;
                                         audiance.setRecievedCoins(viewer.getRecievedCoins());
                                         eidlandpointcount.setText(audiance.getRecievedCoins());
+                                        eidlandPoint.setText(audiance.getRecievedCoins());
                                     }
 
                                     @Override
@@ -1425,6 +1428,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //                                    Toast.makeText(getApplicationContext(), viewer.getId(), Toast.LENGTH_SHORT);
                                     audiance.setRecievedCoins(viewer.getRecievedCoins());
                                     eidlandpointcount.setText(audiance.getRecievedCoins());
+                                    eidlandPoint.setText(audiance.getRecievedCoins());
                                 }
 
                                 @Override
@@ -2449,6 +2453,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         eidlandpointcount.setText(recievedCoins);
+        eidlandPoint.setText(recievedCoins);
         singleUserBox.setVisibility(View.VISIBLE);
     }
 
