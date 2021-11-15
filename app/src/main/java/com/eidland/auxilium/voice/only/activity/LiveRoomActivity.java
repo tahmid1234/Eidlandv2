@@ -745,8 +745,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         });
 
-        requestListener();
-
         blocklayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -791,6 +789,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         giftsListener();
 
         gameListener();
+
+        requestListener();
 
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
@@ -1215,36 +1215,34 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         public void onClick(View view) {
                             finalDialog.dismiss();
 
-//                            finalDialog.dismiss();
-//
-//                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
-//
-//                            ArrayList<String> seatList = new ArrayList<>();
-//                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    seatList.clear();
-//                                    if(snapshot.exists()){
-//                                        for (DataSnapshot snap : snapshot.getChildren()) {
-//                                            seatList.add(snap.getKey());
-//                                        }
-//                                        for(int i=0; i<10; i++){
-//                                            if(!seatList.contains("seat"+ i)){
-//                                                CheckSeats("seat" + i);
-//                                                return;
-//                                            }
-//                                        }
-//                                        Toast.makeText(LiveRoomActivity.this, "Oops! Someone already fill the seat. Ask your moderator to remove someone and try again", Toast.LENGTH_LONG).show();
-//                                    }else{
-//                                        CheckSeats("seat0");
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
+                            FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(currentUser.getUid()).removeValue();
+
+                            ArrayList<String> seatList = new ArrayList<>();
+                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    seatList.clear();
+                                    if(snapshot.exists()){
+                                        for (DataSnapshot snap : snapshot.getChildren()) {
+                                            seatList.add(snap.getKey());
+                                        }
+                                        for(int i=0; i<10; i++){
+                                            if(!seatList.contains("seat"+ i)){
+                                                CheckSeats("seat" + i);
+                                                return;
+                                            }
+                                        }
+                                        Toast.makeText(LiveRoomActivity.this, "Oops! Someone already fill the seat. Ask your moderator to remove someone and try again", Toast.LENGTH_LONG).show();
+                                    }else{
+                                        CheckSeats("seat0");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
 
                         }
                     });
@@ -1276,6 +1274,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     private void CheckSeats(final String seats) {
+        Clickedseat = seats;
         boolean checkPermissionResult = checkSelfPermissions();
         if(checkPermissionResult) {
             checkSelfPermissions();
@@ -1318,8 +1317,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.GONE);
                                     txtsinglegiftsend.setVisibility(View.GONE);
-                                    user_action.setVisibility(View.GONE);
-                                    user_action.setWeightSum(1);
+//                                    user_action.setVisibility(View.GONE);
+//                                    user_action.setWeightSum(1);
                                 }
                                 else if (isMod){
                                     RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
@@ -1345,7 +1344,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     singlegift.setVisibility(View.VISIBLE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
                                     user_action.setVisibility(View.VISIBLE);
-                                    user_action.setWeightSum(1);
+//                                    user_action.setWeightSum(1);
                                 }
                                 CheckModerator(currentUser.getUid(), selectuseruid, seats);
                                 Glide.with(getApplicationContext()).load(audiance.getPhotoUrl()).into(popup_user);
@@ -1441,7 +1440,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             if (selectuseruid.equals(currentUser.getUid())) {
                                 RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                                         /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                                        /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
+                                        /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
 
                                 param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                                 singleUserBox.setLayoutParams(param);
@@ -1449,8 +1448,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 crystal.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
-                                user_action.setVisibility(View.GONE);
-                                user_action.setWeightSum(1);
+//                                user_action.setVisibility(View.GONE);
+//                                user_action.setWeightSum(1);
                             }
                             else if (isMod){
                                 RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
@@ -2176,6 +2175,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     dialog.dismiss();
                 } else {
                     Log.e("no permission", "Not Found");
+                    dialog.dismiss();
+                    finish();
                 }
             }
         });
@@ -2231,13 +2232,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
                     ((AGApplication) getApplication()).initWorkerThread();
                     Viewer viewer = new Viewer(FirebaseAuth.getInstance().getCurrentUser().getUid(), StaticConfig.user.getImageurl(), StaticConfig.user.getEmail(), StaticConfig.user.getName(), StaticConfig.user.getReceivedCoins(), config().mUid);
-                    FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(Clickedseat).setValue(viewer);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(Clickedseat).setValue(viewer);
+                        }
+                    }, 500);
+
                     doSwitchToBroadcaster(true);
                     AgainSeat = Clickedseat;
 
                 } else {
                     CallAlert();
-                    finish();
+//                    finish();
                 }
                 break;
             }
@@ -2246,7 +2253,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     System.out.println("Granted!");
                 } else {
-                    finish();
+                    CallAlert();
+//                    finish();
                 }
                 break;
             }
@@ -2411,7 +2419,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         {
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                     /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
+                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
 
             param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             singleUserBox.setLayoutParams(param);
@@ -2419,8 +2427,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             crystal.setVisibility(View.GONE);
             singlegift.setVisibility(View.GONE);
             txtsinglegiftsend.setVisibility(View.GONE);
-            user_action.setVisibility(View.GONE);
-            user_action.setWeightSum(1);
+//            user_action.setVisibility(View.GONE);
+//            user_action.setWeightSum(1);
         }
         else if (isMod){
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
