@@ -526,7 +526,7 @@
             <LinearLayout
                 android:id="@+id/input_box_area"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="65dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal"
                 android:layout_marginBottom="-30dp"
@@ -534,38 +534,48 @@
                 android:paddingRight="5dp"
                 android:paddingTop="5dp">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/input_wrap"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <LinearLayout
-                        android:id="@+id/comment_box_circle"
+
+                    <RelativeLayout
+                        android:id="@+id/input_box_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="-50dp"
-                        android:layout_centerInParent="true"
-                        android:orientation="horizontal"
-                        android:background="@drawable/transparentblackcircle" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
-                    <EditText
-                        android:id="@+id/comment_box"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="@font/nunitoregular"
-                        android:hint="Type here"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:lines="2"
+                        <LinearLayout
+                            android:id="@+id/comment_box_circle"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="-50dp"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal"
+                            android:background="@drawable/transparentblackcircle" />
 
-                        android:paddingStart="9dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="6dp"
-                        android:paddingBottom="8dp"
-                        android:textColor="#fff"
-                        android:textColorHint="#FFF" />
-                </RelativeLayout>
+                        <EditText
+                            android:id="@+id/comment_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/nunitoregular"
+                            android:hint="Type here"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:lines="1"
+
+                            android:paddingStart="9dp"
+                            android:paddingTop="-15dp"
+                            android:paddingEnd="6dp"
+                            android:paddingBottom="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:textColor="#fff"
+                            android:textColorHint="#FFF" />
+                    </RelativeLayout>
+
+<!--                </LinearLayout>-->
 
 
                 <ImageView
@@ -574,13 +584,22 @@
                     android:layout_height="45dp"
                     android:layout_marginStart="5dp"
                     android:onClick="onSwitchSpeakerClicked"
+                    android:visibility="gone"
                     android:background="@drawable/ic_send_message_button_white" />
+
+                <ImageView
+                    android:id="@+id/input_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:visibility="gone"
+                    android:background="@drawable/ic_baseline_textsms_24" />
 
                 <ImageView
                     android:id="@id/switch_speaker_id"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
                     android:onClick="onSwitchSpeakerClicked"
                     android:src="@drawable/btn_speaker"
@@ -590,7 +609,7 @@
                     android:id="@id/mute_local_speaker_id"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
                     android:src="@drawable/ic_mic_on"
                     android:visibility="gone" />
@@ -599,7 +618,8 @@
                     android:id="@+id/bottom_action_end_call"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:contentDescription="TODO"
                     android:onClick="onEndCallClicked"
                     android:padding="4dp"

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -131,6 +133,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     TextView Selectedspeaker;
     Boolean muteClicked = false;
     ImageView micBtn, imgbroad;
+    ImageView inputButton;
     ImageView button1;
     ImageView leaveRoom;
     ViewerAdapter viewerAdapter;
@@ -202,12 +205,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String inviteLink;
     String welcomeMsg;
     RelativeLayout sendgiftholder;
+    RelativeLayout inputBoxLayout;
     LinearLayout inputArea;
+//    LinearLayout inputWrap;
     boolean Speakerselected = false;
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
     boolean hasEnteredRoom = true, newlyjoined = true;
+    boolean onSeat = false;
 
 
     private void initKeyBoardListener() {
@@ -225,11 +231,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (lastVisibleDecorViewHeight != 0) {
                     if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
                         inputArea.setBackgroundColor(Color.rgb(238, 238, 228));
+//                        inputWrap.setMinimumWidth(0);
+                        inputBoxLayout.setVisibility(View.VISIBLE);
+                        commentBox.setVisibility(View.VISIBLE);
                         commentBox.setHintTextColor(Color.LTGRAY);
                         commentBox.setTextColor(Color.BLACK);
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
+                        sencmnt.setVisibility(View.VISIBLE);
                         sencmnt.setImageResource(R.drawable.ic_send_message_button);
                         roomGift.setVisibility(View.GONE);
+                        bottom_action_end_call.setVisibility(View.GONE);
+                        micBtn.setVisibility(View.GONE);
+                        inputButton.setVisibility(View.GONE);
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
                         inputArea.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setBackgroundColor(Color.TRANSPARENT);
@@ -237,7 +250,18 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         commentBox.setTextColor(Color.WHITE);
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentblackcircle));
                         sencmnt.setImageResource(R.drawable.ic_send_message_button_white);
+                        sencmnt.setVisibility(View.GONE);
                         roomGift.setVisibility(View.VISIBLE);
+                        if(onSeat){
+                            micBtn.setVisibility(View.VISIBLE);
+                            bottom_action_end_call.setVisibility(View.VISIBLE);
+                            inputButton.setVisibility(View.VISIBLE);
+                            commentBox.setVisibility(View.GONE);
+                            inputBoxLayout.setVisibility(View.GONE);
+                        }else {
+                            inputBoxLayout.setVisibility(View.VISIBLE);
+                            commentBox.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
                 lastVisibleDecorViewHeight = visibleDecorViewHeight;
@@ -285,6 +309,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);
         rewarded = findViewById(R.id.sendername2);
+        inputBoxLayout = findViewById(R.id.input_box_layout);
+        inputButton = findViewById(R.id.input_button);
+//        inputWrap = findViewById(R.id.input_wrap);
 
         receivername = findViewById(R.id.receivername);
         popup_uname = findViewById(R.id.txtnamepopup);
@@ -472,6 +499,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             }
         });
 
+        inputButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputBoxLayout.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.VISIBLE);
+                commentBox.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(commentBox, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
         minimizedCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -616,6 +654,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         }
         CheckModeratorGame(currentUser.getUid());
 
+//        View viewForKey = this.getCurrentFocus();
 
         sencmnt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -623,6 +662,14 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 if (!TextUtils.isEmpty(commentBox.getText().toString())) {
                     Comment comment1 = new Comment(StaticConfig.user.getName(), commentBox.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", StaticConfig.user.getImageurl());
                     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment1);
+
+                    View viewForKey = getCurrentFocus();
+                    if (viewForKey != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }else {
+                        System.out.println("view null");
+                    }
                     commentBox.setText("");
                 }
             }
@@ -1880,6 +1927,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         button2.setTag(null);
         button2.setVisibility(View.GONE);
         bottom_action_end_call.setVisibility(View.GONE);
+        onSeat = false;
+        inputButton.setVisibility(View.GONE);
+        inputBoxLayout.setVisibility(View.VISIBLE);
+        commentBox.setVisibility(View.VISIBLE);
         button2.clearColorFilter();
     }
 
@@ -1923,6 +1974,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         button2.setVisibility(View.VISIBLE);
         bottom_action_end_call.setVisibility(View.VISIBLE);
+        onSeat = true;
+        commentBox.setVisibility(View.GONE);
+        inputBoxLayout.setVisibility(View.GONE);
+        inputButton.setVisibility(View.VISIBLE);
     }
 
     public void onVoiceMuteClicked(View view) {
