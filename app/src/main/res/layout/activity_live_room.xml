@@ -968,7 +968,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="#22242D"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <!--            <TextView-->
             <!--                android:id="@+id/removeUser"-->

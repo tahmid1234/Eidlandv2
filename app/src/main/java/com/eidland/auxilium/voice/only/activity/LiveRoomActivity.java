@@ -742,6 +742,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         } catch (Exception e) {
                         }
                         FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).setValue(modName + " invited you to take the seat!");
+                        singleUserBox.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Request has been sent successfully", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Not Applicable with your current user privilege!", Toast.LENGTH_SHORT).show();
