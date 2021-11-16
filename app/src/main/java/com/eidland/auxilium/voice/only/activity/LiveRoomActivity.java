@@ -237,7 +237,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         inputBoxLayout.setVisibility(View.VISIBLE);
                         commentBox.setVisibility(View.VISIBLE);
                         commentBox.setHintTextColor(Color.LTGRAY);
+                        commentBox.setTextSize(14);
                         commentBox.setTextColor(Color.BLACK);
+
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
                         sencmnt.setVisibility(View.VISIBLE);
                         sencmnt.setImageResource(R.drawable.ic_send_message_button);
@@ -250,6 +252,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         commentBox.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setHintTextColor(Color.WHITE);
                         commentBox.setTextColor(Color.WHITE);
+
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentblackcircle));
                         sencmnt.setImageResource(R.drawable.ic_send_message_button_white);
                         sencmnt.setVisibility(View.GONE);
@@ -574,7 +577,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);
                             sendIntent.putExtra("UserName", room.name);
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're havin g a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
                             sendIntent.setType("text/plain");
                             Intent shareIntent = Intent.createChooser(sendIntent, null);
                             startActivity(shareIntent);
@@ -623,8 +626,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         imgUrl = getIntent().getStringExtra("profile");
 
         Glide.with(this).load(imgUrl).error(R.drawable.userprofile).placeholder(R.drawable.userprofile).into(imgbroad);
-        broadName.setText(nameOfRoom + " \uD83E\uDD4A\uD83C\uDFC6\uD83C\uDFC5");
-
+        //broadName.setText(nameOfRoom + " \uD83E\uDD4A\uD83C\uDFC6\uD83C\uDFC5");
+        broadName.setText(nameOfRoom);
         if (type.equals("Host")) {
             roomName = getIntent().getStringExtra(ConstantApp.ACTION_KEY_ROOM_NAME);
             hostuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -770,6 +773,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 try {
                     User user = snapshot.getValue(User.class);
                     StaticConfig.user = user;
+                    eidlandPoint.setText(getFormattedText(user.getReceivedCoins()));
                     userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
                 } catch (Exception e) {
 
