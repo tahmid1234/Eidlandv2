@@ -577,7 +577,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Intent sendIntent = new Intent("com.eidland.auxilium.voice.only.activity.LiveRoomActivity");
                             sendIntent.setAction(Intent.ACTION_SEND);
                             sendIntent.putExtra("UserName", room.name);
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're havin g a pretty interesting discussion on EidLand! Use this link to join:\n" + room.getInviteLink());
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, we're having a pretty interesting discussion on Eidland! Use this link to join:\n" + room.getInviteLink());
                             sendIntent.setType("text/plain");
                             Intent shareIntent = Intent.createChooser(sendIntent, null);
                             startActivity(shareIntent);
