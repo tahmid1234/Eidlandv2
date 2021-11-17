@@ -622,7 +622,7 @@
                     android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
                     android:onClick="onSwitchSpeakerClicked"
-                    android:src="@drawable/btn_speaker"
+                    android:background="@drawable/btn_speaker"
                     android:visibility="gone" />
 
                 <ImageView
@@ -631,7 +631,7 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
-                    android:src="@drawable/ic_mic_on"
+                    android:background="@drawable/ic_mic_on"
                     android:visibility="gone" />
 
                 <ImageView
@@ -642,8 +642,8 @@
                     android:layout_marginRight="15dp"
                     android:contentDescription="TODO"
                     android:onClick="onEndCallClicked"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_leave_mic"
+
+                    android:background="@drawable/ic_leave_mic"
                     android:visibility="gone" />
 
                 <ImageView
