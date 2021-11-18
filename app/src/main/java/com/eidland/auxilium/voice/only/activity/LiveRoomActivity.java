@@ -509,11 +509,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         inputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inputBoxLayout.setVisibility(View.VISIBLE);
+                inputBoxLayout.setVisibility(View.INVISIBLE);
                 commentBox.setVisibility(View.VISIBLE);
                 commentBox.requestFocus();
+
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(commentBox, InputMethodManager.SHOW_IMPLICIT);
+
             }
         });
 
