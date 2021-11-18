@@ -637,8 +637,8 @@
 
                 <ImageView
                     android:id="@+id/bottom_action_end_call"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:contentDescription="TODO"
