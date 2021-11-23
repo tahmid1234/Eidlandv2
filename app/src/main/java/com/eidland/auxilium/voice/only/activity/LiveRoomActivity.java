@@ -1612,6 +1612,44 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     public void giftAnimation(String id, Gift gift, String receiver) {
 
+//        DatabaseReference animRef = FirebaseDatabase.getInstance().getReference().child("animation");
+//        for (AnimationItem animationItem :
+//                ConstantApp.animationItems()) {
+//            if (animationItem.name.equals(id)) {
+//                animRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if (snapshot.getValue().equals("false")) {
+//                            animRef.setValue("true");
+//                            backgrundGIF.setAnimation(animationItem.gifIconId);
+//                            backgrundGIF.setProgress(0);
+//                            backgrundGIF.playAnimation();
+//                            Handler finishGIF = new Handler();
+//                            finishGIF.postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    animRef.setValue("false");
+//                                }
+//                            }, 9000);
+//                            Toast.makeText(getApplicationContext(), animationItem.gifIconId, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//                simpleGift.setImageResource(animationItem.giftIconId);
+//                backgrundGIF.setAnimation(animationItem.gifIconId);
+//                backgrundGIF.setProgress(0);
+//                backgrundGIF.playAnimation();
+//                rewarded.setVisibility(View.VISIBLE);
+//                backgroundGIFLayout.setVisibility(View.VISIBLE);
+//                backgrundGIF.setVisibility(View.VISIBLE);
+//            }
+//        }
+
         for (AnimationItem animationItem :
                 ConstantApp.animationItems()) {
             if (animationItem.name.equals(id)) {
@@ -1619,7 +1657,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 backgrundGIF.setAnimation(animationItem.gifIconId);
                 backgrundGIF.setProgress(0);
                 backgrundGIF.playAnimation();
-//                backgrundGIF.animate();
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
             }

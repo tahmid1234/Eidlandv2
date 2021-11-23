@@ -137,7 +137,7 @@ billingProcessor.purchase(this, selectedkey);
                             }
                         });
                         selectedkey=null;
-                        verifypurchase();
+//                        verifypurchase();
                     }
 
                 }
@@ -185,7 +185,7 @@ billingProcessor.purchase(this, selectedkey);
             }
         });
         selectedkey=null;
-        verifypurchase();
+//        verifypurchase();
     }
 
     @Override
@@ -213,23 +213,23 @@ billingProcessor.purchase(this, selectedkey);
 
     ProgressDialog progressDialog;
 
-    public void verifypurchase() {
-        viewDialog.showDialog("Please wait for a while");
-        FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(StaticConfig.user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-              //  Toast.makeText(WalletActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
-                txtcurrent.setText(coincomma);
-                Toast.makeText(WalletActivity.this, "Purchase of " +coinvalue + " coins confirmed. Thank you!", Toast.LENGTH_SHORT).show();
-                // lrnmethod.setVisibility(View.GONE);
-                viewDialog.hideDialog();
-
-
-            }
-        });
-        verifycalled=true;
-    }
+//    public void verifypurchase() {
+//        viewDialog.showDialog("Please wait for a while");
+//        FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(StaticConfig.user).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//              //  Toast.makeText(WalletActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+//                coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
+//                txtcurrent.setText(coincomma);
+//                Toast.makeText(WalletActivity.this, "Purchase of " +coinvalue + " coins confirmed. Thank you!", Toast.LENGTH_SHORT).show();
+//                // lrnmethod.setVisibility(View.GONE);
+//                viewDialog.hideDialog();
+//
+//
+//            }
+//        });
+//        verifycalled=true;
+//    }
 
 
     String selectedkey = null;
@@ -242,20 +242,20 @@ billingProcessor.purchase(this, selectedkey);
 
             case R.id.buy50:
                 selectedkey = "50";
-                purchasecoins();
+//                purchasecoins();
                 break;
             case R.id.buy350:
                 selectedkey = "350";
-               purchasecoins();
+//               purchasecoins();
                 break;
             case R.id.buy1000n:
                 selectedkey = "1000";
-               purchasecoins();
+//               purchasecoins();
                 break;
 
 
         }
-       //calldialog();
+       calldialog();
 
     }
 
