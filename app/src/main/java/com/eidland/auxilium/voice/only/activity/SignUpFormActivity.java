@@ -99,23 +99,23 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
         viewDialog = new ViewDialog(this);
         // get ids from layout
 
-        if (mAuth.getCurrentUser().getEmail() != null) {
-            if (mAuth.getCurrentUser().getEmail().length() > 0) {
-                email.setText(mAuth.getCurrentUser().getEmail().toString());
-                email.setInputType(InputType.TYPE_NULL);
-                email.setCompoundDrawables(null, null, null, null);
-            }
-        }
+//        if (mAuth.getCurrentUser().getEmail() != null) {
+//            if (mAuth.getCurrentUser().getEmail().length() > 0) {
+//                email.setText(mAuth.getCurrentUser().getEmail().toString());
+//                email.setInputType(InputType.TYPE_NULL);
+//                email.setCompoundDrawables(null, null, null, null);
+//            }
+//        }
 
         if (intent.hasExtra("gName")) {
             gNaame = getIntent().getStringExtra("gName");
             gEmaail = getIntent().getStringExtra("gEmail");
             String gid = getIntent().getStringExtra("gImg");
             username.setText(gNaame);
-            email.setText(gEmaail);
-            email.setEnabled(false);
-            email.setTextColor(Color.GRAY);
-            email.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//            email.setText(gEmaail);
+//            email.setEnabled(false);
+//            email.setTextColor(Color.GRAY);
+//            email.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
 
@@ -123,8 +123,9 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
             @Override
             public void onClick(View v) {
                 _username = username.getText().toString().trim();
-                _email = email.getText().toString().trim();
-                if (!validateUserName() | !validateimage() | !validateEmail()) {
+//                _email = email.getText().toString().trim();
+//                if (!validateUserName() | !validateimage() | !validateEmail()) {
+                if (!validateUserName() | !validateimage()) {
                     return;
                 } else {
                     viewDialog.showDialog();
@@ -171,7 +172,7 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
 
     private void initialViews() {
         username = findViewById(R.id.username);
-        email = findViewById(R.id.email);
+//        email = findViewById(R.id.email);
 
         profileimageView = findViewById(R.id.imageViewprofile);
         singupactive = findViewById(R.id.singupactive);
@@ -184,16 +185,16 @@ public class SignUpFormActivity<mStorage> extends Activity implements AdapterAva
     }
 
     // validate functions
-    private boolean validateEmail() {
-
-        if (_email.isEmpty()) {
-            email.setError("Field can not be empty");
-            return false;
-        } else {
-            Remove_Error(email);
-            return true;
-        }
-    }
+//    private boolean validateEmail() {
+//
+//        if (_email.isEmpty()) {
+//            email.setError("Field can not be empty");
+//            return false;
+//        } else {
+//            Remove_Error(email);
+//            return true;
+//        }
+//    }
 
     private boolean validateUserName() {
         if (_username.isEmpty()) {

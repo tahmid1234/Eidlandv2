@@ -128,25 +128,25 @@
                     android:textColorHint="@color/lightgray"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:paddingEnd="5dp"
-                    android:layout_width="260dp"
-                    android:layout_height="41dp"
-                    android:imeOptions="actionDone"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_background"
-                    android:drawableEnd="@drawable/ic_fi_rr_pencil_1"
-                    android:fontFamily="@font/nunitoregular"
-                    android:hint="Your Email Address"
-                    android:gravity="center|start"
-                    android:paddingStart="10dp"
-                    android:textColor="@color/lightgray"
-                    android:textColorHint="@color/lightgray"
-                    android:textSize="18sp" />
+<!--                <EditText-->
+<!--                    android:id="@+id/email"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:layout_width="260dp"-->
+<!--                    android:layout_height="41dp"-->
+<!--                    android:imeOptions="actionDone"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:background="@drawable/ic_background"-->
+<!--                    android:drawableEnd="@drawable/ic_fi_rr_pencil_1"-->
+<!--                    android:fontFamily="@font/nunitoregular"-->
+<!--                    android:hint="Your Email Address"-->
+<!--                    android:gravity="center|start"-->
+<!--                    android:paddingStart="10dp"-->
+<!--                    android:textColor="@color/lightgray"-->
+<!--                    android:textColorHint="@color/lightgray"-->
+<!--                    android:textSize="18sp" />-->
 
 
                 <RelativeLayout

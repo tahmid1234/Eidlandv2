@@ -184,8 +184,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     RelativeLayout animatedLayout;
-    RelativeLayout backgroundGIFLayout;
-    LottieAnimationView backgrundGIF;
+    RelativeLayout backgroundGIFLayout, eidlandpointGIFLayout;
+    LottieAnimationView backgrundGIF, eidlandpointGIF;
     GifImageView simpleGift;
     boolean flag;
     ArrayList<Gift> giftList, leaderGiftList;
@@ -326,6 +326,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         animatedLayout = findViewById(R.id.animatedlayout);
         backgrundGIF = findViewById(R.id.backgrundGIF);
         backgroundGIFLayout = findViewById(R.id.backgroundGIFLayout);
+        eidlandpointGIF = findViewById(R.id.eidlandpointGIF);
+        eidlandpointGIFLayout = findViewById(R.id.eidlandpointGIFLayout);
         giftList = new ArrayList<>();
         leaderGiftList = new ArrayList<>();
         singleUserBox = findViewById(R.id.single_user_box);
@@ -1593,6 +1595,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //                            backgrundGIF.setProgress(0);
 //                            backgrundGIF.playAnimation();
                             backgroundGIFLayout.setVisibility(View.GONE);
+                            eidlandpointGIFLayout.setVisibility(View.GONE);
                             sendername.setText("Hey " + StaticConfig.user.getName() + "!");
                             receivername.setText("Welcome to " + nameOfRoom);
                             hasEnteredRoom = false;
@@ -1657,8 +1660,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 backgrundGIF.setAnimation(animationItem.gifIconId);
                 backgrundGIF.setProgress(0);
                 backgrundGIF.playAnimation();
+                eidlandpointGIF.setAnimation("eidlandpoint.json");
+                eidlandpointGIF.setProgress(0);
+                eidlandpointGIF.playAnimation();
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
+                eidlandpointGIFLayout.setVisibility(View.VISIBLE);
             }
         }
         sendername.setText(gift.getSenderName());
@@ -1684,6 +1691,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 animatedLayout.setAnimation(animation2);
                 animatedLayout.setVisibility(View.INVISIBLE);
                 backgroundGIFLayout.setVisibility(View.GONE);
+                eidlandpointGIFLayout.setVisibility(View.GONE);
                 try {
                     giftList.remove(0);
                 } catch (Exception e) {

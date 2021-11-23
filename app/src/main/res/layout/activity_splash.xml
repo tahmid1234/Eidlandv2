@@ -29,22 +29,13 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/pacifico"
-            android:layout_gravity="center"
+            android:text="Eidland "
             android:textColor="@color/white"
-            android:textSize="58sp"
-            android:text="Eidland " />
+            android:textSize="58sp" />
 
 
-        <TextView
-            style="@style/go_far_with"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-15dp"
-            android:fontFamily="@font/nunitosemibold"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Go far with your voice " />
     </LinearLayout>
 </LinearLayout>

@@ -151,9 +151,10 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     tools:ignore="MissingClass">
+
                     <com.shobhitpuri.custombuttons.GoogleSignInButton
-                        android:layout_width="265dp"
                         android:id="@+id/sign_in_button"
+                        android:layout_width="265dp"
                         android:layout_height="wrap_content"
                         android:text="@string/google_sign_in"
                         app:isDarkTheme="true" />
