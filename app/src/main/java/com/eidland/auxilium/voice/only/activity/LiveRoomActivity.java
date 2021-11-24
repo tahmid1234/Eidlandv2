@@ -1569,7 +1569,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         int index = giftList.size() - 1;
                         giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
-                        LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
+                   /*     LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
 
                         RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
                         topSpeakerRecycler.setHasFixedSize(true);
@@ -1586,7 +1586,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         topContributorRecycler.setLayoutManager(contributorLayoutManager);
                         adapterLeader.notifyDataSetChanged();
                         topContributorRecycler.setAdapter(adapterLeaderContributor);
-
+*/
                         if (hasEnteredRoom) {
                             rewarded.setVisibility(View.GONE);
                             giftList.clear();
