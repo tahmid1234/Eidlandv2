@@ -124,6 +124,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     LinearLayout seatLayout;
     TextView onlineUserCount, broadName, sendGiftBtn, userAvailableCoin;
     ImageView sencmnt;
+    LinearLayout spinhold;
     LinearLayout commentBoxCircle;
     ProgressDialog progressDialog;
     String selectedGiftName = "flowers";
@@ -320,6 +321,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         profilelayout = findViewById(R.id.profilelayout);
         txtsinglename = findViewById(R.id.txtnamepopup);
         eidlandpointcount = findViewById(R.id.eidland_point_count);
+        spinhold=findViewById(R.id.spinnerhold);
         singleUserClose = findViewById(R.id.close);
         simpleGift = findViewById(R.id.imggif);
         sendername = findViewById(R.id.sendername);
@@ -420,6 +422,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 // selectuseruid = "cJupIaBOKXN8QqWzAQMQYFwHzVC3";
                 txtsinglename.setText(nameOfRoom);
                 spinner.setVisibility(View.VISIBLE);
+                spinhold.setVisibility(View.VISIBLE);
                 Selectedspeaker.setVisibility(View.VISIBLE);
                 crystal.setVisibility(View.VISIBLE);
 //                gameButton.setVisibility(View.GONE);
@@ -721,7 +724,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 singleUserBox.setVisibility(View.GONE);
                 Selectedspeaker.setVisibility(View.GONE);
                 crystal.setVisibility(View.VISIBLE);
+                spinhold.setVisibility(View.GONE);
                 spinner.setVisibility(View.GONE);
+
                 gamesLayout.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
             }
