@@ -3,4 +3,14 @@
     <string name="phn_no_hint">1673090995</string>
     <string name="phn_num_input_msg">Please enter your mobile number to begin</string>
     <string name="next">Next</string>
+    <string-array name="seatimages">
+        <item>@drawable/ic_turquoise</item>
+        <item>@drawable/ic_red</item>
+        <item>@drawable/ic_skyblue</item>
+        <item>@drawable/ic_yellow</item>
+        <item>@drawable/ic_orange</item>
+        <item>@drawable/ic_purple</item>
+        <item>@drawable/ic_blue</item>
+        <item>@drawable/ic_green</item>
+    </string-array>
 </resources>

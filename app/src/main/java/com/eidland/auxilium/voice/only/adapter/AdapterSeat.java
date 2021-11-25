@@ -2,6 +2,7 @@ package com.eidland.auxilium.voice.only.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,21 +31,31 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
     private Context context;
     private OnSeatClickListener onSeatClickListener;
     private String roomName;
-    int[] seats;
+
+    Integer[] seats = {
+            R.drawable.ic_turquoise,
+            R.drawable.ic_red,
+            R.drawable.ic_skyblue,
+            R.drawable.ic_yellow,
+            R.drawable.ic_orange,
+            R.drawable.ic_purple,
+            R.drawable.ic_blue,
+            R.drawable.ic_green
+    };
     ArrayList<UidPositions> uidPositions;
 
     public AdapterSeat(Context context, OnSeatClickListener onSeatClickListener, String roomName) {
         this.context = context;
         this.onSeatClickListener = onSeatClickListener;
         this.roomName = roomName;
-        uidPositions = new ArrayList<>(10);
+        uidPositions = new ArrayList<>(8);
         initVacancies();
-        seats = context.getResources().getIntArray(R.array.seats);
+       // seats = context.getResources().getIntArray(R.array.seats);
     }
 
     private void initVacancies() {
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
 
             uidPositions.add(new UidPositions(0, i));
         }
@@ -79,7 +90,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                     } catch (Exception e) {
                         System.out.println(e);
                         holder.seatName.setText((position + 1));
-                        holder.seatImage.setImageResource(R.drawable.ic_mic);
+                        holder.seatImage.setImageResource(R.drawable.ic_micn);
                         uidPositions.get(position).setIsfill(false);
                         uidPositions.get(position).uid = 0;
 
@@ -89,7 +100,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                 } else {
                     holder.seatName.setText(String.format("%d", position + 1));
                     holder.seatImage.setImageResource(R.drawable.ic_mic);
-                    holder.seatImage.setBackgroundColor(seats[position]);
+                    holder.seatImage.setBackgroundResource(seats[position]);
                     uidPositions.get(position).setIsfill(false);
                     uidPositions.get(position).uid = 0;
 
@@ -107,7 +118,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 8;
     }
 
     public void indicateSpeaking(List<Integer> uidList) {
@@ -123,7 +134,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
     }
 
     public void stopIndicateSpeaking() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             uidPositions.get(i).stopAnimation();
         }
     }

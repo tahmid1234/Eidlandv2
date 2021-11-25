@@ -828,7 +828,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         RecyclerView seatRecycler = findViewById(R.id.seat_recycler);
         seatRecycler.setHasFixedSize(true);
-        GridLayoutManager seatLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 5, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager seatLayoutManager = new GridLayoutManager(LiveRoomActivity.this, 4, GridLayoutManager.VERTICAL, false);
         adapterSeat = new AdapterSeat(LiveRoomActivity.this, this, roomName);
         seatRecycler.setLayoutManager(seatLayoutManager);
         adapterSeat.notifyDataSetChanged();
