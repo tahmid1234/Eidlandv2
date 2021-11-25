@@ -60,8 +60,8 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Glide.with(this.context).load(countryInfoArrayList.get(position).getUserphoto()).into(placesViewHolder.userImg);
             if(countryInfoArrayList.get(position).isHasimg()) {
                 placesViewHolder.gift.setVisibility(View.VISIBLE);
-                placesViewHolder.txtcount.setVisibility(View.VISIBLE);
-                placesViewHolder.txtcount.setText("");
+                //placesViewHolder.txtcount.setVisibility(View.VISIBLE);
+                //placesViewHolder.txtcount.setText("");
 
                 for (AnimationItem animationItem :
                         ConstantApp.animationItems()) {
@@ -73,7 +73,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
             else {
 
                 placesViewHolder.gift.setVisibility(View.GONE);
-                placesViewHolder.txtcount.setVisibility(View.GONE);
+               // placesViewHolder.txtcount.setVisibility(View.GONE);
             }
 //            placesViewHolder.gift.setVisibility(View.GONE);
 //            placesViewHolder.txtcount.setVisibility(View.GONE);
@@ -107,7 +107,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
             view = itemView;
             itemClickListener1 = listener1;
 
-            txtcount = view.findViewById(R.id.txtcount);
+            //txtcount = view.findViewById(R.id.txtcount);
             gift = view.findViewById(R.id.imggift);
             userImg = view.findViewById(R.id.userimgcomment);
             txtcmnt = view.findViewById(R.id.cmnt);

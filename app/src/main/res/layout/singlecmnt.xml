@@ -40,6 +40,9 @@
             android:layout_width="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
+
+
+
             android:background="@drawable/commentback"
             android:layout_height="wrap_content">
 
@@ -50,34 +53,28 @@
                 android:fontFamily="@font/nunitoregular"
                 android:text="2010"
                 android:gravity="left"
-                android:maxLines="10"
+                android:maxLines="4"
                 android:lineHeight="20dp"
                 android:textSize="12sp"
+
                 android:textColor="#fff"
                 android:id="@+id/cmnt" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+               android:orientation="horizontal"
+                android:layout_gravity="center|top"
+                >
 
                 <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:scaleType="fitCenter"
-                    android:visibility="gone"
-
+                    android:visibility="visible"
                     android:id="@+id/imggift" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="x 1"
-                    android:id="@+id/txtcount"
-                    android:visibility="gone"
-                    android:textStyle="bold"
-                    android:textSize="50dp"
-                    android:textColor="#fff" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

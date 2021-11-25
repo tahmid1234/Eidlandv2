@@ -148,6 +148,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     Adapterspinner adapterspinner;
     String selectuseruid;
     EditText commentBox;
+    ImageView speakerbtn;
     String Clickedseat = null;
     private final static Logger log = LoggerFactory.getLogger(LiveRoomActivity.class);
     CircleImageView popup_user;
@@ -243,20 +244,26 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
                         sencmnt.setVisibility(View.VISIBLE);
+
                         sencmnt.setImageResource(R.drawable.ic_send_message_button);
                         roomGift.setVisibility(View.GONE);
+                        speakerbtn.setVisibility(View.GONE);
+                        inviteButton.setVisibility(View.GONE);
                         bottom_action_end_call.setVisibility(View.GONE);
                         micBtn.setVisibility(View.GONE);
                         inputButton.setVisibility(View.GONE);
                     } else if (lastVisibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX < visibleDecorViewHeight) {
-                        inputArea.setBackgroundColor(Color.TRANSPARENT);
-                        commentBox.setBackgroundColor(Color.TRANSPARENT);
+                       inputArea.setBackgroundColor(Color.TRANSPARENT);
+                      /*   commentBox.setBackgroundColor(Color.TRANSPARENT);
                         commentBox.setHintTextColor(Color.WHITE);
-                        commentBox.setTextColor(Color.WHITE);
-
+                        commentBox.setTextColor(Color.WHITE);*/
+                        inputButton.setVisibility(View.VISIBLE);
+                        commentBox.setVisibility(View.GONE);
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentblackcircle));
                         sencmnt.setImageResource(R.drawable.ic_send_message_button_white);
                         sencmnt.setVisibility(View.GONE);
+                        speakerbtn.setVisibility(View.VISIBLE);
+                        inviteButton.setVisibility(View.VISIBLE);
                         roomGift.setVisibility(View.VISIBLE);
                         if(onSeat){
                             micBtn.setVisibility(View.VISIBLE);
@@ -266,7 +273,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             inputBoxLayout.setVisibility(View.GONE);
                         }else {
                             inputBoxLayout.setVisibility(View.VISIBLE);
-                            commentBox.setVisibility(View.VISIBLE);
+                            commentBox.setVisibility(View.GONE);
+                            inputButton.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -291,6 +299,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         progressDialog.setMessage("Your Room is being ready..");
         progressDialog.setCancelable(false);
         seatLayout = findViewById(R.id.seat_layout);
+        speakerbtn=findViewById(R.id.speakerbtn);
         Selectedspeaker = findViewById(R.id.selecteduser);
         inputArea = findViewById(R.id.input_box_area);
         kantesi = findViewById(R.id.ajaira);
@@ -397,7 +406,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onClick(View view) {
                 crystal.setVisibility(View.GONE);
 //                gameButton.setVisibility(View.VISIBLE);
-                commentBox.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.GONE);
             }
         });
         if (!Speakerselected) Selectedspeaker.setText("Select Speaker");
@@ -501,7 +510,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 displayCardLayout.setVisibility(View.GONE);
                 minimizedCard.setVisibility(View.VISIBLE);
                 seatLayout.setVisibility(View.VISIBLE);
-                commentBox.setVisibility(View.VISIBLE);
+                commentBox.setVisibility(View.GONE);
                 roomGift.setVisibility(View.VISIBLE);
 //                gameButton.setVisibility(View.VISIBLE);
 
@@ -682,6 +691,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         System.out.println("view null");
                     }
                     commentBox.setText("");
+                    inputButton.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -868,7 +878,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             if (curnt > selectedGiftAmount) {
                                 crystal.setVisibility(View.GONE);
 //                                gameButton.setVisibility(View.VISIBLE);
-                                commentBox.setVisibility(View.VISIBLE);
+                                commentBox.setVisibility(View.GONE);
                                 FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
                                     @NonNull
                                     @Override
@@ -2025,9 +2035,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         button2.setVisibility(View.GONE);
         bottom_action_end_call.setVisibility(View.GONE);
         onSeat = false;
-        inputButton.setVisibility(View.GONE);
+      //  inputButton.setVisibility(View.GONE);
         inputBoxLayout.setVisibility(View.VISIBLE);
-        commentBox.setVisibility(View.VISIBLE);
+        commentBox.setVisibility(View.GONE);
         button2.clearColorFilter();
     }
 
@@ -2073,7 +2083,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         bottom_action_end_call.setVisibility(View.VISIBLE);
         onSeat = true;
         commentBox.setVisibility(View.GONE);
-        inputBoxLayout.setVisibility(View.GONE);
+        inputBoxLayout.setVisibility(View.VISIBLE);
         inputButton.setVisibility(View.VISIBLE);
     }
 
