@@ -302,7 +302,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         speakerbtn=findViewById(R.id.speakerbtn);
         Selectedspeaker = findViewById(R.id.selecteduser);
         inputArea = findViewById(R.id.input_box_area);
-        kantesi = findViewById(R.id.ajaira);
+      //  kantesi = findViewById(R.id.ajaira);
         leaveRoom = findViewById(R.id._leave);
         //   userImage = findViewById(R.id._userchatroom);
         micBtn = (ImageView) findViewById(R.id.mute_local_speaker_id);
@@ -407,6 +407,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 crystal.setVisibility(View.GONE);
 //                gameButton.setVisibility(View.VISIBLE);
                 commentBox.setVisibility(View.GONE);
+                inputButton.setVisibility(View.VISIBLE);
             }
         });
         if (!Speakerselected) Selectedspeaker.setText("Select Speaker");
@@ -423,6 +424,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 crystal.setVisibility(View.VISIBLE);
 //                gameButton.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
+                inputButton.setVisibility(View.VISIBLE);
             }
         });
         singleUserClose.setOnClickListener(new View.OnClickListener() {

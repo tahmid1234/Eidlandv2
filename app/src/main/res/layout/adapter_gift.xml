@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gift_layout"
-    android:layout_width="100dp"
-    android:layout_height="90dp"
+    android:layout_width="70dp"
+    android:layout_height="80dp"
     android:gravity="center"
+    android:layout_marginLeft="13dp"
+    android:layout_marginBottom="13dp"
     android:orientation="vertical"
-    android:background="@drawable/rectangle"
+    android:background="@drawable/giftback"
     android:layout_gravity="left">
 
     <RelativeLayout
@@ -21,24 +23,28 @@
         android:gravity="left">
 
     </RelativeLayout>
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:id="@+id/giftholder"
+    android:gravity=""
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/gift_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
         android:contentDescription="TODO"
         android:scaleType="centerCrop" />
+</LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gift_identifier_holder"
-        android:layout_below="@id/gift_icon"
+        android:layout_below="@id/giftholder"
         android:layout_marginTop="5dp"
         android:background="@drawable/gifttag"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="center">
 
         <TextView
@@ -55,4 +61,4 @@
     </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -233,6 +233,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="left">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -639,17 +640,18 @@
         <LinearLayout
             android:id="@+id/giftslayout"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="400dp"
             android:layout_alignParentBottom="true"
             android:background="#22242D"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="12dp"
+                android:layout_marginTop="10dp"
                 android:gravity="right">
 
                 <ImageView
@@ -671,7 +673,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:fontFamily="@font/nunitosemibold"
+                        android:fontFamily="@font/nunitoextrabold"
                         android:gravity="left"
                         android:layout_marginEnd="8dp"
                         android:text="Balance:"
@@ -686,11 +688,11 @@
 
                         android:drawableStart="@drawable/ic_fi_rr_coin_5"
                         android:drawablePadding="10dp"
-                        android:fontFamily="@font/nunitosemibold"
+                        android:fontFamily="@font/nunitoextrabold"
                         android:gravity="left"
                         android:text="00"
                         android:textColor="#fff"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="6dp"
                         android:textSize="19sp" />
 
                     <!--                <TextView-->
@@ -764,8 +766,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -775,19 +777,26 @@
                     android:layout_gravity="center"
                     android:layout_weight="1" />
             </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:weightSum="2"
+    android:layout_height="match_parent">
+
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="3"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="0dp">
+                android:layout_width="180dp"
+                android:background="@drawable/spinner_bg"
+                android:layout_height="40dp"
+             android:id="@+id/spinnerhold"
+                android:layout_marginBottom="10dp">
 
 
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1.1"
-                    android:layout_marginStart="20dp"
+                    android:layout_width="match_parent"
+
                     android:layout_height="match_parent"
                     android:gravity="center">
 
@@ -795,20 +804,19 @@
                         android:id="@+id/spinner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="10dp"
-                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:dropDownVerticalOffset="-30dp"
+
                         style="@style/spinner_style"
-                        android:popupBackground="#2F323F"
+                        android:popupBackground="#29333E"
                         android:visibility="visible" />
 
                     <TextView
                         android:id="@+id/selecteduser"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="10dp"
+
                         android:fontFamily="@font/nunitoregular"
-                        android:gravity="left|center"
+                        android:gravity="center"
                         android:text="Select Speaker"
                         android:textColor="@color/white"
                         android:textSize="12sp">
@@ -816,27 +824,19 @@
                     </TextView>
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:id="@+id/ajaira"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:layout_weight="1.2"
-                    android:text="Select User :"
-                    android:layout_margin="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="14sp"
-                    android:visibility="invisible"
-                    android:layout_height="match_parent">
 
-                </TextView>
 
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="180dp"
+
+                android:layout_height="40dp">
                 <RelativeLayout
-                    android:layout_width="10dp"
+                    android:layout_width="180dp"
                     android:id="@+id/sendgiftbuttonholder"
-                    android:layout_height="34dp"
-                    android:layout_gravity="right"
-                    android:layout_weight=".7"
+                    android:layout_height="40dp"
+
                     android:layout_marginBottom="15dp"
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/button_bg_gift"
@@ -854,7 +854,7 @@
                         android:textColor="#fff" />
                 </RelativeLayout>
             </LinearLayout>
-
+</LinearLayout>
 
         </LinearLayout>
 
