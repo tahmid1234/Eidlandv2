@@ -83,6 +83,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                         holder.seatName.setText(viewer.name);
                         holder.cardback.setVisibility(View.VISIBLE);
                         holder.cardback1.setVisibility(View.VISIBLE);
+                        holder.micImage.setImageResource(0);
                         Glide.with(context.getApplicationContext()).load(viewer.getPhotoUrl()).placeholder(R.drawable.ic_mic_on).into(holder.seatImage);
                         uidPositions.get(position).setIsfill(true);
                         uidPositions.get(position).uid = viewer.uid;
@@ -90,7 +91,9 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                     } catch (Exception e) {
                         System.out.println(e);
                         holder.seatName.setText((position + 1));
-                        holder.seatImage.setImageResource(R.drawable.ic_micn);
+                    //    holder.seatImage.setImageResource(R.drawable.ic_mic);
+                        holder.micImage.setImageResource(R.drawable.ic_micn);
+                        holder.seatImage.setImageResource(0);
                         uidPositions.get(position).setIsfill(false);
                         uidPositions.get(position).uid = 0;
 
@@ -99,7 +102,9 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
                     }
                 } else {
                     holder.seatName.setText(String.format("%d", position + 1));
-                    holder.seatImage.setImageResource(R.drawable.ic_mic);
+               //     holder.seatImage.setImageResource(R.drawable.ic_mic);
+                    holder.micImage.setImageResource(R.drawable.ic_micn);
+                    holder.seatImage.setImageResource(0);
                     holder.seatImage.setBackgroundResource(seats[position]);
                     uidPositions.get(position).setIsfill(false);
                     uidPositions.get(position).uid = 0;
@@ -142,6 +147,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView seatName;
         ImageView seatImage;
+        ImageView micImage;
         LinearLayout seat;
         CardView cardback1, cardback;
         OnSeatClickListener onSeatClickListener;
@@ -150,6 +156,7 @@ public class AdapterSeat extends RecyclerView.Adapter<AdapterSeat.ViewHolder> {
             super(itemView);
             seatName = itemView.findViewById(R.id.host_name);
             seatImage = itemView.findViewById(R.id.host_image);
+            micImage = itemView.findViewById(R.id.mic_image);
             cardback = itemView.findViewById(R.id.cardback);
             cardback1 = itemView.findViewById(R.id.cardback1);
             seat = itemView.findViewById(R.id.seat);

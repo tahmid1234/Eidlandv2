@@ -59,6 +59,25 @@
                        />
 
                 </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="360dp">
+
+                    <ImageView
+                        android:id="@+id/mic_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_micn"
+                        android:contentDescription="TODO"
+                        android:scaleType="centerCrop"
+
+                        />
+
+                </androidx.cardview.widget.CardView>
             </RelativeLayout>
             <TextView
                 android:id="@+id/host_name"
