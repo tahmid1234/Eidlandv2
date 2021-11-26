@@ -254,7 +254,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@drawable/viewersicon" />
+                        android:src="@drawable/online_user_foreground" />
 
                     <TextView
                         android:id="@+id/online_user_count"
@@ -473,14 +473,16 @@
                             android:layout_marginStart="15dp"
                             android:visibility="visible"
                             android:background="@drawable/ic_sound_on" />
+
                         <ImageView
                             android:id="@+id/input_button"
                             android:layout_width="100dp"
                             android:layout_height="40dp"
-                            android:layout_toRightOf="@id/speakerbtn"
                             android:layout_marginStart="15dp"
-                            android:visibility="visible"
-                            android:background="@drawable/ic_asset_10_1" />
+                            android:paddingRight="15dp"
+                            android:layout_toRightOf="@id/speakerbtn"
+                            android:background="@drawable/ic_asset_10_1"
+                            android:visibility="visible" />
 
                         <EditText
                             android:id="@+id/comment_box"
@@ -517,7 +519,6 @@
                     android:id="@id/mute_local_speaker_id"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-
                     android:layout_marginEnd="15dp"
                     android:contentDescription="TODO"
                     android:background="@drawable/ic_mic_on"

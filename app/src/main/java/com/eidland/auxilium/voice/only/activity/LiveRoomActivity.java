@@ -269,9 +269,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         if(onSeat){
                             micBtn.setVisibility(View.VISIBLE);
                             bottom_action_end_call.setVisibility(View.VISIBLE);
+//                            inputBoxLayout.setVisibility(View.VISIBLE);
                             inputButton.setVisibility(View.VISIBLE);
-                            commentBox.setVisibility(View.GONE);
-                            inputBoxLayout.setVisibility(View.GONE);
                         }else {
                             inputBoxLayout.setVisibility(View.VISIBLE);
                             commentBox.setVisibility(View.GONE);
@@ -2318,8 +2317,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     private boolean checkSelfPermissions() {
-        return checkSelfPermission(Manifest.permission.RECORD_AUDIO, ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO) &&
-                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
+        return checkSelfPermission(Manifest.permission.RECORD_AUDIO, ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO);
     }
 
     public boolean checkSelfPermission(String permission, int requestCode) {

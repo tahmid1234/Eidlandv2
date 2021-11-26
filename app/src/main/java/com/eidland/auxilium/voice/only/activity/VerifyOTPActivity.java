@@ -122,8 +122,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
         positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                boolean checkPermissionResult = checkSelfPermissions();
-//                if (checkPermissionResult) {
+                boolean checkPermissionResult = checkSelfPermissions();
+                if (checkPermissionResult) {
                     try {
                         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
                         signInWithPhoneAuthCredential(credential);
@@ -131,7 +131,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                         System.out.println(e);
                     }
                     dialog.cancel();
-//                } else Log.e("no permission", "Not Found");
+                } else Log.e("no permission", "Not Found");
             }
         });
         dialog.show();
@@ -177,8 +177,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
     private boolean checkSelfPermissions() {
-        return checkSelfPermission(Manifest.permission.RECORD_AUDIO, ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO) &&
-                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
+        return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
     }
 
     public boolean checkSelfPermission(String permission, int requestCode) {
