@@ -1048,6 +1048,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     @Override
     public void onSeatClick(int position) {
+        boolean checkPermissionResult = checkSelfPermissions();
+        if (checkPermissionResult) {
+             checkSelfPermissions();
+        }
+
         clickedOnlineUserUID = null;
         if (!inactiveClick) {
             CheckSeats("seat" + position);
