@@ -1491,6 +1491,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     audiance.setRecievedCoins(viewer.getRecievedCoins());
                                     eidlandpointcount.setText(audiance.getRecievedCoins());
 
+                                    eidlandpointGIF.setAnimation("eidlandpoint.json");
+                                    eidlandpointGIF.setProgress(0);
+                                    eidlandpointGIF.playAnimation();
+
                                 }
 
                                 @Override
@@ -1682,9 +1686,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 backgrundGIF.setAnimation(animationItem.gifIconId);
                 backgrundGIF.setProgress(0);
                 backgrundGIF.playAnimation();
-                eidlandpointGIF.setAnimation("eidlandpoint.json");
-                eidlandpointGIF.setProgress(0);
-                eidlandpointGIF.playAnimation();
+
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
                 eidlandpointGIFLayout.setVisibility(View.VISIBLE);
@@ -2358,7 +2360,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     AgainSeat = Clickedseat;
 
                 } else {
-                    CallAlert();
+//                    CallAlert();
 //                    finish();
                 }
                 break;
@@ -2368,7 +2370,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     System.out.println("Granted!");
                 } else {
-                    CallAlert();
+//                    CallAlert();
 //                    finish();
                 }
                 break;

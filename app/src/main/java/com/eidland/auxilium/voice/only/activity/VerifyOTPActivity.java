@@ -85,7 +85,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                     pin.setError("Length of OTP code must be 6");
                 } else {
                     pin.setError(null);
-                    Callalert();
+//                    Callalert();
                 }
             }
         });
@@ -210,7 +210,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                     signInWithPhoneAuthCredential(credential);
 
                 } else {
-                    Callalert();
+//                    Callalert();
                     finish();
                 }
                 break;

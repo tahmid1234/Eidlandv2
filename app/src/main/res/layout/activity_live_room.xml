@@ -476,12 +476,12 @@
 
                         <ImageView
                             android:id="@+id/input_button"
-                            android:layout_width="100dp"
+                            android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="15dp"
-                            android:paddingRight="15dp"
                             android:layout_toRightOf="@id/speakerbtn"
-                            android:background="@drawable/ic_asset_10_1"
+                            android:background="@drawable/ic_asset_10_1_small_foreground"
+                            android:paddingRight="15dp"
                             android:visibility="visible" />
 
                         <EditText
@@ -510,7 +510,7 @@
                     android:id="@id/switch_speaker_id"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
                     android:onClick="onSwitchSpeakerClicked"
                     android:background="@drawable/ic_mic_on"
@@ -519,7 +519,7 @@
                     android:id="@id/mute_local_speaker_id"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
                     android:background="@drawable/ic_mic_on"
                     android:visibility="gone" />
@@ -527,10 +527,9 @@
                     android:id="@+id/bottom_action_end_call"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
                     android:contentDescription="TODO"
                     android:onClick="onEndCallClicked"
-
                     android:background="@drawable/ic_leave_the_call"
                     android:visibility="gone" />
                 <ImageView
@@ -543,24 +542,32 @@
                     android:background="@drawable/ic_send_message_button_white" />
 
 
-                <ImageView
-                    android:id="@+id/room_gift"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:contentDescription="TODO"
-                    android:background="@drawable/ic_giftbox" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/room_gift"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:layout_marginEnd="15dp"-->
+<!--                    android:contentDescription="TODO"-->
+<!--                    android:background="@drawable/ic_giftbox" />-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/room_gift"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="15dp"
+                        android:contentDescription="TODO"
+                        android:background="@drawable/ic_giftbox" />
 
                     <ImageView
                         android:id="@+id/invite_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
                         android:background="@drawable/ic_share" />
                 </LinearLayout>
 
