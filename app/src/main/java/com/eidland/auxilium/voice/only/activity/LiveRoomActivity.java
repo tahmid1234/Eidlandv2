@@ -1020,6 +1020,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 seatUsers.clear();
                 speakernames.clear();
+                if (speakernames.isEmpty()) Selectedspeaker.setText("Select Speaker");
                 if (snapshot.exists()) {
                     try {
                         for (DataSnapshot snap : snapshot.getChildren()) {
