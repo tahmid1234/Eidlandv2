@@ -1491,9 +1491,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     audiance.setRecievedCoins(viewer.getRecievedCoins());
                                     eidlandpointcount.setText(audiance.getRecievedCoins());
 
-                                    eidlandpointGIF.setAnimation("eidlandpoint.json");
-                                    eidlandpointGIF.setProgress(0);
-                                    eidlandpointGIF.playAnimation();
+//                                    eidlandpointGIF.setAnimation("eidlandpoint.json");
+//                                    eidlandpointGIF.setProgress(0);
+//                                    eidlandpointGIF.playAnimation();
 
                                 }
 
