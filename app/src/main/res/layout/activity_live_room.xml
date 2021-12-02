@@ -566,6 +566,8 @@
                     <ImageView
                         android:id="@+id/invite_icon"
                         android:layout_width="wrap_content"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:background="@drawable/ic_share" />
