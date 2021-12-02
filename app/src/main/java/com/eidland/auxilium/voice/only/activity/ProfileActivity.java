@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.helper.Helper;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
+import com.eidland.auxilium.voice.only.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -132,10 +133,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void finish(View view) {
         super.onBackPressed();
-//        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL(), StaticConfig.user.getReferrer());
-//        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-//        startActivity(intent);
-//        finish();
+        StaticConfig.user = new User(StaticConfig.user.getName(), StaticConfig.user.getEmail(), PhotoUrl, StaticConfig.user.getCoins(), StaticConfig.user.getReceivedCoins(), StaticConfig.user.getReferralURL(), StaticConfig.user.getReferrer());
+       Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+       startActivity(intent);
+        finish();
     }
 
     @Override
