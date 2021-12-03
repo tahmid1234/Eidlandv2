@@ -995,6 +995,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                                         sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
 
+                                        eidlandpointGIF.setAnimation("eidlandpoint.json");
+                                        eidlandpointGIF.setProgress(0);
+                                        eidlandpointGIF.playAnimation();
                                     }
                                 });
 
@@ -1325,7 +1328,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                             try {
                                 Viewer audiance = snapshot.getValue(Viewer.class);
-                                Toast.makeText(getApplicationContext(), audiance.getId(), Toast.LENGTH_SHORT);
                                 FirebaseDatabase.getInstance().getReference().child("Viewers").child(roomName).child(audiance.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -1490,10 +1492,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //                                    Toast.makeText(getApplicationContext(), viewer.getId(), Toast.LENGTH_SHORT);
                                     audiance.setRecievedCoins(viewer.getRecievedCoins());
                                     eidlandpointcount.setText(audiance.getRecievedCoins());
-
-//                                    eidlandpointGIF.setAnimation("eidlandpoint.json");
-//                                    eidlandpointGIF.setProgress(0);
-//                                    eidlandpointGIF.playAnimation();
 
                                 }
 
@@ -2550,7 +2548,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         else if (isMod){
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                     /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics()));
+                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics()));
 
             param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             singleUserBox.setLayoutParams(param);
@@ -2566,7 +2564,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         else {
             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
                     /*width*/ ViewGroup.LayoutParams.MATCH_PARENT,
-                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics()));
+                    /*height*/ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics()));
 
             param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             singleUserBox.setLayoutParams(param);
@@ -2581,6 +2579,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         Glide.with(getApplicationContext()).load(photo).into(popup_user);
         eidlandpointcount.setText(recievedCoins);
+        Toast.makeText(getApplicationContext(), "viewer", Toast.LENGTH_SHORT);
+
 
         singleUserBox.setVisibility(View.VISIBLE);
     }
