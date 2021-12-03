@@ -245,7 +245,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.buy1000n:
                 selectedkey = "1000";
-//               purchasecoins();
+           //    purchasecoins();
                 break;
 
 
