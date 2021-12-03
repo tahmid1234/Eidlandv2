@@ -1675,23 +1675,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
     }
 
-    public void giftObjectAnimation(String id, Gift gift, String receiver){
-        for (AnimationItem animationItem :
-                ConstantApp.animationItems()) {
-            if (animationItem.name.equals(id)) {
-//                simpleGift.setImageResource(animationItem.giftIconId);
-                backgrundGIF.setAnimation(animationItem.gifIconId);
-                backgrundGIF.setProgress(0);
-                backgrundGIF.playAnimation();
-                eidlandpointGIF.setAnimation("eidlandpoint.json");
-                eidlandpointGIF.setProgress(0);
-                eidlandpointGIF.playAnimation();
-                rewarded.setVisibility(View.VISIBLE);
-                backgroundGIFLayout.setVisibility(View.VISIBLE);
-                eidlandpointGIFLayout.setVisibility(View.VISIBLE);
-            }
-        }
-    }
+    
 
     public void giftAnimation(String id, Gift gift, String receiver) {
 
@@ -2662,6 +2646,12 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
     //inner class for task scheduling
+
+    /*
+    //Thread pooling has been implemented to avoid gift animation overlapping,
+    //GiftAnimationTask Class is a thread class and the run function inside it
+    //handles the ui
+     */
     class GiftAnimationTask implements Runnable
     {
         private String index;
