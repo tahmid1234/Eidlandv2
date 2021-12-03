@@ -1586,7 +1586,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         int index = giftList.size() - 1;
                         System.out.println(index+" ashol");
+                        Runnable r1 = new GiftAnimationTask(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
+                        pool.execute(r1);
 
 
 
@@ -2659,5 +2661,92 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
 
+    //inner class for task scheduling
+    class GiftAnimationTask implements Runnable
+    {
+        private String index;
+        private Gift gift;
+        private String receiver;
+        private Animation animation;
+        public GiftAnimationTask(String index, Gift gift, String receiver) {
+            this.index = index;
+            this.gift = gift;
+            this.receiver = receiver;
+        }
 
+      public GiftAnimationTask(){}
+
+        // Prints task name and sleeps for 1s
+        // This Whole process is repeated 5 times
+        public void run()
+        {
+            System.out.println("Run hoi?");
+            try
+            {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Run hoi? index "+index);
+                        for (AnimationItem animationItem :
+                                ConstantApp.animationItems()) {
+                            if (animationItem.name.equals(index)) {
+                                System.out.println("index mile??");
+//                simpleGift.setImageResource(animationItem.giftIconId);
+                                backgrundGIF.setAnimation(animationItem.gifIconId);
+                                backgrundGIF.setProgress(0);
+                                backgrundGIF.playAnimation();
+                                eidlandpointGIF.setAnimation("eidlandpoint.json");
+                                eidlandpointGIF.setProgress(0);
+                                eidlandpointGIF.playAnimation();
+                                rewarded.setVisibility(View.VISIBLE);
+                                backgroundGIFLayout.setVisibility(View.VISIBLE);
+                                eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+
+
+
+                            }
+                        }
+
+                    }
+                });
+                sendername.setText(gift.getSenderName());
+                receivername.setText(receiver);
+                animatedLayout.setVisibility(View.VISIBLE);
+                animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+
+                animatedLayout.setAnimation(animation);
+
+
+
+                System.out.println("2400 holo animation start");
+
+
+
+                Thread.sleep(2100);
+                //animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
+                //animatedLayout.setAnimation(animation);
+                //animatedLayout.setVisibility(View.INVISIBLE);
+                backgroundGIFLayout.setVisibility(View.GONE);
+                animatedLayout.setVisibility(View.GONE);
+                System.out.println("2400 holo bg");
+
+                System.out.println("2400 holo animation end");
+
+
+
+            }
+
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Run hoi na mone hoi?"+e);
+            }
+        }
+    }
 }
