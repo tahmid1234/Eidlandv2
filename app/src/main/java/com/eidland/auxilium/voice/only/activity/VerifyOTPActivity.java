@@ -122,16 +122,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean checkPermissionResult = checkSelfPermissions();
-                if (checkPermissionResult) {
-                    try {
-                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
-                        signInWithPhoneAuthCredential(credential);
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                    dialog.cancel();
-                } else Log.e("no permission", "Not Found");
+                dialog.cancel();
             }
         });
         dialog.show();
@@ -174,56 +165,6 @@ public class VerifyOTPActivity extends AppCompatActivity {
                         ShowDialogue(VerifyOTPActivity.this);
                     }
                 });
-    }
-
-    private boolean checkSelfPermissions() {
-        return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
-    }
-
-    public boolean checkSelfPermission(String permission, int requestCode) {
-        if (ContextCompat.checkSelfPermission(this,
-                permission)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{permission},
-                    requestCode);
-            return false;
-        }
-
-        if (Manifest.permission.RECORD_AUDIO.equals(permission)) {
-            ((AGApplication) getApplication()).initWorkerThread();
-        }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case ConstantApp.PERMISSION_REQ_ID_RECORD_AUDIO: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE);
-                    ((AGApplication) getApplication()).initWorkerThread();
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
-                    signInWithPhoneAuthCredential(credential);
-
-                } else {
-//                    Callalert();
-                    finish();
-                }
-                break;
-            }
-            case ConstantApp.PERMISSION_REQ_ID_WRITE_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                } else {
-                    finish();
-                }
-                break;
-            }
-        }
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
