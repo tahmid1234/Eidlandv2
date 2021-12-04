@@ -1565,7 +1565,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void giftsListener() {
-        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (isnotfirst) {
@@ -1578,58 +1578,26 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             assert gift != null;
                             if (gift.getGift() != null && gift.getSenderName() != null) {
                                 giftList.add(gift);
-                            }
-                            if (gift.getGift() != null && gift.getSenderName() != null) {
+                                System.out.println("ashol is er vitor"+ gift.getGift() );
+                            //}
+                            //if (gift.getGift() != null && gift.getSenderName() != null) {
                                 leaderGiftList.add(gift);
                             }
                         }
 
                         int index = giftList.size() - 1;
-                        System.out.println(index+" ashol");
-                        Runnable r1 = new GiftAnimationTask(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+                        System.out.println(index+" ashol index + gifts  "+giftList.get(index).getGift());
+                        Runnable runnable = new GiftAnimationTask(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
-                        pool.execute(r1);
+                        pool.execute(runnable);
 
 
 
                         System.out.println("Gone");
                         //giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-                        /*new Thread() {
-                            public void run() {
-                                try {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-                                        }
-                                    });
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                               // giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-                            }
-                        }.start();*/
+                       
 
-                        /*new Thread() {
-                            int i = 1;
-                            public void run() {
 
-                                    try {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                System.out.println(i++);
-                                                //giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-                                            }
-                                        });
-                                        Thread.sleep(300);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-
-                            }
-                        }.start();*/
 
                         /*     LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
 
@@ -1675,7 +1643,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
     }
 
-    
+
 
     public void giftAnimation(String id, Gift gift, String receiver) {
 
@@ -2671,20 +2639,25 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         public void run()
         {
             System.out.println("Run hoi?");
+            System.out.println(index+" ashol index + gifts run er vitore "+gift );
             try
             {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         System.out.println("Run hoi? index "+index);
+                        System.out.println(index+" ashol index + gifts for er age "+gift );
                         for (AnimationItem animationItem :
                                 ConstantApp.animationItems()) {
                             if (animationItem.name.equals(index)) {
+                                System.out.println(index+" ashol index + gifts if er pore "+gift );
                                 System.out.println("index mile??");
 //                simpleGift.setImageResource(animationItem.giftIconId);
+                                //Gift object GIF
                                 backgrundGIF.setAnimation(animationItem.gifIconId);
                                 backgrundGIF.setProgress(0);
                                 backgrundGIF.playAnimation();
+                                //points animation
                                 eidlandpointGIF.setAnimation("eidlandpoint.json");
                                 eidlandpointGIF.setProgress(0);
                                 eidlandpointGIF.playAnimation();
@@ -2692,12 +2665,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 backgroundGIFLayout.setVisibility(View.VISIBLE);
                                 eidlandpointGIFLayout.setVisibility(View.VISIBLE);
 
+                                //reward text animation
 
-
-
-
-
-
+                                sendername.setText(gift.getSenderName());
+                                receivername.setText(receiver);
+                                animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+                                animatedLayout.setAnimation(animation);
+                                animatedLayout.setVisibility(View.VISIBLE);
 
 
                             }
@@ -2705,37 +2679,28 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                     }
                 });
-                sendername.setText(gift.getSenderName());
-                receivername.setText(receiver);
-                animatedLayout.setVisibility(View.VISIBLE);
-                animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
-
-                animatedLayout.setAnimation(animation);
-
-
-
-                System.out.println("2400 holo animation start");
-
-
 
                 Thread.sleep(2100);
-                //animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
-                //animatedLayout.setAnimation(animation);
-                //animatedLayout.setVisibility(View.INVISIBLE);
-                backgroundGIFLayout.setVisibility(View.GONE);
-                animatedLayout.setVisibility(View.GONE);
-                System.out.println("2400 holo bg");
+                //backgroundGIFLayout.setVisibility(View.GONE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                System.out.println("2400 holo animation end");
+                        Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
 
+                        animatedLayout.setAnimation(animation2);
+                        animatedLayout.setVisibility(View.GONE);
+                        backgroundGIFLayout.setVisibility(View.GONE);
 
+                    }
+                });
 
             }
 
             catch(Exception e)
             {
                 e.printStackTrace();
-                System.out.println("Run hoi na mone hoi?"+e);
+                System.out.println("Exceptions: "+e);
             }
         }
     }
