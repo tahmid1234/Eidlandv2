@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -56,12 +54,10 @@ import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.adapter.AdapterComment;
 import com.eidland.auxilium.voice.only.adapter.AdapterGame;
 import com.eidland.auxilium.voice.only.adapter.AdapterGift;
-import com.eidland.auxilium.voice.only.adapter.AdapterLeadUser;
 import com.eidland.auxilium.voice.only.adapter.AdapterSeat;
 import com.eidland.auxilium.voice.only.adapter.Adapterspinner;
 import com.eidland.auxilium.voice.only.adapter.ViewerAdapter;
 import com.eidland.auxilium.voice.only.helper.ConstantApp;
-import com.eidland.auxilium.voice.only.helper.LeaderBoard;
 import com.eidland.auxilium.voice.only.model.AnimationItem;
 import com.eidland.auxilium.voice.only.model.Comment;
 import com.eidland.auxilium.voice.only.model.Gift;
@@ -94,13 +90,13 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -184,7 +180,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     String clickedOnlineUserUID;
     boolean isModerator = false;
 
-
+    ExecutorService pool = Executors.newFixedThreadPool(1);
     RelativeLayout animatedLayout;
     RelativeLayout backgroundGIFLayout, eidlandpointGIFLayout;
     LottieAnimationView backgrundGIF, eidlandpointGIF;
@@ -813,7 +809,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         setOnlineMembers();
 
         setNameAllSeats();
-
+        isnotfirst = false;
         giftsListener();
 
         gameListener();
@@ -1571,7 +1567,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void giftsListener() {
-        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (isnotfirst) {
@@ -1584,16 +1580,28 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             assert gift != null;
                             if (gift.getGift() != null && gift.getSenderName() != null) {
                                 giftList.add(gift);
-                            }
-                            if (gift.getGift() != null && gift.getSenderName() != null) {
+                                System.out.println("ashol is er vitor"+ gift.getGift() );
+                            //}
+                            //if (gift.getGift() != null && gift.getSenderName() != null) {
                                 leaderGiftList.add(gift);
                             }
                         }
 
                         int index = giftList.size() - 1;
-                        giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+                        System.out.println(index+" ashol index + gifts  "+giftList.get(index).getGift());
+                        Runnable runnable = new GiftAnimationTask(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
-                   /*     LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
+                        pool.execute(runnable);
+
+
+
+                        System.out.println("Gone");
+                        //giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+
+
+
+
+                        /*     LeaderBoard leaderBoard = new LeaderBoard(leaderGiftList, hostuid);
 
                         RecyclerView topSpeakerRecycler = findViewById(R.id.top_speaker);
                         topSpeakerRecycler.setHasFixedSize(true);
@@ -1637,6 +1645,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         });
     }
 
+
+
     public void giftAnimation(String id, Gift gift, String receiver) {
 
 //        DatabaseReference animRef = FirebaseDatabase.getInstance().getReference().child("animation");
@@ -1677,6 +1687,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //            }
 //        }
 
+
         for (AnimationItem animationItem :
                 ConstantApp.animationItems()) {
             if (animationItem.name.equals(id)) {
@@ -1690,10 +1701,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 eidlandpointGIFLayout.setVisibility(View.VISIBLE);
             }
         }
+
         sendername.setText(gift.getSenderName());
         receivername.setText(receiver);
 
-        Handler enterScreen = new Handler();
+        /*Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1703,9 +1715,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     animatedLayout.setAnimation(animation);
                 }
             }
-        }, 1500);
+        }, 1500);*/
 
-        Handler exitScreen = new Handler();
+        /*Handler exitScreen = new Handler();
         exitScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1720,7 +1732,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     System.out.println(e);
                 }
             }
-        }, 3000);
+        }, 3000);*/
     }
 
     private void sendGift(Gift gift) {
@@ -2599,5 +2611,102 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
         }
 
+    }
+
+
+    //inner class for task scheduling
+
+    /*
+    //Thread pooling has been implemented to avoid gift animation overlapping,
+    //GiftAnimationTask Class is a thread class and the run function inside it
+    //handles the ui
+     */
+    class GiftAnimationTask implements Runnable
+    {
+        private String index;
+        private Gift gift;
+        private String receiver;
+        private Animation animation;
+        public GiftAnimationTask(String index, Gift gift, String receiver) {
+            this.index = index;
+            this.gift = gift;
+            this.receiver = receiver;
+        }
+
+      public GiftAnimationTask(){}
+
+        // Prints task name and sleeps for 1s
+        // This Whole process is repeated 5 times
+        public void run()
+        {
+            System.out.println("Run hoi?");
+            System.out.println(index+" ashol index + gifts run er vitore "+gift );
+            try
+            {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Run hoi? index "+index);
+                        System.out.println(index+" ashol index + gifts for er age "+gift );
+                        for (AnimationItem animationItem :
+                                ConstantApp.animationItems()) {
+                            if (animationItem.name.equals(index)) {
+                                System.out.println(index+" ashol index + gifts if er pore "+gift );
+                                System.out.println("index mile??");
+//                simpleGift.setImageResource(animationItem.giftIconId);
+                                //Gift object GIF
+                                backgrundGIF.setAnimation(animationItem.gifIconId);
+                                backgrundGIF.setProgress(0);
+                                backgrundGIF.playAnimation();
+                                //points animation
+
+                                System.out.println(currentUser.getDisplayName());
+
+                                //eidlandpointGIF.setAnimation("eidlandpoint.json");
+                                //eidlandpointGIF.setProgress(0);
+                                //eidlandpointGIF.playAnimation();
+
+                                rewarded.setVisibility(View.VISIBLE);
+                                backgroundGIFLayout.setVisibility(View.VISIBLE);
+                                //eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+
+                                //reward text animation
+
+                                sendername.setText(gift.getSenderName());
+                                receivername.setText(receiver);
+                                animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enter);
+                                animatedLayout.setAnimation(animation);
+                                animatedLayout.setVisibility(View.VISIBLE);
+
+
+                            }
+                        }
+
+                    }
+                });
+
+                Thread.sleep(2100);
+                //backgroundGIFLayout.setVisibility(View.GONE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Animation animation2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.exit);
+
+                        animatedLayout.setAnimation(animation2);
+                        animatedLayout.setVisibility(View.GONE);
+                        backgroundGIFLayout.setVisibility(View.GONE);
+
+                    }
+                });
+
+            }
+
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Exceptions: "+e);
+            }
+        }
     }
 }
