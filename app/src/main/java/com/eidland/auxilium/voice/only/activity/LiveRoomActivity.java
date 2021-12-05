@@ -1595,7 +1595,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                         System.out.println("Gone");
                         //giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-                       
+
 
 
 
@@ -2658,12 +2658,16 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 backgrundGIF.setProgress(0);
                                 backgrundGIF.playAnimation();
                                 //points animation
-                                eidlandpointGIF.setAnimation("eidlandpoint.json");
-                                eidlandpointGIF.setProgress(0);
-                                eidlandpointGIF.playAnimation();
+
+                                System.out.println(currentUser.getDisplayName());
+
+                                //eidlandpointGIF.setAnimation("eidlandpoint.json");
+                                //eidlandpointGIF.setProgress(0);
+                                //eidlandpointGIF.playAnimation();
+
                                 rewarded.setVisibility(View.VISIBLE);
                                 backgroundGIFLayout.setVisibility(View.VISIBLE);
-                                eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+                                //eidlandpointGIFLayout.setVisibility(View.VISIBLE);
 
                                 //reward text animation
 
