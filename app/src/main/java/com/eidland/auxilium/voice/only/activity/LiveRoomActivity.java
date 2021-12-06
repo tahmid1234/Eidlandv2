@@ -794,6 +794,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     StaticConfig.user = user;
                     eidlandPoint.setText(getFormattedText(user.getReceivedCoins()));
                     userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
+
                 } catch (Exception e) {
 
                 }

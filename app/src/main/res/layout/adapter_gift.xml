@@ -5,7 +5,7 @@
     android:layout_height="88dp"
     android:gravity="center"
     android:layout_marginLeft="13dp"
-    android:layout_marginBottom="18sp"
+    android:layout_marginBottom="15sp"
     android:orientation="vertical"
     android:background="@drawable/giftback"
     android:layout_gravity="left">

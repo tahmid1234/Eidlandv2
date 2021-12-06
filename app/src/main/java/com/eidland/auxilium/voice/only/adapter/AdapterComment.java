@@ -66,7 +66,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 for (AnimationItem animationItem :
                         ConstantApp.animationItems()) {
                     if (animationItem.name.equals(countryInfoArrayList.get(position).getImgid())) {
-                        placesViewHolder.gift.setImageResource(animationItem.svgIconId);
+                        placesViewHolder.gift.setBackgroundResource(animationItem.svgIconId);
                     }
                 }
             }
