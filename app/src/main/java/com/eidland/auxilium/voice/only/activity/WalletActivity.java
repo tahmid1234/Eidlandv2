@@ -14,9 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.PurchaseInfo;
 import com.eidland.auxilium.voice.only.R;
@@ -38,13 +35,13 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     LinearLayout buy50, buy1000, buy350;
     BillingProcessor billingProcessor;
     String coincomma, Userid;
+    boolean bpressed=false;
     ViewDialog viewDialog;
     ImageView back;
-    int width = 0;
-    boolean productpurchasedcalled = false;
-    boolean verifycalled = false;
+    int width=0;
+    boolean productpurchasedcalled=false;
+    boolean verifycalled=false;
     String coinvalue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,109 +77,114 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         billingProcessor.purchase(this, selectedkey);
 
 
+
     }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (selectedkey == null) {
-
-        } else {
-            if (productpurchasedcalled) {
-
-            } else {
-
-                manualonProductPurchased(selectedkey, billingProcessor.getPurchaseInfo(selectedkey));
-                selectedkey = null;
-            }
-        }
 
 
     }
-
     public void initpur() {
         boolean isAvailable = BillingProcessor.isIabServiceAvailable(this);
         if (isAvailable) {
 
 
-            billingProcessor = new BillingProcessor(this, getResources().getString(R.string.Playid), new BillingProcessor.IBillingHandler() {
+            billingProcessor = new BillingProcessor(this, getResources().getString(R.string.Playid),  new BillingProcessor.IBillingHandler() {
                 @Override
                 public void onProductPurchased(@NonNull String productId, @Nullable PurchaseInfo purchaseInfo) {
-                    productpurchasedcalled = true;
-                    if (!verifycalled) {
-                        Log.d("enteredwallaet", "onProductPurchased: Hello " + productId);
-                        coinvalue = productId;
+                    productpurchasedcalled=true;
+                    bpressed=false;
+                    if (!verifycalled)
+                    {
+                        Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
+                        coinvalue=productId;
                         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String currentCoins = StaticConfig.user.getCoins();
                         long coininnumber = Long.parseLong(currentCoins);
                         long finalcoin = coininnumber + Long.parseLong(productId);
                         StaticConfig.user.setCoins(finalcoin + "");
-                        billingProcessor.consumePurchaseAsync(selectedkey, new BillingProcessor.IPurchasesResponseListener() {
+                        billingProcessor.consumePurchaseAsync(selectedkey, new BillingProcessor.IPurchasesResponseListener()
+                        {
                             @Override
-                            public void onPurchasesSuccess() {
-                                //  Toast.makeText(getApplicationContext(),"Successfully consumed",Toast.LENGTH_SHORT).show();
-
+                            public void onPurchasesSuccess()
+                            {
+                                // Toast.makeText(getApplicationContext(),"Successfully consumed",Toast.LENGTH_SHORT).show();
+                                selectedkey=null;
+                                verifypurchase();
                             }
 
                             @Override
-                            public void onPurchasesError() {
-                                // Toast.makeText(getApplicationContext(),"Not consumed",Toast.LENGTH_SHORT).show();
+                            public void onPurchasesError()
+                            {
+                              //  Toast.makeText(getApplicationContext(),"Not consumed",Toast.LENGTH_SHORT).show();
 
                             }
                         });
-                        selectedkey = null;
-//                        verifypurchase();
+
+
                     }
 
                 }
-
                 @Override
                 public void onBillingError(int errorCode, @Nullable Throwable error) {
-                    //Toast.makeText(getApplicationContext(),"onBillingError: " + Integer.toString(errorCode),Toast.LENGTH_SHORT).show();
+                    if (errorCode==102)
+                    {
+                      //  onProductPurchased(selectedkey,billingProcessor.getPurchaseInfo(selectedkey));
+                        //selectedkey=null;
+                    }
+              //      Toast.makeText(getApplicationContext(),"onBilling Error: " +errorCode ,Toast.LENGTH_SHORT).show();
                 }
-
                 @Override
                 public void onBillingInitialized() {
-                    // Toast.makeText(getApplicationContext(),"onBillingInitiated: " ,Toast.LENGTH_SHORT).show();
+                 //  Toast.makeText(getApplicationContext(),"onBillingInitiated: " ,Toast.LENGTH_SHORT).show();
 
 
                 }
 
                 @Override
                 public void onPurchaseHistoryRestored() {
+                    Toast.makeText(getApplicationContext(),"onPurchaseHistoryRestored",Toast.LENGTH_SHORT).show();
+                    for(String sku : billingProcessor.listOwnedProducts())
+                        Log.d("he", "Owned Managed Product: " + sku);
+                    for(String sku : billingProcessor.listOwnedSubscriptions())
+                        Log.d("he", "Owned Subscription: " + sku);
 
                 }
-
             });
         }
     }
-
-    public void manualonProductPurchased(@NonNull String productId, @Nullable PurchaseInfo purchaseInfo) {
-        productpurchasedcalled = true;
-        Log.d("enteredwallaet", "onProductPurchased: Hello " + productId);
-        coinvalue = productId;
+ /*   public void manualonProductPurchased(@NonNull String productId, @Nullable PurchaseInfo purchaseInfo) {
+        productpurchasedcalled=true;
+        bpressed=false;
+        Log.d("enteredwallaet", "onProductPurchased: Hello "+productId);
+        coinvalue=productId;
         Userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String currentCoins = StaticConfig.user.getCoins();
         long coininnumber = Long.parseLong(currentCoins);
         long finalcoin = coininnumber + Long.parseLong(productId);
         StaticConfig.user.setCoins(finalcoin + "");
-        billingProcessor.consumePurchaseAsync(selectedkey, new BillingProcessor.IPurchasesResponseListener() {
+        billingProcessor.consumePurchaseAsync(selectedkey, new BillingProcessor.IPurchasesResponseListener()
+        {
             @Override
             public void onPurchasesSuccess() {
-                //  Toast.makeText(getApplicationContext(),"Successfully consumed",Toast.LENGTH_SHORT).show();
+               //   Toast.makeText(getApplicationContext(),"Successfully consumed",Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
-            public void onPurchasesError() {
-                // Toast.makeText(getApplicationContext(),"Not consumed",Toast.LENGTH_SHORT).show();
+            public void onPurchasesError()
+            {
+              // Toast.makeText(getApplicationContext(),"Not consumed",Toast.LENGTH_SHORT).show();
 
             }
         });
-        selectedkey = null;
-//        verifypurchase();
-    }
 
+    }
+*/
     @Override
     public void onDestroy() {
         if (billingProcessor != null) {
@@ -201,61 +203,63 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         long coininnumber = Long.parseLong(currentCoins);
         long finalcoin = coininnumber + Long.parseLong(productId);
         StaticConfig.user.setCoins(finalcoin + "");
-
         verifypurchase();
     }*/
 
 
     ProgressDialog progressDialog;
 
-//    public void verifypurchase() {
-//        viewDialog.showDialog("Please wait for a while");
-//        FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(StaticConfig.user).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//              //  Toast.makeText(WalletActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-//                coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
-//                txtcurrent.setText(coincomma);
-//                Toast.makeText(WalletActivity.this, "Purchase of " +coinvalue + " coins confirmed. Thank you!", Toast.LENGTH_SHORT).show();
-//                // lrnmethod.setVisibility(View.GONE);
-//                viewDialog.hideDialog();
-//
-//
-//            }
-//        });
-//        verifycalled=true;
-//    }
+    public void verifypurchase() {
+        viewDialog.showDialog("Please wait for a while");
+        FirebaseDatabase.getInstance().getReference("Users").child(Userid).setValue(StaticConfig.user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                //  Toast.makeText(WalletActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                coincomma = Helper.getFormattedText(StaticConfig.user.getCoins());
+                txtcurrent.setText(coincomma);
+                Toast.makeText(WalletActivity.this, "Purchase of " +coinvalue + " coins confirmed. Thank you!", Toast.LENGTH_SHORT).show();
+                // lrnmethod.setVisibility(View.GONE);
+                viewDialog.hideDialog();
+
+
+            }
+        });
+        verifycalled=true;
+    }
 
 
     String selectedkey = null;
 
     @Override
     public void onClick(View v) {
-        productpurchasedcalled = false;
-        verifycalled = false;
+        productpurchasedcalled=false;
+        verifycalled=false;
         switch (v.getId()) {
 
             case R.id.buy50:
                 selectedkey = "50";
-//                purchasecoins();
+
                 break;
             case R.id.buy350:
                 selectedkey = "350";
-//               purchasecoins();
+
                 break;
             case R.id.buy1000n:
                 selectedkey = "1000";
-           //    purchasecoins();
+
                 break;
 
 
         }
-        calldialog();
+        //calldialog();
+
+            purchasecoins();
 
     }
 
 
-    void calldialog() {
+    void calldialog ()
+    {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.layout_custom_dialog);
         LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
@@ -282,6 +286,43 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         });
         dialog.show();
     }
+    void repurchase (String key) {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.layout_custom_dialog);
+        LinearLayout linearLayout = dialog.findViewById(R.id.alert_root);
+        linearLayout.setMinimumWidth((int) (width * 0.8));
+        //dialog.getWindow().setBackgroundDrawableResource(R.drawable.white_corner);
+        dialog.setCancelable(false);
 
+        ImageView imageView = dialog.findViewById(R.id.dialog_icon);
+        imageView.setImageResource(R.drawable.ic_sleep);
+        imageView.setVisibility(View.GONE);
+        TextView msg = dialog.findViewById(R.id.msg);
+        msg.setText("Do you want to purchase "  +selectedkey +" coins again?");
+
+        TextView positive = dialog.findViewById(R.id.positive_btn);
+        RelativeLayout areatop = dialog.findViewById(R.id.topdialogbutton);
+        positive.setVisibility(View.VISIBLE);
+        positive.setText("OKAY");
+        areatop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                purchasecoins();
+                dialog.dismiss();
+            }
+        });
+        RelativeLayout areabottom = dialog.findViewById(R.id.bottomdialogbutton);
+        TextView negative = dialog.findViewById(R.id.negative_btn);
+        negative.setVisibility(View.VISIBLE);
+        negative.setText("Cancel");
+        areabottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                selectedkey=null;
+            }
+        });
+        dialog.show();
+    }
 
 }

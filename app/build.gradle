@@ -80,7 +80,7 @@ dependencies {
     // image croper
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 // volley
-    implementation 'com.anjlab.android.iab.v3:library:2.0.0'
+    implementation 'com.anjlab.android.iab.v3:library:2.0.3'
 
     // facebook
     implementation 'com.facebook.android:facebook-core:[8,9)'
