@@ -1063,7 +1063,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     public void onGiftClick(int position, ImageView icon, RelativeLayout selec) {
         if (position != lastPos) {
             if (lastselec != null) {
-                lastselec.setVisibility(View.GONE);
+                lastselec.setVisibility(View.INVISIBLE);
             }
         }
 
