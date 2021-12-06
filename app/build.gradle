@@ -17,8 +17,8 @@ android {
         applicationId "com.eidland.auxilium.voice.only"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 27
-        versionName "0.0.27"
+        versionCode 29
+        versionName "0.0.29"
     }
 
     compileOptions {
