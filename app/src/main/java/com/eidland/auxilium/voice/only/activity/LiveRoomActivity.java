@@ -1393,7 +1393,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     blocklayout.setVisibility(View.VISIBLE);
                                     mutelayout.setVisibility(View.GONE);
                                     profilelayout.setVisibility(View.GONE);
-                            user_action.setWeightSum(1);
+                                    user_action.setWeightSum(1);
 
                                 }else {
 
@@ -1406,6 +1406,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                     singleUserBox.setLayoutParams(param);
                                     singleUserBox.requestLayout();
                                     singlegift.setVisibility(View.VISIBLE);
+                                    user_action.setVisibility(View.GONE);
                                     txtsinglegiftsend.setVisibility(View.VISIBLE);
 
 //                                    user_action.setWeightSum(1);
