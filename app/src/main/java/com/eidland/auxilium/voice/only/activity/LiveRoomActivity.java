@@ -402,6 +402,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         closeGiftBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                inputArea.setVisibility(View.VISIBLE);
                 crystal.setVisibility(View.GONE);
 //                gameButton.setVisibility(View.VISIBLE);
                 commentBox.setVisibility(View.GONE);
@@ -421,6 +422,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 spinhold.setVisibility(View.VISIBLE);
                 Selectedspeaker.setVisibility(View.VISIBLE);
                 crystal.setVisibility(View.VISIBLE);
+                inputArea.setVisibility(View.GONE);
 //                gameButton.setVisibility(View.GONE);
                 commentBox.setVisibility(View.GONE);
                 inputButton.setVisibility(View.VISIBLE);
@@ -430,6 +432,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 singleUserBox.setVisibility(View.GONE);
+                inputArea.setVisibility(View.VISIBLE);
             }
         });
 
@@ -720,6 +723,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 singleUserBox.setVisibility(View.GONE);
                 Selectedspeaker.setVisibility(View.GONE);
                 crystal.setVisibility(View.VISIBLE);
+                inputArea.setVisibility(View.GONE);
                 spinhold.setVisibility(View.GONE);
                 spinner.setVisibility(View.GONE);
 
@@ -761,6 +765,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         }
                         FirebaseDatabase.getInstance().getReference().child("MicRequests").child(roomName).child(clickedOnlineUserUID).setValue(modName + " invited you to take the seat!");
                         singleUserBox.setVisibility(View.GONE);
+                        inputArea.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(), "Request has been sent successfully", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -875,7 +880,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         gameRecycler.setAdapter(adapterGame);
 
 
-        sendGiftBtn.setOnClickListener(new View.OnClickListener() {
+        sendgiftholder.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -891,6 +896,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             Long curnt = Long.parseLong(StaticConfig.user.getCoins());
                             if (curnt > selectedGiftAmount) {
                                 crystal.setVisibility(View.GONE);
+                                inputArea.setVisibility(View.VISIBLE);
 //                                gameButton.setVisibility(View.VISIBLE);
                                 commentBox.setVisibility(View.GONE);
                                 FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid()).runTransaction(new Transaction.Handler() {
@@ -1109,7 +1115,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                             FirebaseDatabase.getInstance().getReference().child("Audiance").child(roomName).child(seat).removeValue();
                             Toast.makeText(LiveRoomActivity.this, "user removed", Toast.LENGTH_LONG).show();
                             singleUserBox.setVisibility(View.GONE);
-
+                            inputArea.setVisibility(View.VISIBLE);
 
                         }
                     });
@@ -1421,6 +1427,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                else {
                                    txtsinglename.setText(audiance.getName());
                                    singleUserBox.setVisibility(View.VISIBLE);
+                                   inputArea.setVisibility(View.GONE);
                                }
 
 //                                singleUserBox.setLayoutParams(params);
@@ -1519,6 +1526,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 singleUserBox.setLayoutParams(param);
                                 singleUserBox.requestLayout();
                                 crystal.setVisibility(View.GONE);
+                                inputArea.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.GONE);
                                 txtsinglegiftsend.setVisibility(View.GONE);
                                 user_action.setVisibility(View.GONE);
@@ -1535,6 +1543,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 crystal.setVisibility(View.GONE);
+                                inputArea.setVisibility(View.GONE);
                                 user_action.setVisibility(View.VISIBLE);
                                 blocklayout.setVisibility(View.VISIBLE);
                                 micreqlayout.setVisibility(View.GONE);
@@ -1550,6 +1559,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 singleUserBox.setLayoutParams(param);
                                 singleUserBox.requestLayout();
                                 crystal.setVisibility(View.GONE);
+                                inputArea.setVisibility(View.GONE);
                                 singlegift.setVisibility(View.VISIBLE);
                                 txtsinglegiftsend.setVisibility(View.VISIBLE);
                                 user_action.setVisibility(View.GONE);
@@ -2569,6 +2579,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             singleUserBox.setLayoutParams(param);
             singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
+            inputArea.setVisibility(View.GONE);
             singlegift.setVisibility(View.GONE);
             txtsinglegiftsend.setVisibility(View.GONE);
          user_action.setVisibility(View.GONE);
@@ -2583,6 +2594,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             singleUserBox.setLayoutParams(param);
             singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
+            inputArea.setVisibility(View.GONE);
             user_action.setVisibility(View.VISIBLE);
             blocklayout.setVisibility(View.GONE);
             mutelayout.setVisibility(View.GONE);
@@ -2599,6 +2611,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             singleUserBox.setLayoutParams(param);
             singleUserBox.requestLayout();
             crystal.setVisibility(View.GONE);
+            inputArea.setVisibility(View.GONE);
             user_action.setVisibility(View.GONE);
             user_action.setWeightSum(4);
         }

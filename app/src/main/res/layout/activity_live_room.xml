@@ -653,6 +653,8 @@
             android:layout_alignParentBottom="true"
             android:background="#22242D"
             android:orientation="vertical"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:visibility="gone">
 
             <LinearLayout
