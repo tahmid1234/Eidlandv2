@@ -294,7 +294,7 @@
                 android:id="@+id/animatedlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="-64dp"
+                android:layout_marginBottom="-94dp"
                 android:translationZ="1.0dp"
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -533,9 +533,11 @@
                     android:visibility="gone" />
                 <ImageView
                     android:id="@+id/sndcmnt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="center"
                     android:onClick="onSwitchSpeakerClicked"
                     android:visibility="gone"
                     android:background="@drawable/ic_send_message_button_white" />

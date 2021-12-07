@@ -232,12 +232,13 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                 if (lastVisibleDecorViewHeight != 0) {
                     if (lastVisibleDecorViewHeight > visibleDecorViewHeight + MIN_KEYBOARD_HEIGHT_PX) {
-                        inputArea.setBackgroundColor(Color.rgb(238, 238, 228));
+                        inputArea.setBackgroundColor(Color.WHITE);
 //                        inputWrap.setMinimumWidth(0);
                         inputBoxLayout.setVisibility(View.VISIBLE);
                         commentBox.setVisibility(View.VISIBLE);
-                        commentBox.setHintTextColor(Color.LTGRAY);
+                        commentBox.setHintTextColor(Color.DKGRAY);
                         commentBox.setTextSize(14);
+
                         commentBox.setTextColor(Color.BLACK);
 
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
@@ -819,7 +820,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         setOnlineMembers();
 
         setNameAllSeats();
-        isnotfirst = false;
 
 
        // gameListener();
@@ -1641,7 +1641,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         topContributorRecycler.setAdapter(adapterLeaderContributor);
 */
                         if (hasEnteredRoom) {
-                            rewarded.setVisibility(View.GONE);
+                            rewarded.setVisibility(View.VISIBLE);
                             giftList.clear();
 //                            simpleGift.setBackgroundColor(Color.TRANSPARENT);
 //                            backgrundGIF.setAnimation("entry_fireworks.json");
@@ -1716,6 +1716,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 ConstantApp.animationItems()) {
             if (animationItem.name.equals(id)) {
 //                simpleGift.setImageResource(animationItem.giftIconId);
+
                 backgrundGIF.setAnimation(animationItem.gifIconId);
                 backgrundGIF.setProgress(0);
                 backgrundGIF.playAnimation();
@@ -1762,16 +1763,22 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         String ownuid=currentUser.getUid();
         if((gift.getReceiverUID().equals(ownuid))||(gift.getSenderUID().equals(ownuid)))
         {
-            eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+            if (showeidanimation)
+            {
+                eidlandpointGIFLayout.setVisibility(View.VISIBLE);
 
-            eidlandpointGIF.setAnimation("eidlandpoint.json");
-            eidlandpointGIF.setProgress(0);
-            eidlandpointGIF.playAnimation();
+                eidlandpointGIF.setAnimation("eidlandpoint.json");
+                eidlandpointGIF.setProgress(0);
+                eidlandpointGIF.playAnimation();
+
+
+            }
+
         }
     }
 
     private void sendGift(Gift gift) {
-
+        showeidanimation=true;
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
         Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + selectedViewer.getName() + "\n", FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);

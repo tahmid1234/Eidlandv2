@@ -91,7 +91,7 @@
                 android:paddingVertical="3dp"
                 android:text="Seat No"
                 android:textColor="#fff"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
