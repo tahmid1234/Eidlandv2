@@ -799,13 +799,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     User user = snapshot.getValue(User.class);
                     StaticConfig.user = user;
                     eidlandPoint.setText(getFormattedText(user.getReceivedCoins()));
-                    if(showeidanimation){
-                        eidlandpointGIFLayout.setVisibility(View.VISIBLE);
 
-                        eidlandpointGIF.setAnimation("eidlandpoint.json");
-                        eidlandpointGIF.setProgress(0);
-                        eidlandpointGIF.playAnimation();
-                    }
 
 
                     userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
@@ -826,10 +820,10 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
         setNameAllSeats();
         isnotfirst = false;
-        giftsListener();
+
 
        // gameListener();
-
+        giftsListener();
         requestListener();
 
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).orderByKey().limitToLast(1).addValueEventListener(new ValueEventListener() {
@@ -1622,7 +1616,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
 
-                        //giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+                        giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
 
 
@@ -1662,7 +1656,6 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                 } else
                 {
-                    showeidanimation=true;
                     isnotfirst = true;
                 }
 
@@ -1765,9 +1758,19 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 }
             }
         }, 3000);
+        String ownuid=currentUser.getUid();
+        if((gift.getReceiverUID().equals(ownuid))||(gift.getSenderUID().equals(ownuid)))
+        {
+            eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+
+            eidlandpointGIF.setAnimation("eidlandpoint.json");
+            eidlandpointGIF.setProgress(0);
+            eidlandpointGIF.playAnimation();
+        }
     }
 
     private void sendGift(Gift gift) {
+
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
         Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + selectedViewer.getName() + "\n", FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
@@ -2717,7 +2720,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     }
                 });
 
-                Thread.sleep(2100);
+                Thread.sleep(1000);
                 //backgroundGIFLayout.setVisibility(View.GONE);
                 runOnUiThread(new Runnable() {
                     @Override
