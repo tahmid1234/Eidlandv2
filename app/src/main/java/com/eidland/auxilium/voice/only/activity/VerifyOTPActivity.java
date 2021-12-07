@@ -122,6 +122,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
         positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpid, pincode);
+                signInWithPhoneAuthCredential(credential);
                 dialog.cancel();
             }
         });
