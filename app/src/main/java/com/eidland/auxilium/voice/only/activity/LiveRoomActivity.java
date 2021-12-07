@@ -1590,7 +1590,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
     public void giftsListener() {
 
-        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByChild("time").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (isnotfirst) {
@@ -1611,14 +1611,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         }
 
                         int index = giftList.size() - 1;
-                        System.out.println(index+" ashol index + gifts  "+giftList.get(index).getGift());
+                        giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
+                       /*
+                        Thread
                         Runnable runnable = new GiftAnimationTask(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
-
                         pool.execute(runnable);
+                        */
 
 
 
-                        System.out.println("Gone");
+
+
                         //giftAnimation(giftList.get(index).getGift(), giftList.get(index), giftList.get(index).getReceiverName());
 
 
@@ -1722,7 +1725,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 backgrundGIF.setAnimation(animationItem.gifIconId);
                 backgrundGIF.setProgress(0);
                 backgrundGIF.playAnimation();
-
+                /*eidlandpointGIF.setAnimation("eidlandpoint.json");
+                eidlandpointGIF.setProgress(0);
+                eidlandpointGIF.playAnimation();*/
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
               //  eidlandpointGIFLayout.setVisibility(View.VISIBLE);
@@ -1732,7 +1737,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         sendername.setText(gift.getSenderName());
         receivername.setText(receiver);
 
-        /*Handler enterScreen = new Handler();
+        Handler enterScreen = new Handler();
         enterScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1742,9 +1747,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     animatedLayout.setAnimation(animation);
                 }
             }
-        }, 1500);*/
+        }, 1500);
 
-        /*Handler exitScreen = new Handler();
+        Handler exitScreen = new Handler();
         exitScreen.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1759,7 +1764,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     System.out.println(e);
                 }
             }
-        }, 3000);*/
+        }, 3000);
     }
 
     private void sendGift(Gift gift) {
@@ -2651,7 +2656,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     //GiftAnimationTask Class is a thread class and the run function inside it
     //handles the ui
      */
-    class GiftAnimationTask implements Runnable
+    /*class GiftAnimationTask implements Runnable
     {
         private String index;
         private Gift gift;
@@ -2669,20 +2674,17 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         // This Whole process is repeated 5 times
         public void run()
         {
-            System.out.println("Run hoi?");
-            System.out.println(index+" ashol index + gifts run er vitore "+gift );
+
             try
             {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("Run hoi? index "+index);
-                        System.out.println(index+" ashol index + gifts for er age "+gift );
+
                         for (AnimationItem animationItem :
                                 ConstantApp.animationItems()) {
                             if (animationItem.name.equals(index)) {
-                                System.out.println(index+" ashol index + gifts if er pore "+gift );
-                                System.out.println("index mile??");
+
 //                simpleGift.setImageResource(animationItem.giftIconId);
                                 //Gift object GIF
                                 backgrundGIF.setAnimation(animationItem.gifIconId);
@@ -2690,7 +2692,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                                 backgrundGIF.playAnimation();
                                 //points animation
 
-                                System.out.println(currentUser.getDisplayName());
+                                //System.out.println(currentUser.getDisplayName());
 
                                 //eidlandpointGIF.setAnimation("eidlandpoint.json");
                                 //eidlandpointGIF.setProgress(0);
@@ -2738,5 +2740,5 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                 System.out.println("Exceptions: "+e);
             }
         }
-    }
+    }*/
 }
