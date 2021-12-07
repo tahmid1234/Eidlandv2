@@ -93,7 +93,21 @@
                 android:text="Shuffling..." />
 
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/eidlandpointGIFLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationZ="1.0dp"
+            android:visibility="invisible">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/eidlandpointGIF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:translationZ="1.0dp"
+                android:scaleType="fitCenter" />
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/backgroundGIFLayout"
             android:layout_width="match_parent"
@@ -110,21 +124,7 @@
                 android:scaleType="fitCenter" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/eidlandpointGIFLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:translationZ="1.0dp"
-            android:visibility="invisible">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/eidlandpointGIF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:translationZ="1.0dp"
-                android:scaleType="fitCenter" />
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -1093,7 +1093,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunitosemibold"
-                            android:text="Block\nParticipant"
+                            android:text="Remove\nParticipant"
                             android:textAlignment="center"
                             android:textColor="#fff"
                             android:textSize="13sp"

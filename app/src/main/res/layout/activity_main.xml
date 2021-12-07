@@ -133,7 +133,7 @@
                     android:fontFamily="@font/nunitosemibold"
                     android:padding="5dp"
                     android:scaleType="fitXY"
-                    android:text="Welcome to Eidland! We’re thrilled you came by.\n\nIf you’re new, drop into the room called Eidland Reception Desk to learn what we’re about.\n\nOtherwise, jump into any room that interests you. Feel free to speak up or simply listen in."
+                    android:text="Welcome to Eidland, a digital community center dedicated to mutual self-improvement and the celebration of life :) \n\nWe’re thrilled to have you!\n\nOur events are hosted by members via live group-audio. Please join a room below and feel free to speak up or simply listen in!\n\nIf you’re here for the free leadership seminars, please return on Monday evenings (7pm Dubai time). Please check for notifications as your time zone may differ. Eidland will soon offer these seminars every evening. Enjoy!"
                     android:textColor="#fff" />
 
                 <TextView

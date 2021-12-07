@@ -213,7 +213,8 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     ImageView lastImg;
     int selectedGiftAmount = 0;
     boolean isnotfirst = true;
-    boolean hasEnteredRoom = true, newlyjoined = true;
+    boolean hasEnteredRoom = true,showeidanimation=false, newlyjoined = true;
+    int count=0;
     boolean onSeat = false;
 
 
@@ -793,6 +794,15 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     User user = snapshot.getValue(User.class);
                     StaticConfig.user = user;
                     eidlandPoint.setText(getFormattedText(user.getReceivedCoins()));
+                    if(showeidanimation){
+                        eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+
+                        eidlandpointGIF.setAnimation("eidlandpoint.json");
+                        eidlandpointGIF.setProgress(0);
+                        eidlandpointGIF.playAnimation();
+                    }
+
+
                     userAvailableCoin.setText(getFormattedText(StaticConfig.user.getCoins()));
 
                 } catch (Exception e) {
@@ -813,7 +823,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
         isnotfirst = false;
         giftsListener();
 
-        gameListener();
+       // gameListener();
 
         requestListener();
 
@@ -866,6 +876,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
 
         sendGiftBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
@@ -992,9 +1003,9 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                                         sendGift(new Gift(selectedGiftName, selectedGiftAmount, currentUser.getUid(), StaticConfig.user.name, StaticConfig.user.imageurl, selectuseruid, selectedViewer.getName(), selectedViewer.photo, System.currentTimeMillis()));
 
-                                        eidlandpointGIF.setAnimation("eidlandpoint.json");
-                                        eidlandpointGIF.setProgress(0);
-                                        eidlandpointGIF.playAnimation();
+                                      //  eidlandpointGIF.setAnimation("eidlandpoint.json");
+                                       // eidlandpointGIF.setProgress(0);
+                                       // eidlandpointGIF.playAnimation();
                                     }
                                 });
 
@@ -1568,6 +1579,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     }
 
     public void giftsListener() {
+
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -1628,7 +1640,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 //                            backgrundGIF.setProgress(0);
 //                            backgrundGIF.playAnimation();
                             backgroundGIFLayout.setVisibility(View.GONE);
-                            eidlandpointGIFLayout.setVisibility(View.GONE);
+                            //eidlandpointGIFLayout.setVisibility(View.GONE);
                             sendername.setText("Hey " + StaticConfig.user.getName() + "!");
                             receivername.setText("Welcome to " + nameOfRoom);
                             hasEnteredRoom = false;
@@ -1636,7 +1648,11 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                     }
 
                 } else
+                {
+                    showeidanimation=true;
                     isnotfirst = true;
+                }
+
             }
 
             @Override
@@ -1699,7 +1715,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
 
                 rewarded.setVisibility(View.VISIBLE);
                 backgroundGIFLayout.setVisibility(View.VISIBLE);
-                eidlandpointGIFLayout.setVisibility(View.VISIBLE);
+              //  eidlandpointGIFLayout.setVisibility(View.VISIBLE);
             }
         }
 
