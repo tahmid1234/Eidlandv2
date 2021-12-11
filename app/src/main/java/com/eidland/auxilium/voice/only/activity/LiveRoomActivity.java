@@ -1780,7 +1780,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
     private void sendGift(Gift gift) {
         showeidanimation=true;
         FirebaseDatabase.getInstance().getReference().child("gifts").child(roomName).push().setValue(gift.toMap());
-        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + selectedViewer.getName() + "\n", FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
+        Comment comment = new Comment(gift.getSenderName(), "Rewarded to " + selectedViewer.getName(), FirebaseAuth.getInstance().getCurrentUser().getUid(), true, selectedGiftName, "1", StaticConfig.user.getImageurl());
         FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment);
     }
 

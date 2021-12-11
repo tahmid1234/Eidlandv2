@@ -55,7 +55,8 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         placesViewHolder = (PlacesViewHolder) holder;
         placesViewHolder.txtuser.setText(countryInfoArrayList.get(position).getName());
-        placesViewHolder.txtcmnt.setText(countryInfoArrayList.get(position).getComment());
+        System.out.printf("comment dekhi "+countryInfoArrayList.get(position).getComment()+" nah");
+        placesViewHolder.txtcmnt.setText(countryInfoArrayList.get(position).getComment().trim());
 
         Glide.with(this.context).load(countryInfoArrayList.get(position).getUserphoto()).into(placesViewHolder.userImg);
             if(countryInfoArrayList.get(position).isHasimg()) {
