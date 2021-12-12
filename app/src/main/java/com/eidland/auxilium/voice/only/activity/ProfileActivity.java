@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ProfileActivity extends AppCompatActivity {
     ImageView userimg;
     LinearLayout button_join, lrnrefrsh;
+    RelativeLayout button_back;
     String userid;
     TextView txtname, txtcoins, txtrcvcoins;
     DecimalFormat formatter;
@@ -66,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         txtcoins = findViewById(R.id.txtcoins);
         txtrcvcoins = findViewById(R.id.txtrcvcoins);
         button_join = findViewById(R.id.lrnjoin);
+        button_back = findViewById(R.id.back_to_home);
         referralLinkText = findViewById(R.id.referrallinktext);
 
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -92,6 +95,14 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         createInvitationLink();
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                ProfileActivity.super.onBackPressed();
+            }
+        });
     }
 
     public void gettoken(final String roomname) {

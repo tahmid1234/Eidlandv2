@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +28,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Context context;
     ArrayList<Comment> countryInfoArrayList;
     URI phURI;
+
 
     public AdapterComment(Context context, ArrayList<Comment> cameraobject1s, ItemClickListener1 itemClickListener1) {
         this.context = context;
@@ -55,7 +57,8 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         placesViewHolder = (PlacesViewHolder) holder;
         placesViewHolder.txtuser.setText(countryInfoArrayList.get(position).getName());
-        placesViewHolder.txtcmnt.setText(countryInfoArrayList.get(position).getComment());
+
+        placesViewHolder.txtcmnt.setText(countryInfoArrayList.get(position).getComment().trim());
 
         Glide.with(this.context).load(countryInfoArrayList.get(position).getUserphoto()).into(placesViewHolder.userImg);
             if(countryInfoArrayList.get(position).isHasimg()) {
@@ -66,6 +69,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 for (AnimationItem animationItem :
                         ConstantApp.animationItems()) {
                     if (animationItem.name.equals(countryInfoArrayList.get(position).getImgid())) {
+                        placesViewHolder.imageGiftLayout.setVisibility(View.VISIBLE);
                         placesViewHolder.gift.setBackgroundResource(animationItem.svgIconId);
                     }
                 }
@@ -73,6 +77,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
             else {
 
                 placesViewHolder.gift.setVisibility(View.GONE);
+                placesViewHolder.imageGiftLayout.setVisibility(View.GONE);
                // placesViewHolder.txtcount.setVisibility(View.GONE);
             }
 //            placesViewHolder.gift.setVisibility(View.GONE);
@@ -99,6 +104,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView txtuser, txtcount;
         CircleImageView userImg;
         GifImageView gift;
+        LinearLayout imageGiftLayout;
 
         ItemClickListener1 itemClickListener1;
 
@@ -109,6 +115,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             //txtcount = view.findViewById(R.id.txtcount);
             gift = view.findViewById(R.id.imggift);
+            imageGiftLayout = view.findViewById(R.id.imggiftlayout);
             userImg = view.findViewById(R.id.userimgcomment);
             txtcmnt = view.findViewById(R.id.cmnt);
             txtuser = view.findViewById(R.id.user);

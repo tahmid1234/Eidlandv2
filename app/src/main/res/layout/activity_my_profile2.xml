@@ -423,7 +423,7 @@
         android:layout_marginStart="10dp"
         android:gravity="center"
 
-        android:onClick="finish"
+        android:id="@+id/back_to_home"
         android:layout_marginTop="5dp">
 
         <ImageView
