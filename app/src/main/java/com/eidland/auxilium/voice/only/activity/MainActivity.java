@@ -1,6 +1,7 @@
 package com.eidland.auxilium.voice.only.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,10 +22,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.eidland.auxilium.voice.only.R;
 import com.eidland.auxilium.voice.only.adapter.AdapterRoom;
+import com.eidland.auxilium.voice.only.helper.FirebaseToken;
 import com.eidland.auxilium.voice.only.model.Rooms;
 import com.eidland.auxilium.voice.only.model.StaticConfig;
 import com.eidland.auxilium.voice.only.model.UpcomingSession;
 import com.google.android.gms.analytics.CampaignTrackingReceiver;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
 //        roomRecycler2 = findViewById(R.id.rvrooms2);
 //        roomRecycler3 = findViewById(R.id.rvrooms3);
 //        upcomingSessionRV = findViewById(R.id.upcomingSessionsRV);
+        //FirebaseToken firebaseToken = new FirebaseToken();
+        //firebaseToken.generateFIrebaseToken();
         FirebaseDatabase.getInstance().getReference("AllRooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
