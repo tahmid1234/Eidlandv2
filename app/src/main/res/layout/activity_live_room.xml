@@ -278,7 +278,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -369,6 +369,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="40sp"
                 android:layout_marginBottom="35dp"
                 android:layout_weight="1">
@@ -437,9 +438,9 @@
                 android:id="@+id/input_box_area"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
-                android:gravity="center_horizontal|center_vertical"
+                android:gravity="center_horizontal|center_vertical|bottom"
                 android:orientation="horizontal"
-                android:layout_marginBottom="-30dp"
+                android:layout_marginBottom="-35dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp">
@@ -454,6 +455,7 @@
                         android:id="@+id/input_box_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_weight="1">
 
                         <LinearLayout
@@ -464,6 +466,7 @@
                             android:layout_centerInParent="true"
                             android:orientation="horizontal"
                             android:visibility="gone"
+
                             android:background="@drawable/transparentblackcircle" />
                         <ImageView
                             android:id="@+id/speakerbtn"
@@ -537,7 +540,8 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_gravity="center"
+                    android:layout_marginEnd="-25dp"
+                    android:layout_gravity="center|right"
                     android:onClick="onSwitchSpeakerClicked"
                     android:visibility="gone"
                     android:background="@drawable/ic_send_message_button_white" />
@@ -554,6 +558,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
                     android:orientation="horizontal">
 
                     <ImageView

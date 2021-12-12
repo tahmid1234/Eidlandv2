@@ -39,7 +39,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:orientation="vertical"
-            android:padding="10sp"
+
+            android:padding="10dp"
             android:background="@drawable/commentback"
             android:layout_height="wrap_content">
 
@@ -58,10 +59,12 @@
                 android:id="@+id/cmnt" />
 
             <LinearLayout
+                android:id="@+id/imggiftlayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_gravity="center|top"
+                android:visibility="gone"
                 >
 
                 <pl.droidsonroids.gif.GifImageView

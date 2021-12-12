@@ -242,6 +242,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
                         commentBox.setTextColor(Color.BLACK);
 
                         commentBoxCircle.setBackground(getDrawable(R.drawable.transparentwhitecircle));
+
                         sencmnt.setVisibility(View.VISIBLE);
 
                         sencmnt.setImageResource(R.drawable.ic_send_message_button);
@@ -685,6 +686,7 @@ public class LiveRoomActivity extends BaseActivity implements AGEventHandler, Ad
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(commentBox.getText().toString())) {
+
                     Comment comment1 = new Comment(StaticConfig.user.getName(), commentBox.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(), false, ".", ".", StaticConfig.user.getImageurl());
                     FirebaseDatabase.getInstance().getReference().child("livecomments").child(roomName).push().setValue(comment1);
 
